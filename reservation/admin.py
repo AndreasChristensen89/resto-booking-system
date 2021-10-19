@@ -12,7 +12,7 @@ class ReservationAdmin(admin.ModelAdmin):
 
     def pending(self, request, queryset):
         queryset.update(status=0)
-    
+
     def approve(self, request, queryset):
         queryset.update(status=1)
 
