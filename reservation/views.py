@@ -7,7 +7,7 @@ class ReservationList(generic.ListView):
     model = Reservation
     queryset = Reservation.objects.all()
     template_name = 'index.html'
-    paginate_by = 9
+    paginate_by = 6
 
 
 class ReservationDetail(View):
