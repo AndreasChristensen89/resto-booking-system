@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic, View
-from .models import Reservation
+from django.http import HttpResponseRedirect
+from reservation.models import Reservation
+from .forms import ReserveTableForm
 
 
 class ReservationList(generic.ListView):
@@ -23,3 +25,30 @@ class ReservationDetail(View):
                 "reservation": reservation,
             }
             )
+
+
+# def reserve_table(request):
+
+#     if request.method == 'POST':
+#         form = ReserveTableForm(request.POST)
+
+#         if form.is_valid():
+#             reserve_form.save()
+
+#     else:
+#         form = ReserveTableForm()
+
+#     return render(request, 'make_reservation.html', {'form': form})
+
+
+def reserve_table(request):
+ 
+    if request.method == 'POST':
+        form = ReserveTableForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/thanks/')
+
+    else:
+        form = ReserveTableForm()
+
+    return render(request, 'make_reservation.html', {'form': form})
