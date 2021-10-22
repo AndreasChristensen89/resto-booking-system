@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'reservation',
+    'homepage',
 ]
 
 SITE_ID = 1

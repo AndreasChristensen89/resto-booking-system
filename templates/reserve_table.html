@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-{% load static %}
 
-{% block body %}
+{% block content %}
     {% if user.is_authenticated %}
         <form method="post">
             {% csrf_token %}
@@ -11,4 +10,4 @@
     {% else %}
     <p>Please log in to make a reservation</p>
     {% endif %}
-{% endblock body %}
+{% endblock %}

@@ -5,10 +5,28 @@ from reservation.models import Reservation
 from .forms import ReserveTableForm
 
 
+def reserve_table(request):
+    reserve_form = ReserveTableForm()
+
+    if request.method == 'POST':
+        reserve_form = ReserveTableForm(request.POST)
+
+        if reserve_form.is_valid():
+            reserve_form.save()
+            HttpResponseRedirect('/')
+
+    else:
+        reserve_form = ReserveTableForm()
+
+    context = {'form': reserve_form}
+
+    return render(request, 'reserve_table.html', context)
+
+
 class ReservationList(generic.ListView):
     model = Reservation
     queryset = Reservation.objects.all()
-    template_name = 'index.html'
+    template_name = 'reservation_list.html'
     paginate_by = 6
 
 
@@ -25,30 +43,3 @@ class ReservationDetail(View):
                 "reservation": reservation,
             }
             )
-
-
-# def reserve_table(request):
-
-#     if request.method == 'POST':
-#         form = ReserveTableForm(request.POST)
-
-#         if form.is_valid():
-#             reserve_form.save()
-
-#     else:
-#         form = ReserveTableForm()
-
-#     return render(request, 'make_reservation.html', {'form': form})
-
-
-def reserve_table(request):
- 
-    if request.method == 'POST':
-        form = ReserveTableForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('/thanks/')
-
-    else:
-        form = ReserveTableForm()
-
-    return render(request, 'make_reservation.html', {'form': form})

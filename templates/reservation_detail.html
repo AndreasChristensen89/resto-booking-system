@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if user.is_superuser %}
     <h1>First name: {{ reservation.first_name}}</h1>
     <h1>Last name: {{ reservation.last_name }}</h1>
     <h2>Date: {{ reservation.date }}</h2>
@@ -10,4 +11,7 @@
     <h4>Customer email: {{ reservation.email }} </h4>
     <h4>Customer phone: {{ reservation.phone }}</h4>
     <h5>Reservation created on: {{ reservation.created_on }}</h5>
+{% else %}
+    <p>You need a big boy account to see this content</p>
+{% endif %}
 {% endblock %}

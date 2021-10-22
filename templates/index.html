@@ -3,38 +3,19 @@
 {% block content %}
 
 {% if user.is_superuser %}
-    <ul>
-    {% for reservation in reservation_list %}
-    <li>    
-        <a href="{% url 'reservation_detail' reservation.slug %}">
-            <div>
-                <p>{{ reservation.first_name }} {{ reservation.last_name }} - 
-                    {{ reservation.date }} at {{ reservation.time }} for {{ reservation.number_people }} people</p>
-            </div>
-        </a>
-    </li>
-    {% endfor %}
-    </ul>
 
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
+<a href="/reservations/">See lists of reservations</a>
 
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
+{% elif user.is_authenticated %}
 
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-        </span>
-    </div>
+<a href="/reservations/reserve_table/">Make a reservation</a>
+
 {% else %}
-    <a href="#">Make a reservation</a>
+<h1>Hey there and wecome to the site.</h1>
+
+<p>Have a look at the menu. If you wish to book a table at this restaurant you need to <a href="{% url 'account_login' %}">
+    log in</a> or <a href="{% url 'account_signup' %}"> create a user.</a></p>
+
 {% endif %}
 
 {% endblock %}
