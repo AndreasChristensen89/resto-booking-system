@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Name: {{ meal.first_name}}</h1>
+    <h1>Description: {{ meal.description }}</h1>
+    <h2>Category: {{ meal.category }}</h2>
+    <h2>Number of people: {{ meal.for_nbr_people }}</h2>
+    <h3>price: {{ meal.price }}</h3>
+
+{% endblock %}

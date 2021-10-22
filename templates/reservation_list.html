@@ -5,14 +5,16 @@
 {% if user.is_superuser %}
     <ul>
     {% for reservation in reservation_list %}
-    <li>    
-        <a href="{% url 'reservation_detail' reservation.slug %}">
-            <div>
-                <p>{{ reservation.first_name }} {{ reservation.last_name }} - 
-                    {{ reservation.date }} at {{ reservation.time }} for {{ reservation.number_people }} people</p>
-            </div>
-        </a>
-    </li>
+        {% if reservation.status == 0 %}
+            <li>    
+                <a href="{% url 'reservation_detail' reservation.slug %}">
+                    <div>
+                        <p>{{ reservation.first_name }} {{ reservation.last_name }} - 
+                            {{ reservation.date }} at {{ reservation.time }} for {{ reservation.number_people }} people</p>
+                    </div>
+                </a>
+            </li>
+        {% endif %}
     {% endfor %}
     </ul>
 

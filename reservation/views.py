@@ -13,7 +13,7 @@ def reserve_table(request):
 
         if reserve_form.is_valid():
             reserve_form.save()
-            HttpResponseRedirect('/')
+            HttpResponseRedirect('')
 
     else:
         reserve_form = ReserveTableForm()
