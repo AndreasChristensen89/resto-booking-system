@@ -3,17 +3,35 @@
 {% block content %}
 
 <ul>
-    {% for meal in menu_list %}
-    <li>
-        <a href="{% url 'meal_detail' meal.slug %}">
-            <div>
-                <p>{{ meal.name }} {{ meal.price }} -
-                    {{ meal.name }} for {{ meal.for_nbr_people }} people</p>
-            </div>
-        </a>
-    </li>
+    {% for category in categories %}
+        <li>
+            <a id="{{category}}-tab" href="#{{category}}" role="tab" aria-controls="{{category}}" aria-selected="true">{{category}}</a>
+        </li>
     {% endfor %}
 </ul>
+
+<div class="tab-content" id="pills-tabContent">
+
+    {% for category in categories %}
+
+      <div id="{{category}}" role="tabpanel" aria-labelledby="{{category}}-tab">
+        {% for meal in menu_list %}
+            {% if meal.category == category %}
+              <div>
+                <div>
+                  <h3><a href="{% url 'meal_detail' meal.slug %}">{{ meal.name }}</a></h3>
+                </div>
+                <div>
+                  <strong>${{ meal.price }}</strong>
+                </div>
+              </div>
+            {% endif %}
+        {% endfor %}
+
+      </div>
+      
+    {% endfor %}
+  </div>
 
 <div class="pagination">
     <span class="step-links">
@@ -32,8 +50,5 @@
         {% endif %}
     </span>
 </div>
-{% else %}
-<p>You need a big boy account to see this content</p>
-{% endif %}
 
 {% endblock %}

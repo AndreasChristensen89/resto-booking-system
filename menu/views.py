@@ -1,27 +1,25 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Meals
-from django.views import generic, View
 
 # Create your views here.
 
 
-class MenuList(generic.ListView):
-    model = Meals, Category
-    queryset_meals = Meals.objects.all()
-    queryset_categories = Category.objects.all()
-    template_name = 'menu_list.html'
+def menu_list(request):
+    menu_list = Meals.objects.all()
+    categories = Category.objects.all()
+
+    context = {
+        'menu_list' : menu_list ,
+        'categories' : categories ,
+    }
+
+    return render(request , 'menu_list.html' , context)
 
 
-class MealDetail(View):
 
-    def get(self, request, slug, *args, **kwargs):
-        queryset = Meals.objects.all()
-        meal = get_object_or_404(queryset, slug=slug)
+def meal_detail(request, slug):
+    meal_detail = Meals.objects.get(slug=slug)
 
-        return render(
-            request,
-            'meal_detail.html',
-            {
-                'meal': meal,
-            }
-        )
+    context = {'meal_detail' : meal_detail}
+
+    return render(request , 'meal_detail.html' , context)

@@ -29,7 +29,6 @@ class Meals(models.Model):
             self.slug = slugify(self.name)
         super(Meals, self).save(*args, **kwargs)
 
-
     class Meta:
         verbose_name = 'meal'
         verbose_name_plural = 'meals'
