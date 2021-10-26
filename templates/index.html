@@ -2,11 +2,23 @@
 
 {% block content %}
 
-<h1>Hey there and wecome to the site.</h1>
 
-{% if not user.is_authenticated %}
+
+{% if user.is_superuser %}
+
+<h1>Welcome Admin</h1>
+
+{% elif user.is_authenticated %}
+
+<h1>Welcome</h1>
+{% else %}
+
+<h1>Welcome to the site.</h1>
+
 <p>If you wish to book a table at this restaurant you need to <a href="{% url 'account_login' %}">
     log in</a> or <a href="{% url 'account_signup' %}"> create a user.</a></p>
+
+
 {% endif %}
 
 <a href="/menu/"><p>Have a look at the menu</p></a>
