@@ -9,17 +9,16 @@ def menu_list(request):
     categories = Category.objects.all()
 
     context = {
-        'menu_list' : menu_list ,
-        'categories' : categories ,
+        'menu_list': menu_list,
+        'categories': categories,
     }
 
-    return render(request , 'menu_list.html' , context)
-
+    return render(request, 'menu_list.html', context)
 
 
 def meal_detail(request, slug):
     meal_detail = Meals.objects.get(slug=slug)
 
-    context = {'meal_detail' : meal_detail}
+    context = {'meal_detail': meal_detail}
 
-    return render(request , 'meal_detail.html' , context)
+    return render(request, 'meal_detail.html', context)

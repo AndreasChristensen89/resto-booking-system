@@ -2,15 +2,22 @@
 
 {% block content %}
 {% if user.is_superuser %}
-    <h1>First name: {{ reservation.first_name}}</h1>
-    <h1>Last name: {{ reservation.last_name }}</h1>
-    <h2>Date: {{ reservation.date }}</h2>
-    <h2>Time: {{ reservation.time }}</h2>
-    <h3>Guests: {{ reservation.number_people }}</h3>
-    <h3>Status: {{ reservation.status }}</h3>
-    <h4>Customer email: {{ reservation.email }} </h4>
-    <h4>Customer phone: {{ reservation.phone }}</h4>
-    <h5>Reservation created on: {{ reservation.created_on }}</h5>
+    <h1>Full name:</h1>
+    <p>{{ reservation.first_name}} {{ reservation.last_name }}</p>
+    <h2>Date and time</h2>
+    <p>{{ reservation.date }} -  {{ reservation.time }}</p>
+    <h3>Guests:</h3>
+    <p>{{ reservation.number_people }}</p>
+    {%if reservation.status == 0 %}
+    <h3>Status:</h3>
+    <p>Pending</p>
+    {% endif %}
+    <h4>Customer email:</h4>
+    <p>{{ reservation.email }}</p>
+    <h4>Customer phone:</h4>
+    <p>{{ reservation.phone }}</p>
+    <h5>Reservation created on:</h5>
+    <p>{{ reservation.created_on }}</p>
 {% else %}
     <p>You need a big boy account to see this content</p>
 {% endif %}

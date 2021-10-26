@@ -2,20 +2,11 @@
 
 {% block content %}
 
-{% if user.is_superuser %}
-
-<a href="/reservations/">See lists of pending reservations</a>
-
-{% elif user.is_authenticated %}
-
-<a href="/reservations/reserve_table/">Make a reservation</a>
-
-{% else %}
 <h1>Hey there and wecome to the site.</h1>
 
-<p>Have a look at the menu. If you wish to book a table at this restaurant you need to <a href="{% url 'account_login' %}">
+{% if not user.is_authenticated %}
+<p>If you wish to book a table at this restaurant you need to <a href="{% url 'account_login' %}">
     log in</a> or <a href="{% url 'account_signup' %}"> create a user.</a></p>
-
 {% endif %}
 
 <a href="/menu/"><p>Have a look at the menu</p></a>
