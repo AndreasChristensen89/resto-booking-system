@@ -7,11 +7,11 @@
     <h2>Date and time</h2>
     <p>{{ reservation.date }} -  {{ reservation.time }}</p>
     <h3>Guests:</h3>
-    <p>{{ reservation.number_people }}</p>
-    {%if reservation.status == 0 %}
+    <p>{{ reservation.number_guests }}</p>
+    <h3>Allergies</h3>
+    <p>{{ reservation.allergies }}</p>
     <h3>Status:</h3>
     <p>Pending</p>
-    {% endif %}
     <h4>Customer email:</h4>
     <p>{{ reservation.email }}</p>
     <h4>Customer phone:</h4>
@@ -19,6 +19,6 @@
     <h5>Reservation created on:</h5>
     <p>{{ reservation.created_on }}</p>
 {% else %}
-    <p>You need a big boy account to see this content</p>
+    <p>You need an admin account to see this content</p>
 {% endif %}
 {% endblock %}
