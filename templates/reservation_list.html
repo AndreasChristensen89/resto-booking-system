@@ -3,20 +3,21 @@
 {% block content %}
 
 {% if user.is_superuser %}
-    <ul>
-    {% for reservation in reservation_list %}
-        {% if reservation.status == 0 %}
-            <li>    
-                <a href="{% url 'reservation_detail' reservation.slug %}">
-                    <div>
-                        <p>{{ reservation.first_name }} {{ reservation.last_name }} - 
-                            {{ reservation.date }} at {{ reservation.time }} for {{ reservation.number_people }} people</p>
-                    </div>
-                </a>
-            </li>
-        {% endif %}
-    {% endfor %}
-    </ul>
+<ul>
+{% for reservations in reservations_list %}
+    
+    {% if reservations.status == 0 %}
+        <li>    
+            <a href="#">
+                <div>
+                    <p>{{ reservations.first_name }} {{ reservations.last_name }} - 
+                            {{ reservations.date }} at {{ reservations.time }} for {{ reservations.number_people }} people</p>
+                </div>
+            </a>
+        </li>
+    {% endif %}
+{% endfor %}
+</ul>
 
     <div class="pagination">
         <span class="step-links">
@@ -36,7 +37,7 @@
         </span>
     </div>
 {% else %}
-    <p>You need a big boy account to see this content</p>
+    <p>You need an admin account to see this content</p>
 {% endif %}
 
 {% endblock %}

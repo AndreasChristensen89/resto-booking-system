@@ -1,14 +1,15 @@
 from django.contrib import admin
-from .models import Reservation
+from .models import Reservations
 
-
-@admin.register(Reservation)
-class ReservationAdmin(admin.ModelAdmin):
+# Register your models here.
+@admin.register(Reservations)
+class AdminReservations(admin.ModelAdmin):
 
     list_display = ('first_name', 'last_name', 'status', 'created_on')
     search_fields = ['first_name', 'last_name', 'date']
     list_filter = ('status', 'created_on')
     actions = ['pending', 'approve', 'decline']
+    prepopulated_fields = {'slug': ('first_name', 'last_name',)}
 
     def pending(self, request, queryset):
         queryset.update(status=0)
