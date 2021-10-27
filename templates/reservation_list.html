@@ -4,14 +4,14 @@
 
 {% if user.is_superuser %}
 <ul>
-{% for reservations in reservations_list %}
+{% for reservation in reservation_list %}
     
-    {% if reservations.status == 0 %}
+    {% if reservation.status == 0 %}
         <li>    
-            <a href="#">
+            <a href="/reservations/{{reservation.slug}}">
                 <div>
-                    <p>{{ reservations.first_name }} {{ reservations.last_name }} - 
-                            {{ reservations.date }} at {{ reservations.time }} for {{ reservations.number_people }} people</p>
+                    <p>{{ reservation.first_name }} {{ reservation.last_name }} - 
+                            {{ reservation.date }} at {{ reservation.time }} for {{ reservation.number_guests }} people</p>
                 </div>
             </a>
         </li>

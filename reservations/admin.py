@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Reservations
+from .models import Reservation
 
 # Register your models here.
-@admin.register(Reservations)
+@admin.register(Reservation)
 class AdminReservations(admin.ModelAdmin):
 
     list_display = ('first_name', 'last_name', 'status', 'created_on')

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic, View
 from django.http import HttpResponseRedirect
-from reservations.models import Reservations
+from reservations.models import Reservation
 from .forms import ReserveTableForm
 
 
@@ -24,8 +24,8 @@ def reserve_table(request):
 
 
 class ReservationList(generic.ListView):
-    model = Reservations
-    queryset = Reservations.objects.all()
+    model = Reservation
+    queryset = Reservation.objects.all()
     template_name = 'reservation_list.html'
     paginate_by = 6
 
@@ -33,7 +33,7 @@ class ReservationList(generic.ListView):
 class ReservationDetail(View):
 
     def get(self, request, slug, *args, **kwargs):
-        queryset = Reservations.objects.all()
+        queryset = Reservation.objects.all()
         reservation = get_object_or_404(queryset, slug=slug)
 
         return render(
