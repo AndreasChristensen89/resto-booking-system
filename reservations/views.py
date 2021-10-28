@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic, View
-from django.views.generic import DeleteView
+from django.views.generic.edit import DeleteView
 from django.http import HttpResponseRedirect
 from reservations.models import Reservation
 from .forms import ReserveTableForm
 from django.contrib.auth.models import User
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 
 
 def reserve_table(request):
@@ -51,6 +51,6 @@ class ReservationDetail(View):
             )
 
 
-class CancelReservation(DeleteView):
+class CancelReservationView(DeleteView):
     model = Reservation
-    success_url = reverse_lazy('reservation:reservation_list')
+    success_url = '/'
