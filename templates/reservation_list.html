@@ -3,21 +3,34 @@
 {% block content %}
 
 {% if user.is_superuser %}
-<ul>
-{% for reservation in reservation_list %}
-    
-    {% if reservation.status == 0 %}
-        <li>    
-            <a href="/reservations/{{reservation.slug}}">
-                <div>
-                    <p>{{ reservation.first_name }} {{ reservation.last_name }} - 
-                            {{ reservation.date }} at {{ reservation.time }} for {{ reservation.number_guests }} people</p>
-                </div>
-            </a>
-        </li>
-    {% endif %}
-{% endfor %}
-</ul>
+    <ul>
+        {% for reservation in reservation_list %}
+                <li>    
+                    <a href="/reservations/{{reservation.slug}}">
+                        <div>
+                            <p>{{ reservation.first_name }} {{ reservation.last_name }} - 
+                                    {{ reservation.date }} at {{ reservation.time }} for {{ reservation.number_guests }} people</p>
+                        </div>
+                    </a>
+                </li>
+        {% endfor %}
+    </ul>
+
+{% elif user.is_authenticated %}
+    <ul>
+        {% for reservation in reservation_list %}
+            {% if user == reservation.author %}  
+                <li>    
+                    <a href="/reservations/{{reservation.slug}}">
+                        <div>
+                            <p>{{ reservation.first_name }} {{ reservation.last_name }} - 
+                                    {{ reservation.date }} at {{ reservation.time }} for {{ reservation.number_guests }} people</p>
+                        </div>
+                    </a>
+                </li>
+            {% endif%}
+        {% endfor %}
+    </ul>
 
     <div class="pagination">
         <span class="step-links">
@@ -37,7 +50,7 @@
         </span>
     </div>
 {% else %}
-    <p>You need an admin account to see this content</p>
+    <p>You need to be logged in to see this content</p>
 {% endif %}
 
 {% endblock %}

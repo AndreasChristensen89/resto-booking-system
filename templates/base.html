@@ -23,27 +23,27 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     {% if user.is_superuser %}
-                    <li class="nav-item">
-                        <a href="/reservations/">See lists of pending reservations</a>
+                    <li>
+                        <a href="/reservations/">See lists of reservations</a>
                     </li>
                     {% elif user.is_authenticated %}
                     <li>
                         <a href="/reservations/reserve_table/">Make a reservation</a>
                     </li>
                     <li>
-                        <a href="#">My reservations</a>
+                        <a href="/reservations/">My reservations</a>
                     </li>
                     {% endif %}
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                    <li>
+                        <a href="{% url 'account_logout' %}">Logout</a>
                     </li>
                     {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                    <li>
+                        <a href="{% url 'account_signup' %}">Register</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                    <li>
+                        <a href="{% url 'account_login' %}">Login</a>
                     </li>
                     {% endif %}
                 </ul>

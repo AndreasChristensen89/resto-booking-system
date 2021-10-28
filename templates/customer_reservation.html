@@ -2,6 +2,20 @@
 
 {% block content %}
 
-<p>Test</p>
+{% if user.is_authenticated %}
+    {% for reservation in reservation_list %}
+        {% if user.username == reservation.author %}
+            {{ reservation.first_name }}
+            {{ reservation.last_name }}
+            {{ reservation.email }}
+            {{ reservation.phone }}
+            {{ reservation.number_guests }}
+            {{ reservation.date }}
+            {{ reservation.time }}
+            {{ reservation.comment }}
+            {{ reservation.status }}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 {% endblock %}
