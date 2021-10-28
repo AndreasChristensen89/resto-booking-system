@@ -2,9 +2,8 @@
 
 {% block content %}
 <form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete the reservation?</p>
-    <input type="submit" value="Confirm">
+    {{ form.as_p }}
+    <input type="submit" value="Update">
 </form>
-
 <a href="/reservations/">Cancel</a>
 {% endblock %}

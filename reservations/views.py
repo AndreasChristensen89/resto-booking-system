@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic, View
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from reservations.models import Reservation
 from .forms import ReserveTableForm
@@ -53,4 +53,11 @@ class ReservationDetail(View):
 
 class CancelReservationView(DeleteView):
     model = Reservation
-    success_url = '/'
+    success_url = '/reservations/'
+
+
+class UpdateReservationView(UpdateView):
+    model = Reservation
+    fields = ['first_name', 'last_name', 'email', 'phone', 'number_guests', 'date', 'time', 'comment']
+    template_name_suffix = '_update_form'
+    success_url = '/reservations/'

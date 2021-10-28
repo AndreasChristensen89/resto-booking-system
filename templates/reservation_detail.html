@@ -18,5 +18,7 @@
     <h5>Reservation created on:</h5>
     <p>{{ reservation.created_on }}</p>
 
+    <a href="/reservations/{{reservation.slug}}/update/">Update reservation information</a>
+
     <a href="/reservations/{{reservation.slug}}/cancel/">Cancel reservation</a>
 {% endblock %}
