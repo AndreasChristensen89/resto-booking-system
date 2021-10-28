@@ -12,7 +12,9 @@ def reserve_table(request):
         reserve_form = ReserveTableForm(request.POST)
 
         if reserve_form.is_valid():
-            reserve_form.save()
+            obj = reserve_form.save(commit=False)
+            obj.author = request.user
+            obj.save()
             HttpResponseRedirect('/')
 
     else:
