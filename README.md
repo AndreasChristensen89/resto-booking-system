@@ -2,4 +2,6 @@ command used for copying authentication templates to directory. Once copied we c
 cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates
 
 28/10/2021 - for some reason Django logs user out when following link to reservation_detail.html.
+Browser: Chrome
 Console displays: "POST /accounts/logout/ HTTP/1.1" 302 0
+User is logged back in when hitting the back button in browser
