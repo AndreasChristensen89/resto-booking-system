@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user.is_authenticated %}
     <h1>Full name:</h1>
     <p>{{ reservation.first_name}} {{ reservation.last_name }}</p>
     <h2>Date and time</h2>
@@ -18,7 +17,4 @@
     <p>{{ reservation.phone }}</p>
     <h5>Reservation created on:</h5>
     <p>{{ reservation.created_on }}</p>
-{% else %}
-    <p>You need the correct credentials to see this content</p>
-{% endif %}
 {% endblock %}
