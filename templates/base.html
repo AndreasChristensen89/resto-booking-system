@@ -22,19 +22,13 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
-                    {% if user.is_superuser %}
-                    <li>
-                        <a href="/reservations/">See lists of reservations</a>
-                    </li>
-                    {% elif user.is_authenticated %}
+                    {% if user.is_authenticated %}
                     <li>
                         <a href="/reservations/reserve_table/">Make a reservation</a>
                     </li>
                     <li>
-                        <a href="/reservations/">My reservations</a>
+                        <a href="/reservations/">List of reservations</a>
                     </li>
-                    {% endif %}
-                    {% if user.is_authenticated %}
                     <li>
                         <a href="{% url 'account_logout' %}">Logout</a>
                     </li>
