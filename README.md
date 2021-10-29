@@ -10,3 +10,7 @@ Browser: Chrome
 Console displays: "POST /accounts/logout/ HTTP/1.1" 302 0
 User is logged back in when hitting the back button in browser
 29/10/2021 - bug was fixed. Had to change the render function in ReservationDetail to include "user": User, instead of "user": User.username.
+
+To implement:
+- There is currently no identify check for canceling or updating reservations. If any user knows the author it's possible to type the url and execute either command. In the templates had issues with getting {% if user.username == reservation.author %} to work.
+{{user.username}} and {{reservation.author}} display the same text, but the if statement won't execute.
