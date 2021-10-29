@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect
 from reservations.models import Reservation
 from .forms import ReserveTableForm
 from django.contrib.auth.models import User
-from django.urls import reverse_lazy
 
 
 def reserve_table(request):
@@ -46,7 +45,7 @@ class ReservationDetail(View):
             'reservation_detail.html',
             {
                 "reservation": reservation,
-                "user": User.username,
+                "user": User,
             }
             )
 
