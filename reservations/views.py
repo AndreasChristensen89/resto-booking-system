@@ -4,7 +4,6 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from reservations.models import Reservation
 from .forms import ReserveTableForm
-from django.contrib.auth.models import User
 
 
 def reserve_table(request):
@@ -17,7 +16,7 @@ def reserve_table(request):
             obj = reserve_form.save(commit=False)
             obj.author = request.user
             obj.save()
-            HttpResponseRedirect('/')
+            return HttpResponseRedirect('/reservations/')
 
     else:
         reserve_form = ReserveTableForm()

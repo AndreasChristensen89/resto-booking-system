@@ -11,6 +11,11 @@ Console displays: "POST /accounts/logout/ HTTP/1.1" 302 0
 User is logged back in when hitting the back button in browser
 29/10/2021 - bug was fixed. Had to change the render function in ReservationDetail to include "user": User, instead of "user": User.username.
 
-To implement:
-- There is currently no identify check for canceling or updating reservations. If any user knows the author it's possible to type the url and execute either command. In the templates had issues with getting {% if user.username == reservation.author %} to work.
-{{user.username}} and {{reservation.author}} display the same text, but the if statement won't execute.
+1/11/2021 - I can make reservations with no problems, but it does show an 302 error, similar with loggin in.
+Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0
+
+Implemented authetication check when canceling and updating reservations. The check is already done on the reservation list, but the url can be typed in as long as you know the username, which opens up the possibility for non-users to change the reservation.
+
+Bugs to fix:
+- It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
+get() returned more than one Reservation -- it returned 2!
