@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Reservation
+from .models import Reservation, Table
 
-# Register your models here.
+
 @admin.register(Reservation)
 class AdminReservations(admin.ModelAdmin):
 
@@ -19,3 +19,6 @@ class AdminReservations(admin.ModelAdmin):
 
     def decline(self, request, queryset):
         queryset.update(status=2)
+
+
+admin.site.register(Table)

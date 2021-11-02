@@ -31,3 +31,13 @@ class Reservation(models.Model):
 
     def __str__(self):
         return self.first_name+" "+self.last_name
+
+
+class Table(models.Model):
+    size = models.PositiveIntegerField()
+
+    class Meta:
+        ordering = ["size"]
+
+    def __str__(self):
+        return self.size
