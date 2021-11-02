@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if user == reservation.author or user.is_superuser %}
     <h1>Full name:</h1>
     <p>{{ reservation.first_name}} {{ reservation.last_name }}</p>
     <h2>Date and time</h2>
@@ -21,4 +22,5 @@
     <a href="{% url 'reservations:update_reservation' reservation.slug %}">Update reservation information</a>
 
     <a href="{% url 'reservations:cancel_reservation' reservation.slug %}">Cancel reservation</a>
+{% endif %}
 {% endblock %}

@@ -45,7 +45,6 @@ class ReservationDetail(View):
             'reservation_detail.html',
             {
                 "reservation": reservation,
-                "user": User,
             }
             )
 
