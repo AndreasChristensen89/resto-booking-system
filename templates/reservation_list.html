@@ -4,8 +4,8 @@
     <ul>
         {% for reservation in reservation_list %}
             {% if user == reservation.author or user.is_superuser %}  
-            <li>  
-                <a href="/reservations/{{reservation.slug}}/">
+            <li>
+                <a href="{% url 'reservations:reservation_detail' reservation.slug %}">
                     <div>
                         <p>{{ reservation.first_name }} {{ reservation.last_name }}
                             - {{ reservation.date }} at {{ reservation.time }} for 
