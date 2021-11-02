@@ -30,7 +30,7 @@ class Reservation(models.Model):
         ordering = ["-created_on"]
 
     def __str__(self):
-        return self.first_name+" "+self.last_name
+        return f'{self.first_name} {self.last_name}'
 
 
 class Table(models.Model):
@@ -40,4 +40,4 @@ class Table(models.Model):
         ordering = ["size"]
 
     def __str__(self):
-        return self.size
+        return f'Table with capacity of {self.size}'
