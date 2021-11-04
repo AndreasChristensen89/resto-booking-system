@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user == reservation.author or user.is_superuser %}
+{% if user == booking.author or user.is_superuser %}
 <form method="post">{% csrf_token %}
     <p>Are you sure you want to delete the reservation?</p>
     <input type="submit" value="Confirm">
 </form>
 
-<a href="/reservations/">Cancel</a>
+<a href="/bookings/">Cancel</a>
 {% endif %}
 {% endblock %}

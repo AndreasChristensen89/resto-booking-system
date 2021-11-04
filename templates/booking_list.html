@@ -2,14 +2,14 @@
 
 {% block content %}
     <ul>
-        {% for reservation in reservation_list %}
-            {% if user == reservation.author or user.is_superuser %}  
+        {% for booking in booking_list %}
+            {% if user == booking.author or user.is_superuser %}  
             <li>
-                <a href="{% url 'reservations:reservation_detail' reservation.slug %}">
+                <a href="{% url 'bookings:booking_detail' booking.slug %}">
                     <div>
-                        <p>{{ reservation.first_name }} {{ reservation.last_name }}
-                            - {{ reservation.date }} at {{ reservation.time }} for 
-                                {{ reservation.number_guests }} people</p>
+                        <p>{{ booking.first_name }} {{ booking.last_name }}
+                            - {{ booking.date }} at {{ booking.time }} for 
+                                {{ booking.number_guests }} people</p>
                     </div>
                 </a>
             </li>
