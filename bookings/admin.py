@@ -3,10 +3,10 @@ from .models import Booking, Table
 
 
 @admin.register(Booking)
-class AdminReservations(admin.ModelAdmin):
+class AdminBookings(admin.ModelAdmin):
 
     list_display = ('first_name', 'last_name', 'status', 'created_on')
-    search_fields = ['first_name', 'last_name', 'date']
+    search_fields = ['first_name', 'last_name']
     list_filter = ('status', 'created_on')
     actions = ['pending', 'approve', 'decline']
     prepopulated_fields = {'slug': ('first_name', 'last_name',)}

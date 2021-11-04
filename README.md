@@ -20,3 +20,6 @@ Bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
 get() returned more than one Reservation -- it returned 2!
 - It's currently not possible to make a reservation from the template, as there is not a way to assign a table(s), which also makes it impossible to update the reservation. This can only be done from the admin panel
+
+TIPS
+To reset database: python manage.py migrate MyApp zero
