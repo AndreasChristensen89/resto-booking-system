@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from .models import Table, Booking, OpeningHours
 
 
@@ -26,24 +26,41 @@ def get_table_available(booking_start, number_guests, minutes_slot=180):
     request_start = booking_start
     request_end = booking_start + delta
 
-    all_tables = Table.objects.all()
     tables_booked = []
 
     # Exclude tables which start and end booking date includes requested initial booking date_time
     tables_check = Booking.objects.filter(
-        booking_start=request_start,
-        booking_end=request_start).values('table')
-    for x in tables_check:
-        tables_booked.append(x)
+        booking_start__lt=request_start,
+        booking_end__gt=request_start).values('table')
+    for table in tables_check:
+        tables_booked.append(table)
     
-    tables_check_two = Booking.objects.filter(
-        booking.start > request_end,
-        booking.end < request_start).values('table')
-    for x in tables_check_two:
-        tables_booked.append(x)
+    tables_check = Booking.objects.filter(
+        booking_start__lt=request_end,
+        booking_end__gt=request_end).values('table')
+    for table in tables_check:
+        tables_booked.append(table)
     
-    tables_check_three = Booking.objects.filter(
-        booking.start > request_end,
-        booking.end < request_start).values('table')
-    for x in tables_check_three:
-        tables_booked.append(x)
+    tables_check = Booking.objects.filter(
+        booking_start__gt=request_start,
+        booking_end__lt=request_end).values('table')
+    for table in tables_check:
+        tables_booked.append(table)
+
+    tables_check = Booking.objects.filter(
+        booking_start__lt=request_start,
+        booking_end__gt=request_end).values('table')
+    for table in tables_check:
+        tables_booked.append(table)
+
+
+    tables = Table.objects.all()
+    # if tables has table_booking:
+    #     tables remove table_booking tables
+
+    return tables
+
+# How to get weekday
+# date_str='10-12-20'
+# datetime_object = datetime.strptime(date_str, '%m-%d-%y')
+# datetime_object.weekday()

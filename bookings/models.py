@@ -65,4 +65,4 @@ class OpeningHours(models.Model):
                                  self.from_time, self.to_time)
 
     def __str__(self):
-        return f'{self.weekday}: from{self.from_time} to {self.to_time}'
+        return f'{self.weekday}: from {self.from_time} to {self.to_time}'
