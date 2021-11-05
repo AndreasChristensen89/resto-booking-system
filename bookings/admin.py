@@ -11,13 +11,13 @@ class AdminBookings(admin.ModelAdmin):
     actions = ['pending', 'approve', 'decline']
     prepopulated_fields = {'slug': ('first_name', 'last_name',)}
 
-    def pending(self, queryset):
+    def pending(self, request, queryset):
         queryset.update(status=0)
 
-    def approve(self, queryset):
+    def approve(self, request, queryset):
         queryset.update(status=1)
 
-    def decline(self, queryset):
+    def decline(self, request, queryset):
         queryset.update(status=2)
 
 
