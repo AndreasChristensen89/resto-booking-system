@@ -12,10 +12,10 @@ def book_restaurant_table(booking_time_start, number_guests, minutes_slot=90):
 
     if table:
         delta = timedelta(seconds=60*minutes_slot)
-        booking = Booking(table=table, people=people,
+        booking = Booking(table=table, number_guests=number_guests,
             booking_date_time_start=booking_date_time, booking_date_time_end=booking_date_time + delta)
         booking.save()
-        return {'booking': booking.id, 'table': table.id}
+        return {'booking': booking.slug, 'table': table.id}
     else:
         return None
 

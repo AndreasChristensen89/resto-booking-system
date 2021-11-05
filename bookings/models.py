@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 STATUS = ((0, "Pending"), (1, "Approved"), (2, "Declined"))
