@@ -37,3 +37,32 @@ class Booking(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+
+WEEKDAYS = (
+  (1, "Monday"),
+  (2, "Tuesday"),
+  (3, "Wednesday"),
+  (4, "Thursday"),
+  (5, "Friday"),
+  (6, "Saturday"),
+  (7, ("Sunday")),
+)
+
+
+class OpeningHours(models.Model):
+
+    weekday = models.IntegerField(choices=WEEKDAYS)
+    from_time = models.TimeField()
+    to_time = models.TimeField()
+
+    class Meta:
+        ordering = ('weekday', 'from_time')
+        unique_together = ('weekday', 'from_time', 'to_time')
+
+    def __unicode__(self):
+        return u'%s: %s - %s' % (self.get_weekday_display(),
+                                 self.from_time, self.to_time)
+
+    def __str__(self):
+        return f'{self.weekday}: from {self.from_time} to {self.to_time}'
