@@ -16,10 +16,14 @@ Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0
 
 Implemented authetication check when canceling and updating reservations. The check is already done on the reservation list, but the url can be typed in as long as you know the username, which opens up the possibility for non-users to change the reservation.
 
+Consider two step reservation:
+1. page for entering datetime and number of people - calls check functions - if approved redirects to personal details
+2. personal details form
+
 Bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
 get() returned more than one Reservation -- it returned 2!
-- It's currently not possible to make a reservation from the template, as there is not a way to assign a table(s), which also makes it impossible to update the reservation. This can only be done from the admin panel
+- Update booking doesn't work for some reason. Information is not updated
 
 TIPS
 To reset database: python manage.py migrate MyApp zero
