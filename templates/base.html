@@ -24,7 +24,7 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'bookings:book_table' %}">Make a booking</a>
+                        <a href="{% url 'bookings:check_availability' %}">Make a booking</a>
                     </li>
                     <li>
                         <a href="{% url 'bookings:booking_list' %}">List of bookings</a>

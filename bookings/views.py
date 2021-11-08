@@ -2,18 +2,26 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from bookings.models import Booking, Table
-from .forms import BookTableForm, CheckTableForm
+from .models import Booking, Table
+from .forms import BookTableForm, GuestRequestForm
+from .booking import confirm_availability
 
 
-def check_dates(request):
-    check_form = CheckTableForm()
+class CheckAvailability(generic.ListView):
+    model = Booking
+    queryset = Booking.objects.all()
+    template_name = 'check_availability.html'
 
+
+def get_request(request):
     if request.method == 'POST':
-        check_form = CheckTableForm(request.POST)
-
-        if check_form.is_valid():
-            return HttpResponseRedirect('/book_table/')
+        form = GuestRequestForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/bookings/book_table/')
+    else:
+        form = GuestRequestForm()
+    
+    return render(request, 'check_availability.html', {'form': form})
 
 
 def book_table(request):
