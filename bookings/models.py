@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
+from django.urls import reverse
 
 
 STATUS = ((0, "Pending"), (1, "Approved"), (2, "Declined"))
@@ -28,12 +29,16 @@ class Booking(models.Model):
     table = models.ManyToManyField(Table, related_name='booking_tables', blank=True)
     
     def save(self, *args, **kwargs):
-        if not self.booking_end and self.booking_start:
+        if not self.booking_end and not self.slug and self.booking_start:
             self.booking_end = self.booking_start + timedelta(hours=3)
+            self.slug = self.first_name+self.last_name
             super().save(*args, **kwargs)
 
     class Meta:
         ordering = ["-created_on"]
+
+    def get_absolute_url(self):
+        return reverse('booking-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

@@ -1,14 +1,11 @@
 from django import forms
-from datetime import timedelta, datetime
-from .models import Table, Booking, OpeningHours
+from .models import Booking
+from django.contrib.admin import widgets
 
 
 class BookTableForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['first_name', 'last_name', 'number_guests', 'booking_start', 'table', 'comment']
-
-
-class GuestRequestForm(forms.Form):
-    date_and_time = forms.DateTimeField(label='Date and time')
-    number_guests = forms.IntegerField(label='Guests')
+        fields = [
+            'first_name', 'last_name', 'number_guests', 'booking_start', 'comment'
+            ]

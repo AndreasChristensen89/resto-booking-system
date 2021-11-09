@@ -8,7 +8,7 @@
                 <a href="{% url 'bookings:booking_detail' booking.slug %}">
                     <div>
                         <p>{{ booking.first_name }} {{ booking.last_name }}
-                            - {{ booking.date }} at {{ booking.time }} for 
+                            - on {{ booking.booking_start }} for 
                                 {{ booking.number_guests }} people</p>
                     </div>
                 </a>

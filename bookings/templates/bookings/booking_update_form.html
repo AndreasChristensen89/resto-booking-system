@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user == booking.author or user.is_superuser %}
+{% if user == booking.author %}
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Update">
+    <input type="submit" name="Submit">
 </form>
 <a href="/bookings/">Cancel</a>
 {% endif %}

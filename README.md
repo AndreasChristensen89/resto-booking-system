@@ -23,7 +23,7 @@ Consider two step reservation:
 Bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
 get() returned more than one Reservation -- it returned 2!
-- Update booking doesn't work for some reason. Information is not updated
+- Update booking doesn't work for some reason. Information is not updated. Gives following error: "POST /bookings/LavaBoy/update/ HTTP/1.1" 302 0
 
 TIPS
 To reset database: python manage.py migrate MyApp zero

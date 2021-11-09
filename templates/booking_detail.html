@@ -5,17 +5,13 @@
     <h1>Full name:</h1>
     <p>{{ booking.first_name}} {{ booking.last_name }}</p>
     <h2>Date and time</h2>
-    <p>{{ booking.date }} -  {{ booking.time }}</p>
+    <p>{{ booking.booking_start }}</p>
     <h3>Guests:</h3>
     <p>{{ booking.number_guests }}</p>
-    <h3>Allergies</h3>
+    <h3>Notes: </h3>
     <p>{{ booking.comment }}</p>
     <h3>Status:</h3>
     <p>Pending</p>
-    <h4>Customer email:</h4>
-    <p>{{ booking.email }}</p>
-    <h4>Customer phone:</h4>
-    <p>{{ booking.phone }}</p>
     <h5>Reservation created on:</h5>
     <p>{{ booking.created_on }}</p>
 
