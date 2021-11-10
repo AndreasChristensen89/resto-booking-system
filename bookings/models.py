@@ -29,10 +29,11 @@ class Booking(models.Model):
     table = models.ManyToManyField(Table, related_name='booking_tables', blank=True)
     
     def save(self, *args, **kwargs):
+       
         if not self.booking_end and not self.slug and self.booking_start:
             self.booking_end = self.booking_start + timedelta(hours=3)
             self.slug = self.first_name+self.last_name
-            super().save(*args, **kwargs)
+        super().save(*args, **kwargs)   
 
     class Meta:
         ordering = ["-created_on"]

@@ -1,22 +1,8 @@
+from datetime import datetime, timedelta
+from .models import Booking, Table
 
 
-# def book_restaurant_table(booking_start, number_guests, minutes_slot=180):
-#     """
-#     This method uses get_table_available to get the first table available, then it
-#     creates a Booking on the database.
-#     """
-#     table = get_available_tables(booking_start, number_guests, minutes_slot)
-
-#     if table:
-#         # delta = timedelta(seconds=60*minutes_slot)
-#         booking = Booking(table=table)
-#         booking.save()
-#         return {'booking': booking.slug, 'table': table.id}
-#     else:
-#         return None
-
-
-def get_available_tables(request_start, number_guests):
+def get_available_tables(request_start):
     """
     This method returns the first available table of a restaurant, given a specific number of
     people and a booking date/time.
@@ -48,6 +34,7 @@ def get_available_tables(request_start, number_guests):
 
     # Take all tables and remove the ones from unavailable_tables
     tables = Table.objects.all()
+    print('tables', tables)
     for table in tables:
         if table in unavailable_tables:
             tables.remove(table)
@@ -56,7 +43,7 @@ def get_available_tables(request_start, number_guests):
 
 
 def confirm_availability(request_start, number_guests):
-    available_tables = get_available_tables(request_start, number_guests)
+    available_tables = get_available_tables(request_start)
     sum = 0
 
     for table in available_tables:

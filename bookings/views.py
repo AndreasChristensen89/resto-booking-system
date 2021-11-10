@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from .models import Booking
+from .models import Booking, Table
 from .forms import BookTableForm
+from .booking import get_available_tables
 
 
 def book_table(request):
@@ -24,6 +25,11 @@ def book_table(request):
     context = {'form': book_form}
 
     return render(request, 'book_table.html', context)
+
+
+def show_tables(request):
+    tables = Table.objects.all()
+    return HttpResponse(tables)
 
 
 class BookingList(generic.ListView):

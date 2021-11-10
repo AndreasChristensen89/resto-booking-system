@@ -8,6 +8,11 @@
     <p>{{ booking.booking_start }}</p>
     <h3>Guests:</h3>
     <p>{{ booking.number_guests }}</p>
+    <h3>Tables:</h3>
+    <p>{{ booking.table.count }} tables</p>
+    {% for table in booking.table.all %}
+    <p>    One table for {{ table.size }}</p>
+    {% endfor %}
     <h3>Notes: </h3>
     <p>{{ booking.comment }}</p>
     <h3>Status:</h3>
