@@ -19,7 +19,7 @@ def book_table(request):
             obj.author = request.user
             obj.save()
             return HttpResponseRedirect('/bookings/')
-            obt.table.add(table)
+            obj.table.add(table)
             obj.save()
             for table in table:
                 if table.size == 4:
@@ -37,33 +37,34 @@ def show_tables(request):
     
     unavailable_tables = []
 
-    # Exclude tables that have the same start time
     tables_check_temp = Booking.objects.filter(
-        booking_start="2021-11-06 17:00").values('table')    # returns {'table': 7}
+        booking_start="2021-11-06 17:00").values('table')
     for table in tables_check_temp:
         unavailable_tables.append(table)
     
-    # Exclude tables that start before requested start + end after requested start
     tables_check_temp = Booking.objects.filter(
         booking_start__lt="2021-11-06 17:00",
         booking_end__gt="2021-11-06 17:00").values('table')
     for table in tables_check_temp:
         unavailable_tables.append(table)
     
-    # Exclude tables that start before end of request + end after end of request
     tables_check_temp = Booking.objects.filter(
         booking_start__lt=request_end,
         booking_end__gt=request_end).values('table')
     for table in tables_check_temp:
         unavailable_tables.append(table)
 
-    # Take all tables and remove the ones from unavailable_tables
     tables = Table.objects.all()
+    list = []
+    for table in range(len(unavailable_tables)):
+        for key in unavailable_tables[table]:
+            list.append(unavailable_tables[table][key])
     for table in tables:
-        if table in unavailable_tables:
-            tables.remove(table)
+        for table_number in list:
+            if table_number == table.id:
+                tables.remove(table)
 
-    return HttpResponse(unavailable_tables)
+    return HttpResponse(tables)
 
 
 class BookingList(generic.ListView):
