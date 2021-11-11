@@ -7,14 +7,14 @@ def get_available_tables(request_start):
     This method returns the first available table of a restaurant, given a specific number of
     people and a booking date/time.
     """
-    delta = timedelta(seconds=60*180)
-    request_end = request_start + delta
+    # Delta is set to the 3 hour reservation standard, which is added to request start
+    request_end = "2021-11-06 20:00"
     
     unavailable_tables = []
 
     # Exclude tables that have the same start time
     tables_check_temp = Booking.objects.filter(
-        booking_start=request_start).values('table')
+        booking_start=request_start).values('table')    # returns {'table': 7}
     for table in tables_check_temp:
         unavailable_tables.append(table)
     
@@ -47,10 +47,7 @@ def confirm_availability(request_start, number_guests):
     sum = 0
 
     for table in available_tables:
-        sum += table.size
+        sum = sum + table.size
     
-    if sum < number_guests:
-        print(sum)
-        return False
-    else:
-        return True
+    if sum >= number_guests:
+        return available_tables
