@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from .models import Booking, Table
 from .forms import BookTableForm
 from .booking import get_available_tables
+from datetime import timedelta
 
 
 def book_table(request):
@@ -12,7 +13,8 @@ def book_table(request):
 
     if request.method == 'POST':
         book_form = BookTableForm(request.POST)
-        table = get_available_tables()
+        request_start = book_form.data['booking_start']
+        table = get_available_tables(request_start)
 
         if book_form.is_valid():
             obj = book_form.save(commit=False)
@@ -29,9 +31,13 @@ def book_table(request):
 
 
 def show_tables(request):
+    
+    delta = timedelta(seconds=60*180)
+    request_end = request_start + delta
+    
     # Test variable to simulate a date entered
-    request_start = "2021-11-06 17:00"
-    request_end = "2021-11-06 20:00"
+    # request_start = "2021-11-06 17:00"
+    # request_end = "2021-11-06 20:00"
     
     # List of all unavailable tables
     unavailable_tables = []

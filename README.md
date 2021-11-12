@@ -21,7 +21,7 @@ Consider two step reservation:
 2. personal details form
 
 FORM NOTES
-Cannot add an object to a m2m field while creating an instance.
+Right now I cannot add the three hours to booking_start, as it is presented in a string form. 
 
 Bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
