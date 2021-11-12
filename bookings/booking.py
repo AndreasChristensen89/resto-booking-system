@@ -44,6 +44,8 @@ def get_available_tables(request_start, number_guests):
             list_unav.append(unavailable_tables[table][key])
     
     # Take all tables and sort out the ids from the unavailable list
+    # Currently only able to assign one table,
+    # so one table is assigned according to group size using table's 
     available_tables = []
     all_tables = Table.objects.all()
     for table in all_tables:

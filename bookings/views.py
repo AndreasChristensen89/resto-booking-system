@@ -71,6 +71,12 @@ def show_tables(request):
     all_tables = Table.objects.all()
     for table in all_tables:
         if table.id not in list_unav:
+            if table.id in range(9, 12) and number_of_guests in range(1, 2):
+                available_tables.append(table)
+            elif table.id in range(13, 15) and number_of_guests in range(3-4):
+                available_tables.append(table)
+            elif table.id in range(16, 17) and number_of_guests in range(5-6):
+                available_tables.append(table)
             if table.id == 18 and number_of_guests == 10:
                 available_tables.append(table)
     # table_to_return = available_tables[0]

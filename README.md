@@ -15,18 +15,24 @@ User is logged back in when hitting the back button in browser
 Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0
 
 Implemented authetication check when canceling and updating reservations. The check is already done on the reservation list, but the url can be typed in as long as you know the username, which opens up the possibility for non-users to change the reservation.
+-   no longer an issue. user.authentication added.
 
 Consider two step reservation:
 1. page for entering datetime and number of people - calls check functions - if approved redirects to personal details
 2. personal details form
 
 FORM NOTES
-Right now I cannot add the three hours to booking_start, as it is presented in a string form. 
+Right now I cannot add the three hours to booking_start "normally" using timedelta since the datetime input is presented in string form. Therefore, I added four steps to recreate a string with three hours added.
 
 Bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
 get() returned more than one Reservation -- it returned 2!
-- Update booking doesn't work for some reason. Information is not updated. Gives following error: "POST /bookings/LavaBoy/update/ HTTP/1.1" 302 0
+- Reservations still give a bug sometimes. Need to investigate what triggers it.
+- When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
+
+
+Fixed bugs
+- Update booking doesn't work for some reason. Information is not updated. Gives following error: "POST /bookings/LavaBoy/update/ HTTP/1.1" 302 0 - Was due to view function. The save() command was in the wrong order
 
 TIPS
 To reset database: python manage.py migrate MyApp zero
