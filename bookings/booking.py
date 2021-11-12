@@ -1,19 +1,17 @@
-from datetime import datetime, timedelta
 from .models import Booking, Table
 
 
-def get_available_tables(request_start):
+def get_available_tables(request_start, number_guests):
     """
     This method returns the first available table of a restaurant, given a specific number of
     people and a booking date/time.
     """
-    # Test variable to simulate a date entered
-    # request_start = "2021-11-06 12:00"
+    # request_start is string format, so we do some logic to change the two chars to +3
+    # this works for reservations at 21:00
     full_string = list(request_start)
     end_integer = int(full_string[11] + full_string[12]) + 3
-    string_end_integer = str(end_integer)
-    full_string[11] = string_end_integer[0]
-    full_string[12] = string_end_integer[1]
+    full_string[11] = str(end_integer)[0]
+    full_string[12] = str(end_integer)[1]
     request_end = "".join(full_string)
     
     # List of all unavailable tables
@@ -50,11 +48,16 @@ def get_available_tables(request_start):
     all_tables = Table.objects.all()
     for table in all_tables:
         if table.id not in list_unav:
-            available_tables.append(table)
-    
-    table_to_return = available_tables[0]
+            if table.id in range(9, 12) and int(number_guests) in range(1, 2):
+                available_tables.append(table)
+            elif table.id in range(13, 15) and int(number_guests) in range(3, 4):
+                available_tables.append(table)
+            elif table.id in range(16, 17) and int(number_guests) in range(5, 6):
+                available_tables.append(table)
+            elif table.id == 18 and int(number_guests) in range(7, 10):
+                available_tables.append(table)
 
-    return table_to_return
+    return available_tables[0]
 
 
 def confirm_availability(request_start, number_guests):     # Add request_start and number_guests param. later

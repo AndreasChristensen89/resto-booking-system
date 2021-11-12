@@ -8,10 +8,10 @@ STATUS = ((0, "Pending"), (1, "Approved"), (2, "Declined"))
 
 
 class Table(models.Model):
-    size = models.PositiveIntegerField()
+    size = models.IntegerField()
 
     def __str__(self):
-        return f'Table with capacity for {self.size} people'
+        return f'Table for {self.size}'
 
 
 class Booking(models.Model):

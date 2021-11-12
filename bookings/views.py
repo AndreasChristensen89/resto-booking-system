@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from .models import Booking, Table
 from .forms import BookTableForm
-from .booking import get_available_tables
+from .booking import get_available_tables, confirm_availability
 from datetime import timedelta
 
 
@@ -14,7 +14,8 @@ def book_table(request):
     if request.method == 'POST':
         book_form = BookTableForm(request.POST)
         request_start = book_form.data['booking_start']
-        table = get_available_tables(request_start)
+        number_guests = book_form.data['number_guests']
+        table = get_available_tables(request_start, number_guests)
 
         if book_form.is_valid():
             obj = book_form.save(commit=False)
@@ -31,13 +32,10 @@ def book_table(request):
 
 
 def show_tables(request):
-    
-    delta = timedelta(seconds=60*180)
-    request_end = request_start + delta
-    
     # Test variable to simulate a date entered
-    # request_start = "2021-11-06 17:00"
-    # request_end = "2021-11-06 20:00"
+    number_of_guests = 10
+    request_start = "2021-11-06 17:00"
+    request_end = "2021-11-06 20:00"
     
     # List of all unavailable tables
     unavailable_tables = []
@@ -73,11 +71,11 @@ def show_tables(request):
     all_tables = Table.objects.all()
     for table in all_tables:
         if table.id not in list_unav:
-            available_tables.append(table)
-    
-    table_to_return = available_tables[0]
+            if table.id == 18 and number_of_guests == 10:
+                available_tables.append(table)
+    # table_to_return = available_tables[0]
 
-    return HttpResponse(table_to_return)
+    return HttpResponse(available_tables)
 
 
 class BookingList(generic.ListView):
