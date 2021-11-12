@@ -5,7 +5,7 @@ from .models import Booking, Table, OpeningHours
 @admin.register(Booking)
 class AdminBookings(admin.ModelAdmin):
 
-    list_display = ('first_name', 'last_name', 'number_guests', 'status', 'created_on')
+    list_display = ('first_name', 'last_name', 'number_guests', 'status', 'booking_start')
     search_fields = ['first_name', 'last_name']
     list_filter = ('status', 'created_on')
     actions = ['pending', 'approve', 'decline']

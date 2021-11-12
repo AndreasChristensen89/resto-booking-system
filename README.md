@@ -20,6 +20,9 @@ Consider two step reservation:
 1. page for entering datetime and number of people - calls check functions - if approved redirects to personal details
 2. personal details form
 
+FORM NOTES
+Cannot add an object to a m2m field while creating an instance.
+
 Bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
 get() returned more than one Reservation -- it returned 2!
