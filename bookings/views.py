@@ -15,13 +15,15 @@ def book_table(request):
         book_form = BookTableForm(request.POST)
         request_start = book_form.data['booking_start']
         number_guests = book_form.data['number_guests']
-        table = get_available_tables(request_start, number_guests)
+        tables = confirm_availability(request_start, number_guests)
 
         if book_form.is_valid():
             obj = book_form.save(commit=False)
             obj.author = request.user
             obj.save()
-            obj.table.add(table[0],table[1])
+            if tables is not None:
+                for table in tables:
+                    obj.table.add(table)   # Tables added after save since the object needs to exist before m2m comes in
             return HttpResponseRedirect('/bookings/')
     else:
         book_form = BookTableForm()

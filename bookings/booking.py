@@ -57,11 +57,33 @@ def get_available_tables(request_start, number_guests):
 
 
 def confirm_availability(request_start, number_guests):     # Add request_start and number_guests param. later
-    available_tables = get_available_tables(request_start)
-    sum = 0
-
-    for table in available_tables:
-        sum = sum + table.size
+    available_tables = get_available_tables(request_start, number_guests)
+    # sum = 0
+    fitting_tables = []
+    # for table in available_tables:
+    #     sum += table.size
     
-    if sum >= number_guests:
-        return available_tables
+    for table in available_tables:
+        if table.size == int(number_guests):
+            fitting_tables.append(table)
+            return fitting_tables
+            break
+    
+    for table in available_tables:
+        if int(number_guests)+1 == table.size:
+            fitting_tables.append(table)
+            return fitting_tables
+            break
+
+    # for table in available_tables:
+
+    
+        # elif table.size == 2 and int(number_guests) in range(1, 2):
+        #     available_tables.append(table)
+        # elif table.size == 4 and int(number_guests) in range(3, 4):
+        #     available_tables.append(table)
+        # elif table.size == 6 and int(number_guests) in range(5, 6):
+        #     available_tables.append(table)
+        # elif table.size == 10 and int(number_guests) in range(7, 10):
+        #     available_tables.append(table)
+    return None
