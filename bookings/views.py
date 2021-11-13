@@ -21,7 +21,7 @@ def book_table(request):
             obj = book_form.save(commit=False)
             obj.author = request.user
             obj.save()
-            obj.table.add(table)
+            obj.table.add(table[0],table[1])
             return HttpResponseRedirect('/bookings/')
     else:
         book_form = BookTableForm()

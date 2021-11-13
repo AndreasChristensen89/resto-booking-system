@@ -50,16 +50,10 @@ def get_available_tables(request_start, number_guests):
     all_tables = Table.objects.all()
     for table in all_tables:
         if table.id not in list_unav:
-            if table.id in range(9, 12) and int(number_guests) in range(1, 2):
-                available_tables.append(table)
-            elif table.id in range(13, 15) and int(number_guests) in range(3, 4):
-                available_tables.append(table)
-            elif table.id in range(16, 17) and int(number_guests) in range(5, 6):
-                available_tables.append(table)
-            elif table.id == 18 and int(number_guests) in range(7, 10):
+            if table.size == int(number_guests):
                 available_tables.append(table)
 
-    return available_tables[0]
+    return available_tables
 
 
 def confirm_availability(request_start, number_guests):     # Add request_start and number_guests param. later
