@@ -75,10 +75,27 @@ def confirm_availability(request_start, number_guests):     # Add request_start 
                 spots_to_fill -= table.size
                 table_id = table.id
                 break
-        if spots_to_fill < int(number_guests):
-            break
+        # My idea is to create for loop that for each round adds the size of next table to itself
+        # This sum is stored as a value in a list, and the loop continues with the next table
+        # In the end we have a list with the sum of each combination
+        # We subtract the guest number with each combination,
+        # and the smallest number is the most optimal comb. to return
+        # if spots_to_fill == int(number_guests):
+        #     def create_combination():
+        #         sum = 0
+        #         combinations = []
+        #         for table in available_tables:
+        #             while sum < int(number_guests):
+
+        #                 if table.size-1 == int(number_guests):
+        #                     fitting_tables.append(table)
+        #                     spots_to_fill -= table.size
+        #                     table_id = table.id
+        #                     break
+        #     if spots_to_fill < int(number_guests):
+        #     break
     
-    # For loop in range to find table equal to spots_to_fill, or closest larger table sizewise
+    # For loop in range to find table equal to spots_to_fill, or closest larger table
     for i in range(spots_to_fill, 11):
         if spots_to_fill > 0:
             for table in available_tables:

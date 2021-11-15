@@ -27,8 +27,13 @@ Right now I cannot add the three hours to booking_start "normally" using timedel
 Bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
 get() returned more than one Reservation -- it returned 2!
-- Reservations still give a bug sometimes. Need to investigate what triggers it.
 - When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
+- Reservation logic is still not complete. For example:
+    - Guests requested: 6
+    - Tables available: 4, 10
+    - Will search for tables < guests first, so 4
+    - Will add next available table, starting from 2 (6-4) and counting up. Will only find 10.
+    - Tables given are therefore 4 and 10 to 6 guests
 
 
 Fixed bugs
