@@ -50,40 +50,43 @@ def get_available_tables(request_start, number_guests):
     all_tables = Table.objects.all()
     for table in all_tables:
         if table.id not in list_unav:
-            if table.size == int(number_guests):
-                available_tables.append(table)
+            available_tables.append(table)
 
     return available_tables
 
 
 def confirm_availability(request_start, number_guests):     # Add request_start and number_guests param. later
     available_tables = get_available_tables(request_start, number_guests)
-    # sum = 0
     fitting_tables = []
-    # for table in available_tables:
-    #     sum += table.size
+
+    # Runs through all tables starting length of number_guests, adds first table that is closest in size
+    # e.g. number_guests == 8 -> check for 8, 7, 6(hit) -> add table size 6
     
-    for table in available_tables:
-        if table.size == int(number_guests):
-            fitting_tables.append(table)
-            return fitting_tables
+    spots_to_fill = int(number_guests)
+
+    # table id registered to avoid using same table twice
+    table_id = 0
+    
+    # Reverse for loop to get first available table with size closest to number_guests
+    for i in range(int(number_guests), 1, -1):
+        for table in available_tables:
+            if table.size == i:
+                fitting_tables.append(table)
+                spots_to_fill -= table.size
+                table_id = table.id
+                break
+        if spots_to_fill < int(number_guests):
             break
     
-    for table in available_tables:
-        if int(number_guests)+1 == table.size:
-            fitting_tables.append(table)
-            return fitting_tables
-            break
-
-    # for table in available_tables:
-
+    # For loop in range to find table equal to spots_to_fill, or closest larger table sizewise
+    for i in range(spots_to_fill, 11):
+        if spots_to_fill > 0:
+            for table in available_tables:
+                if table.size == i and table.id is not table_id:
+                    fitting_tables.append(table)
+                    spots_to_fill -= int(table.size)
+                    break
+            if spots_to_fill <= 0:
+                break
     
-        # elif table.size == 2 and int(number_guests) in range(1, 2):
-        #     available_tables.append(table)
-        # elif table.size == 4 and int(number_guests) in range(3, 4):
-        #     available_tables.append(table)
-        # elif table.size == 6 and int(number_guests) in range(5, 6):
-        #     available_tables.append(table)
-        # elif table.size == 10 and int(number_guests) in range(7, 10):
-        #     available_tables.append(table)
-    return None
+    return fitting_tables

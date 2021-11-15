@@ -34,11 +34,9 @@ def book_table(request):
 
 
 def show_tables(request):
-    # Test variable to simulate a date entered
-    number_of_guests = 10
+    number_guests = 9
     request_start = "2021-11-06 17:00"
     request_end = "2021-11-06 20:00"
-    
     # List of all unavailable tables
     unavailable_tables = []
 
@@ -69,21 +67,42 @@ def show_tables(request):
             list_unav.append(unavailable_tables[table][key])
     
     # Take all tables and sort out the ids from the unavailable list
+    # Currently only able to assign one table,
+    # so one table is assigned according to group size using table's 
     available_tables = []
     all_tables = Table.objects.all()
     for table in all_tables:
         if table.id not in list_unav:
-            if table.id in range(9, 12) and number_of_guests in range(1, 2):
-                available_tables.append(table)
-            elif table.id in range(13, 15) and number_of_guests in range(3-4):
-                available_tables.append(table)
-            elif table.id in range(16, 17) and number_of_guests in range(5-6):
-                available_tables.append(table)
-            if table.id == 18 and number_of_guests == 10:
-                available_tables.append(table)
-    # table_to_return = available_tables[0]
+            available_tables.append(table)
+    
+    fitting_tables = []
+    
+    spots_to_fill = number_guests
 
-    return HttpResponse(available_tables)
+    table_id = 0
+    
+    for i in range(int(number_guests), 1, -1):
+        for table in available_tables:
+            if table.size == i:
+                fitting_tables.append(table)
+                spots_to_fill -= table.size    # 3
+                table_id = table.id             # 16
+                break
+        if spots_to_fill < int(number_guests):
+            break
+    
+    # For loop in range to find table equal to spots_to_fill, or closest larger table sizewise
+    for i in range(spots_to_fill, 11):
+        if spots_to_fill > 0:
+            for table in available_tables:
+                if table.size == i and table.id is not table_id:
+                    fitting_tables.append(table)
+                    spots_to_fill -= int(table.size)
+                    break
+            if spots_to_fill <= 0:
+                break
+
+    return HttpResponse(spots_to_fill)
 
 
 class BookingList(generic.ListView):
