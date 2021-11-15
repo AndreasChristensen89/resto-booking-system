@@ -34,75 +34,43 @@ def book_table(request):
 
 
 def show_tables(request):
-    number_guests = 9
-    request_start = "2021-11-06 17:00"
-    request_end = "2021-11-06 20:00"
-    # List of all unavailable tables
-    unavailable_tables = []
-
-    # First remove tables that have the same start-time
-    tables_check_temp = Booking.objects.filter(
-        booking_start=request_start).values('table')
-    for table in tables_check_temp:
-        unavailable_tables.append(table)
-    
-    # Second remove tables that start before but finish after start-time
-    tables_check_temp_two = Booking.objects.filter(
-        booking_start__lt=request_start,
-        booking_end__gt=request_start).values('table')
-    for table in tables_check_temp_two:
-        unavailable_tables.append(table)
-    
-    # Third remove tables that that before end-time but finish after end-time
-    tables_check_temp_three = Booking.objects.filter(
-        booking_start__lt=request_end,
-        booking_end__gt=request_end).values('table')
-    for table in tables_check_temp_three:
-        unavailable_tables.append(table)
-
-    # Create a list of unavailable tables' ids
-    list_unav = []
-    for table in range(len(unavailable_tables)):
-        for key in unavailable_tables[table]:
-            list_unav.append(unavailable_tables[table][key])
-    
-    # Take all tables and sort out the ids from the unavailable list
-    # Currently only able to assign one table,
-    # so one table is assigned according to group size using table's 
-    available_tables = []
-    all_tables = Table.objects.all()
-    for table in all_tables:
-        if table.id not in list_unav:
-            available_tables.append(table)
-    
+    available_tables = get_available_tables("2021-11-07 17:00", 9)
+    number_guests = 17
     fitting_tables = []
     
     spots_to_fill = number_guests
 
     table_id = 0
     
-    for i in range(int(number_guests), 1, -1):
-        for table in available_tables:
-            if table.size == i:
-                fitting_tables.append(table)
-                spots_to_fill -= table.size    # 3
-                table_id = table.id             # 16
-                break
-        if spots_to_fill < int(number_guests):
+    for table in available_tables:
+        if table.size == int(number_guests):
+            fitting_tables.append(table)
+            spots_to_fill = 0
+            table_id = table.id
             break
-    
-    # For loop in range to find table equal to spots_to_fill, or closest larger table sizewise
-    for i in range(spots_to_fill, 11):
-        if spots_to_fill > 0:
-            for table in available_tables:
-                if table.size == i and table.id is not table_id:
-                    fitting_tables.append(table)
-                    spots_to_fill -= int(table.size)
-                    break
-            if spots_to_fill <= 0:
+    if spots_to_fill == number_guests:
+        for table in available_tables:
+            if table.size-1 == int(number_guests):
+                fitting_tables.append(table)
+                spots_to_fill = 0
+                table_id = table.id
                 break
+    # high number to be sure that new combination is lower
+    best_combination = 100
+    # how many seats gained/wasted. > 0 = wasted
+    seat_difference = 0
+    if spots_to_fill == int(number_guests):
+        for i in range(0, len(available_tables)-1):
+            for j in range(i+1, len(available_tables)):
+                combination = available_tables[i].size + available_tables[j].size
+                seat_difference = int(number_guests)-combination
+                if seat_difference <= 0 and abs(seat_difference) < abs(best_combination):
+                    best_combination = seat_difference
+                    fitting_tables = []
+                    fitting_tables.append(available_tables[i])
+                    fitting_tables.append(available_tables[j])
 
-    return HttpResponse(spots_to_fill)
+    return HttpResponse(fitting_tables)
 
 
 class BookingList(generic.ListView):
