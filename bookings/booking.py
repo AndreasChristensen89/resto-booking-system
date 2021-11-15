@@ -81,7 +81,7 @@ def confirm_availability(request_start, number_guests):
     best_combination = 100
     # how many seats gained/wasted. x < 0 == wasted
     seat_difference = 0
-    
+
     if spots_to_fill == int(number_guests):
         for i in range(0, len(available_tables)-1):
             for j in range(i+1, len(available_tables)):

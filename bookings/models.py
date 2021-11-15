@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime, timedelta
+from datetime import timedelta, date
+import datetime
 from django.urls import reverse
 
 
@@ -27,9 +28,18 @@ class Booking(models.Model):
     status = models.IntegerField(choices=STATUS, default=0)
     comment = models.TextField(max_length=300)
     table = models.ManyToManyField(Table, related_name='booking_tables', blank=True)
+
+    # To see if booking is in the past or future
+    # @property
+    # def is_booking_upcoming(self):
+    #     current_time = datetime.datetime.now(current_time, "%d/%m/%Y %H:%M")
+    #     booking_time = self.booking_start
+    #     booking_time = datetime.datetime.strptime(booking_time, "%d/%m/%Y %H:%M")
+    #     if current_time < booking_time:
+    #         return True
+    #     return False
     
     def save(self, *args, **kwargs):
-       
         if not self.booking_end and not self.slug and self.booking_start:
             self.booking_end = self.booking_start + timedelta(hours=3)
             self.slug = self.first_name+self.last_name
@@ -37,9 +47,6 @@ class Booking(models.Model):
 
     class Meta:
         ordering = ["-created_on"]
-
-    def get_absolute_url(self):
-        return reverse('booking-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

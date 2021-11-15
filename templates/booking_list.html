@@ -2,8 +2,9 @@
 
 {% block content %}
     <ul>
-        {% for booking in booking_list %}
-            {% if user == booking.author or user.is_superuser %}  
+    Upcoming bookings
+    {% for booking in booking_list %}
+        {% if user == booking.author or user.is_superuser %}
             <li>
                 <a href="{% url 'bookings:booking_detail' booking.slug %}">
                     <div>
@@ -13,8 +14,8 @@
                     </div>
                 </a>
             </li>
-            {% endif%}
-        {% endfor %}
+        {% endif%}
+    {% endfor %}
     </ul>
 
     <div class="pagination">

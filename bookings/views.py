@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from .models import Booking, Table
+from .models import Booking
 from .forms import BookTableForm
 from .booking import get_available_tables, confirm_availability
-from datetime import timedelta
 
 
 def book_table(request):
@@ -23,7 +22,8 @@ def book_table(request):
             obj.save()
             if tables is not None:
                 for table in tables:
-                    obj.table.add(table)   # Tables added after save since the object needs to exist before m2m comes in
+                    # Tables added after save since the object needs to exist before m2m comes in
+                    obj.table.add(table)
             return HttpResponseRedirect('/bookings/')
     else:
         book_form = BookTableForm()
@@ -37,23 +37,19 @@ def show_tables(request):
     available_tables = get_available_tables("2021-11-07 17:00", 9)
     number_guests = 17
     fitting_tables = []
-    
+
     spots_to_fill = number_guests
 
-    table_id = 0
-    
     for table in available_tables:
         if table.size == int(number_guests):
             fitting_tables.append(table)
             spots_to_fill = 0
-            table_id = table.id
             break
     if spots_to_fill == number_guests:
         for table in available_tables:
             if table.size-1 == int(number_guests):
                 fitting_tables.append(table)
                 spots_to_fill = 0
-                table_id = table.id
                 break
     # high number to be sure that new combination is lower
     best_combination = 100
@@ -102,6 +98,6 @@ class CancelBookingView(DeleteView):
 
 class UpdateReservationView(UpdateView):
     model = Booking
-    fields = ['first_name', 'last_name', 'number_guests', 'booking_start', 'comment']
+    fields = ['first_name', 'last_name', 'comment']
     template_name_suffix = '_update_form'
     success_url = '/bookings/'
