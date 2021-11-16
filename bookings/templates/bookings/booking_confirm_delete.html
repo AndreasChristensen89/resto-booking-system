@@ -4,9 +4,14 @@
 {% if user == booking.author or user.is_superuser %}
 <form method="post">{% csrf_token %}
     <p>Are you sure you want to delete the reservation?</p>
-    <input type="submit" value="Confirm">
+    <h4>Details:</h4>
+    <p>Name: {{booking.first_name}} {{booking.last_name}}</p>
+    <p>{{booking.booking_start|date}}</p>
+    <p>{{booking.booking_start|time}}</p>
+    <p>{{booking.number_guests}} guests</p>
+    <input type="submit" value="Delete">
 </form>
 
-<a href="/bookings/">Cancel</a>
+<a href="/bookings/">Return</a>
 {% endif %}
 {% endblock %}

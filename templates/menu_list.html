@@ -2,62 +2,26 @@
 
 {% block content %}
 {% for category in categories %}
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  {{category}}
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">{{category}}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
+<p>
+  <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#{{category.name}}"
+    aria-expanded="false" aria-controls="collapseExample">
+    {{category.name}}
+  </button>
+</p>
+<div class="collapse" id="{{category.name}}">
+  <div class="card card-body">
+    <div class="tab-content" id="pills-tabContent">
+      {% for meal in menu_list %}
+      {% if meal.category == category %}
+        <div>
+          <h4><a href="{% url 'meal_detail' meal.slug %}">{{ meal.name }}</a></h4>
+        </div>
+      {% endif %}
+      {% endfor %}
     </div>
   </div>
 </div>
 {% endfor %}
-</div>
-
-<ul>
-    {% for category in categories %}
-        <li>
-            <a id="{{category}}-tab" href="#{{category}}" role="tab" aria-controls="{{category}}" aria-selected="true">{{category}}</a>
-        </li>
-    {% endfor %}
-</ul>
-
-<div class="tab-content" id="pills-tabContent">
-
-    {% for category in categories %}
-
-      <div id="{{category}}" role="tabpanel" aria-labelledby="{{category}}-tab">
-        {% for meal in menu_list %}
-            {% if meal.category == category %}
-              <div>
-                <div>
-                  <h3><a href="{% url 'meal_detail' meal.slug %}">{{ meal.name }}</a></h3>
-                </div>
-                <div>
-                  <strong>${{ meal.price }}</strong>
-                </div>
-              </div>
-            {% endif %}
-        {% endfor %}
-
-      </div>
-      
-    {% endfor %}
-  </div>
 
 <div class="pagination">
     <span class="step-links">
