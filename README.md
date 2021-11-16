@@ -31,7 +31,7 @@ get() returned more than one Reservation -- it returned 2!
 - When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
     - If a guests wish to increase number of people, the admin does not have access to availability-logic when assigning new tables
 - Reservation logic only works for parties that are smaller or equal to the largest combination the two largest available tables can make. Should be able to add a third table
-
+- bootstrap widget implementation from this site: https://pypi.org/project/django-bootstrap-datepicker-plus/
 
 
 Fixed bugs
