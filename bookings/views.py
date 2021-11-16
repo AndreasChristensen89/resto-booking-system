@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from .models import Booking
+from .models import Booking, OpeningHours
 from .forms import BookTableForm
 from .booking import get_available_tables, confirm_availability
+from datetime import datetime, timedelta
 
 
 def book_table(request):
@@ -65,14 +66,32 @@ def show_tables(request):
                     fitting_tables = []
                     fitting_tables.append(available_tables[i])
                     fitting_tables.append(available_tables[j])
+    
+    date_str = "2021-11-07 12:00"
+    datetime_object = datetime.strptime(date_str, '%Y-%m-%d %H:%M')
+    request_time = datetime.strptime(date_str, '%Y-%m-%d %H:%M').time()
+    request_weekday = datetime_object.weekday()
+    opening_hours = OpeningHours.objects.all()
+    open = False
+    for day in opening_hours:
+        if day.from_time <= request_time and day.weekday == request_weekday:
+            open = True
 
-    return HttpResponse(fitting_tables)
+    return HttpResponse(open)
 
 
 class BookingList(generic.ListView):
     model = Booking
     queryset = Booking.objects.all()
     template_name = 'booking_list.html'
+    paginate_by = 6
+
+
+class BookingsUpdated(generic.ListView):
+    model = Booking
+    queryset = Booking.objects.all()
+    context_object_name = "updated_list"
+    template_name = 'updated_bookings.html'
     paginate_by = 6
 
 

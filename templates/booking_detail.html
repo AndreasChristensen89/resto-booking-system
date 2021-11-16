@@ -3,11 +3,18 @@
 {% block content %}
 {% if user == booking.author or user.is_superuser %}
     {% if booking.status == 1 %}
+        <hr>
         <h2>Booking accepted</h2>
         <h4>We have reserved the following for you:</h4>
             {% for table in booking.table.all %}
                 <p>    1 table for {{ table.size }} guests</p>
             {% endfor %}
+        <hr>
+    {% elif booking.status == 2 %}
+        <hr>
+        <h2>Booking rejected</h2>
+        <h4>Please check comment down below for further information</h4>
+        <hr>
     {% else %}
         <h3>Status of booking:</h3>
         <p>Pending</p>
@@ -15,7 +22,7 @@
     <h3>Name:</h3>
     <p>{{ booking.first_name}} {{ booking.last_name }}</p>
     <h3>Date and time</h3>
-    <p>{{ booking.booking_start }}</p>
+    <p>{{ booking.booking_start| date:"l" }} {{ booking.booking_start }}</p>
     <h3>Guests:</h3>
     <p>{{ booking.number_guests }}</p>
     

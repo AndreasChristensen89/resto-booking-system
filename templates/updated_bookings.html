@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_superuser %}
+This works, but below?
+{% for booking in updated_list %}
+    <!-- {% if booking.created_on == booking.updated_on %} -->
+        <p>It works!</p>
+    <!-- {% endif %} -->
+{% endfor %}
+{% endif %}
+{% endblock %}

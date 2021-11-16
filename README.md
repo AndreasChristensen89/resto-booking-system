@@ -27,6 +27,7 @@ Right now I cannot add the three hours to booking_start "normally" using timedel
 Bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
 get() returned more than one Reservation -- it returned 2!
+- I am not able to loop through the updated booking view. I don't know what the name of the list is...
 - When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
     - If a guests wish to increase number of people, the admin does not have access to availability-logic when assigning new tables
 - Reservation logic only works for parties that are smaller or equal to the largest combination the two largest available tables can make. Should be able to add a third table

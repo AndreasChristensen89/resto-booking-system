@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user == booking.author %}
+{% if user == booking.author or user.is_superuser %}
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" name="Submit">

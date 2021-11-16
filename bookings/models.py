@@ -43,7 +43,7 @@ class Booking(models.Model):
         if not self.booking_end and not self.slug and self.booking_start:
             self.booking_end = self.booking_start + timedelta(hours=3)
             self.slug = self.first_name+self.last_name
-        super().save(*args, **kwargs)   
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ["-created_on"]
@@ -53,13 +53,13 @@ class Booking(models.Model):
 
 
 WEEKDAYS = (
-  (1, "Monday"),
-  (2, "Tuesday"),
-  (3, "Wednesday"),
-  (4, "Thursday"),
-  (5, "Friday"),
-  (6, "Saturday"),
-  (7, ("Sunday")),
+  (1, "Sunday"),
+  (2, "Monday"),
+  (3, "Tuesday"),
+  (4, "Wednesday"),
+  (5, "Thursday"),
+  (6, "Friday"),
+  (7, ("Saturday")),
 )
 
 

@@ -5,13 +5,14 @@
     Upcoming bookings
     {% for booking in booking_list %}
         {% if user == booking.author or user.is_superuser %}
-        <a href="{% url 'bookings:booking_detail' booking.slug %}">
         <div class="card" style="width: 18rem;">
+            <a href="{% url 'bookings:booking_detail' booking.slug %}">
             <div class="card-body">
               <h5 class="card-title">{{ booking.first_name }} {{ booking.last_name }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{ booking.booking_start }}</h6>
               <p class="card-text">{{ booking.number_guests }} people.</p>
             </div>
+            </a>
           </div>
         </a>
         {% endif%}
