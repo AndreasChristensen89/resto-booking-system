@@ -2,10 +2,25 @@ from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from .models import Booking, OpeningHours
+from .models import Booking
 from .forms import BookTableForm
-from .booking import get_available_tables, confirm_availability, confirm_opening_hours
+from .booking import confirm_availability
 from datetime import datetime
+
+
+def show_tables(request):
+    current_date = datetime.now().date()
+    current_date_weekday = datetime.strptime(str(current_date), '%Y-%m-%d').weekday()
+
+    all_bookings = Booking.objects.all()
+    bookings_today = []
+    for i in range(current_date_weekday, 7):
+        for booking in all_bookings:
+            date_of_booking = datetime.strptime(str(booking.booking_start), '%Y-%m-%d %H:%M:%S').date()
+            if current_date == date_of_booking:
+                bookings_today.append(booking.booking_start)
+
+    return HttpResponse(current_date_weekday)
 
 
 def book_table(request):
@@ -32,60 +47,6 @@ def book_table(request):
     context = {'form': book_form}
 
     return render(request, 'book_table.html', context)
-
-
-def show_tables(request):
-    available_tables = get_available_tables("2021-11-07 17:00")
-    number_guests = 17
-    fitting_tables = []
-
-    spots_to_fill = number_guests
-
-    for table in available_tables:
-        if table.size == int(number_guests):
-            fitting_tables.append(table)
-            spots_to_fill = 0
-            break
-    if spots_to_fill == number_guests:
-        for table in available_tables:
-            if table.size-1 == int(number_guests):
-                fitting_tables.append(table)
-                spots_to_fill = 0
-                break
-    # high number to be sure that new combination is lower
-    best_combination = 100
-    # how many seats gained/wasted. > 0 = wasted
-    seat_difference = 0
-    if spots_to_fill == int(number_guests):
-        for i in range(0, len(available_tables)-1):
-            for j in range(i+1, len(available_tables)):
-                combination = available_tables[i].size + available_tables[j].size
-                seat_difference = int(number_guests)-combination
-                if seat_difference <= 0 and abs(seat_difference) < abs(best_combination):
-                    best_combination = seat_difference
-                    fitting_tables = []
-                    fitting_tables.append(available_tables[i])
-                    fitting_tables.append(available_tables[j])
-    
-    request_start = "2021-11-11 12:00"
-    full_string = list(request_start)
-    end_integer = int(full_string[11] + full_string[12]) + 3
-    full_string[11] = str(end_integer)[0]
-    full_string[12] = str(end_integer)[1]
-    request_end = "".join(full_string)
-    
-    start_datetime = datetime.strptime(request_start, '%Y-%m-%d %H:%M')
-    request_time = datetime.strptime(request_start, '%Y-%m-%d %H:%M').time()
-    request_time_end = datetime.strptime(request_end, '%Y-%m-%d %H:%M').time()
-    request_weekday = start_datetime.weekday()
-    opening_hours = OpeningHours.objects.all()
-    restaurant_open = False
-    for day in opening_hours:
-        if day.from_time <= request_time and day.to_time >= request_time_end:
-            if day.weekday == request_weekday:
-                restaurant_open = True
-
-    return HttpResponse(restaurant_open)
 
 
 class BookingList(generic.ListView):

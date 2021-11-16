@@ -1,5 +1,5 @@
-from .models import Booking, Table, OpeningHours
 from datetime import datetime
+from .models import Booking, Table, OpeningHours
 
 
 def generate_request_end(request_start):
@@ -25,7 +25,7 @@ def get_available_tables(request_start):
     full_string[11] = str(end_integer)[0]
     full_string[12] = str(end_integer)[1]
     request_end = "".join(full_string)
-    
+
     unavailable_tables = []
 
     # 1. Remove existing reserv. that have the same start-time
@@ -114,7 +114,7 @@ def confirm_opening_hours(request_start):
     full_string[11] = str(end_integer)[0]
     full_string[12] = str(end_integer)[1]
     request_end = "".join(full_string)
-    
+
     start_datetime = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S')
     request_time = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S').time()
     request_time_end = datetime.strptime(request_end, '%Y-%m-%d %H:%M:%S').time()

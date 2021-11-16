@@ -39,3 +39,5 @@ Fixed bugs
 
 TIPS
 To reset database: python manage.py migrate MyApp zero
+
+I set use_tz to False in settings.py in order to avoid the timezone input from bookings.booking_start
