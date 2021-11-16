@@ -4,8 +4,8 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from .models import Booking, OpeningHours
 from .forms import BookTableForm
-from .booking import get_available_tables, confirm_availability
-from datetime import datetime, timedelta
+from .booking import get_available_tables, confirm_availability, confirm_opening_hours
+from datetime import datetime
 
 
 def book_table(request):
@@ -35,7 +35,7 @@ def book_table(request):
 
 
 def show_tables(request):
-    available_tables = get_available_tables("2021-11-07 17:00", 9)
+    available_tables = get_available_tables("2021-11-07 17:00")
     number_guests = 17
     fitting_tables = []
 
@@ -67,17 +67,25 @@ def show_tables(request):
                     fitting_tables.append(available_tables[i])
                     fitting_tables.append(available_tables[j])
     
-    date_str = "2021-11-07 12:00"
-    datetime_object = datetime.strptime(date_str, '%Y-%m-%d %H:%M')
-    request_time = datetime.strptime(date_str, '%Y-%m-%d %H:%M').time()
-    request_weekday = datetime_object.weekday()
+    request_start = "2021-11-11 12:00"
+    full_string = list(request_start)
+    end_integer = int(full_string[11] + full_string[12]) + 3
+    full_string[11] = str(end_integer)[0]
+    full_string[12] = str(end_integer)[1]
+    request_end = "".join(full_string)
+    
+    start_datetime = datetime.strptime(request_start, '%Y-%m-%d %H:%M')
+    request_time = datetime.strptime(request_start, '%Y-%m-%d %H:%M').time()
+    request_time_end = datetime.strptime(request_end, '%Y-%m-%d %H:%M').time()
+    request_weekday = start_datetime.weekday()
     opening_hours = OpeningHours.objects.all()
-    open = False
+    restaurant_open = False
     for day in opening_hours:
-        if day.from_time <= request_time and day.weekday == request_weekday:
-            open = True
+        if day.from_time <= request_time and day.to_time >= request_time_end:
+            if day.weekday == request_weekday:
+                restaurant_open = True
 
-    return HttpResponse(open)
+    return HttpResponse(restaurant_open)
 
 
 class BookingList(generic.ListView):
