@@ -48,10 +48,17 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'bootstrap_datepicker_plus',
+
+    # My apps
     'homepage',
     'menu',
     'bookings',
 ]
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
 
 SITE_ID = 1
 
