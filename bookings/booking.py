@@ -65,6 +65,13 @@ def get_available_tables(request_start):
 
 
 def confirm_availability(request_start, number_guests):
+    # This method takes the available tables and uses 3 step logic to sort the best combination
+    # 1. Checks if there exact group-table matches, or match-1 (size 6 for 5 people)
+    #   1.a if not, best option is stored
+    # 2. Generates best two-table-combination, then same with three tables
+    # 3. Compare best option for 1/2/3 combinations
+    #   3.a hierarchy: fewest lost seats -> if equal: fewest tables used
+
     available_tables = get_available_tables(request_start)
     fitting_tables_1table = []
     fitting_tables_2tables = []
@@ -73,18 +80,15 @@ def confirm_availability(request_start, number_guests):
 
      # 0 == no wasted seats.
      # < 0 == wasted seats
-    # best_comb_1table = 100
     best_comb_1table = 100
     best_comb_2tables = 100
     best_comb_3tables = 100
 
-    # will be used to calculate optimal table.size/combinations
     spots_to_fill = int(number_guests)
 
-    # First check for exact table-size match
-    # Second check for - seat - e.g. table for 6 for 5 people
-    # Aims to keep group at one table and have more tables available
-    # for potential other reservations
+    # Step 1:
+    # a. check for exact table-size match
+    # b. Second check for -1
     for table in available_tables:
         seat_difference = int(number_guests)-table.size
         if seat_difference <= 0 and abs(seat_difference) < abs(best_comb_1table):
@@ -101,18 +105,9 @@ def confirm_availability(request_start, number_guests):
                 optimal_solution.append(table)
                 spots_to_fill = 0
 
-    # if spots_to_fill == number_guests:
-    #     for table in available_tables:
-    #         if table.size-1 == int(number_guests):
-    #             optimal_solution.append(table)
-    #             best_comb_1table = -1
-    #             spots_to_fill = 0
-    #             break
-
-    # If party cannot fit in one table the following is triggered
-    # All combinations of 2 tables are added together
-    # Proceeds to test all combinations of 3 tables added together
-    # The combination closest to 0 will be returned, 2 tables preferred
+    # Step 2
+    # Triggered if not exact match
+    # 3 for loops. Second loop adds i+j, third i+j+k. Continuously updates lists
     if spots_to_fill == int(number_guests):
         for i in range(0, len(available_tables)-1):
             for j in range(i+1, len(available_tables)):
@@ -132,6 +127,8 @@ def confirm_availability(request_start, number_guests):
                         fitting_tables_3tables.append(available_tables[i])
                         fitting_tables_3tables.append(available_tables[j])
                         fitting_tables_3tables.append(available_tables[k])
+        # Step 3
+        # All combinations are matched. Prefers fewest losses, then fewest tables
 
         if abs(best_comb_1table) <= abs(best_comb_2tables):
             optimal_solution = fitting_tables_1table
@@ -139,19 +136,6 @@ def confirm_availability(request_start, number_guests):
             optimal_solution = fitting_tables_2tables
         elif abs(best_comb_3tables) <abs(best_comb_2tables):
             optimal_solution = fitting_tables_3tables
-
-        # for i in range(0, len(available_tables)-1):
-        #     for j in range(i+1, len(available_tables)):
-        #         combination = available_tables[i].size + available_tables[j].size
-        #         seat_difference = int(number_guests)-combination
-        #         if seat_difference <= 0 and abs(seat_difference) < abs(best_combination_2tables):
-        #             best_combination_2tables = seat_difference
-        #             fitting_tables = []
-        #             fitting_tables.append(available_tables[i])
-        #             fitting_tables.append(available_tables[j])
-        #         for k in range(j+1, len(available_tables)):
-        #             combination = available_tables[i].size + available_tables[j].size + available_tables[k].size
-        #             seat_difference = int(number_guests)-combination
 
     return optimal_solution
 
