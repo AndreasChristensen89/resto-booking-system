@@ -66,46 +66,94 @@ def get_available_tables(request_start):
 
 def confirm_availability(request_start, number_guests):
     available_tables = get_available_tables(request_start)
-    fitting_tables = []
+    fitting_tables_1table = []
+    fitting_tables_2tables = []
+    fitting_tables_3tables = []
+    optimal_solution = []
+
+     # 0 == no wasted seats.
+     # < 0 == wasted seats
+    # best_comb_1table = 100
+    best_comb_1table = 100
+    best_comb_2tables = 100
+    best_comb_3tables = 100
 
     # will be used to calculate optimal table.size/combinations
     spots_to_fill = int(number_guests)
 
     # First check for exact table-size match
-    for table in available_tables:
-        if table.size == int(number_guests):
-            fitting_tables.append(table)
-            spots_to_fill = 0
-            break
     # Second check for - seat - e.g. table for 6 for 5 people
-    if spots_to_fill == number_guests:
-        for table in available_tables:
-            if table.size-1 == int(number_guests):
-                fitting_tables.append(table)
+    # Aims to keep group at one table and have more tables available
+    # for potential other reservations
+    for table in available_tables:
+        seat_difference = int(number_guests)-table.size
+        if seat_difference <= 0 and abs(seat_difference) < abs(best_comb_1table):
+            best_comb_1table = seat_difference
+            fitting_tables_1table = []
+            fitting_tables_1table.append(table)
+
+            if table.size == int(number_guests):
+                optimal_solution = []
+                optimal_solution.append(table)
                 spots_to_fill = 0
                 break
+            elif not optimal_solution and table.size-1 == int(number_guests):
+                optimal_solution.append(table)
+                spots_to_fill = 0
 
-    # The following tests all combinations of 2 tables added together
-    # The combination closest to 0 will be returned (least wasted space)
-    # Currently only works for parties <= two largest tables put together
+    # if spots_to_fill == number_guests:
+    #     for table in available_tables:
+    #         if table.size-1 == int(number_guests):
+    #             optimal_solution.append(table)
+    #             best_comb_1table = -1
+    #             spots_to_fill = 0
+    #             break
 
-    # high number to be sure that new combination is lower
-    best_combination = 100
-    # how many seats gained/wasted. x < 0 == wasted
-    seat_difference = 0
-
+    # If party cannot fit in one table the following is triggered
+    # All combinations of 2 tables are added together
+    # Proceeds to test all combinations of 3 tables added together
+    # The combination closest to 0 will be returned, 2 tables preferred
     if spots_to_fill == int(number_guests):
         for i in range(0, len(available_tables)-1):
             for j in range(i+1, len(available_tables)):
                 combination = available_tables[i].size + available_tables[j].size
                 seat_difference = int(number_guests)-combination
-                if seat_difference <= 0 and abs(seat_difference) < abs(best_combination):
-                    best_combination = seat_difference
-                    fitting_tables = []
-                    fitting_tables.append(available_tables[i])
-                    fitting_tables.append(available_tables[j])
+                if seat_difference <= 0 and abs(seat_difference) < abs(best_comb_2tables):
+                    best_comb_2tables = seat_difference
+                    fitting_tables_2tables = []
+                    fitting_tables_2tables.append(available_tables[i])
+                    fitting_tables_2tables.append(available_tables[j])
+                for k in range(j+1, len(available_tables)):
+                    combination = available_tables[i].size + available_tables[j].size + available_tables[k].size
+                    seat_difference = int(number_guests)-combination
+                    if seat_difference <= 0 and abs(seat_difference) < abs(best_comb_3tables):
+                        best_comb_3tables = seat_difference
+                        fitting_tables_3tables = []
+                        fitting_tables_3tables.append(available_tables[i])
+                        fitting_tables_3tables.append(available_tables[j])
+                        fitting_tables_3tables.append(available_tables[k])
 
-    return fitting_tables
+        if abs(best_comb_1table) <= abs(best_comb_2tables):
+            optimal_solution = fitting_tables_1table
+        elif abs(best_comb_2tables) <= abs(best_comb_3tables):
+            optimal_solution = fitting_tables_2tables
+        elif abs(best_comb_3tables) <abs(best_comb_2tables):
+            optimal_solution = fitting_tables_3tables
+
+        # for i in range(0, len(available_tables)-1):
+        #     for j in range(i+1, len(available_tables)):
+        #         combination = available_tables[i].size + available_tables[j].size
+        #         seat_difference = int(number_guests)-combination
+        #         if seat_difference <= 0 and abs(seat_difference) < abs(best_combination_2tables):
+        #             best_combination_2tables = seat_difference
+        #             fitting_tables = []
+        #             fitting_tables.append(available_tables[i])
+        #             fitting_tables.append(available_tables[j])
+        #         for k in range(j+1, len(available_tables)):
+        #             combination = available_tables[i].size + available_tables[j].size + available_tables[k].size
+        #             seat_difference = int(number_guests)-combination
+
+    return optimal_solution
 
 
 def confirm_opening_hours(request_start):
