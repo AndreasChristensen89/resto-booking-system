@@ -78,8 +78,7 @@ def confirm_availability(request_start, number_guests):
     fitting_tables_3tables = []
     optimal_solution = []
 
-     # 0 == no wasted seats.
-     # < 0 == wasted seats
+     # high number to be sure the following is lower
     best_comb_1table = 100
     best_comb_2tables = 100
     best_comb_3tables = 100
@@ -87,8 +86,9 @@ def confirm_availability(request_start, number_guests):
     spots_to_fill = int(number_guests)
 
     # Step 1:
-    # a. check for exact table-size match
-    # b. Second check for -1
+    # a. store best option is case no exact match
+    # b. check for exact table-size match
+    # c. Second check for -1 match
     for table in available_tables:
         seat_difference = int(number_guests)-table.size
         if seat_difference <= 0 and abs(seat_difference) < abs(best_comb_1table):

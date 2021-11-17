@@ -2,25 +2,52 @@ from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from .models import Booking
+from .models import Booking, OpeningHours
 from .forms import BookTableForm
-from .booking import confirm_availability
+from .booking import confirm_availability, get_available_tables
 from datetime import datetime
 
 
 def show_tables(request):
-    current_date = datetime.now().date()
-    current_date_weekday = datetime.strptime(str(current_date), '%Y-%m-%d').weekday()
+    current_date_str = str(datetime.now().date())
+    current_date_weekday = datetime.strptime(str(current_date_str), '%Y-%m-%d').weekday()
+    
+    list_times = []
+    opening_time = OpeningHours.objects.filter(
+        weekday=current_date_weekday).values('from_time')
+    closing_time = OpeningHours.objects.filter(
+        weekday=current_date_weekday).values('to_time')
+    for opening in opening_time:
+        list_times.append(opening)
+    for closing in closing_time:
+        list_times.append(closing)
+    extracted_times = []
+    for time in range(len(list_times)):
+        for key in list_times[time]:
+            extracted_times.append(list_times[time][key])
+    opening_time_str = str(extracted_times[0])[0:2]
+    closing_time_str = str(extracted_times[1])[0:2]
 
-    all_bookings = Booking.objects.all()
-    bookings_today = []
-    for i in range(current_date_weekday, 7):
-        for booking in all_bookings:
-            date_of_booking = datetime.strptime(str(booking.booking_start), '%Y-%m-%d %H:%M:%S').date()
-            if current_date == date_of_booking:
-                bookings_today.append(booking.booking_start)
+    list_to_check_for_ok = []
+    for i in range(int(opening_time_str), int(closing_time_str)-1):
+        time_to_test = ':00:00'
+        number_guests = 10
+        generate_request_start = current_date_str + ' ' + str(i) + time_to_test
+        available_tables_fullhour = get_available_tables(generate_request_start)
+        time_to_test = ':30:00'
+        available_tables_halfhour = get_available_tables(generate_request_start)
+        sum_full = 0
+        sum_half = 0
+        for table in available_tables_fullhour:
+            sum_full += table.size
+        for table in available_tables_halfhour:
+            sum_half += table.size
+        if sum_full >= number_guests:
+            list_to_check_for_ok.append(f'{i} is ok - ')
+        if sum_half >= number_guests:
+            list_to_check_for_ok.append(f'{i}:30 is ok - ')
 
-    return HttpResponse(current_date_weekday)
+    return HttpResponse(list_to_check_for_ok)
 
 
 def book_table(request):
