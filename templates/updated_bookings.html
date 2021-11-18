@@ -6,10 +6,9 @@
     {% for booking in updated_list %}
         {% if booking.updated_on|date:'Y-m-d H:i:s' > booking.created_on|date:'Y-m-d H:i:s' %}
             <p>Name: {{booking.first_name}} {{booking.last_name}}</p>
-            <p>Updated on: {{booking.updated_on|time:'H:i:s'}}</p>
-            <p>Created on: {{booking.created_on|time:'H:i:s'}}</p>
-            <p>Guests: {{booking.number_guests}}</p>
-            <p>Table: {{booking.table}}</p>
+            <p>Date: {{booking.booking_start}}</p>
+            <p>Message: {{booking.comment}}</p>
+            <a href="{% url 'bookings:update_booking_admin' booking.slug %}" class="card-link">Edit Reservation</a>
             <hr>
         {% endif %}
     {% endfor %}

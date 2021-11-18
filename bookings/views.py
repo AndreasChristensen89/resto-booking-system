@@ -10,7 +10,7 @@ from datetime import datetime
 
 
 def times_available(request):
-    list = display_available_times(14)
+    list = display_available_times(6)
     template = loader.get_template('booking_test.html')
     return render(request, 'booking_test.html', {'available_times_list': list})
 
@@ -105,6 +105,13 @@ class CancelBookingView(DeleteView):
 
 class UpdateReservationView(UpdateView):
     model = Booking
-    fields = ['first_name', 'last_name', 'number_guests', 'comment']
+    fields = ['comment']
     template_name_suffix = '_update_form'
     success_url = '/bookings/'
+
+
+class UpdateReservationViewAdmin(UpdateView):
+    model = Booking
+    fields = ['number_guests', 'table', 'comment']
+    template_name_suffix = '_update_form_admin'
+    success_url = '/bookings/updated_reservations/'
