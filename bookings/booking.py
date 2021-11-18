@@ -172,3 +172,5 @@ def display_available_times(number_guests):
                 time_to_test = ':' + time_to_add + ':00'
                 if confirm_availability(generate_request_start, number_guests):
                     available_times.append(f'{i}:{minute}')
+    
+    return available_times

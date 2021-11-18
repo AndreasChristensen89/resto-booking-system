@@ -1,37 +1,43 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.template import loader
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from .models import Booking, OpeningHours
 from .forms import BookTableForm
-from .booking import confirm_availability, get_available_tables, get_opening_hours, generate_request_end
+from .booking import confirm_availability, get_available_tables, get_opening_hours, generate_request_end, display_available_times
 from datetime import datetime
 
 
-def show_tables(request):
-    current_date_str = str(datetime.now().date())
-    current_date_weekday = datetime.strptime(str(current_date_str), '%Y-%m-%d').weekday()
+def times_available(request):
+    list = display_available_times(14)
+    template = loader.get_template('booking_test.html')
+    return render(request, 'booking_test.html', {'available_times_list': list})
+
+# def show_tables(request):
+#     current_date_str = str(datetime.now().date())
+#     current_date_weekday = datetime.strptime(str(current_date_str), '%Y-%m-%d').weekday()
     
-    opens_closes = get_opening_hours(current_date_weekday)
-    opening_time_str = str(opens_closes[0])[0:2]
-    closing_time_str = str(opens_closes[1])[0:2]
+#     opens_closes = get_opening_hours(current_date_weekday)
+#     opening_time_str = str(opens_closes[0])[0:2]
+#     closing_time_str = str(opens_closes[1])[0:2]
 
-    available_times = []
+#     available_times = []
 
-    for i in range(int(opening_time_str), int(closing_time_str)-2):
-        time_to_test = ':00:00'
-        number_guests = 12
-        generate_request_start = current_date_str + ' ' + str(i) + time_to_test
-        if confirm_availability(generate_request_start, number_guests):
-            available_times.append(f'{i}:00 ')
-        if i < int(closing_time_str)-3:
-            for minute in range(15,60,15):
-                time_to_add = str(minute)
-                time_to_test = ':' + time_to_add + ':00'
-                if confirm_availability(generate_request_start, number_guests):
-                    available_times.append(f'{i}:{minute} ')
+#     for i in range(int(opening_time_str), int(closing_time_str)-2):
+#         time_to_test = ':00:00'
+#         number_guests = 12
+#         generate_request_start = current_date_str + ' ' + str(i) + time_to_test
+#         if confirm_availability(generate_request_start, number_guests):
+#             available_times.append(f'{i}:00 ')
+#         if i < int(closing_time_str)-3:
+#             for minute in range(15,60,15):
+#                 time_to_add = str(minute)
+#                 time_to_test = ':' + time_to_add + ':00'
+#                 if confirm_availability(generate_request_start, number_guests):
+#                     available_times.append(f'{i}:{minute} ')
         
-    return HttpResponse(available_times)
+#     return HttpResponse(available_times)
 
 
 def book_table(request):
