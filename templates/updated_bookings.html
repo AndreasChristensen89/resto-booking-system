@@ -2,11 +2,23 @@
 
 {% block content %}
 {% if user.is_superuser %}
-This works, but below?
-{% for booking in updated_list %}
-    <!-- {% if booking.created_on == booking.updated_on %} -->
-        <p>It works!</p>
-    <!-- {% endif %} -->
-{% endfor %}
+    <hr>
+    {% for booking in updated_list %}
+        {% if booking.updated_on|date:'Y-m-d H:i:s' > booking.created_on|date:'Y-m-d H:i:s' %}
+            <p>Updated</p>
+            <p>Name: {{booking.first_name}} {{booking.last_name}}</p>
+            <p>Updated on: {{booking.updated_on|time:'H:i:s'}}</p>
+            <p>Created on: {{booking.created_on|time:'H:i:s'}}</p>
+            <p></p>
+            <hr>
+        {% else %}
+            <p>Not updated</p>
+            <p>Name: {{booking.first_name}} {{booking.last_name}}</p>
+            <p>Updated on: {{booking.updated_on|time:'H:i:s'}}</p>
+            <p>Created on: {{booking.created_on|time:'H:i:s'}}</p>
+            <hr>
+        {% endif %}
+    {% endfor %}
+
 {% endif %}
 {% endblock %}

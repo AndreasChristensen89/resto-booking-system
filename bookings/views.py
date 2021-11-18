@@ -4,7 +4,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from .models import Booking, OpeningHours
 from .forms import BookTableForm
-from .booking import confirm_availability, get_available_tables
+from .booking import confirm_availability, get_available_tables, get_opening_hours, generate_request_end
 from datetime import datetime
 
 
@@ -12,42 +12,26 @@ def show_tables(request):
     current_date_str = str(datetime.now().date())
     current_date_weekday = datetime.strptime(str(current_date_str), '%Y-%m-%d').weekday()
     
-    list_times = []
-    opening_time = OpeningHours.objects.filter(
-        weekday=current_date_weekday).values('from_time')
-    closing_time = OpeningHours.objects.filter(
-        weekday=current_date_weekday).values('to_time')
-    for opening in opening_time:
-        list_times.append(opening)
-    for closing in closing_time:
-        list_times.append(closing)
-    extracted_times = []
-    for time in range(len(list_times)):
-        for key in list_times[time]:
-            extracted_times.append(list_times[time][key])
-    opening_time_str = str(extracted_times[0])[0:2]
-    closing_time_str = str(extracted_times[1])[0:2]
+    opens_closes = get_opening_hours(current_date_weekday)
+    opening_time_str = str(opens_closes[0])[0:2]
+    closing_time_str = str(opens_closes[1])[0:2]
 
-    list_to_check_for_ok = []
-    for i in range(int(opening_time_str), int(closing_time_str)-1):
+    available_times = []
+
+    for i in range(int(opening_time_str), int(closing_time_str)-2):
         time_to_test = ':00:00'
-        number_guests = 10
+        number_guests = 12
         generate_request_start = current_date_str + ' ' + str(i) + time_to_test
-        available_tables_fullhour = get_available_tables(generate_request_start)
-        time_to_test = ':30:00'
-        available_tables_halfhour = get_available_tables(generate_request_start)
-        sum_full = 0
-        sum_half = 0
-        for table in available_tables_fullhour:
-            sum_full += table.size
-        for table in available_tables_halfhour:
-            sum_half += table.size
-        if sum_full >= number_guests:
-            list_to_check_for_ok.append(f'{i} is ok - ')
-        if sum_half >= number_guests:
-            list_to_check_for_ok.append(f'{i}:30 is ok - ')
-
-    return HttpResponse(list_to_check_for_ok)
+        if confirm_availability(generate_request_start, number_guests):
+            available_times.append(f'{i}:00 ')
+        if i < int(closing_time_str)-3:
+            for minute in range(15,60,15):
+                time_to_add = str(minute)
+                time_to_test = ':' + time_to_add + ':00'
+                if confirm_availability(generate_request_start, number_guests):
+                    available_times.append(f'{i}:{minute} ')
+        
+    return HttpResponse(available_times)
 
 
 def book_table(request):
@@ -67,6 +51,7 @@ def book_table(request):
                 for table in tables:
                     # Tables added after save since the object needs to exist before m2m comes in
                     obj.table.add(table)
+            obj.save()
             return HttpResponseRedirect('/bookings/')
     else:
         book_form = BookTableForm()
@@ -85,10 +70,11 @@ class BookingList(generic.ListView):
 
 class BookingsUpdated(generic.ListView):
     model = Booking
-    queryset = Booking.objects.all()
     context_object_name = "updated_list"
+    queryset = Booking.objects.filter(
+        status=1
+    )
     template_name = 'updated_bookings.html'
-    paginate_by = 6
 
 
 class BookingDetail(View):
@@ -113,6 +99,6 @@ class CancelBookingView(DeleteView):
 
 class UpdateReservationView(UpdateView):
     model = Booking
-    fields = ['first_name', 'last_name', 'comment']
+    fields = ['first_name', 'last_name', 'number_guests', 'comment']
     template_name_suffix = '_update_form'
     success_url = '/bookings/'

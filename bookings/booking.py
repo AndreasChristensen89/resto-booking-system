@@ -2,6 +2,24 @@ from datetime import datetime
 from .models import Booking, Table, OpeningHours
 
 
+def get_opening_hours(current_date_weekday):
+    list_times = []
+    opening_time = OpeningHours.objects.filter(
+        weekday=current_date_weekday).values('from_time')
+    closing_time = OpeningHours.objects.filter(
+        weekday=current_date_weekday).values('to_time')
+    for opening in opening_time:
+        list_times.append(opening)
+    for closing in closing_time:
+        list_times.append(closing)
+    extracted_times = []
+    for time in range(len(list_times)):
+        for key in list_times[time]:
+            extracted_times.append(list_times[time][key])
+    
+    return extracted_times
+
+
 def generate_request_end(request_start):
     # request_start is string format, so we do some logic to change the two chars to +3 hours
     # this works for reservations until 21:00
@@ -18,14 +36,7 @@ def get_available_tables(request_start):
     """
     This method returns the first available table(s) of the restaurant
     """
-    # request_start is string format, so we do some logic to change the two chars to +3 hours
-    # this works for reservations until 21:00
-    full_string = list(request_start)
-    end_integer = int(full_string[11] + full_string[12]) + 3
-    full_string[11] = str(end_integer)[0]
-    full_string[12] = str(end_integer)[1]
-    request_end = "".join(full_string)
-
+    request_end = generate_request_end(request_start)
     unavailable_tables = []
 
     # 1. Remove existing reserv. that have the same start-time
@@ -140,21 +151,24 @@ def confirm_availability(request_start, number_guests):
     return optimal_solution
 
 
-def confirm_opening_hours(request_start):
-    full_string = list(request_start)
-    end_integer = int(full_string[11] + full_string[12]) + 3
-    full_string[11] = str(end_integer)[0]
-    full_string[12] = str(end_integer)[1]
-    request_end = "".join(full_string)
+def display_available_times(number_guests):
+    current_date_str = str(datetime.now().date())
+    current_date_weekday = datetime.strptime(str(current_date_str), '%Y-%m-%d').weekday()
+    
+    opens_closes = get_opening_hours(current_date_weekday)
+    opening_time_str = str(opens_closes[0])[0:2]
+    closing_time_str = str(opens_closes[1])[0:2]
 
-    start_datetime = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S')
-    request_time = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S').time()
-    request_time_end = datetime.strptime(request_end, '%Y-%m-%d %H:%M:%S').time()
-    request_weekday = start_datetime.weekday()
-    opening_hours = OpeningHours.objects.all()
-    restaurant_open = False
-    for day in opening_hours:
-        if day.from_time <= request_time and day.to_time >= request_time_end:
-            if day.weekday == request_weekday:
-                restaurant_open = True
-    return restaurant_open
+    available_times = []
+
+    for i in range(int(opening_time_str), int(closing_time_str)-2):
+        time_to_test = ':00:00'
+        generate_request_start = current_date_str + ' ' + str(i) + time_to_test
+        if confirm_availability(generate_request_start, number_guests):
+            available_times.append(f'{i}:00')
+        if i < int(closing_time_str)-3:
+            for minute in range(15,60,15):
+                time_to_add = str(minute)
+                time_to_test = ':' + time_to_add + ':00'
+                if confirm_availability(generate_request_start, number_guests):
+                    available_times.append(f'{i}:{minute}')

@@ -45,6 +45,10 @@ get() returned more than one Reservation -- it returned 2!
 - I am not able to loop through the updated booking view. I don't know what the name of the list is...
 - When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
     - If a guests wish to increase number of people, the admin does not have access to availability-logic when assigning new tables
+- When creating a reservation the updated_bookings page sets it to "not updated" because it's booked within the same minut. However, if a user updates the reservation, e.g. number of people, within that minute, it is still registered as "not updated".
+    - If I change the setting to be within the same second, it's automatically added as "updated" since created_on and updated_on may be added in different seconds.
+- Admin cannot book tables with specifying booking_end - prepopulated-fields to be tested
+- When 12:00 is booked, django writes 12 as "noon", and the function doesn't work because it expects an integer
 - bootstrap widget implementation from this site: https://pypi.org/project/django-bootstrap-datepicker-plus/
     - Not currently implemented, however, the following is installed: pip install django-bootstrap-datepicker-plus
 
