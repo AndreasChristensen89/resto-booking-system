@@ -51,6 +51,7 @@ get() returned more than one Reservation -- it returned 2!
 - When 12:00 is booked, django writes 12 as "noon", and the function doesn't work because it expects an integer
 - bootstrap widget implementation from this site: https://pypi.org/project/django-bootstrap-datepicker-plus/
     - Not currently implemented, however, the following is installed: pip install django-bootstrap-datepicker-plus
+- When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate
 
 
 Fixed bugs
