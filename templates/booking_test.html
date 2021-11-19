@@ -3,7 +3,7 @@
 {% block content %}
 <p>Times available today:</p>
 {% for time in available_times_list %}
-    <button>{{time}}</button>
+    <button type="submit" value='datetime' name={{time}}>{{time}}</button>
 {% endfor %}
 
 {% endblock %}

@@ -10,7 +10,7 @@ from datetime import datetime
 
 
 def times_available(request):
-    list = display_available_times(40, '2021-11-19 17:00:00')
+    list = display_available_times()
     template = loader.get_template('booking_test.html')
     return render(request, 'booking_test.html', {'available_times_list': list})
 
@@ -61,6 +61,8 @@ def book_table(request):
 
         if book_form.is_valid():
             obj = book_form.save(commit=False)
+            # if 'message_frm' in request.POST:
+            #     obj.booking_start = message_frm
             obj.author = request.user
             obj.save()
             if tables is not None:

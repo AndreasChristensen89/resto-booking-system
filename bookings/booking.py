@@ -151,7 +151,11 @@ def return_tables(request_start, number_guests):
     return optimal_solution
 
 
-def display_available_times(number_guests, date):
+def display_available_times():
+    date = '2021-11-19 17:00:00'
+    number_guests = 12
+    # date_weekday = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').weekday()
+    current_date = str(datetime.now().date())
     date_weekday = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').weekday()
 
     opens_closes = get_opening_hours(date_weekday)
@@ -163,7 +167,7 @@ def display_available_times(number_guests, date):
 
     for i in range(int(opening_time_str), int(closing_time_str)-2):
         time_to_test = ':00:00'
-        start_to_pass = date + ' ' + str(i) + time_to_test
+        start_to_pass = current_date + ' ' + str(i) + time_to_test
         available_tables = get_available_tables(start_to_pass)
         sum = 0
         for table in available_tables:
