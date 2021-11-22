@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>Times available today:</p>
+<h3>Times available:</h3>
 <form action="/bookings/book_table/" method="post">
 {% csrf_token %}
 {% for time in available_times_list %}
-    <input type="radio" value='{{time}}'>{{time}}</button>
+    <input type="radio" value="{{time}}">{{time}}</button>
 {% endfor %}
 <br>
 <br>
-<input type="submit">
+<input type="submit" value="Next">
 </form>
 
 {% endblock %}

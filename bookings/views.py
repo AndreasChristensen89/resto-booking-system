@@ -4,7 +4,7 @@ from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from .models import Booking, OpeningHours
-from .forms import BookTableForm
+from .forms import BookTableForm, DateAndGuestsForm
 from .booking import return_tables, get_available_tables, get_opening_hours, generate_request_end, display_available_times
 from datetime import datetime
 
@@ -13,6 +13,18 @@ def times_available(request):
     list = display_available_times()
     template = loader.get_template('booking_test.html')
     return render(request, 'booking_test.html', {'available_times_list': list})
+
+
+def get_date_and_guests(request):
+    if request.method == 'POST':
+        form = DateAndGuestsForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/firstform')
+    else:
+        form = DateAndGuestsForm()
+
+    return render(request, 'select_date_form.html', {'form': form})
+
 
 def show_tables(request):
     date = '2021-11-19 17:00:00'

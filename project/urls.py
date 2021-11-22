@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from bookings.views import times_available, show_tables
+from bookings.views import times_available, show_tables, get_date_and_guests
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +23,6 @@ urlpatterns = [
     path('menu/', include('menu.urls'), name='menu_urls'),
     path('accounts/', include('allauth.urls')),
     path('', include('homepage.urls')),
-    path('test/', times_available, name='test')
+    path('test/', times_available, name='test'),
+    path('firstform/', get_date_and_guests, name='firstform'),
 ]
