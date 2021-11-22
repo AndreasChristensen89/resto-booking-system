@@ -51,23 +51,24 @@ def show_tables(request):
 
 
 def book_table(request):
+    to_add = '2021-11-29 17:00:00'
     book_form = BookTableForm()
 
     if request.method == 'POST':
         book_form = BookTableForm(request.POST)
-        request_start = book_form.data['booking_start']
-        number_guests = book_form.data['number_guests']
-        tables = return_tables(request_start, number_guests)
 
         if book_form.is_valid():
             obj = book_form.save(commit=False)
-            # if 'message_frm' in request.POST:
-            #     obj.booking_start = message_frm
             obj.author = request.user
+            obj.booking_start = datetime.strptime(to_add, '%Y-%m-%d %H:%M:%S')
             obj.save()
+
+            request_start = str(obj.booking_start)
+            number_guests = book_form.data['number_guests']
+            tables = return_tables(request_start, number_guests)
+
             if tables is not None:
                 for table in tables:
-                    # Tables added after save since the object needs to exist before m2m comes in
                     obj.table.add(table)
             obj.save()
             return HttpResponseRedirect('/bookings/')

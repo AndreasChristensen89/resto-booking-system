@@ -52,6 +52,7 @@ get() returned more than one Reservation -- it returned 2!
 - bootstrap widget implementation from this site: https://pypi.org/project/django-bootstrap-datepicker-plus/
     - Not currently implemented, however, the following is installed: pip install django-bootstrap-datepicker-plus
 - When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate
+- When calculating available seats the system assumes that closing time is on an full-hour mark. Does not calculate properly if e.g. 20:30 is the closing time
 
 
 Fixed bugs

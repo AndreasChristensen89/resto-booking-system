@@ -154,7 +154,6 @@ def return_tables(request_start, number_guests):
 def display_available_times():
     date = '2021-11-19 17:00:00'
     number_guests = 12
-    # date_weekday = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').weekday()
     current_date = str(datetime.now().date())
     date_weekday = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').weekday()
 
@@ -162,7 +161,7 @@ def display_available_times():
     opening_time_str = str(opens_closes[0])[0:2]
     closing_time_str = str(opens_closes[1])[0:2]
 
-    booking_interval = 30
+    booking_interval = 60
     available_times = []
 
     for i in range(int(opening_time_str), int(closing_time_str)-2):

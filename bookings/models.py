@@ -21,7 +21,7 @@ class Booking(models.Model):
     slug = models.SlugField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='table_booking')
     number_guests = models.PositiveIntegerField()
-    booking_start = models.DateTimeField()
+    booking_start = models.DateTimeField(blank=True)
     booking_end = models.DateTimeField(blank=True)
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)

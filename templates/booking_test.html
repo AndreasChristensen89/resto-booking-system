@@ -2,8 +2,14 @@
 
 {% block content %}
 <p>Times available today:</p>
+<form action="/bookings/book_table/" method="post">
+{% csrf_token %}
 {% for time in available_times_list %}
-    <button type="submit" value='datetime' name={{time}}>{{time}}</button>
+    <input type="radio" value='{{time}}'>{{time}}</button>
 {% endfor %}
+<br>
+<br>
+<input type="submit">
+</form>
 
 {% endblock %}
