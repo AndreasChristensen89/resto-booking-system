@@ -5,7 +5,7 @@
 <form action="/bookings/book_table/" method="post">
 {% csrf_token %}
 {% for time in available_times_list %}
-    <input type="radio" value="{{time}}">{{time}}</button>
+    <input type="radio" value="{{time}}" name="radio">{{time}}</button>
 {% endfor %}
 <br>
 <br>

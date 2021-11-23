@@ -7,7 +7,7 @@ class BookTableForm(forms.ModelForm):
     class Meta:
         model = Booking
         fields = [
-            'first_name', 'last_name', 'number_guests', 'comment'
+            'first_name', 'last_name', 'comment'
             ]
 
 
@@ -17,4 +17,3 @@ class DateAndGuestsForm(forms.Form):
 
 
 # class TimeForm(forms.Form):
-

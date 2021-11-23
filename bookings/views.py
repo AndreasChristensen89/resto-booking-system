@@ -3,82 +3,53 @@ from django.template import loader
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from .models import Booking, OpeningHours
-from .forms import BookTableForm, DateAndGuestsForm
-from .booking import return_tables, get_available_tables, get_opening_hours, generate_request_end, display_available_times
+from .models import Booking
+from .forms import BookTableForm
+from .booking import return_tables, get_available_tables, get_opening_hours, display_available_times
 from datetime import datetime
 
 
-def times_available(request):
-    list = display_available_times()
-    template = loader.get_template('booking_test.html')
-    return render(request, 'booking_test.html', {'available_times_list': list})
+# def times_available(request):
+#     date = request.POST.get('date', None)
+#     number = request.POST.get('number', None)
+#     list = display_available_times(date, number)
+#     return render(request, 'book_table.html', {'available_times_list': list, 'date': date, 'number': number})
 
 
-def get_date_and_guests(request):
-    if request.method == 'POST':
-        form = DateAndGuestsForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('/firstform')
-    else:
-        form = DateAndGuestsForm()
+# def get_date_and_guests(request):
+#     context = {}
+#     system = request.POST.get('dateguests', None)
+#     context['dateguests'] = system
+#     return render(request, 'select_date_form.html', context)
 
-    return render(request, 'select_date_form.html', {'form': form})
+    # if request.method == 'POST':
+    #     form = DateAndGuestsForm(request.POST)
+    #     if form.is_valid():
+    #         return HttpResponseRedirect('/firstform')
+    # else:
+    #     form = DateAndGuestsForm()
 
-
-def show_tables(request):
-    date = '2021-11-19 17:00:00'
-    number_guests = 40
-    date_weekday = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').weekday()
-    current_date = str(datetime.now().date())
-
-    opens_closes = get_opening_hours(datetime.now().weekday())
-    opening_time_str = str(opens_closes[0])[0:2]
-    closing_time_str = str(opens_closes[1])[0:2]
-
-    booking_interval = 30
-    available_times = []
-
-    for i in range(int(opening_time_str), int(closing_time_str)-2):
-        time_to_test = ':00:00'
-        start_to_pass = current_date + ' ' + str(i) + time_to_test
-        available_tables = get_available_tables(start_to_pass)
-        sum = 0
-        for table in available_tables:
-            sum += table.size
-        if sum >= number_guests:
-            available_times.append(f'{i}:00 ')
-        if i < int(closing_time_str)-3:
-            for minute in range(booking_interval, 60, booking_interval):
-                time_to_add = str(minute)
-                time_to_test = ':' + time_to_add + ':00'
-                available_tables = get_available_tables(start_to_pass)
-                sum = 0
-                for table in available_tables:
-                    sum += table.size
-                if sum >= number_guests:
-                    available_times.append(f'{i}:{minute} ')
-
-    return HttpResponse(date_weekday)
+    # return render(request, 'select_date_form.html', {'form': form})
 
 
 def book_table(request):
-    to_add = '2021-11-29 17:00:00'
     book_form = BookTableForm()
+    number = request.POST.get('number_guests')
+    date = request.POST.get('day')
+    list = display_available_times('2021-11-29', '4')
 
     if request.method == 'POST':
         book_form = BookTableForm(request.POST)
 
         if book_form.is_valid():
             obj = book_form.save(commit=False)
+            datetime_to_add = '2021-11-29' + ' ' + '15:00:00'
+            obj.number_guests = '4'
             obj.author = request.user
-            obj.booking_start = datetime.strptime(to_add, '%Y-%m-%d %H:%M:%S')
+            obj.booking_start = datetime.strptime(datetime_to_add, '%Y-%m-%d %H:%M:%S')
             obj.save()
 
-            request_start = str(obj.booking_start)
-            number_guests = book_form.data['number_guests']
-            tables = return_tables(request_start, number_guests)
-
+            tables = return_tables(str(obj.booking_start), obj.number_guests)
             if tables is not None:
                 for table in tables:
                     obj.table.add(table)
@@ -87,7 +58,7 @@ def book_table(request):
     else:
         book_form = BookTableForm()
 
-    context = {'form': book_form}
+    context = {'form': book_form, 'available_times_list': list}
 
     return render(request, 'book_table.html', context)
 
@@ -140,3 +111,39 @@ class UpdateReservationViewAdmin(UpdateView):
     fields = ['number_guests', 'table', 'comment']
     template_name_suffix = '_update_form_admin'
     success_url = '/bookings/updated_reservations/'
+
+
+def show_tables(request):
+    date = '2021-11-19 17:00:00'
+    number_guests = 40
+    date_weekday = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').weekday()
+    current_date = str(datetime.now().date())
+
+    opens_closes = get_opening_hours(datetime.now().weekday())
+    opening_time_str = str(opens_closes[0])[0:2]
+    closing_time_str = str(opens_closes[1])[0:2]
+
+    booking_interval = 30
+    available_times = []
+
+    for i in range(int(opening_time_str), int(closing_time_str)-2):
+        time_to_test = ':00:00'
+        start_to_pass = current_date + ' ' + str(i) + time_to_test
+        available_tables = get_available_tables(start_to_pass)
+        sum = 0
+        for table in available_tables:
+            sum += table.size
+        if sum >= number_guests:
+            available_times.append(f'{i}:00 ')
+        if i < int(closing_time_str)-3:
+            for minute in range(booking_interval, 60, booking_interval):
+                time_to_add = str(minute)
+                time_to_test = ':' + time_to_add + ':00'
+                available_tables = get_available_tables(start_to_pass)
+                sum = 0
+                for table in available_tables:
+                    sum += table.size
+                if sum >= number_guests:
+                    available_times.append(f'{i}:{minute} ')
+
+    return HttpResponse(date_weekday)

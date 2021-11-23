@@ -4,8 +4,11 @@
     {% if user.is_authenticated %}
         <form method="post">
             {% csrf_token %}
+            {% for time in available_times_list %}
+            <input type="radio" value="{{time}}" name="{{time}}">{{time}}</button>
+            {% endfor %}
             {{ form.as_p }}
-            <input type="submit" value="Submit" name='message_frm'>
+            <input type="submit" value="Submit" name='submit'>
         </form>
     {% else %}
     <p>Please log in to make a reservation</p>

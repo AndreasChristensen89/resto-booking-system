@@ -145,34 +145,35 @@ def return_tables(request_start, number_guests):
             optimal_solution = fitting_tables_1table
         elif abs(best_comb_2tables) <= abs(best_comb_3tables):
             optimal_solution = fitting_tables_2tables
-        elif abs(best_comb_3tables) <abs(best_comb_2tables):
+        elif abs(best_comb_3tables) < abs(best_comb_2tables):
             optimal_solution = fitting_tables_3tables
 
     return optimal_solution
 
 
-def display_available_times():
-    date = '2021-11-19 17:00:00'
-    number_guests = 12
-    current_date = str(datetime.now().date())
-    date_weekday = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').weekday()
+def display_available_times(request_start, number_guests):
+    # date = '2021-11-19 17:00:00'
+    # number_guests = 12
+    # 02-11-2021
+    # current_date = str(datetime.now().date())
+    date_weekday = datetime.strptime(request_start, '%Y-%m-%d').weekday()
 
     opens_closes = get_opening_hours(date_weekday)
     opening_time_str = str(opens_closes[0])[0:2]
     closing_time_str = str(opens_closes[1])[0:2]
 
-    booking_interval = 60
+    booking_interval = 30
     available_times = []
 
     for i in range(int(opening_time_str), int(closing_time_str)-2):
         time_to_test = ':00:00'
-        start_to_pass = current_date + ' ' + str(i) + time_to_test
+        start_to_pass = str(request_start) + ' ' + str(i) + time_to_test
         available_tables = get_available_tables(start_to_pass)
         sum = 0
         for table in available_tables:
             sum += table.size
-        if sum >= number_guests:
-            available_times.append(f'{i}:00 ')
+        if sum >= int(number_guests):
+            available_times.append(f'{i}:00')
         if i < int(closing_time_str)-3:
             for minute in range(booking_interval, 60, booking_interval):
                 time_to_add = str(minute)
@@ -181,7 +182,7 @@ def display_available_times():
                 sum = 0
                 for table in available_tables:
                     sum += table.size
-                if sum >= number_guests:
-                    available_times.append(f'{i}:{minute} ')
+                if sum >= int(number_guests):
+                    available_times.append(f'{i}:{minute}')
     
     return available_times

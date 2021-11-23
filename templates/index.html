@@ -8,9 +8,18 @@
 
 <h1>Welcome Admin</h1>
 
+<h3>Make a booking: </h3>
+
+<form action="/bookings/book_table/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+
 {% elif user.is_authenticated %}
 
 <h1>Welcome {{user.username}}</h1>
+
 {% else %}
 
 <h1>Welcome to the site.</h1>
