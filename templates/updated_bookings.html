@@ -8,6 +8,8 @@
             <p>Name: {{booking.first_name}} {{booking.last_name}}</p>
             <p>Date: {{booking.booking_start}}</p>
             <p>Message: {{booking.comment}}</p>
+            <p>Created on: {{booking.created_on}}</p>
+            <p>Updated on: {{booking.updated_on}}</p>
             <a href="{% url 'bookings:update_booking_admin' booking.slug %}" class="card-link">Edit Reservation</a>
             <hr>
         {% endif %}

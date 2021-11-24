@@ -4,7 +4,7 @@
 {% if user.is_superuser %}
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" name="Submit">
+    <input type="submit" name="Submit" value="Update">
 </form>
 <a href="{% url 'bookings:updated_list' %}">Return</a>
 {% endif %}

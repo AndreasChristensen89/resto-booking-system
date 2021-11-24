@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
-from django.template import loader
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
@@ -9,47 +8,33 @@ from .booking import return_tables, get_available_tables, get_opening_hours, dis
 from datetime import datetime
 
 
-# def times_available(request):
-#     date = request.POST.get('date', None)
-#     number = request.POST.get('number', None)
-#     list = display_available_times(date, number)
-#     return render(request, 'book_table.html', {'available_times_list': list, 'date': date, 'number': number})
-
-
-# def get_date_and_guests(request):
-#     context = {}
-#     system = request.POST.get('dateguests', None)
-#     context['dateguests'] = system
-#     return render(request, 'select_date_form.html', context)
-
-    # if request.method == 'POST':
-    #     form = DateAndGuestsForm(request.POST)
-    #     if form.is_valid():
-    #         return HttpResponseRedirect('/firstform')
-    # else:
-    #     form = DateAndGuestsForm()
-
-    # return render(request, 'select_date_form.html', {'form': form})
-
-
 def book_table(request):
     book_form = BookTableForm()
-    number = request.POST.get('number_guests')
-    date = request.POST.get('day')
-    list = display_available_times('2021-11-29', '4')
+    # number = request.POST.get('number')     # 12
+    # date = request.POST.get('day')  # 2021-12-25
+    # list = display_available_times(request.POST.get('date'), request.POST.get('number_guests'))
 
     if request.method == 'POST':
         book_form = BookTableForm(request.POST)
+        book_form.fields['number_guests'].initial = number
 
         if book_form.is_valid():
             obj = book_form.save(commit=False)
-            datetime_to_add = '2021-11-29' + ' ' + '15:00:00'
-            obj.number_guests = '4'
+            # datetime_str = str(date) + ' ' + '15:00'
+            # datetime_obj = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M')
+            # obj.number_guests = number
             obj.author = request.user
-            obj.booking_start = datetime.strptime(datetime_to_add, '%Y-%m-%d %H:%M:%S')
+            # obj.booking_start = datetime_to_add
+            # obj.booking_start = datetime.strptime(datetime_to_add, '%Y-%m-%d %H:%M')
+            tables = return_tables(str(obj.booking_start), obj.number_guests)
+            time = obj.booking_start.time()
+            weekday = obj.booking_start.weekday()
+            if get_opening_hours(weekday):
+                lol
+            if len(tables) < 1:
+                raise Exception("No tables were found")
             obj.save()
 
-            tables = return_tables(str(obj.booking_start), obj.number_guests)
             if tables is not None:
                 for table in tables:
                     obj.table.add(table)
@@ -57,8 +42,9 @@ def book_table(request):
             return HttpResponseRedirect('/bookings/')
     else:
         book_form = BookTableForm()
-
-    context = {'form': book_form, 'available_times_list': list}
+    
+    context = {'form': book_form}
+    # context = {'form': book_form, 'available_times_list': list, 'number': number, 'date': date}
 
     return render(request, 'book_table.html', context)
 

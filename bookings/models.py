@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import timedelta, date
-import datetime
-from django.urls import reverse
+from datetime import timedelta
 
 
 STATUS = ((0, "Pending"), (1, "Approved"), (2, "Declined"))
@@ -20,13 +18,13 @@ class Booking(models.Model):
     last_name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='table_booking')
-    number_guests = models.PositiveIntegerField(blank=True, null=True)
-    booking_start = models.DateTimeField(blank=True)
-    booking_end = models.DateTimeField(blank=True)
+    number_guests = models.PositiveIntegerField(blank=True)
+    booking_start = models.DateTimeField()
+    booking_end = models.DateTimeField()
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
-    comment = models.TextField(max_length=300)
+    comment = models.TextField(max_length=200, blank=True)
     table = models.ManyToManyField(Table, related_name='booking_tables', blank=True)
     
     def save(self, *args, **kwargs):
@@ -69,3 +67,20 @@ class OpeningHours(models.Model):
 
     def __str__(self):
         return f'{self.weekday}: from {self.from_time} to {self.to_time}'
+
+
+INTERVALS = (
+  (5, "5"),
+  (10, "10"),
+  (15, "15"),
+  (20, "20"),
+  (30, "30"),
+)
+
+
+class BookingDetails(models.Model):
+    booking_intervals_minutes = models.PositiveIntegerField(choices=INTERVALS)
+    booking_duration_minutes = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'Bookings possible every {self.booking_intervals_minutes} minutes'
