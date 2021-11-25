@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if user.is_superuser %}
+    <hr>
+    {% now 'Y-m-d H:i' as todays_date %}
+    {% for booking in pending_list %}
+        {% if booking.booking_end|date:'Y-m-d H:i' > todays_date  %}
+            <p>Name: {{booking.first_name}} {{booking.last_name}}</p>
+            <p>Date: {{booking.booking_start}}</p>
+            <p>Message: {{booking.comment}}</p>
+            {% for table in booking.table.all %}
+                <p>1 x table for {{ table.size }}</p>
+            {% endfor %}
+            {% if booking.table.all|length == 0 %}
+                <p>Warning: No tables have been assigned to booking!</p>
+            {% endif %}
 
+            <a href="{% url 'bookings:approve_booking' booking.slug %}" class="card-link">Approve/Decline</a>
+            <hr>
+        {% endif %}
+    {% endfor %}
+
+{% endif %}
 {% endblock %}

@@ -41,6 +41,7 @@
                   <li><a class="dropdown-item" href="{% url 'bookings:book_table' %}">Make new booking</a></li>
                   <li><a class="dropdown-item" href="{% url 'bookings:booking_list' %}">Bookings made</a></li>
                   {% if user.is_superuser%}
+                  <li><a class="dropdown-item" href="{% url 'bookings:pending_bookings' %}">Pending bookings</a></li>
                   <li><a class="dropdown-item" href="{% url 'bookings:updated_list' %}">Updated bookings</a></li>
                   {% endif %}
                 </ul>

@@ -23,6 +23,7 @@ def get_opening_hours(current_date_weekday):
 def generate_request_end(request_start):
     # request_start is string format, so we do some logic to change the two chars to +3 hours
     # this works for reservations until 21:00
+    # Add bookingDetails model instead of +3
     full_string = list(request_start)
     end_integer = int(full_string[11] + full_string[12]) + 3
     full_string[11] = str(end_integer)[0]

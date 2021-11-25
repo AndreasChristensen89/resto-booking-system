@@ -16,7 +16,6 @@ def book_table(request):
 
     if request.method == 'POST':
         book_form = BookTableForm(request.POST)
-        book_form.fields['number_guests'].initial = number
 
         if book_form.is_valid():
             obj = book_form.save(commit=False)
@@ -27,10 +26,6 @@ def book_table(request):
             # obj.booking_start = datetime_to_add
             # obj.booking_start = datetime.strptime(datetime_to_add, '%Y-%m-%d %H:%M')
             tables = return_tables(str(obj.booking_start), obj.number_guests)
-            time = obj.booking_start.time()
-            weekday = obj.booking_start.weekday()
-            if get_opening_hours(weekday):
-                lol
             if len(tables) < 1:
                 raise Exception("No tables were found")
             obj.save()
@@ -65,6 +60,15 @@ class BookingsUpdated(generic.ListView):
     template_name = 'updated_bookings.html'
 
 
+class BookingsPending(generic.ListView):
+    model = Booking
+    context_object_name = "pending_list"
+    queryset = Booking.objects.filter(
+        status=0
+    )
+    template_name = 'booking_pending.html'
+
+
 class BookingDetail(View):
 
     def get(self, request, slug, *args, **kwargs):
@@ -94,9 +98,16 @@ class UpdateReservationView(UpdateView):
 
 class UpdateReservationViewAdmin(UpdateView):
     model = Booking
-    fields = ['number_guests', 'table', 'comment']
+    fields = ['number_guests', 'table', 'comment', 'status']
     template_name_suffix = '_update_form_admin'
     success_url = '/bookings/updated_reservations/'
+
+
+class ApproveReservationViewAdmin(UpdateView):
+    model = Booking
+    fields = ['table', 'status']
+    template_name_suffix = '_approve_form'
+    success_url = '/bookings/pending_bookings/'
 
 
 def show_tables(request):
