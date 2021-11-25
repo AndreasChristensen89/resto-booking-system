@@ -55,6 +55,7 @@ get() returned more than one Reservation -- it returned 2!
 - When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate
 - When calculating available seats the system assumes that closing time is on an full-hour mark. Does not calculate properly if e.g. 20:30 is the closing time
 - Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long.
+- Cancel function on site doesn't work if there are multiple reservations with the same slug
 
 
 Fixed bugs

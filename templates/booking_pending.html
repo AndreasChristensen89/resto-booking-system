@@ -3,6 +3,9 @@
 {% block content %}
 {% if user.is_superuser %}
     <hr>
+    {% if pending_list|length == 0 %}
+        <p>There are no pending bookings</p>
+    {% else %}
     {% now 'Y-m-d H:i' as todays_date %}
     {% for booking in pending_list %}
         {% if booking.booking_end|date:'Y-m-d H:i' > todays_date  %}
@@ -20,6 +23,7 @@
             <hr>
         {% endif %}
     {% endfor %}
+    {% endif %}
 
 {% endif %}
 {% endblock %}

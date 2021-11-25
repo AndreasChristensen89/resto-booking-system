@@ -4,7 +4,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from .models import Booking
 from .forms import BookTableForm
-from .booking import return_tables, get_available_tables, get_opening_hours, display_available_times
+from .booking import return_tables, get_available_tables, get_opening_hours, test_available_times
 from datetime import datetime
 
 
@@ -25,9 +25,11 @@ def book_table(request):
             obj.author = request.user
             # obj.booking_start = datetime_to_add
             # obj.booking_start = datetime.strptime(datetime_to_add, '%Y-%m-%d %H:%M')
-            tables = return_tables(str(obj.booking_start), obj.number_guests)
-            if len(tables) < 1:
+            if test_available_times(obj.booking_start, obj.number_guests) < 1:
                 raise Exception("No tables were found")
+            tables = return_tables(str(obj.booking_start), obj.number_guests)
+            # if len(tables) < 1:
+            #     raise Exception("No tables were found")
             obj.save()
 
             if tables is not None:

@@ -1,5 +1,5 @@
 from datetime import datetime
-from .models import Booking, Table, OpeningHours
+from .models import Booking, Table, OpeningHours, bookingDetails
 
 
 def get_opening_hours(current_date_weekday):
@@ -152,38 +152,51 @@ def return_tables(request_start, number_guests):
     return optimal_solution
 
 
-def display_available_times(request_start, number_guests):
+def test_available_times(request_start, number_guests):
     # date = '2021-11-19 17:00:00'
     # number_guests = 12
     # 02-11-2021
     # current_date = str(datetime.now().date())
     date_weekday = datetime.strptime(request_start, '%Y-%m-%d').weekday()
+    request_time = datetime.strptime(request_start, '%Y-%m-%d').time()
 
     opens_closes = get_opening_hours(date_weekday)
     opening_time_str = str(opens_closes[0])[0:2]
     closing_time_str = str(opens_closes[1])[0:2]
 
-    booking_interval = 30
-    available_times = []
+    available_tables = False
 
-    for i in range(int(opening_time_str), int(closing_time_str)-2):
-        time_to_test = ':00:00'
-        start_to_pass = str(request_start) + ' ' + str(i) + time_to_test
-        available_tables = get_available_tables(start_to_pass)
+    if int(request_time) >= opens_closes[0] and int(request_time) + BookingDetails.booking_duration_minutes >= opens_closes[1]:
+        availability_check = get_available_tables(request_start)
         sum = 0
-        for table in available_tables:
+        for table in availability_check:
             sum += table.size
-        if sum >= int(number_guests):
-            available_times.append(f'{i}:00')
-        if i < int(closing_time_str)-3:
-            for minute in range(booking_interval, 60, booking_interval):
-                time_to_add = str(minute)
-                time_to_test = ':' + time_to_add + ':00'
-                available_tables = get_available_tables(start_to_pass)
-                sum = 0
-                for table in available_tables:
-                    sum += table.size
-                if sum >= int(number_guests):
-                    available_times.append(f'{i}:{minute}')
+        if sum >= number_guests:
+            available_tables = True
     
-    return available_times
+    return available_tables
+
+    # booking_interval = 30
+    # available_times = []
+
+    # for i in range(int(opening_time_str), int(closing_time_str)-2):
+    #     time_to_test = ':00:00'
+    #     start_to_pass = str(request_start) + ' ' + str(i) + time_to_test
+    #     available_tables = get_available_tables(start_to_pass)
+    #     sum = 0
+    #     for table in available_tables:
+    #         sum += table.size
+    #     if sum >= int(number_guests):
+    #         available_times.append(f'{i}:00')
+    #     if i < int(closing_time_str)-3:
+    #         for minute in range(booking_interval, 60, booking_interval):
+    #             time_to_add = str(minute)
+    #             time_to_test = ':' + time_to_add + ':00'
+    #             available_tables = get_available_tables(start_to_pass)
+    #             sum = 0
+    #             for table in available_tables:
+    #                 sum += table.size
+    #             if sum >= int(number_guests):
+    #                 available_times.append(f'{i}:{minute}')
+    
+    # return available_times
