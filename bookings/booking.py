@@ -1,23 +1,12 @@
-from datetime import datetime
-from .models import Booking, Table, OpeningHours, bookingDetails
+from datetime import datetime, timedelta
+from .models import Booking, Table, OpeningHours, BookingDetails
 
 
 def get_opening_hours(current_date_weekday):
-    list_times = []
     opening_time = OpeningHours.objects.filter(
-        weekday=current_date_weekday).values('from_time')
-    closing_time = OpeningHours.objects.filter(
-        weekday=current_date_weekday).values('to_time')
-    for opening in opening_time:
-        list_times.append(opening)
-    for closing in closing_time:
-        list_times.append(closing)
-    extracted_times = []
-    for time in range(len(list_times)):
-        for key in list_times[time]:
-            extracted_times.append(list_times[time][key])
-    
-    return extracted_times
+        weekday=current_date_weekday)
+
+    return opening_time
 
 
 def generate_request_end(request_start):
@@ -148,25 +137,45 @@ def return_tables(request_start, number_guests):
             optimal_solution = fitting_tables_2tables
         elif abs(best_comb_3tables) < abs(best_comb_2tables):
             optimal_solution = fitting_tables_3tables
+    
+    if not optimal_solution:
+        optimal_solution = sort_large_party(request_start, number_guests, available_tables)
 
     return optimal_solution
 
 
-def test_available_times(request_start, number_guests):
-    # date = '2021-11-19 17:00:00'
-    # number_guests = 12
-    # 02-11-2021
-    # current_date = str(datetime.now().date())
-    date_weekday = datetime.strptime(request_start, '%Y-%m-%d').weekday()
-    request_time = datetime.strptime(request_start, '%Y-%m-%d').time()
+def sort_large_party(request_start, number_guests, available_tables):
+    available_tables.sort(key=lambda x: x.size, reverse=True)
+    tables_sorted = sorted(available_tables, key=lambda x: x.size, reverse=True)
 
-    opens_closes = get_opening_hours(date_weekday)
-    opening_time_str = str(opens_closes[0])[0:2]
-    closing_time_str = str(opens_closes[1])[0:2]
+    table_combination = []
+    sum = 0
+    for table in tables_sorted:
+        if sum < number_guests:
+            table_combination.append(table)
+            sum += table.size
+    if sum < number_guests:
+        table_combination = []
+    
+    return table_combination
+
+
+def test_available_times(request_start, number_guests):
+    start = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S')
+ 
+    start_time = start.time()   # 17:00:00
+    duration = BookingDetails.objects.all()[0].booking_duration_minutes
+    end = start + timedelta(minutes=duration)   # 180
+    end_time = end.time()       # 20:00:00
+
+    opens_closes = get_opening_hours(start.weekday())  # 10:00:0023:00:00
+    opening_time = opens_closes[0].from_time
+    closing_time = opens_closes[0].to_time
 
     available_tables = False
+    availability_check = []
 
-    if int(request_time) >= opens_closes[0] and int(request_time) + BookingDetails.booking_duration_minutes >= opens_closes[1]:
+    if start_time >= opening_time and end_time <= closing_time:
         availability_check = get_available_tables(request_start)
         sum = 0
         for table in availability_check:
@@ -176,27 +185,12 @@ def test_available_times(request_start, number_guests):
     
     return available_tables
 
-    # booking_interval = 30
-    # available_times = []
 
-    # for i in range(int(opening_time_str), int(closing_time_str)-2):
-    #     time_to_test = ':00:00'
-    #     start_to_pass = str(request_start) + ' ' + str(i) + time_to_test
-    #     available_tables = get_available_tables(start_to_pass)
-    #     sum = 0
-    #     for table in available_tables:
-    #         sum += table.size
-    #     if sum >= int(number_guests):
-    #         available_times.append(f'{i}:00')
-    #     if i < int(closing_time_str)-3:
-    #         for minute in range(booking_interval, 60, booking_interval):
-    #             time_to_add = str(minute)
-    #             time_to_test = ':' + time_to_add + ':00'
-    #             available_tables = get_available_tables(start_to_pass)
-    #             sum = 0
-    #             for table in available_tables:
-    #                 sum += table.size
-    #             if sum >= int(number_guests):
-    #                 available_times.append(f'{i}:{minute}')
-    
-    # return available_times
+def number_of_guests(request_start):
+    bookings = Booking.objects.filter(
+        booking_start=request_start)
+    sum_guests = 0
+    for booking in bookings:
+        sum_guests += booking.number_guests
+
+    return sum_guests

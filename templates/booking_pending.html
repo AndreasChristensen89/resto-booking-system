@@ -11,6 +11,7 @@
         {% if booking.booking_end|date:'Y-m-d H:i' > todays_date  %}
             <p>Name: {{booking.first_name}} {{booking.last_name}}</p>
             <p>Date: {{booking.booking_start}}</p>
+            <p>Guests: {{booking.number_guests}}</p>
             <p>Message: {{booking.comment}}</p>
             {% for table in booking.table.all %}
                 <p>1 x table for {{ table.size }}</p>
