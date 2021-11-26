@@ -17,7 +17,7 @@ Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0
 Implemented authetication check when canceling and updating reservations. The check is already done on the reservation list, but the url can be typed in as long as you know the username, which opens up the possibility for non-users to change the reservation.
 -   no longer an issue. user.authentication added.
 
-Add restaurant model to have the restaurant be able to set reservation interval
+Add restaurant model to have the restaurant be able to set reservation interval - done
 
 Consider two step reservation:
 1. page for entering datetime and number of people - calls check functions - if approved redirects to personal details
@@ -38,10 +38,8 @@ TABLE SORT LOGIC:
         - 2-table option and 3-table option are compared
 7. This is the basic logic, and admin can change which tables are given at any point.
 
-FORM NOTES
-Right now I cannot add the three hours to booking_start "normally" using timedelta since the datetime input is presented in string form. Therefore, I added four steps to recreate a string with three hours added.
 
-Bugs to fix:
+Current bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
 get() returned more than one Reservation -- it returned 2!
 - When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
@@ -49,17 +47,23 @@ get() returned more than one Reservation -- it returned 2!
 - When creating a reservation the updated_bookings page sets it to "not updated" because it's booked within the same minut. However, if a user updates the reservation, e.g. number of people, within that minute, it is still registered as "not updated".
     - If I change the setting to be within the same second, it's automatically added as "updated" since created_on and updated_on may be added in different seconds.
 - Admin cannot book tables with specifying booking_end - prepopulated-fields to be tested
-- When 12:00 is booked, django writes 12 as "noon", and the function doesn't work because it expects an integer
 - bootstrap widget implementation from this site: https://pypi.org/project/django-bootstrap-datepicker-plus/
     - Not currently implemented, however, the following is installed: pip install django-bootstrap-datepicker-plus
 - When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate
-- When calculating available seats the system assumes that closing time is on an full-hour mark. Does not calculate properly if e.g. 20:30 is the closing time
 - Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long.
-- Cancel function on site doesn't work if there are multiple reservations with the same slug
+- Same user can make many bookings at the same datetime - run a check for booking.author in all bookings and test for booking_start
 
 
 Fixed bugs
 - Update booking doesn't work for some reason. Information is not updated. Gives following error: "POST /bookings/LavaBoy/update/ HTTP/1.1" 302 0 - Was due to view function. The save() command was in the wrong order
+- Cancel function on site doesn't work if there are multiple reservations with the same slug
+    Added random string to every slug due to double slugs if first name + last name is the same as another reservation
+- Right now I cannot add the three hours to booking_start "normally" using timedelta since the datetime input is presented in string form. Therefore, I added four steps to recreate a string with three hours added.
+    booking_start now uses datetime format
+- When 12:00 is booked, django writes 12 as "noon", and the function doesn't work because it expects an integer
+    now uses datetime, and is no longer an issue
+- When calculating available seats the system assumes that closing time is on an full-hour mark. Does not calculate properly if e.g. 20:30 is the closing time
+    No longer uses this feature. User is shown validation error in form and uses datetime to calculate available tables
 
 TIPS
 To reset database: python manage.py migrate MyApp zero

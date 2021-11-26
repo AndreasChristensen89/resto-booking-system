@@ -133,32 +133,58 @@ def return_tables(request_start, number_guests):
             optimal_solution = fitting_tables_2tables
         elif abs(best_comb_3tables) < abs(best_comb_2tables):
             optimal_solution = fitting_tables_3tables
- 
+
     if not optimal_solution:
-        optimal_solution = sort_large_party(request_start, number_guests, available_tables)
+        optimal_solution = sort_large_party(number_guests, available_tables)
 
     return optimal_solution
 
 
-def sort_large_party(request_start, number_guests, available_tables):
+def sort_large_party(number_guests, available_tables):
+    # sorting available tables, biggest first
     available_tables.sort(key=lambda x: x.size, reverse=True)
     tables_sorted = sorted(available_tables, key=lambda x: x.size, reverse=True)
 
     table_combination = []
-    sum = 0
+    check_two = []
+    sum_seats = 0
+    range_value = 0
+
     for table in tables_sorted:
-        if sum < number_guests:
-            table_combination.append(table)
-            sum += table.size
-    if sum < number_guests:
+        if sum_seats < number_guests:
+            if (sum_seats + table.size) <= number_guests:
+                table_combination.append(table)
+                sum_seats += table.size
+            else:
+                check_two.append(table)
+                if table.size > range_value:
+                    range_value = table.size
+        else:
+            break
+
+    if sum_seats < number_guests:
+        check_two.sort()
+        difference = number_guests - sum_seats
+        list_temp = []
+        for table in check_two:
+            if table.size == difference:
+                table_combination.append(table)
+                sum_seats += table.size
+                break
+            elif not list_temp or table.size < list_temp[0]:
+                list_temp = []
+                list_temp.append(table)
+        table_combination.append(list_temp[0])
+        sum_seats += list_temp[0].size
+
+    if sum_seats < number_guests:
         table_combination = []
-    
+
     return table_combination
 
 
 def test_time(request_start):
     start_time = request_start.time()
-    duration = BookingDetails.objects.all()[0].booking_duration_minutes
     end = generate_request_end(request_start)
     end_time = end.time()
 
@@ -176,13 +202,13 @@ def test_time(request_start):
 
 def test_available_times(request_start, number_guests):
     start = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S')
- 
-    start_time = start.time()   # 17:00:00
-    duration = BookingDetails.objects.all()[0].booking_duration_minutes
-    end = start + timedelta(minutes=duration)   # 180
-    end_time = end.time()       # 20:00:00
 
-    opens_closes = get_opening_hours(start.weekday())  # 10:00:0023:00:00
+    start_time = start.time()
+    duration = BookingDetails.objects.all()[0].booking_duration_minutes
+    end = start + timedelta(minutes=duration)
+    end_time = end.time()
+
+    opens_closes = get_opening_hours(start.weekday())
     opening_time = opens_closes[0].from_time
     closing_time = opens_closes[0].to_time
 
@@ -196,7 +222,7 @@ def test_available_times(request_start, number_guests):
             sum += table.size
         if sum >= number_guests:
             available_tables = True
-    
+
     return available_tables
 
 
