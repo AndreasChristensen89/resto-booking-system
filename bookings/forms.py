@@ -1,5 +1,6 @@
 from django import forms
 from .models import Booking
+from restaurant.models import BookingDetails
 import datetime
 from .booking import return_tables, test_time, get_opening_hours
 
@@ -10,7 +11,7 @@ class BookTableForm(forms.ModelForm):
         fields = [
             'first_name', 'last_name', 'number_guests', 'booking_start', 'comment'
             ]
-    
+
     def clean(self):
         number_guests = self.cleaned_data.get('number_guests')
         booking_start = self.cleaned_data.get('booking_start')

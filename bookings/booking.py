@@ -1,5 +1,6 @@
-from datetime import datetime, timedelta
-from .models import Booking, Table, OpeningHours, BookingDetails
+from datetime import timedelta
+from .models import Booking, Table
+from restaurant.models import OpeningHours, BookingDetails
 
 
 def get_opening_hours(requested_weekday):
@@ -10,7 +11,7 @@ def get_opening_hours(requested_weekday):
 
 
 def generate_request_end(request_start):
-    duration = BookingDetails.objects.all()[0].booking_duration_minutes
+    duration = BookingDetails.objects.all()[0].booking_duration
     request_end = request_start + timedelta(minutes=duration)
 
     return request_end
@@ -20,9 +21,7 @@ def get_available_tables(request_start):
     """
     This method returns the first available table(s) of the restaurant
     """
-    # request_start = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S')
     request_end = generate_request_end(request_start)
-    # request_end = generate_request_end(request_start)
     unavailable_tables = []
 
     # 1. Remove existing reserv. that have the same start-time
@@ -141,6 +140,11 @@ def return_tables(request_start, number_guests):
 
 
 def sort_large_party(number_guests, available_tables):
+    # Logic not complete, example:
+    # tables = [8, 5, 4, 3, 3, 2] - guests = 9
+    # best option would be 5 + 4, but it picks biggest table first
+    # will therefore pick 8 + 2 since 2 wastes the least seats
+
     # sorting available tables, biggest first
     available_tables.sort(key=lambda x: x.size, reverse=True)
     tables_sorted = sorted(available_tables, key=lambda x: x.size, reverse=True)
@@ -150,6 +154,8 @@ def sort_large_party(number_guests, available_tables):
     sum_seats = 0
     range_value = 0
 
+    # Add biggest first, if sum passes guests it's not added
+    # All tables that causes surplus are added to new list
     for table in tables_sorted:
         if sum_seats < number_guests:
             if (sum_seats + table.size) <= number_guests:
@@ -162,6 +168,8 @@ def sort_large_party(number_guests, available_tables):
         else:
             break
 
+    # if not perfect match it will run through the remains
+    # add table that wastes the least seats
     if sum_seats < number_guests:
         check_two.sort()
         difference = number_guests - sum_seats
@@ -200,30 +208,30 @@ def test_time(request_start):
     return within_hours
 
 
-def test_available_times(request_start, number_guests):
-    start = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S')
+# def test_available_times(request_start, number_guests):
+#     start = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S')
 
-    start_time = start.time()
-    duration = BookingDetails.objects.all()[0].booking_duration_minutes
-    end = start + timedelta(minutes=duration)
-    end_time = end.time()
+#     start_time = start.time()
+#     duration = BookingDetails.objects.all()[0].booking_duration_minutes
+#     end = start + timedelta(minutes=duration)
+#     end_time = end.time()
 
-    opens_closes = get_opening_hours(start.weekday())
-    opening_time = opens_closes[0].from_time
-    closing_time = opens_closes[0].to_time
+#     opens_closes = get_opening_hours(start.weekday())
+#     opening_time = opens_closes[0].from_time
+#     closing_time = opens_closes[0].to_time
 
-    available_tables = False
-    availability_check = []
+#     available_tables = False
+#     availability_check = []
 
-    if start_time >= opening_time and end_time <= closing_time:
-        availability_check = get_available_tables(request_start)
-        sum = 0
-        for table in availability_check:
-            sum += table.size
-        if sum >= number_guests:
-            available_tables = True
+#     if start_time >= opening_time and end_time <= closing_time:
+#         availability_check = get_available_tables(request_start)
+#         sum = 0
+#         for table in availability_check:
+#             sum += table.size
+#         if sum >= number_guests:
+#             available_tables = True
 
-    return available_tables
+#     return available_tables
 
 
 def number_of_guests(request_start):

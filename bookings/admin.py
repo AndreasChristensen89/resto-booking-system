@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Booking, Table, OpeningHours, BookingDetails
+from .models import Booking, Table
 
 
 @admin.register(Booking)
@@ -22,5 +22,3 @@ class AdminBookings(admin.ModelAdmin):
 
 
 admin.site.register(Table)
-admin.site.register(OpeningHours)
-admin.site.register(BookingDetails)

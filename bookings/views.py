@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from .models import Booking, BookingDetails
+from .models import Booking
+from restaurant.models import BookingDetails
 from .forms import BookTableForm
-from .booking import return_tables, get_available_tables, generate_request_end, get_opening_hours
-from datetime import datetime, timedelta
+from .booking import return_tables
+from datetime import datetime
 
 
 def book_table(request):
@@ -16,18 +17,19 @@ def book_table(request):
 
         if form.is_valid():
             obj = form.save(commit=False)
-            tables = return_tables(obj.booking_start, obj.number_guests)
             obj.author = request.user
             obj.save()
             # save the many-to-many data for the form.
-            if tables is not None:
+            tables = return_tables(obj.booking_start, obj.number_guests)
+            table_assign = BookingDetails.objects.all()
+            if table_assign[0].auto_table_assign and tables is not None:
                 for table in tables:
                     obj.table.add(table)
-            form.save_m2m()
+                form.save_m2m()
             return HttpResponseRedirect('/bookings/')
     else:
         form = BookTableForm()
-    
+
     context = {'form': form}
 
     return render(request, 'book_table.html', context)
@@ -100,7 +102,6 @@ class ApproveReservationViewAdmin(UpdateView):
 
 
 def show_tables(request):
-    start = '2021-11-06 21:01:00'
-    request_start = datetime.strptime(start, '%Y-%m-%d %H:%M:%S')
+    autoassign = BookingDetails.objects.all()
 
-    return HttpResponse()
+    return HttpResponse(autoassign[0].auto_table_assign)

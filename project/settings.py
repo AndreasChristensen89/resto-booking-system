@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'homepage',
     'menu',
     'bookings',
+    'restaurant',
 ]
 
 SITE_ID = 1
