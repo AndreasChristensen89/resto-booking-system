@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta
+import random
+import string
 
 
 STATUS = ((0, "Pending"), (1, "Approved"), (2, "Declined"))
@@ -30,7 +32,9 @@ class Booking(models.Model):
     def save(self, *args, **kwargs):
         if not self.booking_end and not self.slug and self.booking_start:
             self.booking_end = self.booking_start + timedelta(hours=3)
-            self.slug = self.first_name+self.last_name
+            letters = string.ascii_lowercase
+            random_str = ''.join(random.choice(letters) for i in range(8))
+            self.slug = self.first_name+self.last_name+random_str
         super().save(*args, **kwargs)
 
     class Meta:

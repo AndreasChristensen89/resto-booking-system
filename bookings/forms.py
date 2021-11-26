@@ -1,7 +1,7 @@
 from django import forms
 from .models import Booking
 import datetime
-from .booking import return_tables, test_time
+from .booking import return_tables, test_time, get_opening_hours
 
 
 class BookTableForm(forms.ModelForm):
@@ -18,9 +18,10 @@ class BookTableForm(forms.ModelForm):
         tables = return_tables(booking_start, number_guests)
 
         if not test_time(booking_start):
-            raise forms.ValidationError("Not within opening hours")
-        if not tables:
-            raise forms.ValidationError("There are unfortunately not enough seats to accomodate your party at the requested time")
+            opening_hours = get_opening_hours(booking_start.weekday())
+            raise forms.ValidationError(f'Not within opening hours: {opening_hours[0].from_time} to {opening_hours[0].to_time}')
+        elif not tables:
+            raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party")
 
 
 class DateAndGuestsForm(forms.Form):
