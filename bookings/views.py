@@ -2,35 +2,33 @@ from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from .models import Booking, BookingDetails, Table
+from .models import Booking, BookingDetails
 from .forms import BookTableForm
-from .booking import return_tables, get_available_tables, get_opening_hours, test_available_times, number_of_guests
+from .booking import return_tables, get_available_tables, generate_request_end, get_opening_hours
 from datetime import datetime, timedelta
 
 
 def book_table(request):
-    book_form = BookTableForm()
+    form = BookTableForm()
 
     if request.method == 'POST':
-        book_form = BookTableForm(request.POST)
+        form = BookTableForm(request.POST)
 
-        if book_form.is_valid():
-            obj = book_form.save(commit=False)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            tables = return_tables(obj.booking_start, obj.number_guests)
             obj.author = request.user
-            tables = return_tables(str(obj.booking_start), obj.number_guests)
-            if len(tables) < 1:
-                raise Exception("There are unfortunately not enough tables to accomodate your party")
             obj.save()
-
+            # save the many-to-many data for the form.
             if tables is not None:
                 for table in tables:
                     obj.table.add(table)
-            obj.save()
+            form.save_m2m()
             return HttpResponseRedirect('/bookings/')
     else:
-        book_form = BookTableForm()
+        form = BookTableForm()
     
-    context = {'form': book_form}
+    context = {'form': form}
 
     return render(request, 'book_table.html', context)
 
@@ -102,22 +100,7 @@ class ApproveReservationViewAdmin(UpdateView):
 
 
 def show_tables(request):
-    request_start = '2021-11-06 17:00:00'
-    number_guests = 24
-    available_tables = get_available_tables(request_start)
+    start = '2021-11-06 21:01:00'
+    request_start = datetime.strptime(start, '%Y-%m-%d %H:%M:%S')
 
-    # Sort list from higest to lowest
-    available_tables.sort(key=lambda x: x.size, reverse=True)
-    tables_sorted = sorted(available_tables, key=lambda x: x.size, reverse=True)
-
-    table_combination = []
-    sum = 0
-    for table in tables_sorted:
-        if sum < number_guests:
-            table_combination.append(table)
-            sum += table.size
-        # elif sum > number_guests:
-        #     combination = table_combination
-        #     combination.pop()
-        #     if sum - table.size == number_guests
-    return HttpResponse(table_combination)
+    return HttpResponse()

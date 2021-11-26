@@ -13,11 +13,13 @@ def generate_request_end(request_start):
     # request_start is string format, so we do some logic to change the two chars to +3 hours
     # this works for reservations until 21:00
     # Add bookingDetails model instead of +3
-    full_string = list(request_start)
-    end_integer = int(full_string[11] + full_string[12]) + 3
-    full_string[11] = str(end_integer)[0]
-    full_string[12] = str(end_integer)[1]
-    request_end = "".join(full_string)
+    # full_string = list(request_start)
+    # end_integer = int(full_string[11] + full_string[12]) + 3
+    # full_string[11] = str(end_integer)[0]
+    # full_string[12] = str(end_integer)[1]
+    # request_end = "".join(full_string)
+    duration = BookingDetails.objects.all()[0].booking_duration_minutes
+    request_end = request_start + timedelta(minutes=duration)
 
     return request_end
 
@@ -26,7 +28,9 @@ def get_available_tables(request_start):
     """
     This method returns the first available table(s) of the restaurant
     """
+    # request_start = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S')
     request_end = generate_request_end(request_start)
+    # request_end = generate_request_end(request_start)
     unavailable_tables = []
 
     # 1. Remove existing reserv. that have the same start-time
@@ -79,7 +83,7 @@ def return_tables(request_start, number_guests):
     fitting_tables_3tables = []
     optimal_solution = []
 
-     # high number to be sure the following is lower
+    # high number to be sure the following is lower
     best_comb_1table = 100
     best_comb_2tables = 100
     best_comb_3tables = 100
@@ -137,7 +141,7 @@ def return_tables(request_start, number_guests):
             optimal_solution = fitting_tables_2tables
         elif abs(best_comb_3tables) < abs(best_comb_2tables):
             optimal_solution = fitting_tables_3tables
-    
+ 
     if not optimal_solution:
         optimal_solution = sort_large_party(request_start, number_guests, available_tables)
 
@@ -158,6 +162,24 @@ def sort_large_party(request_start, number_guests, available_tables):
         table_combination = []
     
     return table_combination
+
+
+def test_time(request_start):
+    start_time = request_start.time()
+    duration = BookingDetails.objects.all()[0].booking_duration_minutes
+    end = generate_request_end(request_start)
+    end_time = end.time()
+
+    opens_closes = get_opening_hours(request_start.weekday())
+    opening_time = opens_closes[0].from_time
+    closing_time = opens_closes[0].to_time
+
+    within_hours = True
+
+    if start_time < opening_time or end_time > closing_time or end_time < opening_time:
+        within_hours = False
+
+    return within_hours
 
 
 def test_available_times(request_start, number_guests):
