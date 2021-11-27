@@ -208,37 +208,25 @@ def test_time(request_start):
     return within_hours
 
 
-# def test_available_times(request_start, number_guests):
-#     start = datetime.strptime(request_start, '%Y-%m-%d %H:%M:%S')
+def double_booking(author, request_start, request_end):
+    double_booked = False
+    
+    bookings_exact = Booking.objects.filter(
+        author=author,
+        booking_start=request_start
+    )
+    bookings_before = Booking.objects.filter(
+        author=author,
+        booking_start__lt=request_start,
+        booking_end__gt=request_start
+    )
+    bookings_after = Booking.objects.filter(
+        author=author,
+        booking_start__lt=request_end,
+        booking_end__gt=request_end
+    )
 
-#     start_time = start.time()
-#     duration = BookingDetails.objects.all()[0].booking_duration_minutes
-#     end = start + timedelta(minutes=duration)
-#     end_time = end.time()
+    if bookings_exact or bookings_before or bookings_after:
+        double_booked = True
 
-#     opens_closes = get_opening_hours(start.weekday())
-#     opening_time = opens_closes[0].from_time
-#     closing_time = opens_closes[0].to_time
-
-#     available_tables = False
-#     availability_check = []
-
-#     if start_time >= opening_time and end_time <= closing_time:
-#         availability_check = get_available_tables(request_start)
-#         sum = 0
-#         for table in availability_check:
-#             sum += table.size
-#         if sum >= number_guests:
-#             available_tables = True
-
-#     return available_tables
-
-
-def number_of_guests(request_start):
-    bookings = Booking.objects.filter(
-        booking_start=request_start)
-    sum_guests = 0
-    for booking in bookings:
-        sum_guests += booking.number_guests
-
-    return sum_guests
+    return double_booked

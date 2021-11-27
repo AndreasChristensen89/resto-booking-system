@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from .models import Booking
 from restaurant.models import BookingDetails
 from .forms import BookTableForm
-from .booking import return_tables
+from .booking import return_tables, double_booking
 from datetime import datetime
 
 
@@ -20,12 +20,13 @@ def book_table(request):
             obj.author = request.user
             obj.save()
             # save the many-to-many data for the form.
-            tables = return_tables(obj.booking_start, obj.number_guests)
-            table_assign = BookingDetails.objects.all()
-            if table_assign[0].auto_table_assign and tables is not None:
-                for table in tables:
-                    obj.table.add(table)
-                form.save_m2m()
+            if not double_booking(obj.author.id, obj.booking_start, obj.booking_end):
+                tables = return_tables(obj.booking_start, obj.number_guests)
+                auto_assign = BookingDetails.objects.all()[0].auto_table_assign
+                if auto_assign and tables is not None:
+                    for table in tables:
+                        obj.table.add(table)
+                    form.save_m2m()
             return HttpResponseRedirect('/bookings/')
     else:
         form = BookTableForm()
@@ -102,6 +103,26 @@ class ApproveReservationViewAdmin(UpdateView):
 
 
 def show_tables(request):
-    autoassign = BookingDetails.objects.all()
+    author = 1
+    request_start = '2022-01-07 10:00:00'
+    request_end = '2022-01-07 13:00:00'
+    double_booked = False
+    
+    bookings_exact = Booking.objects.filter(
+        booking_start=request_start
+    )
+    bookings_before = Booking.objects.filter(
+        author=author,
+        booking_start__lt=request_start,
+        booking_end__gt=request_start
+    )
+    bookings_after = Booking.objects.filter(
+        author=author,
+        booking_start__lt=request_end,
+        booking_end__gt=request_end
+    )
 
-    return HttpResponse(autoassign[0].auto_table_assign)
+    if bookings_exact or bookings_before or bookings_after:
+        double_booked = True
+
+    return HttpResponse(double_booked)
