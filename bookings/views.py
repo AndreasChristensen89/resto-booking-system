@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from .models import Booking
 from restaurant.models import BookingDetails
 from .forms import BookTableForm
-from .booking import return_tables, double_booking
+from .booking import return_tables, double_booking, get_unavailable_tables
 from datetime import datetime
 
 
@@ -20,7 +20,8 @@ def book_table(request):
             obj.author = request.user
             obj.save()
             # save the many-to-many data for the form.
-            if not double_booking(obj.author.id, obj.booking_start, obj.booking_end):
+            overlapping_times = get_unavailable_tables(request_start)
+            if overlapping_times is None:
                 tables = return_tables(obj.booking_start, obj.number_guests)
                 auto_assign = BookingDetails.objects.all()[0].auto_table_assign
                 if auto_assign and tables is not None:

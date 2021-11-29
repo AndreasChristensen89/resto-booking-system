@@ -17,7 +17,7 @@ def generate_request_end(request_start):
     return request_end
 
 
-def get_available_tables(request_start):
+def get_unavailable_tables(request_start):
     """
     This method returns the first available table(s) of the restaurant
     """
@@ -44,7 +44,12 @@ def get_available_tables(request_start):
     for table in tables_check_temp_three:
         unavailable_tables.append(table)
 
+    return unavailable_tables
+
+
+def get_available_tables(request_start):
     # Create a list of unavailable tables' ids
+    unavailable_tables = get_available_tables(request_start)
     list_unav = []
     for table in range(len(unavailable_tables)):
         for key in unavailable_tables[table]:
