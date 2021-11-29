@@ -213,7 +213,7 @@ def test_time(request_start):
     return within_hours
 
 
-def double_booking(author, request_start, author):
+def double_booking(request_start, author):
     request_end = generate_request_end(request_start)
     unavailable_tables = []
     
