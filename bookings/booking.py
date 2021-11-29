@@ -208,16 +208,16 @@ def test_time(request_start):
     return within_hours
 
 
-def double_booking(request_start):
-    request_end = generate_request_end(request_start)
-    
+def double_booking(author):
+    # request_end = generate_request_end(request_start)
+    # start = '2021-11-04 17:00:00'
     double_booked = False
-    unavailable_tables = []
+    author_found = []
     
-    tables_check_temp = Booking.objects.filter(
-        booking_start=request_start)
-    for table in tables_check_temp:
-        unavailable_tables.append(table)
+    author_check = Booking.objects.filter(
+        author__id=author)
+    # for author in author_check:
+    #     author_found.append(author)
 
     # tables_check_temp_two = Booking.objects.filter(
     #     # author=author,
@@ -233,7 +233,7 @@ def double_booking(request_start):
     # for table in tables_check_temp_three:
     #     unavailable_tables.append(table)
     
-    if unavailable_tables:
+    if author_check:
         double_booked = True
 
     return double_booked

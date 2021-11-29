@@ -20,10 +20,10 @@ def book_table(request):
             obj.author = request.user
             obj.save()
             # save the many-to-many data for the form.
-            overlapping_bookings = double_booking(obj.booking_start)
+            # overlapping_bookings = double_booking(obj.author.id)
             tables = return_tables(obj.booking_start, obj.number_guests)
             auto_assign = BookingDetails.objects.all()[0].auto_table_assign
-            if not overlapping_bookings and auto_assign and tables:
+            if auto_assign and tables:
                 for table in tables:
                     obj.table.add(table)
                 form.save_m2m()
