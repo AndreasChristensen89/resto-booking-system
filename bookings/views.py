@@ -20,8 +20,8 @@ def book_table(request):
             obj.author = request.user
             obj.save()
             # save the many-to-many data for the form.
-            overlapping_times = get_unavailable_tables(request_start)
-            if overlapping_times is None:
+            overlapping_bookings = double_booking(obj.booking_start, obj.author.id)
+            if overlapping_bookings is None:
                 tables = return_tables(obj.booking_start, obj.number_guests)
                 auto_assign = BookingDetails.objects.all()[0].auto_table_assign
                 if auto_assign and tables is not None:
@@ -110,6 +110,7 @@ def show_tables(request):
     double_booked = False
     
     bookings_exact = Booking.objects.filter(
+        author=author,
         booking_start=request_start
     )
     bookings_before = Booking.objects.filter(

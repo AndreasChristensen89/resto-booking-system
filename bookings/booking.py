@@ -213,25 +213,23 @@ def test_time(request_start):
     return within_hours
 
 
-def double_booking(author, request_start, request_end):
-    double_booked = False
+def double_booking(author, request_start, author):
+    request_end = generate_request_end(request_start)
+    unavailable_tables = []
     
-    bookings_exact = Booking.objects.filter(
+    # 1. Remove existing reserv. that have the same start-time
+    tables_check_temp = Booking.objects.filter(
         author=author,
-        booking_start=request_start
-    )
-    bookings_before = Booking.objects.filter(
+        booking_start=request_start)
+    # 2. Remove existing reserv. that start before request-start but finish after
+    tables_check_temp_two = Booking.objects.filter(
         author=author,
         booking_start__lt=request_start,
-        booking_end__gt=request_start
-    )
-    bookings_after = Booking.objects.filter(
+        booking_end__gt=request_start)
+    # 3. Remove existing reserv. that start before and finish after request-end
+    tables_check_temp_three = Booking.objects.filter(
         author=author,
         booking_start__lt=request_end,
-        booking_end__gt=request_end
-    )
+        booking_end__gt=request_end)
 
-    if bookings_exact or bookings_before or bookings_after:
-        double_booked = True
-
-    return double_booked
+    return unavailable_tables
