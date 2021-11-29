@@ -1,6 +1,7 @@
 from datetime import timedelta
 from .models import Booking, Table
 from restaurant.models import OpeningHours, BookingDetails
+import datetime
 
 
 def get_opening_hours(requested_weekday):
@@ -17,7 +18,7 @@ def generate_request_end(request_start):
     return request_end
 
 
-def get_unavailable_tables(request_start):
+def get_available_tables(request_start):
     """
     This method returns the first available table(s) of the restaurant
     """
@@ -44,12 +45,6 @@ def get_unavailable_tables(request_start):
     for table in tables_check_temp_three:
         unavailable_tables.append(table)
 
-    return unavailable_tables
-
-
-def get_available_tables(request_start):
-    # Create a list of unavailable tables' ids
-    unavailable_tables = get_available_tables(request_start)
     list_unav = []
     for table in range(len(unavailable_tables)):
         for key in unavailable_tables[table]:
@@ -213,23 +208,32 @@ def test_time(request_start):
     return within_hours
 
 
-def double_booking(request_start, author):
+def double_booking(request_start):
     request_end = generate_request_end(request_start)
+    
+    double_booked = False
     unavailable_tables = []
     
-    # 1. Remove existing reserv. that have the same start-time
     tables_check_temp = Booking.objects.filter(
-        author=author,
         booking_start=request_start)
-    # 2. Remove existing reserv. that start before request-start but finish after
-    tables_check_temp_two = Booking.objects.filter(
-        author=author,
-        booking_start__lt=request_start,
-        booking_end__gt=request_start)
-    # 3. Remove existing reserv. that start before and finish after request-end
-    tables_check_temp_three = Booking.objects.filter(
-        author=author,
-        booking_start__lt=request_end,
-        booking_end__gt=request_end)
+    for table in tables_check_temp:
+        unavailable_tables.append(table)
 
-    return unavailable_tables
+    # tables_check_temp_two = Booking.objects.filter(
+    #     # author=author,
+    #     booking_start__lt=request_start,
+    #     booking_end__gt=request_start)
+    # for table in tables_check_temp_two:
+    #     unavailable_tables.append(table)
+
+    # tables_check_temp_three = Booking.objects.filter(
+    #     # author=author,
+    #     booking_start__lt=request_end,
+    #     booking_end__gt=request_end)
+    # for table in tables_check_temp_three:
+    #     unavailable_tables.append(table)
+    
+    if unavailable_tables:
+        double_booked = True
+
+    return double_booked
