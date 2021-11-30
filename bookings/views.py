@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
+from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView, UpdateView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
-from .models import Booking, Table
+from .models import Booking
 from restaurant.models import BookingDetails
-from .forms import BookTableForm
-from .booking import return_tables, double_booking, get_available_tables
+from .forms import BookTableForm, UserRegisterForm, UserLoginForm, ProfileForm, PasswordEditForm
+from allauth.account.views import PasswordChangeView
+from .booking import return_tables, double_booking
 import datetime
 
 
@@ -142,3 +145,47 @@ def show_tables(request):
         break
 
     return HttpResponse(double_booked)
+
+class UserRegisterView(generic.CreateView):
+    """User Registration form"""
+    form_class = UserRegisterForm
+    template_name = 'account/signup.html'
+    success_url = reverse_lazy('home')
+
+    def save(self, request):
+        """Save user to user model"""
+        user = super(UserRegisterForm. self).save(request)
+        return user
+
+
+class UserLoginView(generic.CreateView):
+    """User login view"""
+    form_class = UserLoginForm
+    template_name = 'account/login.html'
+    success_url = reverse_lazy('home')
+
+    def login(self, *args, **kwargs):
+        """User login return"""
+        return super(UserLoginForm, self).login(*args, **kwargs)
+
+
+class PasswordsChangeView(PasswordChangeView):
+    """View for changing password"""
+    form_class = PasswordEditForm
+    success_message = 'Password changed successfully!'
+    success_url = reverse_lazy('members')
+
+    def save(self):
+        """Save new password to model"""
+        super(PasswordEditForm, self).save()
+
+
+class MemberViewProfile(SuccessMessageMixin, generic.UpdateView):
+    """View and update user profile"""
+    form_class = ProfileForm
+    template_name = 'profile.html'
+    success_message = 'Profile updated successfully!'
+    success_url = reverse_lazy('members')
+
+    def get_object(self):
+        return self.request.user
