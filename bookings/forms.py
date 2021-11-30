@@ -66,8 +66,6 @@ class ProfileForm(UserChangeForm):
         widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = forms.EmailField(
-        widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         """Meta class"""
@@ -75,8 +73,7 @@ class ProfileForm(UserChangeForm):
         fields = (
             'username',
             'first_name',
-            'last_name',
-            'email',
+            'last_name'
             )
 
 

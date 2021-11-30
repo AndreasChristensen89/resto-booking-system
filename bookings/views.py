@@ -180,12 +180,12 @@ class PasswordsChangeView(PasswordChangeView):
         super(PasswordEditForm, self).save()
 
 
-class MemberViewProfile(SuccessMessageMixin, generic.UpdateView):
+class ProfileView(SuccessMessageMixin, generic.UpdateView):
     """View and update user profile"""
     form_class = ProfileForm
     template_name = 'profile.html'
     success_message = 'Profile updated successfully!'
-    success_url = reverse_lazy('members')
+    success_url = reverse_lazy('homepage')
 
     def get_object(self):
         return self.request.user
