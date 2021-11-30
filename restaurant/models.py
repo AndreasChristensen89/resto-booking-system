@@ -34,17 +34,7 @@ class OpeningHours(models.Model):
         return f'{calendar.day_name[self.weekday]}: {self.from_time} to {self.to_time}'
 
 
-INTERVALS = (
-  (5, "5 min"),
-  (10, "10 min"),
-  (15, "15 min"),
-  (20, "20 min"),
-  (30, "30 min"),
-)
-
-
 class BookingDetails(models.Model):
-    booking_intervals = models.PositiveIntegerField(choices=INTERVALS)
     booking_duration = models.PositiveIntegerField()
     auto_table_assign = models.BooleanField()
 
@@ -53,4 +43,4 @@ class BookingDetails(models.Model):
         verbose_name_plural = 'Booking details'
 
     def __str__(self):
-        return f'{self.booking_intervals} min intervals - {self.booking_duration} min bookings - auto table-assignment: {self.auto_table_assign}'
+        return f'{self.booking_duration} min bookings - auto table-assignment: {self.auto_table_assign}'

@@ -140,11 +140,6 @@ def return_tables(request_start, number_guests):
 
 
 def sort_large_party(number_guests, available_tables):
-    # Logic not complete, example:
-    # tables = [8, 5, 4, 3, 3, 2] - guests = 9
-    # best option would be 5 + 4, but it picks biggest table first
-    # will therefore pick 8 + 2 since 2 wastes the least seats
-
     # sorting available tables, biggest first
     available_tables.sort(key=lambda x: x.size, reverse=True)
     tables_sorted = sorted(available_tables, key=lambda x: x.size, reverse=True)
@@ -208,32 +203,24 @@ def test_time(request_start):
     return within_hours
 
 
-def double_booking(author):
+def double_booking(request_start):
     # request_end = generate_request_end(request_start)
-    # start = '2021-11-04 17:00:00'
-    double_booked = False
-    author_found = []
-    
-    author_check = Booking.objects.filter(
-        author__id=author)
-    # for author in author_check:
-    #     author_found.append(author)
+    double_booked = True
 
-    # tables_check_temp_two = Booking.objects.filter(
-    #     # author=author,
+    bookings = Booking.objects.all()
+    for booking in bookings:
+        if str(booking.booking_start) == str(request_start):
+            double_booked = False
+            break
+
+    # check_two = Booking.objects.filter(
+    #     author=author,
     #     booking_start__lt=request_start,
     #     booking_end__gt=request_start)
-    # for table in tables_check_temp_two:
-    #     unavailable_tables.append(table)
 
-    # tables_check_temp_three = Booking.objects.filter(
-    #     # author=author,
+    # check_three = Booking.objects.filter(
+    #     author=author,
     #     booking_start__lt=request_end,
     #     booking_end__gt=request_end)
-    # for table in tables_check_temp_three:
-    #     unavailable_tables.append(table)
-    
-    if author_check:
-        double_booked = True
 
     return double_booked

@@ -3,7 +3,7 @@
 {% block content %}
     <ul>
 {% for booking in booking_list %}
-{% if user == booking.author or user.is_superuser %}
+{% if user == booking.author %}
     <div class="card border border-dark m-3" style="width: 18rem;">
         <div class="card-body text-dark">
             <h5 class="card-title">{{booking.first_name}} {{booking.last_name}}</h5>
@@ -39,7 +39,7 @@
         </div>
         {% endif %}
     </div>
-    {% endif%}
+{% endif%}
 {% endfor %}
 </ul>
 

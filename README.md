@@ -24,19 +24,23 @@ Consider two step reservation:
 2. personal details form
 
 TABLE SORT LOGIC:
-1. Firstly, the function seeks to bring an exact match with table-size/number of people.
-2. If there are no exact matches it will look for table-size minus one
+Admin can choose to turn this logic on/off in Admin -> Booking Details -> Edit first object -> auto table assign tick box
+1. Firstly, the function seeks to bring an exact match with table-size/number of people. 
+    - If there are no exact matches it will look for table-size minus one
     - This is done to keep groups at the same table, and also to preserve other tables (smaller tables are valuable for dates/small families)
-3. If there are no matches it will store the best option for 1 table
-4. Follows to find best option (fewest seat losses) when combining any two tables
-5. Follows to find best option (fewest seat losses) when combining any three tables
-6. All options are then compared to each other to find best match
+    - If there are no matches it will store the best option for 1 table
+2. Follows to find best option (fewest seat losses) when combining any two tables
+3. Follows to find best option (fewest seat losses) when combining any three tables
+4. All options are then compared to each other to find best match
     - fewest tables are prioritised, meaning if losses are equal it will pick the option with the fewest tables
         - 1-table-option is only compared to 2-table-option. If a single table can fit a group, and with fewer or equal losses than a two-table option, then a 3-table option is not worth considering due to loss of smaller tables. As mentioned above, smaller tables are valuable and should be kept for smaller groups.
         - e.g. if available tables' sizes are [2, 2, 4, 10], a group of 8 will be given a table of 10, even though the total-seat loss of 2+2+4 == 0. If only the table for 10 is used, then three tables remain for a potential of more groups, compared to only a table of 10.
     - fewer losses are then prioritised
         - 2-table option and 3-table option are compared
-7. This is the basic logic, and admin can change which tables are given at any point.
+5. If three tables are not sufficient then tables will be added one by one, largest to smallest.
+    - If sum of seats exceeds number of guests then last table will not be added, and it, along with the following smaller tables, is checked for which one gives fewest losses.
+    - Seeks to only add one table to preserve tables
+7. Once tables are assigned Admin is still free to change tables in admin settings.
 
 
 Current bugs to fix:
@@ -52,6 +56,11 @@ get() returned more than one Reservation -- it returned 2!
 - When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate
 - Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long.
 - Same user can make many bookings at the same datetime - run a check for booking.author in all bookings and test for booking_start
+- When running tests in booking.tests.py (python3 manage.py test bookings) it gives the following error:
+Creating test database for alias 'default'...
+/workspace/.pip-modules/lib/python3.8/site-packages/django/db/backends/postgresql/base.py:304: RuntimeWarning: Normally Django will use a connection to the 'postgres' database to avoid running initialization queries against the production database when it's not needed (for example, when running tests). Django was unable to create a connection to the 'postgres' database and will use the first PostgreSQL database instead.
+  warnings.warn(
+Got an error creating the test database: permission denied to create database
 
 
 Fixed bugs

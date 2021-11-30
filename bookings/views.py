@@ -2,10 +2,10 @@ from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import HttpResponseRedirect
-from .models import Booking
+from .models import Booking, Table
 from restaurant.models import BookingDetails
 from .forms import BookTableForm
-from .booking import return_tables, double_booking
+from .booking import return_tables, double_booking, get_available_tables
 import datetime
 
 
@@ -20,7 +20,7 @@ def book_table(request):
             obj.author = request.user
             obj.save()
             # save the many-to-many data for the form.
-            # overlapping_bookings = double_booking(obj.author.id)
+            # overlapping_bookings = double_booking(obj.booking_start)
             tables = return_tables(obj.booking_start, obj.number_guests)
             auto_assign = BookingDetails.objects.all()[0].auto_table_assign
             if auto_assign and tables:
@@ -109,31 +109,36 @@ def show_tables(request):
     request_start = datetime.datetime.strptime(request_start_str, '%Y-%m-%d %H:%M:%S')
     request_end = datetime.datetime.strptime(request_end_str, '%Y-%m-%d %H:%M:%S')
     
-    double_booked = False
-    unavailable_tables = []
+    double_booked = True
+    # unavailable_tables = []
     
-    # 1. Remove existing reserv. that have the same start-time
-    tables_check_temp = Booking.objects.filter(
-        # author=author,
-        booking_start=request_start)
-    for table in tables_check_temp:
-        unavailable_tables.append(table)
-    # 2. Remove existing reserv. that start before request-start but finish after
-    tables_check_temp_two = Booking.objects.filter(
-        # author=author,
-        booking_start__lt=request_start,
-        booking_end__gt=request_start)
-    for table in tables_check_temp_two:
-        unavailable_tables.append(table)
-    # 3. Remove existing reserv. that start before and finish after request-end
-    tables_check_temp_three = Booking.objects.filter(
-        # author=author,
-        booking_start__lt=request_end,
-        booking_end__gt=request_end)
-    for table in tables_check_temp_three:
-        unavailable_tables.append(table)
+    # # 1. Remove existing reserv. that have the same start-time
+    # tables_check_temp = Booking.objects.filter(
+    #     # author=author,
+    #     booking_start=request_start)
+    # for table in tables_check_temp:
+    #     unavailable_tables.append(table)
+    # # 2. Remove existing reserv. that start before request-start but finish after
+    # tables_check_temp_two = Booking.objects.filter(
+    #     # author=author,
+    #     booking_start__lt=request_start,
+    #     booking_end__gt=request_start)
+    # for table in tables_check_temp_two:
+    #     unavailable_tables.append(table)
+    # # 3. Remove existing reserv. that start before and finish after request-end
+    # tables_check_temp_three = Booking.objects.filter(
+    #     # author=author,
+    #     booking_start__lt=request_end,
+    #     booking_end__gt=request_end)
+    # for table in tables_check_temp_three:
+    #     unavailable_tables.append(table)
     
-    if unavailable_tables:
-        double_booked = True
+    # if unavailable_tables:
+    #     double_booked = True
+
+    bookings = Booking.objects.all()
+    for booking in bookings:
+        double_booked = False
+        break
 
     return HttpResponse(double_booked)
