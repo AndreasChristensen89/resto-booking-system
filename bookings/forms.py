@@ -1,5 +1,6 @@
 from django import forms
-from allauth.account.forms import SignupForm, LoginForm, ChangePasswordForm
+from django.forms.widgets import SplitDateTimeWidget
+from allauth.account.forms import SignupForm, LoginForm, ChangePasswordForm, ResetPasswordForm
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
 from .models import Booking
@@ -9,6 +10,12 @@ from .booking import return_tables, test_time, get_opening_hours
 
 
 class BookTableForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
+    number_guests = forms.IntegerField()
+    booking_start = forms.SplitDateTimeField()
+    comment = forms.TextInput()
+    
     class Meta:
         model = Booking
         fields = [
@@ -66,6 +73,8 @@ class ProfileForm(UserChangeForm):
         widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         """Meta class"""
@@ -73,7 +82,8 @@ class ProfileForm(UserChangeForm):
         fields = (
             'username',
             'first_name',
-            'last_name'
+            'last_name',
+            'email',
             )
 
 
@@ -101,3 +111,10 @@ class PasswordEditForm(ChangePasswordForm):
             'password1',
             'password2',
             )
+
+class MyCustomResetPasswordForm(ResetPasswordForm):
+
+    def save(self):
+        email_address = super(MyCustomResetPasswordForm, self).save()
+
+        return email_address

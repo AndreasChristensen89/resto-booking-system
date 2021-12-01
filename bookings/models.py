@@ -33,7 +33,7 @@ class Booking(models.Model):
         if not self.booking_end and not self.slug and self.booking_start:
             self.booking_end = self.booking_start + timedelta(hours=3)
             letters = string.ascii_lowercase
-            random_str = ''.join(random.choice(letters) for i in range(8))
+            random_str = ''.join(random.choice(letters) for i in range(6))
             self.slug = self.first_name+self.last_name+random_str
         super().save(*args, **kwargs)
 

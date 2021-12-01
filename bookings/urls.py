@@ -6,6 +6,8 @@ app_name = 'bookings'
 
 urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('password/', views.PasswordChangeView.as_view(), name='password'),
+    path('resetpassword/', views.PasswordChangeView.as_view(), name='password'),
     path('', views.BookingList.as_view(), name='booking_list'),
     path('book_table/', views.book_table, name='book_table'),
     path('updated_bookings/', views.BookingsUpdated.as_view(), name='updated_list'),

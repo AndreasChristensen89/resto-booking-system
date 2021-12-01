@@ -61,6 +61,7 @@ Creating test database for alias 'default'...
 /workspace/.pip-modules/lib/python3.8/site-packages/django/db/backends/postgresql/base.py:304: RuntimeWarning: Normally Django will use a connection to the 'postgres' database to avoid running initialization queries against the production database when it's not needed (for example, when running tests). Django was unable to create a connection to the 'postgres' database and will use the first PostgreSQL database instead.
   warnings.warn(
 Got an error creating the test database: permission denied to create database
+- Need to fix reset password form
 
 
 Fixed bugs

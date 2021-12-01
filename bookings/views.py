@@ -6,8 +6,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from .models import Booking
 from restaurant.models import BookingDetails
-from .forms import BookTableForm, UserRegisterForm, UserLoginForm, ProfileForm, PasswordEditForm
-from allauth.account.views import PasswordChangeView
+from .forms import BookTableForm, UserRegisterForm, UserLoginForm, ProfileForm, PasswordEditForm, MyCustomResetPasswordForm
+from allauth.account.views import PasswordChangeView, PasswordResetView
 from .booking import return_tables, double_booking
 import datetime
 
@@ -146,6 +146,7 @@ def show_tables(request):
 
     return HttpResponse(double_booked)
 
+
 class UserRegisterView(generic.CreateView):
     """User Registration form"""
     form_class = UserRegisterForm
@@ -173,7 +174,18 @@ class PasswordsChangeView(PasswordChangeView):
     """View for changing password"""
     form_class = PasswordEditForm
     success_message = 'Password changed successfully!'
-    success_url = reverse_lazy('members')
+    success_url = reverse_lazy('homepage')
+
+    def save(self):
+        """Save new password to model"""
+        super(PasswordEditForm, self).save()
+
+
+class PasswordsChangeView(PasswordResetView):
+    """View for changing password"""
+    form_class = MyCustomResetPasswordForm
+    success_message = 'Email sent!'
+    success_url = reverse_lazy('homepage')
 
     def save(self):
         """Save new password to model"""
