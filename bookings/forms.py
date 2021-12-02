@@ -10,11 +10,7 @@ from .booking import return_tables, test_time, get_opening_hours
 
 
 class BookTableForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
-    number_guests = forms.IntegerField()
     booking_start = forms.SplitDateTimeField()
-    comment = forms.TextInput()
     
     class Meta:
         model = Booking

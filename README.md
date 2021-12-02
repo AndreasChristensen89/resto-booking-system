@@ -26,6 +26,8 @@ Consider two step reservation:
 The following was added in settings.py to work with emails during development, should not be there when submitting:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+Check why Django admin in Heroku doesn't load css
+
 TABLE SORT LOGIC:
 Admin can choose to turn this logic on/off in Admin -> Booking Details -> Edit first object -> auto table assign tick box
 1. Firstly, the function seeks to bring an exact match with table-size/number of people. 
@@ -45,6 +47,8 @@ Admin can choose to turn this logic on/off in Admin -> Booking Details -> Edit f
     - Seeks to only add one table to preserve tables
 7. Once tables are assigned Admin is still free to change tables in admin settings.
 
+TESTING
+Currently I have no other solution when testing than to comment out the current database, and then uncommenting the sqlite2 database in settings.py
 
 Current bugs to fix:
 - It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
