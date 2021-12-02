@@ -165,7 +165,7 @@ def sort_large_party(number_guests, available_tables):
 
     # if not perfect match it will run through the remains
     # add table that wastes the least seats
-    if sum_seats < number_guests:
+    if sum_seats < number_guests and check_two:
         check_two.sort()
         difference = number_guests - sum_seats
         list_temp = []
