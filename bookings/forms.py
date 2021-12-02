@@ -35,36 +35,6 @@ class BookTableForm(forms.ModelForm):
             raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party")
 
 
-class UserRegisterForm(SignupForm):
-    """Registration form"""
-    class Meta:
-        """Meta class"""
-        model = User
-        fields = ('username', 'email', 'password1', 'password2')
-
-    def __init__(self, *args, **kwargs):
-        super(UserRegisterForm, self).__init__(*args, **kwargs)
-
-        self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-
-
-class UserLoginForm(LoginForm):
-    """Login form"""
-    class Meta:
-        """Meta class"""
-        model = User
-        fields = ('login', 'password')
-
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-
-        self.fields['login'].widget.attrs['class'] = 'form-control'
-        self.fields['password'].widget.attrs['class'] = 'form-control'
-
-
 class ProfileForm(UserChangeForm):
     """View and edit profile"""
     username = forms.CharField(

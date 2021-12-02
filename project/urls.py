@@ -24,5 +24,4 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('homepage.urls')),
     path('test/', show_tables, name='test'),
-    # path('firstform/', get_date_and_guests, name='firstform'),
 ]
