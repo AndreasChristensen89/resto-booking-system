@@ -85,36 +85,3 @@ class ProfileForm(UserChangeForm):
             'last_name',
             'email',
             )
-
-
-class PasswordEditForm(ChangePasswordForm):
-    """Password change view"""
-    oldpassword = forms.CharField(
-        label="Old password",
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'type': 'password'}))
-    password1 = forms.CharField(
-        label="New password",
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control', 'type': 'password'}))
-    password2 = forms.CharField(
-        label="New password (again)",
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control', 'type': 'password'}))
-
-    class Meta:
-        """Meta class"""
-        model = User
-        fields = (
-            'oldpassword',
-            'password1',
-            'password2',
-            )
-
-class MyCustomResetPasswordForm(ResetPasswordForm):
-
-    def save(self):
-        email_address = super(MyCustomResetPasswordForm, self).save()
-
-        return email_address

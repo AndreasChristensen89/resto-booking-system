@@ -23,6 +23,9 @@ Consider two step reservation:
 1. page for entering datetime and number of people - calls check functions - if approved redirects to personal details
 2. personal details form
 
+The following was added in settings.py to work with emails during development, should not be there when submitting:
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 TABLE SORT LOGIC:
 Admin can choose to turn this logic on/off in Admin -> Booking Details -> Edit first object -> auto table assign tick box
 1. Firstly, the function seeks to bring an exact match with table-size/number of people. 

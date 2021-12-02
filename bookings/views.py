@@ -6,7 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from .models import Booking
 from restaurant.models import BookingDetails
-from .forms import BookTableForm, UserRegisterForm, UserLoginForm, ProfileForm, PasswordEditForm, MyCustomResetPasswordForm
+from .forms import BookTableForm, UserRegisterForm, ProfileForm
 from allauth.account.views import PasswordChangeView, PasswordResetView
 from .booking import return_tables, double_booking
 import datetime
@@ -46,22 +46,22 @@ class BookingList(generic.ListView):
     paginate_by = 6
 
 
-class BookingsUpdated(generic.ListView):
-    model = Booking
-    context_object_name = "updated_list"
-    queryset = Booking.objects.filter(
-        status=1
-    )
-    template_name = 'updated_bookings.html'
+# class BookingsUpdated(generic.ListView):
+#     model = Booking
+#     context_object_name = "updated_list"
+#     queryset = Booking.objects.filter(
+#         status=1
+#     )
+#     template_name = 'updated_bookings.html'
 
 
-class BookingsPending(generic.ListView):
-    model = Booking
-    context_object_name = "pending_list"
-    queryset = Booking.objects.filter(
-        status=0
-    )
-    template_name = 'booking_pending.html'
+# class BookingsPending(generic.ListView):
+#     model = Booking
+#     context_object_name = "pending_list"
+#     queryset = Booking.objects.filter(
+#         status=0
+#     )
+#     template_name = 'booking_pending.html'
 
 
 class BookingDetail(View):
@@ -91,11 +91,11 @@ class UpdateReservationView(UpdateView):
     success_url = '/bookings/'
 
 
-class UpdateReservationViewAdmin(UpdateView):
-    model = Booking
-    fields = ['number_guests', 'table', 'comment', 'status']
-    template_name_suffix = '_update_form_admin'
-    success_url = '/bookings/updated_reservations/'
+# class UpdateReservationViewAdmin(UpdateView):
+#     model = Booking
+#     fields = ['number_guests', 'table', 'comment', 'status']
+#     template_name_suffix = '_update_form_admin'
+#     success_url = '/bookings/updated_reservations/'
 
 
 class ApproveReservationViewAdmin(UpdateView):
@@ -145,51 +145,6 @@ def show_tables(request):
         break
 
     return HttpResponse(double_booked)
-
-
-class UserRegisterView(generic.CreateView):
-    """User Registration form"""
-    form_class = UserRegisterForm
-    template_name = 'account/signup.html'
-    success_url = reverse_lazy('home')
-
-    def save(self, request):
-        """Save user to user model"""
-        user = super(UserRegisterForm. self).save(request)
-        return user
-
-
-class UserLoginView(generic.CreateView):
-    """User login view"""
-    form_class = UserLoginForm
-    template_name = 'account/login.html'
-    success_url = reverse_lazy('home')
-
-    def login(self, *args, **kwargs):
-        """User login return"""
-        return super(UserLoginForm, self).login(*args, **kwargs)
-
-
-class PasswordsChangeView(PasswordChangeView):
-    """View for changing password"""
-    form_class = PasswordEditForm
-    success_message = 'Password changed successfully!'
-    success_url = reverse_lazy('homepage')
-
-    def save(self):
-        """Save new password to model"""
-        super(PasswordEditForm, self).save()
-
-
-class PasswordsChangeView(PasswordResetView):
-    """View for changing password"""
-    form_class = MyCustomResetPasswordForm
-    success_message = 'Email sent!'
-    success_url = reverse_lazy('homepage')
-
-    def save(self):
-        """Save new password to model"""
-        super(PasswordEditForm, self).save()
 
 
 class ProfileView(SuccessMessageMixin, generic.UpdateView):

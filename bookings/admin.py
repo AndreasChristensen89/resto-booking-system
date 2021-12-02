@@ -7,7 +7,7 @@ class AdminBookings(admin.ModelAdmin):
 
     list_display = ('first_name', 'last_name', 'number_guests', 'status', 'booking_start')
     search_fields = ['first_name', 'last_name']
-    list_filter = ('booking_start', 'status')
+    list_filter = ('status', 'booking_start')
     actions = ['pending', 'approve', 'decline']
     prepopulated_fields = {'slug': ('first_name', 'last_name',)}
 
