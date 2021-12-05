@@ -20,7 +20,7 @@
                 <p>Warning: No tables have been assigned to booking!</p>
             {% endif %}
 
-            <a href="{% url 'bookings:approve_booking' booking.slug %}" class="card-link">Approve/Decline</a>
+            <a href="{% url 'reservations:approve_booking' booking.slug %}" class="card-link">Approve/Decline</a>
             <hr>
         {% endif %}
     {% endfor %}

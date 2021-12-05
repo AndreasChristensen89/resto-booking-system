@@ -33,8 +33,8 @@
     <h5>Reservation created on:</h5>
     <p>{{ booking.created_on }}</p>
 
-    <h3><a href="{% url 'bookings:update_booking' booking.slug %}">Update reservation information</a></h2>
+    <h3><a href="{% url 'reservations:update_booking' booking.slug %}">Update reservation information</a></h2>
 
-    <h3><a href="{% url 'bookings:cancel_booking' booking.slug %}">Cancel reservation</a></h2>
+    <h3><a href="{% url 'reservations:cancel_booking' booking.slug %}">Cancel reservation</a></h2>
 {% endif %}
 {% endblock %}

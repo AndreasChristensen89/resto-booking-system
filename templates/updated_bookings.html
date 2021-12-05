@@ -10,7 +10,7 @@
             <p>Message: {{booking.comment}}</p>
             <p>Created on: {{booking.created_on}}</p>
             <p>Updated on: {{booking.updated_on}}</p>
-            <a href="{% url 'bookings:update_booking_admin' booking.slug %}" class="card-link">Edit Reservation</a>
+            <a href="{% url 'reservations:update_booking_admin' booking.slug %}" class="card-link">Edit Reservation</a>
             <hr>
         {% endif %}
     {% endfor %}

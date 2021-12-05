@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .forms import BookTableForm
+# from .forms import BookTableForm
 
 
 # class TestBookingForm(TestCase):

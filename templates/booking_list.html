@@ -34,8 +34,8 @@
         </ul>
         {% if booking.status != 2%}
         <div class="card-body">
-            <a href="{% url 'bookings:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
-            <a href="{% url 'bookings:update_booking' booking.slug %}" class="card-link">Add/edit comment</a>
+            <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
+            <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Add/edit comment</a>
         </div>
         {% endif %}
     </div>

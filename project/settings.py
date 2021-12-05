@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     # My apps
     'homepage',
     'menu',
-    'bookings',
+    'reservations',
     'restaurant',
 ]
 
