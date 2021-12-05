@@ -32,8 +32,8 @@ class BookTableForm(forms.ModelForm):
             raise forms.ValidationError(f'Not within opening hours of the requested date - {open} to {close}')
         if not tables:
             raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party")
-        if Booking.objects.filter(booking_start=booking_start).exists():
-            raise forms.ValidationError("You have already booked a time on the requested time")
+        # if Booking.objects.filter(booking_start=booking_start).exists():
+        #     raise forms.ValidationError("You have already booked a time on the requested time")
 
 
 class ProfileForm(UserChangeForm):

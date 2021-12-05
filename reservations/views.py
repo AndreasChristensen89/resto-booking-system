@@ -20,12 +20,14 @@ def book_table(request):
 
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.author = request.user
+            user = request.user
+            obj.author = user
             obj.save()
             # save the many-to-many data for the form.
             # overlapping_first_name = double_booking(obj.booking_start)
             tables = return_tables(obj.booking_start, obj.number_guests)
             auto_assign = BookingDetails.objects.all()[0].auto_table_assign
+            # double_booked = double_booking(obj.booking_start, user)
             if auto_assign and tables:
                 for table in tables:
                     obj.table.add(table)
