@@ -70,6 +70,7 @@ Creating test database for alias 'default'...
 Got an error creating the test database: permission denied to create database
 - Need to fix reset password form
 - May not be bug, but no reservations can be made if admin has not set opening hours or booking interval
+- Need to fix DeleteView and UpdateView to fit new app
 
 
 Fixed bugs
