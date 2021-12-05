@@ -203,7 +203,7 @@ def test_time(request_start):
     return within_hours
 
 
-def double_booking(request_start):
+def double_booking(request_start, user):
     # request_end = generate_request_end(request_start)
     double_booked = True
 
@@ -213,10 +213,10 @@ def double_booking(request_start):
             double_booked = False
             break
 
-    # check_two = Booking.objects.filter(
-    #     author=author,
-    #     booking_start__lt=request_start,
-    #     booking_end__gt=request_start)
+    check_two = Booking.objects.filter(
+        author=user,
+        booking_start__lt=request_start,
+        booking_end__gt=request_start)
 
     # check_three = Booking.objects.filter(
     #     author=author,

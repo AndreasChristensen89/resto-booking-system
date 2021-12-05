@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
 from django.urls import reverse_lazy
-from django.views.generic.edit import DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from .models import Booking
@@ -37,6 +37,28 @@ def book_table(request):
     context = {'form': form}
 
     return render(request, 'book_table.html', context)
+
+
+# class BookingCreateView(CreateView):
+#     template_name = 'book_table.html'
+#     form_class = BookTableForm
+
+#     def form_valid(self, form):
+#         self.object = form.save(commit=False)
+#         self.object.user = self.request.user
+#         self.object.save()
+#         tables = return_tables(self.object.booking_start, self.object.number_guests)
+#         auto_assign = BookingDetails.objects.all()[0].auto_table_assign
+#         if auto_assign and tables:
+#             for table in tables:
+#                 self.object.table.add(table)
+#             self.object.save_m2m()
+#         return HttpResponseRedirect(self.get_success_url())
+
+#     def get_form_kwargs(self, *args, **kwargs):
+#         kwargs = super(BookingCreateView, self).get_form_kwargs(*args, **kwargs)
+#         kwargs['user'] = self.request.user
+#         return kwargs
 
 
 class BookingList(generic.ListView):

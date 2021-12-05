@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from .models import Booking
 from restaurant.models import BookingDetails
 import datetime
-from .booking import return_tables, test_time, get_opening_hours
+from .booking import return_tables, test_time, get_opening_hours, double_booking
 
 
 class BookTableForm(forms.ModelForm):
@@ -23,12 +23,17 @@ class BookTableForm(forms.ModelForm):
         booking_start = self.cleaned_data.get('booking_start')
 
         tables = return_tables(booking_start, number_guests)
+        
 
         if not test_time(booking_start):
             opening_hours = get_opening_hours(booking_start.weekday())
-            raise forms.ValidationError(f'Not within opening hours of the requested date - {opening_hours[0].from_time} to {opening_hours[0].to_time}')
+            open = str(opening_hours[0].from_time)[0:5]
+            close = str(opening_hours[0].to_time)[0:5]
+            raise forms.ValidationError(f'Not within opening hours of the requested date - {open} to {close}')
         if not tables:
             raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party")
+        if Booking.objects.filter(booking_start=booking_start).exists():
+            raise forms.ValidationError("You have already booked a time on the requested time")
 
 
 class ProfileForm(UserChangeForm):
