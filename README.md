@@ -19,9 +19,7 @@ Implemented authetication check when canceling and updating reservations. The ch
 
 Add restaurant model to have the restaurant be able to set reservation interval - done
 
-Consider two step reservation:
-1. page for entering datetime and number of people - calls check functions - if approved redirects to personal details
-2. personal details form
+If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not given which is because of the chance that a user may want to reserve a table for someone else in the same timeslot.
 
 The following was added in settings.py to work with emails during development, should not be there when submitting:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -78,7 +76,7 @@ Fixed bugs
 - When calculating available seats the system assumes that closing time is on an full-hour mark. Does not calculate properly if e.g. 20:30 is the closing time
     No longer uses this feature. User is shown validation error in form and uses datetime to calculate available tables
 - Need to fix DeleteView and UpdateView to fit new app - turns out I needed to rename the folder where my templates were put in. It was still called "bookings", but is now called "reservations"
-- Same user can make many bookings at the same datetime - implemented a check for booking.author in all bookings and test for booking_start. Needed to adjust for length of returns as it always returns one conflicting, which is the booking being made, which is due to double-save
+- Same user can make many bookings at the same datetime - implemented a check for booking.author in all bookings and test for booking_start. Needed to adjust for length of returns as it always returns one conflicting, which is the booking being made, which is due to double-save. Used print to see the variables along the way
 - When running tests in booking.tests.py (python3 manage.py test bookings) it gives the following error:
 Creating test database for alias 'default'...
 /workspace/.pip-modules/lib/python3.8/site-packages/django/db/backends/postgresql/base.py:304: RuntimeWarning: Normally Django will use a connection to the 'postgres' database to avoid running initialization queries against the production database when it's not needed (for example, when running tests). Django was unable to create a connection to the 'postgres' database and will use the first PostgreSQL database instead.
