@@ -3,6 +3,7 @@ from django.views import generic, View
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from .models import Booking
 from restaurant.models import BookingDetails
@@ -24,11 +25,11 @@ def book_table(request):
             obj.author = user
             obj.save()
             # save the many-to-many data for the form.
-            # overlapping_first_name = double_booking(obj.booking_start)
             tables = return_tables(obj.booking_start, obj.number_guests)
             auto_assign = BookingDetails.objects.all()[0].auto_table_assign
-            # double_booked = double_booking(obj.booking_start, user)
-            if auto_assign and tables:
+            conflicting = double_booking(obj.booking_start, user)
+            # conflicting length is 1 due to save further up
+            if conflicting == 1 and auto_assign and tables:
                 for table in tables:
                     obj.table.add(table)
                 form.save_m2m()
@@ -39,28 +40,6 @@ def book_table(request):
     context = {'form': form}
 
     return render(request, 'book_table.html', context)
-
-
-# class BookingCreateView(CreateView):
-#     template_name = 'book_table.html'
-#     form_class = BookTableForm
-
-#     def form_valid(self, form):
-#         self.object = form.save(commit=False)
-#         self.object.user = self.request.user
-#         self.object.save()
-#         tables = return_tables(self.object.booking_start, self.object.number_guests)
-#         auto_assign = BookingDetails.objects.all()[0].auto_table_assign
-#         if auto_assign and tables:
-#             for table in tables:
-#                 self.object.table.add(table)
-#             self.object.save_m2m()
-#         return HttpResponseRedirect(self.get_success_url())
-
-#     def get_form_kwargs(self, *args, **kwargs):
-#         kwargs = super(BookingCreateView, self).get_form_kwargs(*args, **kwargs)
-#         kwargs['user'] = self.request.user
-#         return kwargs
 
 
 class BookingList(generic.ListView):
@@ -130,45 +109,29 @@ class ApproveReservationViewAdmin(UpdateView):
 
 
 def show_tables(request):
-    author = 1
-    request_start_str = '2021-11-06 17:00:00'
-    request_end_str = '2021-11-06 20:00:00'
+    # User = get_user_model()
+    # users = User.objects.all()
+    # list_of_user_ids = []
+    # for user in users:
+    #     list_of_user_ids.append(user.id)
+    #     list_of_user_ids.append(" ")
+
+    request_start_str = '2021-10-06 18:00:00'
+    request_end_str = '2021-11-06 15:00:00'
     request_start = datetime.datetime.strptime(request_start_str, '%Y-%m-%d %H:%M:%S')
     request_end = datetime.datetime.strptime(request_end_str, '%Y-%m-%d %H:%M:%S')
-    
-    double_booked = True
-    # unavailable_tables = []
-    
-    # # 1. Remove existing reserv. that have the same start-time
-    # tables_check_temp = Booking.objects.filter(
-    #     # author=author,
-    #     booking_start=request_start)
-    # for table in tables_check_temp:
-    #     unavailable_tables.append(table)
-    # # 2. Remove existing reserv. that start before request-start but finish after
-    # tables_check_temp_two = Booking.objects.filter(
-    #     # author=author,
-    #     booking_start__lt=request_start,
-    #     booking_end__gt=request_start)
-    # for table in tables_check_temp_two:
-    #     unavailable_tables.append(table)
-    # # 3. Remove existing reserv. that start before and finish after request-end
-    # tables_check_temp_three = Booking.objects.filter(
-    #     # author=author,
-    #     booking_start__lt=request_end,
-    #     booking_end__gt=request_end)
-    # for table in tables_check_temp_three:
-    #     unavailable_tables.append(table)
-    
-    # if unavailable_tables:
-    #     double_booked = True
 
-    booking = Booking.objects.all()
-    for booking in first_name:
-        double_booked = False
-        break
+    # double_booked = True
+    # bookings = Booking.objects.all()
+    # list_of_bookings_authors_ids = []
+    # for booking in bookings:
+    #     if str(booking.booking_start) == request_start_str:
+    #         list_of_bookings_authors_ids.append(booking.author.id)
+    #         double_booked = False
 
-    return HttpResponse(double_booked)
+    conflicting = double_booking(request_start_str)
+
+    return HttpResponse(conflicting)
 
 
 class ProfileView(SuccessMessageMixin, generic.UpdateView):

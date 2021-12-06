@@ -45,7 +45,8 @@ Admin can choose to turn this logic on/off in Admin -> Booking Details -> Edit f
 5. If three tables are not sufficient then tables will be added one by one, largest to smallest.
     - If sum of seats exceeds number of guests then last table will not be added, and it, along with the following smaller tables, is checked for which one gives fewest losses.
     - Seeks to only add one table to preserve tables
-7. Once tables are assigned Admin is still free to change tables in admin settings.
+6. Once tables are assigned Admin is still free to change tables in admin settings.
+7. This logic assumes that the restaurant is able to move tables around
 
 TESTING
 Currently I have no other solution when testing than to comment out the current database, and then uncommenting the sqlite2 database in settings.py
@@ -62,15 +63,8 @@ get() returned more than one Reservation -- it returned 2!
     - Not currently implemented, however, the following is installed: pip install django-bootstrap-datepicker-plus
 - When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate
 - Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long.
-- Same user can make many bookings at the same datetime - run a check for booking.author in all bookings and test for booking_start
-- When running tests in booking.tests.py (python3 manage.py test bookings) it gives the following error:
-Creating test database for alias 'default'...
-/workspace/.pip-modules/lib/python3.8/site-packages/django/db/backends/postgresql/base.py:304: RuntimeWarning: Normally Django will use a connection to the 'postgres' database to avoid running initialization queries against the production database when it's not needed (for example, when running tests). Django was unable to create a connection to the 'postgres' database and will use the first PostgreSQL database instead.
-  warnings.warn(
-Got an error creating the test database: permission denied to create database
-- Need to fix reset password form
+- Need to fix reset password form - seems to work now
 - May not be bug, but no reservations can be made if admin has not set opening hours or booking interval
-- Need to fix DeleteView and UpdateView to fit new app
 
 
 Fixed bugs
@@ -83,6 +77,13 @@ Fixed bugs
     now uses datetime, and is no longer an issue
 - When calculating available seats the system assumes that closing time is on an full-hour mark. Does not calculate properly if e.g. 20:30 is the closing time
     No longer uses this feature. User is shown validation error in form and uses datetime to calculate available tables
+- Need to fix DeleteView and UpdateView to fit new app - turns out I needed to rename the folder where my templates were put in. It was still called "bookings", but is now called "reservations"
+- Same user can make many bookings at the same datetime - implemented a check for booking.author in all bookings and test for booking_start. Needed to adjust for length of returns as it always returns one conflicting, which is the booking being made, which is due to double-save
+- When running tests in booking.tests.py (python3 manage.py test bookings) it gives the following error:
+Creating test database for alias 'default'...
+/workspace/.pip-modules/lib/python3.8/site-packages/django/db/backends/postgresql/base.py:304: RuntimeWarning: Normally Django will use a connection to the 'postgres' database to avoid running initialization queries against the production database when it's not needed (for example, when running tests). Django was unable to create a connection to the 'postgres' database and will use the first PostgreSQL database instead.
+  warnings.warn(
+Got an error creating the test database: permission denied to create database - Need to comment out database in settings and remove commentout for sqlite3 database. Flip back when done testing
 
 TIPS
 To reset database: python manage.py migrate MyApp zero

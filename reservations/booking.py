@@ -204,26 +204,23 @@ def test_time(request_start):
 
 
 def double_booking(request_start, user):
-    # request_end = generate_request_end(request_start)
-    double_booked = []
 
-    bookings = Booking.objects.all()
-    for booking in bookings:
-        if str(booking.booking_start) == str(request_start) and booking.author == user:
-            double_booked.append(booking)
+    request_end = generate_request_end(request_start)
+    
+    check_one = Booking.objects.filter(
+        author=user,
+        booking_start=request_start)
 
-    # check_one = Booking.objects.filter(
-    #     author=user,
-    #     )
+    check_two = Booking.objects.filter(
+        author=user,
+        booking_start__lt=request_start,
+        booking_end__gt=request_start)
 
-    # check_two = Booking.objects.filter(
-    #     author=user,
-    #     booking_start__lt=request_start,
-    #     booking_end__gt=request_start)
+    check_three = Booking.objects.filter(
+        author=user,
+        booking_start__lt=request_end,
+        booking_end__gt=request_end)
 
-    # check_three = Booking.objects.filter(
-    #     author=author,
-    #     booking_start__lt=request_end,
-    #     booking_end__gt=request_end)
+    conflicting = len(check_one) + len(check_two) + len(check_three)
 
-    return double_booked
+    return conflicting

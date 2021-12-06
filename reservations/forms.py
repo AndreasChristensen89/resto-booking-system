@@ -12,6 +12,10 @@ from .booking import return_tables, test_time, get_opening_hours, double_booking
 class BookTableForm(forms.ModelForm):
     booking_start = forms.SplitDateTimeField()
     
+    # def __init__(self, *args, **kwargs):
+    #     self.user = kwargs.pop('user', None)
+    #     super(BookTableForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = Booking
         fields = [
@@ -32,7 +36,7 @@ class BookTableForm(forms.ModelForm):
             raise forms.ValidationError(f'Not within opening hours of the requested date - {open} to {close}')
         if not tables:
             raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party")
-        # if Booking.objects.filter(booking_start=booking_start).exists():
+        # if Booking.objects.filter(booking_author=user).exists():
         #     raise forms.ValidationError("You have already booked a time on the requested time")
 
 
