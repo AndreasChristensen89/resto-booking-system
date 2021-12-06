@@ -97,6 +97,8 @@ Due to message on the 06-12-2021, Gitpod had new dependencies. Followed the inst
     - pip3 install django-allauth
     - pip3 freeze --local > requirements.txt
     - saved, commited, and pushed
+    - pip3 install Pillow
+    - pip3 freeze --local > requirements.txt
 From here onwards, whenever you (re)start your workspace, you need to do two things:
 run pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt first, and then
 run pip3 install -r requirements.txt second
