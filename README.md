@@ -87,3 +87,16 @@ TIPS
 To reset database: python manage.py migrate MyApp zero
 
 I set use_tz to False in settings.py in order to avoid the timezone input from bookings.booking_start
+
+Due to message on the 06-12-2021, Gitpod had new dependencies. Followed the instructions:
+    - find -name "deps.txt" - no results, so meant that I had the older version
+    - ran pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
+    - pip3 install django gunicorn
+    - pip3 install dj_database_url psycopg2
+    - pip3 install dj3-cloudinary-storage
+    - pip3 install django-allauth
+    - pip3 freeze --local > requirements.txt
+    - saved, commited, and pushed
+From here onwards, whenever you (re)start your workspace, you need to do two things:
+run pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt first, and then
+run pip3 install -r requirements.txt second
