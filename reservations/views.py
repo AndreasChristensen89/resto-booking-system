@@ -11,6 +11,7 @@ from .forms import BookTableForm, ProfileForm
 from allauth.account.views import PasswordChangeView, PasswordResetView
 from .booking import return_tables, double_booking
 import datetime
+from datetime import timedelta
 
 
 def book_table(request):
@@ -23,6 +24,8 @@ def book_table(request):
             obj = form.save(commit=False)
             user = request.user
             obj.author = user
+            booking_end = obj.booking_start + timedelta(minutes=BookingDetails.objects.all()[0].booking_duration)
+            obj.booking_end = booking_end
             obj.save()
             # save the many-to-many data for the form.
             tables = return_tables(obj.booking_start, obj.number_guests)
@@ -48,7 +51,7 @@ class BookingList(generic.ListView):
     template_name = 'booking_list.html'
     paginate_by = 6
 
-
+# currently not used
 class BookingUpdated(generic.ListView):
     model = Booking
     context_object_name = "updated_list"
@@ -57,7 +60,7 @@ class BookingUpdated(generic.ListView):
     )
     template_name = 'updated_booking.html'
 
-
+# currently not used
 class BookingPending(generic.ListView):
     model = Booking
     context_object_name = "pending_list"
@@ -66,7 +69,7 @@ class BookingPending(generic.ListView):
     )
     template_name = 'booking_pending.html'
 
-
+# currently not used
 class BookingDetail(View):
 
     def get(self, request, slug, *args, **kwargs):
@@ -81,12 +84,12 @@ class BookingDetail(View):
             }
             )
 
-
+# tested
 class CancelBookingView(DeleteView):
     model = Booking
     success_url = '/reservations/'
 
-
+# tested
 class UpdateReservationView(UpdateView):
     model = Booking
     fields = ['comment']
