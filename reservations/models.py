@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
+from restaurant.models import BookingDetails
 import random
 import string
 
@@ -31,9 +32,10 @@ class Booking(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.booking_end and not self.slug and self.booking_start:
-            self.booking_end = datetime.strptime(self.booking_start, "%Y-%m-%d %H:%M:%S") + timedelta(hours=3)
+            duration = BookingDetails.objects.all()[0].booking_duration
+            self.booking_end = self.booking_start + timedelta(minutes=duration)
             letters = string.ascii_lowercase
-            random_str = ''.join(random.choice(letters) for i in range(6))
+            random_str = ''.join(random.choice(letters) for i in range(4))
             self.slug = self.first_name+self.last_name+random_str
         super().save(*args, **kwargs)
 

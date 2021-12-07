@@ -88,6 +88,10 @@ To reset database: python manage.py migrate MyApp zero
 
 I set use_tz to False in settings.py in order to avoid the timezone input from bookings.booking_start
 
+Remember in reservations.bookings.generate_request_end() to set duration to:
+duration = BookingDetails.objects.all()[0].booking_duration
+For testing purposes it has been commented out and set to 180
+
 Due to message on the 06-12-2021, Gitpod had new dependencies. Followed the instructions:
     - find -name "deps.txt" - no results, so meant that I had the older version
     - ran pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
