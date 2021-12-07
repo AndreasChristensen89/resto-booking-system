@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     class Meta:
         verbose_name = 'category'
@@ -16,7 +16,7 @@ class Category(models.Model):
 
 
 class Meals(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     description = models.TextField(max_length=500)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     for_nbr_people = models.IntegerField()
