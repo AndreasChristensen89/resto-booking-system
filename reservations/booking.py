@@ -12,7 +12,8 @@ def get_opening_hours(requested_weekday):
 
 
 def generate_request_end(request_start):
-    duration = BookingDetails.objects.all()[0].booking_duration
+    # duration = BookingDetails.objects.all()[0].booking_duration
+    duration = 180
     request_end = request_start + timedelta(minutes=duration)
 
     return request_end

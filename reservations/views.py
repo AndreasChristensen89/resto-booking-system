@@ -96,14 +96,14 @@ class UpdateReservationView(UpdateView):
     template_name_suffix = '_update_form'
     success_url = '/reservations/'
 
-
+# currently not used
 class UpdateReservationViewAdmin(UpdateView):
     model = Booking
     fields = ['number_guests', 'table', 'comment', 'status']
     template_name_suffix = '_update_form_admin'
     success_url = '/reservations/updated_reservations/'
 
-
+# currently not used
 class ApproveReservationViewAdmin(UpdateView):
     model = Booking
     fields = ['table', 'status']
@@ -136,7 +136,7 @@ def show_tables(request):
 
     return HttpResponse(conflicting)
 
-
+# tested
 class ProfileView(SuccessMessageMixin, generic.UpdateView):
     """View and update user profile"""
     form_class = ProfileForm
