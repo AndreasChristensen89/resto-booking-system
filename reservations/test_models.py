@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Booking
+from .models import Booking, Table
 from django.contrib.auth.models import User
 from .booking import return_tables, double_booking
 from restaurant.models import BookingDetails
@@ -39,18 +39,6 @@ class TestModels(TestCase):
             booking_start='2021-11-06 12:00:00',
             booking_end='2021-11-06 15:00:00')
         self.assertEqual(booking.status, 0)
-
-    # tables are not added - seems there is no access to the other models
-    def test_tables_empty(self):
-        user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-        booking = Booking.objects.create(
-            first_name='x',
-            last_name='x', 
-            author=user, 
-            number_guests=4, 
-            booking_start='2021-11-06 12:00:00',
-            booking_end='2021-11-06 15:00:00')
-        self.assertEqual(len(booking.table.all()), 0)
     
     def test_booking_slug(self):
         user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')

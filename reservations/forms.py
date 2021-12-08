@@ -22,9 +22,9 @@ class BookTableForm(forms.ModelForm):
     def clean(self):
         number_guests = self.cleaned_data.get('number_guests')
         booking_start = self.cleaned_data.get('booking_start')
-        tables = []
+        available_tables = []
         if booking_start is not None:
-            tables = return_tables(booking_start, number_guests)
+            available_tables = return_tables(booking_start, number_guests)
             time_check = test_time(booking_start)
 
             if not time_check:
@@ -32,7 +32,7 @@ class BookTableForm(forms.ModelForm):
                 open = str(opening_hours[0].from_time)[0:5]
                 close = str(opening_hours[0].to_time)[0:5]
                 raise forms.ValidationError(f'Not within opening hours of the requested date - {open} to {close}')
-        if not tables:
+        if not available_tables:
             raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party")
 
 

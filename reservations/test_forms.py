@@ -3,6 +3,7 @@ from .forms import BookTableForm
 from .models import Booking, Table
 from restaurant.models import OpeningHours
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 import datetime
 
 
@@ -59,3 +60,33 @@ class TestBookingForm(TestCase):
                 'comment': ''
                 })
         self.assertTrue(form.is_valid())
+
+    def test_not_enough_tables(self):
+        opening_hours = OpeningHours.objects.create(
+            weekday=6,
+            from_time='10:00', 
+            to_time='22:00')
+        form = BookTableForm({
+                'first_name': 'x',
+                'last_name': 'x',
+                'number_guests': 4,
+                'booking_start': '2021-12-12 12:00:00',
+                'comment': ''
+                })
+        self.assertRaises(ValidationError)
+
+    def test_outside_opening_hours(self):
+        opening_hours = OpeningHours.objects.create(
+            weekday=6,
+            from_time='10:00', 
+            to_time='22:00')
+        tables = Table.objects.create(
+            size=4)
+        form = BookTableForm({
+                'first_name': 'x',
+                'last_name': 'x',
+                'number_guests': 4,
+                'booking_start': '2021-12-12 23:00:00',
+                'comment': ''
+                })
+        self.assertRaises(ValidationError)

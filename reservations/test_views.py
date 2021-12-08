@@ -1,5 +1,7 @@
 from django.test import TestCase
-from .models import Booking
+from .models import Booking, Table
+from . forms import BookTableForm
+from restaurant.models import OpeningHours
 from datetime import datetime
 from django.contrib.auth.models import User
 
@@ -59,17 +61,22 @@ class TestsLoggedIn(TestCase):
         self.assertTemplateUsed(response, 'reservations/booking_confirm_delete.html')
         self.assertTemplateUsed(response, 'base.html')
 
-    # def test_cancel_reservation(self):
-    #     admin = User.objects.create_superuser('theadmin', 'admin@test.com', 'adminboss123')
-    #     self.client.login(username='theadmin', password='adminboss123')
-    #     booking = Booking.objects.create(
-    #         first_name='x',
-    #         last_name='x', 
-    #         author=admin,
-    #         number_guests=4, 
-    #         booking_start='2021-11-06 12:00:00',
-    #         booking_end='2021-11-06 15:00:00')
-    #     response = self.client.get(f'/reservations/{booking.slug}/cancel/', follow=True)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'reservations/booking_confirm_delete.html')
-    #     self.assertTemplateUsed(response, 'base.html')
+    # def test_book_table_view(self):
+    #     user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+    #     self.client.login(username='john', password='johnpassword')
+    #     opening_hours = OpeningHours.objects.create(
+    #         weekday=6,
+    #         from_time='10:00', 
+    #         to_time='22:00')
+    #     tables = Table.objects.create(
+    #         size=4)
+    #     response = self.client.get(f'/reservations/book_table/', follow=True)
+    #     form = BookTableForm({
+    #             'first_name': 'x',
+    #             'last_name': 'x',
+    #             'number_guests': 4,
+    #             'booking_start': '2021-12-12 12:00:00',
+    #             'comment': ''
+    #             })
+    #     self.assertTrue(form.is_valid())
+    #     self.assertEqual(request.user, user)
