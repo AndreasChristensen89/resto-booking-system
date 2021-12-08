@@ -191,8 +191,9 @@ def test_time(request_start):
     start_time = request_start.time()
     end = generate_request_end(request_start)
     end_time = end.time()
+    weekday = request_start.weekday()
 
-    opens_closes = get_opening_hours(request_start.weekday())
+    opens_closes = get_opening_hours(weekday)
     opening_time = opens_closes[0].from_time
     closing_time = opens_closes[0].to_time
 

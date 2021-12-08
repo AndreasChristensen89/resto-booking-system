@@ -62,7 +62,8 @@ get() returned more than one Reservation -- it returned 2!
 - When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate
 - Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long.
 - Need to fix reset password form - seems to work now
-- May not be bug, but no reservations can be made if admin has not set opening hours or booking interval
+- May not be bug, but no reservations cannot be made if admin has not set opening hours or booking interval
+- During testing there's no access to other models
 
 
 Fixed bugs

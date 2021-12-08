@@ -40,7 +40,7 @@ class TestModels(TestCase):
             booking_end='2021-11-06 15:00:00')
         self.assertEqual(booking.status, 0)
 
-    # tables are added after the second save in views, therefore test shows tables as []
+    # tables are not added - seems there is no access to the other models
     def test_tables_empty(self):
         user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         booking = Booking.objects.create(

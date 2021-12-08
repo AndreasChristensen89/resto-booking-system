@@ -1,11 +1,12 @@
 from django.test import TestCase
 from .forms import BookTableForm
+from .models import Booking, Table
+from restaurant.models import OpeningHours
 from django.contrib.auth.models import User
+import datetime
 
 
 class TestBookingForm(TestCase):
-    # there seems to be problems testing this since I'm using functions inside the form function
-    # If i remove the functions the test passes
     def test_empty_form(self):
         form = BookTableForm()
         self.assertFalse(form.is_valid())
@@ -44,11 +45,17 @@ class TestBookingForm(TestCase):
         self.assertEqual(form.Meta.fields, ['first_name', 'last_name', 'number_guests', 'booking_start', 'comment'])
 
     def test_comment_field_not_required(self):
+        opening_hours = OpeningHours.objects.create(
+            weekday=6,
+            from_time='10:00', 
+            to_time='22:00')
+        tables = Table.objects.create(
+            size=4)
         form = BookTableForm({
                 'first_name': 'x',
                 'last_name': 'x',
                 'number_guests': 4,
-                'booking_start': '2021-12-12 13:00:00',
-                'comment': 'test'
+                'booking_start': '2021-12-12 12:00:00',
+                'comment': ''
                 })
         self.assertTrue(form.is_valid())
