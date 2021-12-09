@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load crispy_forms_tags %}
     {% if user.is_authenticated %}
         <form method="post">
-            {% csrf_token %}
-            {% for time in available_times_list %}
-            <input type="radio" value="{{time}}" name="{{time}}">{{time}}</button>
-            {% endfor %}
-            {{ form.as_p }}
+            {{ form | crispy }}
+            {% csrf_token %} 
             <input type="submit" value="Submit" name='submit'>
         </form>
     {% else %}
