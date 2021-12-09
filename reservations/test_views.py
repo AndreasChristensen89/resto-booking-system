@@ -22,9 +22,8 @@ class TestViews(TestCase):
 
 
 class TestsLoggedIn(TestCase):
-    
     def test_get_profile_page(self):
-        user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         login = self.client.login(username='john', password='johnpassword')
         response = self.client.get(f'/reservations/profile/', follow=True)
         self.assertEqual(response.status_code, 200)
@@ -32,51 +31,50 @@ class TestsLoggedIn(TestCase):
         self.assertTemplateUsed(response, 'base.html')
     
     def test_get_update_reservation(self):
-        user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         self.client.login(username='john', password='johnpassword')
-        booking = Booking.objects.create(
+        create_booking = Booking.objects.create(
             first_name='x',
             last_name='x', 
-            author=user, 
+            author=create_user, 
             number_guests=4, 
             booking_start='2021-11-06 12:00:00',
             booking_end='2021-11-06 15:00:00')
-        response = self.client.get(f'/reservations/{booking.slug}/update/', follow=True)
+        response = self.client.get(f'/reservations/{create_booking.slug}/update/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'reservations/booking_update_form.html')
         self.assertTemplateUsed(response, 'base.html')
 
     def test_cancel_reservation(self):
-        user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         self.client.login(username='john', password='johnpassword')
-        booking = Booking.objects.create(
+        create_booking = Booking.objects.create(
             first_name='x',
             last_name='x', 
-            author=user, 
+            author=create_user, 
             number_guests=4, 
             booking_start='2021-11-06 12:00:00',
             booking_end='2021-11-06 15:00:00')
-        response = self.client.get(f'/reservations/{booking.slug}/cancel/', follow=True)
+        response = self.client.get(f'/reservations/{create_booking.slug}/cancel/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'reservations/booking_confirm_delete.html')
         self.assertTemplateUsed(response, 'base.html')
 
-    # def test_book_table_view(self):
-    #     user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-    #     self.client.login(username='john', password='johnpassword')
-    #     opening_hours = OpeningHours.objects.create(
-    #         weekday=6,
-    #         from_time='10:00', 
-    #         to_time='22:00')
-    #     tables = Table.objects.create(
-    #         size=4)
-    #     response = self.client.get(f'/reservations/book_table/', follow=True)
-    #     form = BookTableForm({
-    #             'first_name': 'x',
-    #             'last_name': 'x',
-    #             'number_guests': 4,
-    #             'booking_start': '2021-12-12 12:00:00',
-    #             'comment': ''
-    #             })
-    #     self.assertTrue(form.is_valid())
-    #     self.assertEqual(request.user, user)
+    def test_book_table_view(self):
+        create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        self.client.login(username='john', password='johnpassword')
+        create_opening_hours = OpeningHours.objects.create(
+            weekday=6,
+            from_time='10:00', 
+            to_time='22:00')
+        create_table = Table.objects.create(
+            size=4)
+        self.client.post('/reservations/book_table/', {
+            'first_name': "x", 
+            'last_name': "x", 
+            'author': create_user,
+            'number_guests': 4, 
+            'booking_start': '2021-12-12 12:00:00',
+            'booking_end': '2021-12-12 15:00:00'
+            })
+        self.assertEqual(Booking.objects.last().first_name, 'x')

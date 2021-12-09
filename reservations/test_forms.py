@@ -61,7 +61,7 @@ class TestBookingForm(TestCase):
                 })
         self.assertTrue(form.is_valid())
 
-    def test_not_enough_tables(self):
+    def test_zero_tables_available(self):
         opening_hours = OpeningHours.objects.create(
             weekday=6,
             from_time='10:00', 
@@ -71,6 +71,22 @@ class TestBookingForm(TestCase):
                 'last_name': 'x',
                 'number_guests': 4,
                 'booking_start': '2021-12-12 12:00:00',
+                'comment': ''
+                })
+        self.assertRaises(ValidationError)
+
+    def test_not_enough_tables_available(self):
+        opening_hours = OpeningHours.objects.create(
+            weekday=6,
+            from_time='10:00', 
+            to_time='22:00')
+        tables = Table.objects.create(
+            size=2)
+        form = BookTableForm({
+                'first_name': 'x',
+                'last_name': 'x',
+                'number_guests': 4,
+                'booking_start': '2021-12-12 17:00:00',
                 'comment': ''
                 })
         self.assertRaises(ValidationError)
