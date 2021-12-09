@@ -34,6 +34,15 @@ class OpeningHours(models.Model):
         return f'{calendar.day_name[self.weekday]}: {self.from_time} to {self.to_time}'
 
 
+TABLE_SORT_CHOICES = (
+  (0, "Off"),
+  (1, "Assign tables - only assign adjoining tables"),
+  (2, "Assign tables - moveable tables in same zone can be added"),
+  (3, "Assign tables - any moveable tables can be added"),
+  (4, "Assign tables - any available tables"),
+)
+
+
 class BookingDetails(models.Model):
     booking_duration = models.PositiveIntegerField()
     auto_table_assign = models.BooleanField()

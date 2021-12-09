@@ -34,7 +34,10 @@ class BookTableForm(forms.ModelForm):
                 close = str(opening_hours[0].to_time)[0:5]
                 raise forms.ValidationError(f'Not within opening hours of the requested date - {open} to {close}')
         if not available_tables:
-            raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party")
+            raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party at this time")
+        if number_guests < 1:
+            raise forms.ValidationError("Number of guests must be at least 1")
+        
 
 
 class ProfileForm(UserChangeForm):

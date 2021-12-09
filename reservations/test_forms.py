@@ -61,6 +61,22 @@ class TestBookingForm(TestCase):
                 })
         self.assertTrue(form.is_valid())
 
+    def test_form_with_minus_integer(self):
+        opening_hours = OpeningHours.objects.create(
+            weekday=6,
+            from_time='10:00', 
+            to_time='22:00')
+        tables = Table.objects.create(
+            size=4)
+        form = BookTableForm({
+                'first_name': 'x',
+                'last_name': 'x',
+                'number_guests': -1,
+                'booking_start': '2021-12-12 12:00:00',
+                'comment': ''
+                })
+        self.assertRaises(ValidationError)
+
     def test_zero_tables_available(self):
         opening_hours = OpeningHours.objects.create(
             weekday=6,
@@ -102,6 +118,22 @@ class TestBookingForm(TestCase):
                 'first_name': 'x',
                 'last_name': 'x',
                 'number_guests': 4,
+                'booking_start': '2021-12-12 23:00:00',
+                'comment': ''
+                })
+        self.assertRaises(ValidationError)
+
+    def test_outside_zero_guests(self):
+        opening_hours = OpeningHours.objects.create(
+            weekday=6,
+            from_time='10:00', 
+            to_time='22:00')
+        tables = Table.objects.create(
+            size=4)
+        form = BookTableForm({
+                'first_name': 'x',
+                'last_name': 'x',
+                'number_guests': 0,
                 'booking_start': '2021-12-12 23:00:00',
                 'comment': ''
                 })
