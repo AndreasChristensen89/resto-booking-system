@@ -11,7 +11,8 @@ from .booking import return_tables, test_time, get_opening_hours, double_booking
 
 
 class BookTableForm(forms.ModelForm):
-    # booking_start = forms.DateTimeField(input_formats='%m/%d/%Y %H:%M')
+    number_guests = forms.IntegerField(label='Number of guests')
+    booking_start = forms.DateTimeField(label='Date and time')
 
     class Meta:
         model = Booking

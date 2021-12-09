@@ -1,15 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Name:</h1>
-    <p>{{ meal_detail.name}}</p>
+    <h2>{{ meal_detail.name}}</h2>
     <img src="{{meal_detail.image.url}}" alt="">
-    <h2>Description:</h2>
-    <p>{{ meal_detail.description }}</p>
-    <h3>Category:</h3>
+    {{ meal_detail.description | safe }}
     <p>{{ meal_detail.category }}</p>
-    <h3>Number of people:</h3>
-    <p>{{ meal_detail.for_nbr_people }}</p>
+    <p>Suitable for {{ meal_detail.for_nbr_people }}</p>
     <h3>Price:</h3>
     <p>{{ meal_detail.price }}€</p>
 
