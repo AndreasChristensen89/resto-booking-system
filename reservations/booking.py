@@ -61,14 +61,17 @@ def get_available_tables(request_start):
 
     return available_tables
 
-
+# tested
 def return_tables(request_start, number_guests):
-    # This method takes the available tables and uses 3 step logic to sort the best combination
-    # 1. Checks if there are exact group-table matches, or match-1 (size 6 for 5 people)
-    #   1.a if not, best option is stored
-    # 2. Generates best two-table-combination, then same with three tables
-    # 3. Compare best option for 1/2/3 combinations
-    #   3.a hierarchy: fewest lost seats -> if equal: fewest tables used
+    """
+    This method takes the available tables and uses 3 step logic to sort the best combination
+    1. Checks if there are exact group-table matches, or match-1 (size 6 for 5 people)
+      1.a if not, best option is stored if it can fit the party
+    2. Generates best two-table-combination, then same with three tables
+    3. Compare best option for 1/2/3 combinations
+      3.a hierarchy: fewest lost seats -> if equal: fewest tables used
+    """
+    
 
     available_tables = get_available_tables(request_start)
     fitting_tables_1table = []
@@ -125,15 +128,15 @@ def return_tables(request_start, number_guests):
                         fitting_tables_3tables.append(available_tables[i])
                         fitting_tables_3tables.append(available_tables[j])
                         fitting_tables_3tables.append(available_tables[k])
-        # Step 3
-        # All combinations are matched. Prefers fewest losses, then fewest tables
-
-        if abs(best_comb_1table) <= abs(best_comb_2tables):
-            optimal_solution = fitting_tables_1table
-        elif abs(best_comb_2tables) <= abs(best_comb_3tables):
-            optimal_solution = fitting_tables_2tables
-        elif abs(best_comb_3tables) < abs(best_comb_2tables):
-            optimal_solution = fitting_tables_3tables
+    
+    # Step 3
+    # All combinations are matched. Prefers fewest losses, then fewest tables
+    if best_comb_1table <= 0 and abs(best_comb_1table) <= abs(best_comb_2tables):
+        optimal_solution = fitting_tables_1table
+    elif abs(best_comb_2tables) <= abs(best_comb_3tables):
+        optimal_solution = fitting_tables_2tables
+    elif abs(best_comb_3tables) < abs(best_comb_2tables):
+        optimal_solution = fitting_tables_3tables
 
     if not optimal_solution:
         optimal_solution = sort_large_party(number_guests, available_tables)
@@ -143,37 +146,35 @@ def return_tables(request_start, number_guests):
 
 def sort_large_party(number_guests, av_tables):
     # sorting available tables, biggest first
-    sorted = [av_tables[i].size <= av_tables[i+1].size for i in range(len(av_tables)-1)]
+    sorted = [av_tables[i].size >= av_tables[i+1].size for i in range(len(av_tables)-1)]
+
     if False in sorted:
-        av_tables.sort(key=lambda x: x.size)
-        av_tables = sorted(av_tables, key=lambda x: x.size, reverse=True)
-    print(sorted)
-    print(av_tables)
-    
+        av_tables.sort(key=lambda x: x.size, reverse=True)
+        # tables_sorted = sorted(av_tables, key=lambda x: x.size, reverse=True)
 
     table_combination = []
     check_two = []
     sum_seats = 0
-    range_value = 0
+    # range_value = 0
 
     # Add biggest first, if sum passes guests it's not added
     # All tables that causes surplus are added to new list
+    
     for table in av_tables:
         if sum_seats < number_guests:
-            if (sum_seats + table.size) <= number_guests:
+            if sum_seats + table.size <= number_guests:
                 table_combination.append(table)
                 sum_seats += table.size
             else:
                 check_two.append(table)
-                if table.size > range_value:
-                    range_value = table.size
+                # if table.size > range_value:
+                #     range_value = table.size
         else:
             break
-
     # if not perfect match it will run through the remains
     # add table that wastes the least seats
-    if sum_seats < number_guests and check_two:
-        check_two.sort()
+    if number_guests > sum_seats and check_two:
+        check_two.sort(key=lambda x: x.size, reverse=False)
         difference = number_guests - sum_seats
         list_temp = []
         for table in check_two:
@@ -181,7 +182,7 @@ def sort_large_party(number_guests, av_tables):
                 table_combination.append(table)
                 sum_seats += table.size
                 break
-            elif not list_temp or table.size < list_temp[0]:
+            elif not list_temp or table.size < list_temp[0].size:
                 list_temp = []
                 list_temp.append(table)
         table_combination.append(list_temp[0])
@@ -189,7 +190,6 @@ def sort_large_party(number_guests, av_tables):
 
     if sum_seats < number_guests:
         table_combination = []
-
     return table_combination
 
 

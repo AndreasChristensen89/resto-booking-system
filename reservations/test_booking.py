@@ -55,7 +55,7 @@ class TestGenerateRequestEnd(TestCase):
         )
         self.assertRaises(TypeError, generate_request_end, 1)
 
-
+# need raise valueerror
 class TestGetAvailableTables(TestCase):
     
     def test_all_tables_returned(self):
@@ -126,7 +126,8 @@ class TestGetAvailableTables(TestCase):
 
 
 class TestReturnTables(TestCase):
-    def test_sum_of_seat_is_always_greater_or_equal(self):
+    
+    def test_sum_of_seat_is_always_greater_or_equal_to_guests(self):
         BookingDetails.objects.create(
             booking_duration=180,
             auto_table_assign=True
@@ -141,23 +142,62 @@ class TestReturnTables(TestCase):
             Table.objects.create(size=8)
         request_start = datetime.datetime(2021, 11, 6, 9, 0)
 
-        for i in range(1, 15):
+        for i in range(1, 21):
             tables_returned = return_tables(request_start, i)
             sum = 0
             for table in tables_returned:
                 sum += table.size
             self.assertGreaterEqual(sum, i)
 
-    def test_fucntion_prefers_fewer_tables_used(self):
+    def test_function_prefers_fewer_tables_used(self):
         BookingDetails.objects.create(
             booking_duration=180,
             auto_table_assign=True
         )
+        # two solutions: 4+3+2 or 6+3
+        Table.objects.create(size=4)
+        Table.objects.create(size=3)
         Table.objects.create(size=2)
         Table.objects.create(size=3)
         Table.objects.create(size=6)
         request_start = datetime.datetime(2021, 11, 6, 9, 0)
 
-        tables_returned = return_tables(request_start, 5)
-        self.assertEqual(len(tables_returned), 1)
-        self.assertEqual(tables_returned[0].size, 6)
+        tables_returned = return_tables(request_start, 9)
+        self.assertEqual(len(tables_returned), 2)
+        self.assertEqual(tables_returned[0].size, 3)
+        self.assertEqual(tables_returned[1].size, 6)
+
+    def test_function_returns_error_if_no_parameters_are_passed(self):
+        self.assertRaises(TypeError, return_tables)
+
+    def test_function_return_error_if_datetime_is_missing(self):
+        self.assertRaises(TypeError, return_tables, 5)
+
+    def test_function_return_error_if_integer_is_missing(self):
+        self.assertRaises(TypeError, return_tables, datetime.datetime(2021, 12, 12, 13, 0))
+
+
+class TestSortLargerParty(TestCase):
+    
+    def test(self):
+        BookingDetails.objects.create(
+            booking_duration=180,
+            auto_table_assign=True
+        )
+        for i in range(4):
+            Table.objects.create(size=2)
+        for i in range(3):
+            Table.objects.create(size=4)
+        for i in range(2):
+            Table.objects.create(size=6)
+        for i in range(1):
+            Table.objects.create(size=8)
+        
+        request_start = datetime.datetime(2021, 11, 6, 9, 0)
+        av_tables = get_available_tables(request_start)
+        for i in range(16, 41):
+            sum = 0
+            returned_tables = sort_large_party(i, av_tables)
+            for table in returned_tables:
+                sum += table.size 
+            self.assertGreaterEqual(sum, i)
