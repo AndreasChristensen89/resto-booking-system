@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from restaurant.models import OpeningHours, BookingDetails
-from .booking import get_opening_hours, generate_request_end, get_available_tables, return_tables
+from .booking import get_opening_hours, generate_request_end, get_available_tables, return_tables, sort_large_party
 from .models import Booking, Table
 import datetime
 
@@ -126,7 +126,7 @@ class TestGetAvailableTables(TestCase):
 
 
 class TestReturnTables(TestCase):
-    def test_sum_of_seat_loss_never_less_than_two(self):
+    def test_sum_of_seat_is_always_greater_or_equal(self):
         BookingDetails.objects.create(
             booking_duration=180,
             auto_table_assign=True
@@ -146,4 +146,18 @@ class TestReturnTables(TestCase):
             sum = 0
             for table in tables_returned:
                 sum += table.size
-            self.assertLess(sum, i+2)
+            self.assertGreaterEqual(sum, i)
+
+    def test_fucntion_prefers_fewer_tables_used(self):
+        BookingDetails.objects.create(
+            booking_duration=180,
+            auto_table_assign=True
+        )
+        Table.objects.create(size=2)
+        Table.objects.create(size=3)
+        Table.objects.create(size=6)
+        request_start = datetime.datetime(2021, 11, 6, 9, 0)
+
+        tables_returned = return_tables(request_start, 5)
+        self.assertEqual(len(tables_returned), 1)
+        self.assertEqual(tables_returned[0].size, 6)
