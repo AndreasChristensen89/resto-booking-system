@@ -3,22 +3,23 @@ from .models import Booking, Table
 from restaurant.models import OpeningHours, BookingDetails
 import datetime
 
-
-def get_opening_hours(requested_weekday):
+# tested
+def get_opening_hours(weekday):
+    if not isinstance(weekday, int):
+        raise TypeError("Value needs to be an integer")
     opening_time = OpeningHours.objects.filter(
-        weekday=requested_weekday)
+        weekday=weekday)
 
     return opening_time
 
-
+# tested
 def generate_request_end(request_start):
-    # duration = BookingDetails.objects.all()[0].booking_duration
-    duration = 180
+    duration = BookingDetails.objects.all()[0].booking_duration
     request_end = request_start + timedelta(minutes=duration)
 
     return request_end
 
-
+# tested
 def get_available_tables(request_start):
     """
     This method returns the first available table(s) of the restaurant
@@ -63,7 +64,7 @@ def get_available_tables(request_start):
 
 def return_tables(request_start, number_guests):
     # This method takes the available tables and uses 3 step logic to sort the best combination
-    # 1. Checks if there exact group-table matches, or match-1 (size 6 for 5 people)
+    # 1. Checks if there are exact group-table matches, or match-1 (size 6 for 5 people)
     #   1.a if not, best option is stored
     # 2. Generates best two-table-combination, then same with three tables
     # 3. Compare best option for 1/2/3 combinations
