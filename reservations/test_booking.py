@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from restaurant.models import OpeningHours, BookingDetails
-from .booking import get_opening_hours, generate_request_end, get_available_tables, return_tables, sort_large_party
+from .booking import get_opening_hours, generate_request_end, get_available_tables, return_tables, sort_large_party, test_time, double_booking
 from .models import Booking, Table
 import datetime
 
@@ -55,7 +55,7 @@ class TestGenerateRequestEnd(TestCase):
         )
         self.assertRaises(TypeError, generate_request_end, 1)
 
-# need raise valueerror
+
 class TestGetAvailableTables(TestCase):
     
     def test_all_tables_returned(self):
@@ -108,21 +108,15 @@ class TestGetAvailableTables(TestCase):
         tables = Table.objects.all()
         create_booking.table.add(tables[0])
 
-        tables_returned_nine = get_available_tables(datetime.datetime(2021, 11, 6, 9, 0))
-        tables_returned_ten = get_available_tables(datetime.datetime(2021, 11, 6, 10, 0))
-        tables_returned_eleven = get_available_tables(datetime.datetime(2021, 11, 6, 11, 0))
-        tables_returned_twelve = get_available_tables(datetime.datetime(2021, 11, 6, 12, 0))
-        tables_returned_thirteen = get_available_tables(datetime.datetime(2021, 11, 6, 13, 0))
-        tables_returned_fourteen = get_available_tables(datetime.datetime(2021, 11, 6, 14, 0))
-        tables_returned_fifteen = get_available_tables(datetime.datetime(2021, 11, 6, 15, 0))
+        for i in range(10, 15):
+            tables_returned = get_available_tables(datetime.datetime(2021, 11, 6, i, 0))
+            self.assertEqual(len(tables_returned), 1)
+        for i in range(9, 17, 6):
+            tables_returned = get_available_tables(datetime.datetime(2021, 11, 6, i, 0))
+            self.assertEqual(len(tables_returned), 2)
 
-        self.assertEqual(len(tables_returned_nine), 2)
-        self.assertEqual(len(tables_returned_ten), 1)
-        self.assertEqual(len(tables_returned_eleven), 1)
-        self.assertEqual(len(tables_returned_twelve), 1)
-        self.assertEqual(len(tables_returned_thirteen), 1)
-        self.assertEqual(len(tables_returned_fourteen), 1)
-        self.assertEqual(len(tables_returned_fifteen), 2)
+    def test_no_value_is_passed_into_function(self):
+        self.assertRaises(TypeError, get_available_tables)
 
 
 class TestReturnTables(TestCase):
@@ -179,7 +173,10 @@ class TestReturnTables(TestCase):
 
 class TestSortLargerParty(TestCase):
     
-    def test(self):
+    def test_function_return_error_if_no_argument(self):
+        self.assertRaises(TypeError, sort_large_party)
+    
+    def test_sum_of_seats_always_greater_or_equal_to_guests(self):
         BookingDetails.objects.create(
             booking_duration=180,
             auto_table_assign=True
@@ -195,9 +192,85 @@ class TestSortLargerParty(TestCase):
         
         request_start = datetime.datetime(2021, 11, 6, 9, 0)
         av_tables = get_available_tables(request_start)
-        for i in range(16, 41):
+        for i in range(1, 41):
             sum = 0
             returned_tables = sort_large_party(i, av_tables)
             for table in returned_tables:
                 sum += table.size 
             self.assertGreaterEqual(sum, i)
+
+    def test_return_no_tables_if_not_enough(self):
+        BookingDetails.objects.create(
+            booking_duration=180,
+            auto_table_assign=True)
+
+        for i in range(4):
+            Table.objects.create(size=2)
+
+        request_start = datetime.datetime(2021, 11, 6, 9, 0)
+        av_tables = get_available_tables(request_start)
+        returned_tables = sort_large_party(9, av_tables)
+        self.assertEqual(len(returned_tables), 0)
+
+
+class TestTestTime(TestCase):
+
+    def test_returns_error_if_no_value_passed(self):
+        self.assertRaises(TypeError, test_time)
+
+    def test_returns_error_if_wrong_value_passed(self):
+        self.assertRaises(TypeError, test_time, 2)
+    
+    def test_returns_correct_boolean(self):
+        BookingDetails.objects.create(
+            booking_duration=180,
+            auto_table_assign=True
+        )
+        OpeningHours.objects.create(
+            weekday=5,
+            from_time='09:00',
+            to_time='16:00')
+        for i in range(9, 14):
+            create_datetime = datetime.datetime(2021, 11, 6, i, 0)
+            within_hours = test_time(create_datetime)
+            self.assertEqual(within_hours, True)
+        for i in range(14, 23):
+            create_datetime = datetime.datetime(2021, 11, 6, i, 0)
+            within_hours = test_time(create_datetime)
+            self.assertEqual(within_hours, False)
+        for i in range(0, 8):
+            create_datetime = datetime.datetime(2021, 11, 6, i, 0)
+            within_hours = test_time(create_datetime)
+            self.assertEqual(within_hours, False)
+
+
+class TestDoubleBooking(TestCase):
+
+    def test_returns_error_if_no_value_passed(self):
+        self.assertRaises(TypeError, double_booking)
+
+    def test_returns_error_if_wrong_value_passed(self):
+        self.assertRaises(TypeError, double_booking, 2)
+
+    def test_returns_correct_number(self):
+        BookingDetails.objects.create(
+            booking_duration=180,
+            auto_table_assign=True)
+
+        conflicting_start = datetime.datetime(2021, 11, 6, 12, 0)
+        non_conflicting_start = datetime.datetime(2021, 11, 7, 12, 0)
+
+        user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        booking = Booking.objects.create(
+            first_name='x',
+            last_name='x', 
+            author=user, 
+            number_guests=4, 
+            booking_start='2021-11-06 12:00:00',
+            booking_end='2021-11-06 15:00:00')
+
+        conflicting_booking = double_booking(conflicting_start, user)
+        non_conflicting_booking = double_booking(non_conflicting_start, user)
+
+        self.assertEqual(conflicting_booking, 1)
+        self.assertEqual(non_conflicting_booking, 0)

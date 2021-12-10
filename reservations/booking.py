@@ -143,8 +143,14 @@ def return_tables(request_start, number_guests):
 
     return optimal_solution
 
-
+# tested
 def sort_large_party(number_guests, av_tables):
+    """
+    Function activated if no three-table-combination can fit guests
+    Adds tables sorted largest to smallest, won't add if sum exceeds number of guests
+    Surplus tables are kept in case no exact match is found
+    If no exact match will add the table that wastes the fewest seats
+    """
     # sorting available tables, biggest first
     sorted = [av_tables[i].size >= av_tables[i+1].size for i in range(len(av_tables)-1)]
 
@@ -155,11 +161,9 @@ def sort_large_party(number_guests, av_tables):
     table_combination = []
     check_two = []
     sum_seats = 0
-    # range_value = 0
 
     # Add biggest first, if sum passes guests it's not added
     # All tables that causes surplus are added to new list
-    
     for table in av_tables:
         if sum_seats < number_guests:
             if sum_seats + table.size <= number_guests:
@@ -167,8 +171,6 @@ def sort_large_party(number_guests, av_tables):
                 sum_seats += table.size
             else:
                 check_two.append(table)
-                # if table.size > range_value:
-                #     range_value = table.size
         else:
             break
     # if not perfect match it will run through the remains
@@ -192,8 +194,10 @@ def sort_large_party(number_guests, av_tables):
         table_combination = []
     return table_combination
 
-
+# tested
 def test_time(request_start):
+    if not isinstance(request_start, datetime.datetime):
+        raise TypeError("Value needs to be datetime object")
     start_time = request_start.time()
     end = generate_request_end(request_start)
     end_time = end.time()
@@ -210,7 +214,7 @@ def test_time(request_start):
 
     return within_hours
 
-
+# tested
 def double_booking(request_start, user):
 
     request_end = generate_request_end(request_start)
