@@ -1,10 +1,21 @@
 from django.test import TestCase
 from .forms import BookTableForm
 from .models import Booking, Table
-from restaurant.models import OpeningHours
+from restaurant.models import OpeningHours, BookingDetails
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import datetime
+
+
+def create_booking_form(number_guests):
+    form = BookTableForm({
+        'first_name': 'x', 
+        'last_name': 'x', 
+        'number_guests': number_guests, 
+        'booking_start': '2021-12-12 12:00:00',
+        'comment': ''
+            })
+    return form
 
 
 class TestBookingForm(TestCase):
@@ -52,13 +63,8 @@ class TestBookingForm(TestCase):
             to_time='22:00')
         tables = Table.objects.create(
             size=4)
-        form = BookTableForm({
-                'first_name': 'x',
-                'last_name': 'x',
-                'number_guests': 4,
-                'booking_start': '2021-12-12 12:00:00',
-                'comment': ''
-                })
+        BookingDetails.objects.create(booking_duration=180, auto_table_assign=True)
+        form = create_booking_form(4)
         self.assertTrue(form.is_valid())
 
     def test_form_with_minus_integer(self):
@@ -68,13 +74,7 @@ class TestBookingForm(TestCase):
             to_time='22:00')
         tables = Table.objects.create(
             size=4)
-        form = BookTableForm({
-                'first_name': 'x',
-                'last_name': 'x',
-                'number_guests': -1,
-                'booking_start': '2021-12-12 12:00:00',
-                'comment': ''
-                })
+        form = create_booking_form(-1)
         self.assertRaises(ValidationError)
 
     def test_zero_tables_available(self):
@@ -82,13 +82,7 @@ class TestBookingForm(TestCase):
             weekday=6,
             from_time='10:00', 
             to_time='22:00')
-        form = BookTableForm({
-                'first_name': 'x',
-                'last_name': 'x',
-                'number_guests': 4,
-                'booking_start': '2021-12-12 12:00:00',
-                'comment': ''
-                })
+        form = create_booking_form(4)
         self.assertRaises(ValidationError)
 
     def test_not_enough_tables_available(self):
@@ -98,29 +92,17 @@ class TestBookingForm(TestCase):
             to_time='22:00')
         tables = Table.objects.create(
             size=2)
-        form = BookTableForm({
-                'first_name': 'x',
-                'last_name': 'x',
-                'number_guests': 4,
-                'booking_start': '2021-12-12 17:00:00',
-                'comment': ''
-                })
+        form = create_booking_form(4)
         self.assertRaises(ValidationError)
 
     def test_outside_opening_hours(self):
         opening_hours = OpeningHours.objects.create(
             weekday=6,
-            from_time='10:00', 
+            from_time='13:00', 
             to_time='22:00')
         tables = Table.objects.create(
             size=4)
-        form = BookTableForm({
-                'first_name': 'x',
-                'last_name': 'x',
-                'number_guests': 4,
-                'booking_start': '2021-12-12 23:00:00',
-                'comment': ''
-                })
+        form = create_booking_form(4)
         self.assertRaises(ValidationError)
 
     def test_outside_zero_guests(self):
@@ -130,11 +112,5 @@ class TestBookingForm(TestCase):
             to_time='22:00')
         tables = Table.objects.create(
             size=4)
-        form = BookTableForm({
-                'first_name': 'x',
-                'last_name': 'x',
-                'number_guests': 0,
-                'booking_start': '2021-12-12 23:00:00',
-                'comment': ''
-                })
+        form = create_booking_form(0)
         self.assertRaises(ValidationError)
