@@ -34,8 +34,6 @@ class Booking(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            # duration = BookingDetails.objects.all()[0].booking_duration
-            # self.booking_end = self.booking_start + timedelta(minutes=duration)
             letters = string.ascii_lowercase
             random_str = ''.join(random.choice(letters) for i in range(4))
             self.slug = self.first_name+self.last_name+random_str

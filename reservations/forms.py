@@ -25,7 +25,8 @@ class BookTableForm(forms.ModelForm):
         booking_start = self.cleaned_data.get('booking_start')
         available_tables = []
         if booking_start is not None:
-            available_tables = return_tables(booking_start, number_guests)
+            # extract table sort number
+            available_tables = return_tables(booking_start, number_guests)  #add table sort number
             time_check = test_time(booking_start)
 
             if not time_check:

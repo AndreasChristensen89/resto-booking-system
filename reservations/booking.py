@@ -3,6 +3,27 @@ from .models import Booking, Table
 from restaurant.models import OpeningHours, BookingDetails
 import datetime
 
+# (1, "Assign tables - same zone, only adjoining tables"),
+# (2, "Assign tables - same zone, only adjoining but movables can be added"),
+# (3, "Assign tables - same zone, any tables"),
+# (4, "Assign tables - any available tables"), DONE
+
+def return_tables(request_start, number_guests, sorting_method):
+    available_tables = []
+    
+    if sorting_method == 0:
+        available_tables == xx
+    elif sorting_method == 1:
+        available_tables = xx
+    elif sorting_method == 2:
+        available_tables == xx
+    elif sorting_method == 3:
+        available_tables == xx
+    elif sorting_method == 4:
+        available_tables == xx
+
+    return available_tables
+
 # tested
 def get_opening_hours(weekday):
     if not isinstance(weekday, int):
@@ -62,7 +83,7 @@ def get_available_tables(request_start):
     return available_tables
 
 # tested
-def return_tables(request_start, number_guests):
+def return_combination(available_tables):
     """
     This method takes the available tables and uses 3 step logic to sort the best combination
     1. Checks if there are exact group-table matches, or match-1 (size 6 for 5 people)
@@ -73,7 +94,7 @@ def return_tables(request_start, number_guests):
     """
     
 
-    available_tables = get_available_tables(request_start)
+    # available_tables = get_available_tables(request_start)
     fitting_tables_1table = []
     fitting_tables_2tables = []
     fitting_tables_3tables = []

@@ -9,7 +9,7 @@ from .models import Booking
 from restaurant.models import BookingDetails
 from .forms import BookTableForm, ProfileForm
 from allauth.account.views import PasswordChangeView, PasswordResetView
-from .booking import return_tables, double_booking
+from .booking import double_booking, return_available_tables
 import datetime
 from datetime import timedelta
 
