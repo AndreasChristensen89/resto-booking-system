@@ -3,10 +3,11 @@ from .models import Booking, Table
 from restaurant.models import OpeningHours, BookingDetails
 import datetime
 
-# (1, "Assign tables - same zone, only adjoining tables"),
-# (2, "Assign tables - same zone, only adjoining but movables can be added"),
-# (3, "Assign tables - same zone, any tables"),
-# (4, "Assign tables - any available tables"), DONE
+# 0 Off - Admins assigns tables
+# 1 On - same-zone tables, only movable tables can supplement
+# 2 On - same-zone tables, any tables in zone can supplement
+# 3 On - any zone, only moveables can supplement
+# 4 On - any zone, any tables can supplement
 
 
 def return_tables(request_start, number_guests, sorting_method):

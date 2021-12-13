@@ -24,10 +24,10 @@ If a user double books (same user, and duration of booking overlaps) a validatio
 The following was added in settings.py to work with emails during development, should not be there when submitting:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-Check why Django admin in Heroku doesn't load css
+Check why Django admin in Heroku doesn't load css - DISABLE_COLLECTSTATIC on heroku vars
 
 TABLE SORT LOGIC:
-Admin can choose to turn this logic on/off in Admin -> Booking Details -> Edit first object -> auto table assign tick box
+Admin can change sorting method or turn it off completely in the BookingDetails model
 1. Firstly, the function seeks to bring an exact match with table-size/number of people. 
     - If there are no exact matches it will look for table-size minus one
     - This is done to keep groups at the same table, and also to preserve other tables (smaller tables are valuable for dates/small families)
@@ -45,6 +45,8 @@ Admin can choose to turn this logic on/off in Admin -> Booking Details -> Edit f
     - Seeks to only add one table to preserve tables
 6. Once tables are assigned Admin is still free to change tables in admin settings.
 7. This logic assumes that the restaurant is able to move tables around
+
+BOOKING - SAME ZONE
 
 TESTING
 Currently I have no other solution when testing than to comment out the current database, and then uncommenting the sqlite2 database in settings.py
