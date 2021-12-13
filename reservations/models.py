@@ -6,17 +6,19 @@ import random
 import string
 
 
-STATUS = ((0, "Pending"), (1, "Approved"), (2, "Declined"))
-
-
 class Table(models.Model):
-    size = models.IntegerField()
+    table_number = models.IntegerField(unique=True, default=1)
+    seats = models.IntegerField()
+    zone = models.IntegerField(blank=True, default=0)
+    moveable = models.BooleanField(blank=True, default=False)
 
     def __str__(self):
-        return f'Table for {self.size} with id of {self.id}'
+        return f'Table {self.table_number} - Seats: {self.seats} - Zone: {self.zone}'
 
 
 class Booking(models.Model):
+    STATUS = ((0, "Pending"), (1, "Approved"), (2, "Declined"))
+    
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=200)

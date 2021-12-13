@@ -36,10 +36,9 @@ class OpeningHours(models.Model):
 
 TABLE_SORT_CHOICES = (
   (0, "Off"),
-  (1, "Assign tables - only assign adjoining tables"),
-  (2, "Assign tables - moveable tables in same zone can be added"),
-  (3, "Assign tables - any moveable tables can be added"),
-  (4, "Assign tables - any available tables"),
+  (1, "Assign tables - tables in same zone, only adjoining tables"),
+  (2, "Assign tables - tables in same zone, movables can be added"),
+  (3, "Assign tables - any available tables"),
 )
 
 

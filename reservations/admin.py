@@ -21,4 +21,9 @@ class AdminBookings(admin.ModelAdmin):
         queryset.update(status=2)
 
 
-admin.site.register(Table)
+@admin.register(Table)
+class AdminTable(admin.ModelAdmin):
+
+    list_display = ('seats', 'zone', 'table_number', 'moveable')
+    search_fields = ['zone', 'seats', 'table_number', 'moveable']
+    list_filter = ('seats', 'zone', 'table_number', 'moveable')
