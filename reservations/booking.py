@@ -8,44 +8,83 @@ import datetime
 # (3, "Assign tables - same zone, any tables"),
 # (4, "Assign tables - any available tables"), DONE
 
+
 def return_tables(request_start, number_guests, sorting_method):
-    available_tables = []
-    
-    if sorting_method == 0:
-        available_tables == xx
-    elif sorting_method == 1:
-        available_tables = xx
-    elif sorting_method == 2:
-        available_tables == xx
-    elif sorting_method == 3:
-        available_tables == xx
-    elif sorting_method == 4:
-        available_tables == xx
-
-    return available_tables
-
-# tested
-def get_opening_hours(weekday):
-    if not isinstance(weekday, int):
-        raise TypeError("Value needs to be an integer")
-    opening_time = OpeningHours.objects.filter(
-        weekday=weekday)
-
-    return opening_time
-
-# tested
-def generate_request_end(request_start):
-    duration = BookingDetails.objects.all()[0].booking_duration
-    request_end = request_start + timedelta(minutes=duration)
-
-    return request_end
-
-# tested
-def get_available_tables(request_start):
-    """
-    This method returns the first available table(s) of the restaurant
-    """
     request_end = generate_request_end(request_start)
+    optimal_solution = []
+    available_tables = return_all_available_tables(request_start, request_end)
+    
+    if sorting_method == 1:
+        optimal_solution = table_method_one(available_tables, number_guests)
+    elif sorting_method == 2:
+        optimal_solution == table_method_two(available_tables, number_guests)
+    elif sorting_method == 3:
+        optimal_solution == table_method_three(available_tables, number_guests)
+    elif sorting_method == 4:
+        optimal_solution = return_combination(available_tables, number_guests)
+
+    return optimal_solution
+
+
+def table_method_one(available_tables, number_guests):
+    """
+    Returns available tables from the same zone, moveable tables can be added
+    Used for option 2, "Assign tables - same zone, only adjoining but movables can be added"
+    """
+
+
+    return tables_to_return
+
+
+def table_method_two(available_tables, number_guests):
+    """
+    Returns available tables from the same zone, moveable tables can be added
+    Used for option 2, "Assign tables - same zone, only adjoining but movables can be added"
+    """
+    
+    
+    return tables_to_return
+
+
+def table_method_three(available_tables, number_guests):
+    """
+    Returns any available tables from the same zone
+    Used for option 3, "Assign tables - same zone, any tables"
+    """
+    unavailable_tables = []
+    list_of_zones = []
+    for table in available_tables:
+        if table.zone not in list_of_zones:
+            list_of_zones.append(table.zone)
+
+    tables_to_return = [1, 2, 3, 4]
+    fewest_losses = 100
+    
+    for zone in list_of_zones:
+        tables_in_zone = []
+        sum = 0
+        for table in available_tables:
+            if table.zone == zone:
+                tables_in_zone.append(table)
+                sum += table.seats
+        if sum >= number_guests:
+            zone_losses = number_guests
+            result_zone = return_combination(tables_in_zone, number_guests)
+            for table in result_zone:
+                zone_losses -= table.seats
+            if abs(fewest_losses) > abs(zone_losses) and len(result_zone) < len(tables_to_return):
+                fewest_losses = zone_losses
+                tables_to_return = result_zone
+    print(tables_to_return)
+
+    return tables_to_return
+    
+
+# tested
+def return_all_available_tables(request_start, request_end):
+    """
+    Returns any available tables from the restaurant
+    """
     unavailable_tables = []
 
     # 1. Remove existing reserv. that have the same start-time
@@ -82,8 +121,9 @@ def get_available_tables(request_start):
 
     return available_tables
 
+
 # tested
-def return_combination(available_tables):
+def return_combination(available_tables, number_guests):
     """
     This method takes the available tables and uses 3 step logic to sort the best combination
     1. Checks if there are exact group-table matches, or match-1 (size 6 for 5 people)
@@ -92,7 +132,6 @@ def return_combination(available_tables):
     3. Compare best option for 1/2/3 combinations
       3.a hierarchy: fewest lost seats -> if equal: fewest tables used
     """
-    
 
     # available_tables = get_available_tables(request_start)
     fitting_tables_1table = []
@@ -112,18 +151,18 @@ def return_combination(available_tables):
     # b. check for exact table-size match
     # c. Second check for -1 match
     for table in available_tables:
-        seat_difference = number_guests-table.size
+        seat_difference = number_guests-table.seats
         if seat_difference <= 0 and abs(seat_difference) < abs(best_comb_1table):
             best_comb_1table = seat_difference
             fitting_tables_1table = []
             fitting_tables_1table.append(table)
 
-            if table.size == number_guests:
+            if table.seats == number_guests:
                 optimal_solution = []
                 optimal_solution.append(table)
                 spots_to_fill = 0
                 break
-            elif not optimal_solution and table.size-1 == number_guests:
+            elif not optimal_solution and table.seats-1 == number_guests:
                 optimal_solution.append(table)
                 spots_to_fill = 0
 
@@ -133,7 +172,7 @@ def return_combination(available_tables):
     if spots_to_fill == number_guests:
         for i in range(0, len(available_tables)-1):
             for j in range(i+1, len(available_tables)):
-                combination = available_tables[i].size + available_tables[j].size
+                combination = available_tables[i].seats + available_tables[j].seats
                 seat_difference = number_guests-combination
                 if seat_difference <= 0 and abs(seat_difference) < abs(best_comb_2tables):
                     best_comb_2tables = seat_difference
@@ -141,7 +180,7 @@ def return_combination(available_tables):
                     fitting_tables_2tables.append(available_tables[i])
                     fitting_tables_2tables.append(available_tables[j])
                 for k in range(j+1, len(available_tables)):
-                    combination = available_tables[i].size + available_tables[j].size + available_tables[k].size
+                    combination = available_tables[i].seats + available_tables[j].seats + available_tables[k].seats
                     seat_difference = number_guests-combination
                     if seat_difference <= 0 and abs(seat_difference) < abs(best_comb_3tables):
                         best_comb_3tables = seat_difference
@@ -164,6 +203,7 @@ def return_combination(available_tables):
 
     return optimal_solution
 
+
 # tested
 def sort_large_party(number_guests, av_tables):
     """
@@ -173,11 +213,11 @@ def sort_large_party(number_guests, av_tables):
     If no exact match will add the table that wastes the fewest seats
     """
     # sorting available tables, biggest first
-    sorted = [av_tables[i].size >= av_tables[i+1].size for i in range(len(av_tables)-1)]
+    sorted = [av_tables[i].seats >= av_tables[i+1].seats for i in range(len(av_tables)-1)]
 
     if False in sorted:
-        av_tables.sort(key=lambda x: x.size, reverse=True)
-        # tables_sorted = sorted(av_tables, key=lambda x: x.size, reverse=True)
+        av_tables.sort(key=lambda x: x.seats, reverse=True)
+        # tables_sorted = sorted(av_tables, key=lambda x: x.seats, reverse=True)
 
     table_combination = []
     check_two = []
@@ -187,9 +227,9 @@ def sort_large_party(number_guests, av_tables):
     # All tables that causes surplus are added to new list
     for table in av_tables:
         if sum_seats < number_guests:
-            if sum_seats + table.size <= number_guests:
+            if sum_seats + table.seats <= number_guests:
                 table_combination.append(table)
-                sum_seats += table.size
+                sum_seats += table.seats
             else:
                 check_two.append(table)
         else:
@@ -197,23 +237,24 @@ def sort_large_party(number_guests, av_tables):
     # if not perfect match it will run through the remains
     # add table that wastes the least seats
     if number_guests > sum_seats and check_two:
-        check_two.sort(key=lambda x: x.size, reverse=False)
+        check_two.sort(key=lambda x: x.seats, reverse=False)
         difference = number_guests - sum_seats
         list_temp = []
         for table in check_two:
-            if table.size == difference:
+            if table.seats == difference:
                 table_combination.append(table)
-                sum_seats += table.size
+                sum_seats += table.seats
                 break
-            elif not list_temp or table.size < list_temp[0].size:
+            elif not list_temp or table.seats < list_temp[0].seats:
                 list_temp = []
                 list_temp.append(table)
         table_combination.append(list_temp[0])
-        sum_seats += list_temp[0].size
+        sum_seats += list_temp[0].seats
 
     if sum_seats < number_guests:
         table_combination = []
     return table_combination
+
 
 # tested
 def test_time(request_start):
@@ -234,6 +275,7 @@ def test_time(request_start):
         within_hours = False
 
     return within_hours
+
 
 # tested
 def double_booking(request_start, user):
@@ -257,3 +299,21 @@ def double_booking(request_start, user):
     conflicting = len(check_one) + len(check_two) + len(check_three)
 
     return conflicting
+
+
+# tested
+def get_opening_hours(weekday):
+    if not isinstance(weekday, int):
+        raise TypeError("Value needs to be an integer")
+    opening_time = OpeningHours.objects.filter(
+        weekday=weekday)
+
+    return opening_time
+
+
+# tested
+def generate_request_end(request_start):
+    duration = BookingDetails.objects.all()[0].booking_duration
+    request_end = request_start + timedelta(minutes=duration)
+
+    return request_end

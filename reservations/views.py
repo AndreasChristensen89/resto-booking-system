@@ -9,7 +9,7 @@ from .models import Booking
 from restaurant.models import BookingDetails
 from .forms import BookTableForm, ProfileForm
 from allauth.account.views import PasswordChangeView, PasswordResetView
-from .booking import double_booking, return_available_tables
+from .booking import double_booking, return_tables
 import datetime
 from datetime import timedelta
 
@@ -28,7 +28,7 @@ def book_table(request):
             obj.booking_end = booking_end
             obj.save()
             # save the many-to-many data for the form.
-            tables = return_tables(obj.booking_start, obj.number_guests)
+            tables = return_tables(obj.booking_start, obj.number_guests, 4)
             auto_assign = BookingDetails.objects.all()[0].auto_table_assign
             conflicting = double_booking(obj.booking_start, user)
             # conflicting length is 1 due to save further up

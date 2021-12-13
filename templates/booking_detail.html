@@ -7,7 +7,7 @@
         <h2>Booking accepted</h2>
         <h4>We have reserved the following for you:</h4>
             {% for table in booking.table.all %}
-                <p>    1 table for {{ table.size }} guests</p>
+                <p>    1 table for {{ table.seats }} guests</p>
             {% endfor %}
         <hr>
     {% elif booking.status == 2 %}

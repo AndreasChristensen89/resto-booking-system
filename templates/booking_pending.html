@@ -14,7 +14,7 @@
             <p>Guests: {{booking.number_guests}}</p>
             <p>Message: {{booking.comment}}</p>
             {% for table in booking.table.all %}
-                <p>1 x table for {{ table.size }}</p>
+                <p>1 x table for {{ table.seats }}</p>
             {% endfor %}
             {% if booking.table.all|length == 0 %}
                 <p>Warning: No tables have been assigned to booking!</p>

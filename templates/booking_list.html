@@ -13,7 +13,7 @@
             <p class="card-text text-dark">
                 <hr>
                 {% for table in booking.table.all %}
-                <p>1 x table for {{ table.size }}</p>
+                <p>1 x table for {{ table.seats }}</p>
                 {% endfor %}
                 <hr>
             </p>

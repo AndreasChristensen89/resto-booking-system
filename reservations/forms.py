@@ -24,6 +24,7 @@ class BookTableForm(forms.ModelForm):
         number_guests = self.cleaned_data.get('number_guests')
         booking_start = self.cleaned_data.get('booking_start')
         available_tables = []
+        auto_assign = BookingDetails.objects.all()[0].auto_table_assign
         if booking_start is not None:
             # extract table sort number
             available_tables = return_tables(booking_start, number_guests)  #add table sort number
@@ -34,7 +35,7 @@ class BookTableForm(forms.ModelForm):
                 open = str(opening_hours[0].from_time)[0:5]
                 close = str(opening_hours[0].to_time)[0:5]
                 raise forms.ValidationError(f'Not within opening hours of the requested date - {open} to {close}')
-        if not available_tables:
+        if not available_tables and not auto_assign:
             raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party at this time")
         if number_guests < 1:
             raise forms.ValidationError("Number of guests must be at least 1")
