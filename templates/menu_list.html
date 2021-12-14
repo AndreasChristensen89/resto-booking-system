@@ -1,7 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for category in categories %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto col-12 text-center mb-3">
+            <h1 class="mt-0 text-primary">Menu</h1>
+            <p class="lead">Begin with a selection from our award winning beverage menu or choose a wine from our
+                extensive wine list. Our wine list features over 100 different vintages and has received the chamber of
+                commerce award of excellence.</p>
+        </div>
+        {% for category in categories %}
+        <div class="col-12 mt-4">
+            <h3 class="text-center">{{category}}</h3>
+            <hr class="accent my-5">
+        </div>
+        <div class="card-columns">
+            {% for meal in menu_list %}
+            {% if meal.category == category %}
+            <div class="card card-body">
+                <span class="float-right font-weight-bold">€{{meal.price}}</span>
+                <h6 class="text-truncate">{{meal.name}}</h6>
+                <p class="small">{{meal.description | safe}}</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+      <div class="col-12 mt-4">
+          <hr class="accent my-5">
+      </div>
+      <div class="col-6 mx-auto">
+          <div class="card card-body text-center">
+              <h5 class="text-uppercase">Thursdays Only!</h5>
+              <h6>Portuguese Seafood Soup</h6>
+              <p class="small"> Portuguese Seafood Stew made with clams, shrimp, scallops and chorizo. Served with crusty bread.</p>
+              <span class="float-right font-weight-bold">$12</span>
+          </div>
+      </div>
+      <div class="col-12 mt-5 border border-right-0 border-left-0">
+          <div class="row">
+              <div class="col h5">Dre's Diner</div>
+              <div class="col h5 text-right">+45 48 10 00 02</div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- {% for category in categories %}
 <p>
   <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#{{category.name}}"
     aria-expanded="false" aria-controls="collapseExample">
@@ -21,7 +66,7 @@
     </div>
   </div>
 </div>
-{% endfor %}
+{% endfor %} -->
 
 <!-- <div class="pagination">
     <span class="step-links">

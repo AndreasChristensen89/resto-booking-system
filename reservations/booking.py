@@ -4,7 +4,7 @@ from restaurant.models import OpeningHours, BookingDetails
 import datetime
 
 # 0 Off - Admins assigns tables
-# 1 On - same-zone tables, only movable tables can supplement
+# 1 On - same-zone tables, any movable tables can supplement
 # 2 On - same-zone tables, any tables in zone can supplement
 # 3 On - any zone, only moveables can supplement
 # 4 On - any zone, any tables can supplement
