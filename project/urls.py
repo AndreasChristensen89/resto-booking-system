@@ -19,7 +19,6 @@ from reservations.views import show_tables
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('summernote/', include('django_summernote.urls')),
     path('reservations/', include('reservations.urls'), name='reservations_urls'),
     path('menu/', include('menu.urls'), name='menu_urls'),
     path('accounts/', include('allauth.urls')),
