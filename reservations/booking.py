@@ -16,29 +16,36 @@ def return_tables(request_start, number_guests, sorting_method):
     available_tables = return_all_available_tables(request_start, request_end)
     
     if sorting_method == 1:
-        optimal_solution == table_method_same_zone(available_tables, number_guests)
-    elif sorting_method == 2:   #need to add sorting method int to function
-        optimal_solution == table_method_same_zone(available_tables, number_guests)
+        optimal_solution == table_method_same_zone(available_tables, number_guests, sorting_method)
+    elif sorting_method == 2:
+        moveables = Table.objects.filter(moveable=True)
+        moveables_list = [table for table in moveables]
+        sorted = [moveables[i].seats <= moveables[i+1].seats for i in range(len(moveables)-1)]
+        if False in sorted:
+            moveables_list.sort(key=lambda x: x.seats, reverse=False)
+
+        optimal_solution == table_method_same_zone(available_tables, number_guests, sorting_method)
     elif sorting_method == 3:
         optimal_solution = return_combination(available_tables, number_guests)
 
     return optimal_solution
 
 
-def table_method_same_zone(available_tables, number_guests):
+def table_method_same_zone(available_tables, number_guests, sorting_method):
     """
     Returns any available tables from the same zone
-    Used for option 3, "Assign tables - same zone, any tables"
     """
-    unavailable_tables = []
+
     list_of_zones = []
     for table in available_tables:
         if table.zone not in list_of_zones:
             list_of_zones.append(table.zone)
 
-    tables_to_return = [1, 2, 3, 4]
+    tables_to_return = []
     fewest_losses = 100
-    
+
+    sum = 0
+
     for zone in list_of_zones:
         tables_in_zone = []
         sum = 0
@@ -51,11 +58,10 @@ def table_method_same_zone(available_tables, number_guests):
             result_zone = return_combination(tables_in_zone, number_guests)
             for table in result_zone:
                 zone_losses -= table.seats
-            if abs(fewest_losses) > abs(zone_losses) and len(result_zone) < len(tables_to_return):
+            if abs(fewest_losses) > abs(zone_losses):
                 fewest_losses = zone_losses
                 tables_to_return = result_zone
-    print(tables_to_return)
-
+    
     return tables_to_return
     
 

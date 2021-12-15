@@ -16,7 +16,7 @@ class TestReturnTables(TestCase):
         create_table = Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
         create_table = Table.objects.create(table_number=2, seats=2, zone=2, moveable=False)
         create_table = Table.objects.create(table_number=3, seats=4, zone=3, moveable=False)
-        all_tables = return_tables(datetime.datetime(2021, 12, 12, 10, 0), 8, 4)
+        all_tables = return_tables(datetime.datetime(2021, 12, 12, 10, 0), 8, 3)
         self.assertEqual(len(all_tables), 3)
         
 
@@ -155,7 +155,7 @@ class TestReturnCombination(TestCase):
         request_start = datetime.datetime(2021, 11, 6, 12, 0)
 
         for i in range(1, 21):
-            returned_tables = return_tables(request_start, i, 4)
+            returned_tables = return_tables(request_start, i, 3)
             tables_returned = return_combination(returned_tables, i)
             sum = 0
             for table in tables_returned:
@@ -174,7 +174,7 @@ class TestReturnCombination(TestCase):
         Table.objects.create(table_number=5, seats=6, zone=5, moveable=False)
         request_start = datetime.datetime(2021, 11, 6, 9, 0)
 
-        returned_tables = return_tables(request_start, 9, 4)
+        returned_tables = return_tables(request_start, 9, 3)
         tables_returned = return_combination(returned_tables, 9)
         self.assertEqual(len(tables_returned), 2)
         self.assertEqual(tables_returned[0].seats, 3)
@@ -197,7 +197,7 @@ class TestReturnCombination(TestCase):
         Table.objects.create(table_number=5, seats=6, zone=5, moveable=False)
         request_start = datetime.datetime(2021, 11, 6, 9, 0)
 
-        returned_tables = return_tables(request_start, 9, 4)
+        returned_tables = return_tables(request_start, 9, 3)
         self.assertRaises(TypeError, return_combination, datetime.datetime(2021, 12, 12, 13, 0))
 
 
@@ -306,18 +306,18 @@ class TestDoubleBooking(TestCase):
         self.assertEqual(non_conflicting_booking, 0)
 
 
-class TestTableMethodThree(TestCase):
+class TestTableMethodSameZone(TestCase):
     def test_list_of_zones(self):
         for i in range(4):
-            Table.objects.create(table_number=i, seats=2, zone=1, moveable=False)
+            Table.objects.create(table_number=i+1, seats=6, zone=1, moveable=True)
         for i in range(3):
-            Table.objects.create(table_number=4+i, seats=4, zone=2, moveable=False)
+            Table.objects.create(table_number=5+i, seats=4, zone=2, moveable=False)
         for i in range(2):
-            Table.objects.create(table_number=7+i, seats=6, zone=1, moveable=False)
-        Table.objects.create(table_number=9, seats=8, zone=4, moveable=False)
+            Table.objects.create(table_number=8+i, seats=2, zone=3, moveable=True)
+        Table.objects.create(table_number=10, seats=8, zone=4, moveable=False)
         request_start = datetime.datetime(2021, 11, 7, 12, 0)
         request_end = datetime.datetime(2021, 11, 7, 15, 0)
         available_tables  = return_all_available_tables(request_start, request_end)
 
-        test_of_zones = table_method_three(available_tables, 9)
-        self.assertEqual(test_of_zones, [])
+        test_of_zones = table_method_same_zone(available_tables, 9, 3)
+        self.assertEqual(len(test_of_zones), 2)
