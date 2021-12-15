@@ -3,11 +3,11 @@ from .models import Booking, Table
 from restaurant.models import OpeningHours, BookingDetails
 import datetime
 
-# 0 Off - Admins assigns tables
-# 1 On - same-zone tables, any movable tables can supplement
-# 2 On - same-zone tables, any tables in zone can supplement
-# 3 On - any zone, only moveables can supplement
-# 4 On - any zone, any tables can supplement
+# 0 Off - admin assigns tables
+# 1 Assign any tables in same zone
+# 2 Same zone, add moveable tables if needed
+# 3 Assign any tables
+# Set guest-limit to auto-assign system, won't assign if larger/smaller than x.
 
 
 def return_tables(request_start, number_guests, sorting_method):
@@ -16,38 +16,16 @@ def return_tables(request_start, number_guests, sorting_method):
     available_tables = return_all_available_tables(request_start, request_end)
     
     if sorting_method == 1:
-        optimal_solution = table_method_one(available_tables, number_guests)
-    elif sorting_method == 2:
-        optimal_solution == table_method_two(available_tables, number_guests)
+        optimal_solution == table_method_same_zone(available_tables, number_guests)
+    elif sorting_method == 2:   #need to add sorting method int to function
+        optimal_solution == table_method_same_zone(available_tables, number_guests)
     elif sorting_method == 3:
-        optimal_solution == table_method_three(available_tables, number_guests)
-    elif sorting_method == 4:
         optimal_solution = return_combination(available_tables, number_guests)
 
     return optimal_solution
 
 
-def table_method_one(available_tables, number_guests):
-    """
-    Returns available tables from the same zone, moveable tables can be added
-    Used for option 2, "Assign tables - same zone, only adjoining but movables can be added"
-    """
-
-
-    return tables_to_return
-
-
-def table_method_two(available_tables, number_guests):
-    """
-    Returns available tables from the same zone, moveable tables can be added
-    Used for option 2, "Assign tables - same zone, only adjoining but movables can be added"
-    """
-    
-    
-    return tables_to_return
-
-
-def table_method_three(available_tables, number_guests):
+def table_method_same_zone(available_tables, number_guests):
     """
     Returns any available tables from the same zone
     Used for option 3, "Assign tables - same zone, any tables"

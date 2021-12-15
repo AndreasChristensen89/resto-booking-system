@@ -10,6 +10,24 @@ body {
     height: 30px;
 }
 
+.img-fluid {
+    height: auto;
+    width: 80%;
+}
+
+/* .meal-col {
+    max-width: 30%;
+    margin: 1rem;
+}
+
+.meal-h4 {
+    margin-top: 10px;
+}
+
+.meal-p {
+    margin-top: 10px;
+} */
+
 .brand {
     font-family: Lato, sans-serif;
     font-size: 1.4rem;

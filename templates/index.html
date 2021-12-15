@@ -4,29 +4,23 @@
 
 
 
-{% if user.is_superuser %}
+{% if user.is_authenticated %}
+    
+    {% if user.first_name %}
 
-<h1>Welcome Admin</h1>
+        <h1>Welcome {{user.first_name}}</h1>
 
-<!-- <h3>Make a booking: </h3>
+    {% else %}
 
-<form action="/bookings/book_table/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form> -->
+        <h1>Welcome {{user.username}}</h1>
 
-{% elif user.is_authenticated %}
-
-<h1>Welcome {{user.username}}</h1>
-
+    {% endif %}
 {% else %}
 
-<h1>Welcome to the site.</h1>
+    <h1>Welcome to the site.</h1>
 
-<p>If you wish to book a table at this restaurant you need to <a href="{% url 'account_login' %}">
+    <p>If you wish to book a table at this restaurant you need to <a href="{% url 'account_login' %}">
     log in</a> or <a href="{% url 'account_signup' %}"> create a user.</a></p>
-
 
 {% endif %}
 
