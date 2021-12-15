@@ -17,10 +17,10 @@ def create_booking_form(number_guests):
             })
     return form
 
-def create_booking_details():
+def create_booking_details(method):
     booking_details = BookingDetails.objects.create(
             booking_duration = 180,
-            table_assign_method = 1,
+            table_assign_method = method,
             assign_method_limit = 0
         )
 
@@ -33,28 +33,28 @@ class TestBookingForm(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_form_with_no_first_name_field(self):
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         form = BookTableForm({'first_name': ''})
         self.assertIn('first_name', form.errors.keys())
         self.assertEqual(form.errors['first_name'][0], 'This field is required.')
         self.assertFalse(form.is_valid())
 
     def test_form_with_no_last_name_field(self):
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         form = BookTableForm({'first_name': 'x', 'last_name': ''})
         self.assertIn('last_name', form.errors.keys())
         self.assertEqual(form.errors['last_name'][0], 'This field is required.')
         self.assertFalse(form.is_valid())
 
     def test_form_with_no_guest_number_field(self):
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         form = BookTableForm({'first_name': 'x', 'last_name': 'x', 'number_guests': ''})
         self.assertIn('number_guests', form.errors.keys())
         self.assertEqual(form.errors['number_guests'][0], 'This field is required.')
         self.assertFalse(form.is_valid())
 
     def test_form_with_no_booking_start_field(self):
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         form = BookTableForm({
             'first_name': 'x', 
             'last_name': 'x', 
@@ -79,12 +79,12 @@ class TestBookingForm(TestCase):
             seats=4,
             zone=1,
             moveable=True)
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         form = create_booking_form(4)
         self.assertTrue(form.is_valid())
 
     def test_form_with_minus_integer(self):
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=6,
             from_time='10:00', 
@@ -99,7 +99,7 @@ class TestBookingForm(TestCase):
         self.assertRaises(ValidationError)
 
     def test_zero_tables_available(self):
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=6,
             from_time='10:00', 
@@ -108,7 +108,7 @@ class TestBookingForm(TestCase):
         self.assertRaises(ValidationError)
 
     def test_not_enough_tables_available(self):
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=6,
             from_time='10:00', 
@@ -123,7 +123,7 @@ class TestBookingForm(TestCase):
         self.assertRaises(ValidationError)
 
     def test_outside_opening_hours(self):
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=6,
             from_time='13:00', 
@@ -138,7 +138,7 @@ class TestBookingForm(TestCase):
         self.assertRaises(ValidationError)
 
     def test_outside_zero_guests(self):
-        booking_details = create_booking_details()
+        booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=6,
             from_time='10:00', 

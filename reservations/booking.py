@@ -13,7 +13,6 @@ def return_tables(request_start, number_guests, sorting_method):
     request_end = generate_request_end(request_start)
     optimal_solution = []
     available_tables = return_all_available_tables(request_start, request_end)
-    
     if sorting_method == 1:
         optimal_solution = table_method_same_zone(available_tables, number_guests, sorting_method)
     elif sorting_method == 2:
@@ -22,8 +21,6 @@ def return_tables(request_start, number_guests, sorting_method):
         # sorted = [moveables[i].seats <= moveables[i+1].seats for i in range(len(moveables)-1)]
         # if False in sorted:
         #     moveables_list.sort(key=lambda x: x.seats, reverse=False)
-        optimal_solution == table_method_same_zone(available_tables, number_guests, sorting_method)
-    elif sorting_method == 3:
         optimal_solution = return_combination(available_tables, number_guests)
 
     return optimal_solution
@@ -41,8 +38,6 @@ def table_method_same_zone(available_tables, number_guests, sorting_method):
     tables_to_return = []
     fewest_losses = 100
 
-    sum = 0
-
     for zone in list_of_zones:
         tables_in_zone = []
         sum = 0
@@ -58,7 +53,7 @@ def table_method_same_zone(available_tables, number_guests, sorting_method):
             if abs(fewest_losses) > abs(zone_losses):
                 fewest_losses = zone_losses
                 tables_to_return = result_zone
-    
+
     return tables_to_return
     
 
