@@ -54,8 +54,17 @@ class TestsLoggedIn(TestCase):
             weekday=6,
             from_time='10:00', 
             to_time='22:00')
-        Table.objects.create(size=4)
-        BookingDetails.objects.create(booking_duration=180, auto_table_assign=True)
+        tables = Table.objects.create(
+            table_number=1,
+            seats=4,
+            zone=1,
+            moveable=False
+            )
+        BookingDetails.objects.create(
+            booking_duration=180,
+            table_assign_method=1,
+            assign_method_limit=0
+        )
         self.client.post('/reservations/book_table/', {
             'first_name': "x", 
             'last_name': "x", 
@@ -64,4 +73,6 @@ class TestsLoggedIn(TestCase):
             'booking_start': '2021-12-12 12:00:00',
             'booking_end': '2021-12-12 15:00:00'
             })
+        # table_assigned = Booking.objects.filter(first_name='x').values('table')
         self.assertEqual(Booking.objects.last().first_name, 'x')
+        # self.assertEqual(table_assigned, 1)

@@ -26,6 +26,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 Check why Django admin in Heroku doesn't load css - DISABLE_COLLECTSTATIC on heroku vars
 
+To add:
+Check if user has first_name, otherwise ask them to fill in. This way we can cut first_name and last_name from booking and only use User info
+
 TABLE SORT LOGIC:
 Admin can change sorting method or turn it off completely in the BookingDetails model
 1. Firstly, the function seeks to bring an exact match with table-size/number of people. 
@@ -65,7 +68,6 @@ get() returned more than one Reservation -- it returned 2!
 - Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long.
 - Need to fix reset password form - seems to work now
 - May not be bug, but no reservations cannot be made if admin has not set opening hours or booking interval
-- During testing there's no access to other models
 
 
 Fixed bugs

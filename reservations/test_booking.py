@@ -11,11 +11,12 @@ class TestReturnTables(TestCase):
     def test_returns_correct_tables(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True
+            table_assign_method=1,
+            assign_method_limit=0
         )
-        create_table = Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
-        create_table = Table.objects.create(table_number=2, seats=2, zone=2, moveable=False)
-        create_table = Table.objects.create(table_number=3, seats=4, zone=3, moveable=False)
+        Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
+        Table.objects.create(table_number=2, seats=2, zone=2, moveable=False)
+        Table.objects.create(table_number=3, seats=4, zone=3, moveable=False)
         all_tables = return_tables(datetime.datetime(2021, 12, 12, 10, 0), 8, 3)
         self.assertEqual(len(all_tables), 3)
         
@@ -54,7 +55,8 @@ class TestGenerateRequestEnd(TestCase):
     def test_correct_datetime_is_returned(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True
+            table_assign_method=1,
+            assign_method_limit=0
         )
         returned_datetime = generate_request_end(datetime.datetime(2021, 12, 12, 10, 0))
         self.assertEqual(returned_datetime, datetime.datetime(2021, 12, 12, 13, 0))
@@ -65,7 +67,8 @@ class TestGenerateRequestEnd(TestCase):
     def test_wrong_value_is_passed_into_function(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True
+            table_assign_method=1,
+            assign_method_limit=0
         )
         self.assertRaises(TypeError, generate_request_end, 1)
 
@@ -75,7 +78,8 @@ class TestTableMethodFour(TestCase):
     def test_all_tables_returned(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True
+            table_assign_method=1,
+            assign_method_limit=0
         )
         Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
         Table.objects.create(table_number=2, seats=2, zone=2, moveable=False)
@@ -87,7 +91,8 @@ class TestTableMethodFour(TestCase):
     def test_does_not_returned_occupied_table(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True
+            table_assign_method=1,
+            assign_method_limit=0
         )
         Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
         Table.objects.create(table_number=2, seats=2, zone=1, moveable=False)
@@ -107,7 +112,8 @@ class TestTableMethodFour(TestCase):
     def test_only_returns_if_outside_duration(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True
+            table_assign_method=1,
+            assign_method_limit=0
         )
         Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
         Table.objects.create(table_number=2, seats=2, zone=1, moveable=False)
@@ -138,7 +144,8 @@ class TestReturnCombination(TestCase):
     def test_sum_of_seat_is_always_greater_or_equal_to_guests(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True
+            table_assign_method=1,
+            assign_method_limit=0
         )
         for i in range(4):
             Table.objects.create(table_number=i, seats=2, zone=1, moveable=False)
@@ -165,7 +172,8 @@ class TestReturnCombination(TestCase):
     def test_function_prefers_fewer_tables_used(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True
+            table_assign_method=1,
+            assign_method_limit=0
         )
         Table.objects.create(table_number=1, seats=4, zone=1, moveable=False)
         Table.objects.create(table_number=2, seats=3, zone=2, moveable=False)
@@ -189,7 +197,8 @@ class TestReturnCombination(TestCase):
     def test_function_return_error_if_integer_is_missing(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True)
+            table_assign_method=1,
+            assign_method_limit=0)
         Table.objects.create(table_number=1, seats=4, zone=1, moveable=False)
         Table.objects.create(table_number=2, seats=3, zone=2, moveable=False)
         Table.objects.create(table_number=3, seats=2, zone=3, moveable=False)
@@ -209,7 +218,8 @@ class TestSortLargerParty(TestCase):
     def test_sum_of_seats_always_greater_or_equal_to_guests(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True)
+            table_assign_method=1,
+            assign_method_limit=0)
         for i in range(4):
             Table.objects.create(table_number=i, seats=2, zone=1, moveable=False)
         for i in range(3):
@@ -231,7 +241,8 @@ class TestSortLargerParty(TestCase):
     def test_return_no_tables_if_not_enough(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True)
+            table_assign_method=1,
+            assign_method_limit=0)
 
         for i in range(4):
             Table.objects.create(table_number=i+1, seats=2, zone=1, moveable=False)
@@ -254,7 +265,8 @@ class TestTestTime(TestCase):
     def test_returns_correct_boolean(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True
+            table_assign_method=1,
+            assign_method_limit=0
         )
         OpeningHours.objects.create(
             weekday=5,
@@ -285,7 +297,8 @@ class TestDoubleBooking(TestCase):
     def test_returns_correct_number(self):
         BookingDetails.objects.create(
             booking_duration=180,
-            auto_table_assign=True)
+            table_assign_method=1,
+            assign_method_limit=0)
 
         conflicting_start = datetime.datetime(2021, 11, 6, 12, 0)
         non_conflicting_start = datetime.datetime(2021, 11, 7, 12, 0)

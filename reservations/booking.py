@@ -5,8 +5,7 @@ import datetime
 
 # 0 Off - admin assigns tables
 # 1 Assign any tables in same zone
-# 2 Same zone, add moveable tables if needed
-# 3 Assign any tables
+# 2 Assign any tables
 # Set guest-limit to auto-assign system, won't assign if larger/smaller than x.
 
 
@@ -16,14 +15,13 @@ def return_tables(request_start, number_guests, sorting_method):
     available_tables = return_all_available_tables(request_start, request_end)
     
     if sorting_method == 1:
-        optimal_solution == table_method_same_zone(available_tables, number_guests, sorting_method)
+        optimal_solution = table_method_same_zone(available_tables, number_guests, sorting_method)
     elif sorting_method == 2:
-        moveables = Table.objects.filter(moveable=True)
-        moveables_list = [table for table in moveables]
-        sorted = [moveables[i].seats <= moveables[i+1].seats for i in range(len(moveables)-1)]
-        if False in sorted:
-            moveables_list.sort(key=lambda x: x.seats, reverse=False)
-
+        # moveables = Table.objects.filter(moveable=True)
+        # moveables_list = [table for table in moveables]
+        # sorted = [moveables[i].seats <= moveables[i+1].seats for i in range(len(moveables)-1)]
+        # if False in sorted:
+        #     moveables_list.sort(key=lambda x: x.seats, reverse=False)
         optimal_solution == table_method_same_zone(available_tables, number_guests, sorting_method)
     elif sorting_method == 3:
         optimal_solution = return_combination(available_tables, number_guests)
@@ -40,7 +38,6 @@ def table_method_same_zone(available_tables, number_guests, sorting_method):
     for table in available_tables:
         if table.zone not in list_of_zones:
             list_of_zones.append(table.zone)
-
     tables_to_return = []
     fewest_losses = 100
 

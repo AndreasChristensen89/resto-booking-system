@@ -35,20 +35,20 @@ class OpeningHours(models.Model):
 
 
 TABLE_SORT_CHOICES = (
-  (0, "Off"),
-  (1, "Assign tables - tables in same zone, only adjoining tables"),
-  (2, "Assign tables - tables in same zone, movables can be added"),
-  (3, "Assign tables - any available tables"),
+  (0, "Off - admin assigns tables"),
+  (1, "Assign any tables in same zone"),
+  (2, "Assign any tables"),
 )
 
 
 class BookingDetails(models.Model):
     booking_duration = models.PositiveIntegerField()
-    auto_table_assign = models.BooleanField()
+    table_assign_method = models.IntegerField(choices=TABLE_SORT_CHOICES)
+    assign_method_limit = models.IntegerField(blank=True, default=100)
 
     class Meta:
         verbose_name = 'Booking detail'
         verbose_name_plural = 'Booking details'
 
     def __str__(self):
-        return f'{self.booking_duration} min bookings - auto table-assignment: {self.auto_table_assign}'
+        return f'{self.booking_duration} min bookings - method: {self.table_assign_method}'
