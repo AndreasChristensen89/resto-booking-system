@@ -7,21 +7,28 @@
 {% if user.is_authenticated %}
     
     {% if user.first_name %}
-
-        <h1>Welcome {{user.first_name}}</h1>
-
+    <div class="row">
+        <div class="col-3 h1-bg">
+            <h1 class="text-center welcome">Welcome {{user.first_name}}</h1>
+        </div>
+    </div>
     {% else %}
 
         <h1>Welcome {{user.username}}</h1>
 
     {% endif %}
 {% else %}
-
-    <h1>Welcome to the site.</h1>
-
+<div class="row">
+    <div class="col-3">
+    <h1 text-center welcome>Welcome to the site.</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
     <p>If you wish to book a table at this restaurant you need to <a href="{% url 'account_login' %}">
     log in</a> or <a href="{% url 'account_signup' %}"> create a user.</a></p>
-
+    </div>
+</div>
 {% endif %}
 
 {% endblock %}

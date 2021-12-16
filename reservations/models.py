@@ -19,8 +19,6 @@ class Table(models.Model):
 class Booking(models.Model):
     STATUS = ((0, "Pending"), (1, "Approved"), (2, "Declined"))
     
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='table_booking')
     number_guests = models.PositiveIntegerField()
@@ -35,8 +33,8 @@ class Booking(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             letters = string.ascii_lowercase
-            random_str = ''.join(random.choice(letters) for i in range(4))
-            self.slug = self.first_name+self.last_name+random_str
+            random_str = ''.join(random.choice(letters) for i in range(5))
+            self.slug = random_str
         super().save(*args, **kwargs)
 
     class Meta:
@@ -46,4 +44,4 @@ class Booking(models.Model):
         return reverse('reservations', args=[self.id])
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.author.first_name} {self.author.last_name}'

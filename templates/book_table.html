@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% load crispy_forms_tags %}
-    {% if user.is_authenticated %}
+{% if user.is_authenticated %}
+    {% if user.first_name %}
+    {% load crispy_forms_tags %}
+    <h1 class="text-center welcome">Book a Table</h1>
         <form method="post">
             {{ form | crispy }}
             {% csrf_token %} 
-            <input type="submit" value="Submit" name='submit'>
+            <input type="submit" value="Submit" name='submit' id=submitbooking>
         </form>
+    
     {% else %}
-    <p>Please log in to make a reservation</p>
+        <h3>Please fill in your name in the <a href="/reservations/profile/">profile section</a> before making a reservation</h3>
     {% endif %}
+{% else %}
+    <p>Please log in to make a reservation</p>
+{% endif %}
+
 {% endblock %}

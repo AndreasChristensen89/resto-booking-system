@@ -1,9 +1,9 @@
 body {
-    background-color: #B1A296;
+    background-color: whitesmoke;
 }
 
 .navbar {
-    background-color: #557A95;
+    background-color: #286DA8;
 }
 
 .navbar-light .navbar-brand {
@@ -22,6 +22,10 @@ body {
     color: white;
 }
 
+h1 {
+    /* color: whitesmoke; */
+}
+
 
 .img-fluid {
     height: auto;
@@ -29,7 +33,7 @@ body {
 }
 
 .footer {
-    background-color: #7395AE;
+    background-color: #3DB0A7;
 }
 
 .brand {
@@ -45,6 +49,35 @@ body {
 
 .thin {
     font-weight: 300;
+}
+
+.h1-bg {
+    width: 100%;
+}
+
+.welcome {
+    margin: 3%;
+}
+
+.booking {
+    margin: 3%;
+}
+
+#submitbooking {
+    margin: 0 auto;
+}
+
+label {
+    margin-left: 10%;
+}
+
+.form-control {
+    width: 80%;
+    margin: auto;
+}
+
+a {
+    text-decoration: none;
 }
 
 .light-bg {
