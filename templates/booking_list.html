@@ -2,36 +2,50 @@
 
 {% block content %}
 <div class="row">
+    <div class="col-3 h1-bg m-3">
+        <h1 class="text-center display-1">Your Bookings</h1>
+    </div>
+</div>
+<div class="row">
 {% for booking in booking_list %}
 {% if user == booking.author %}
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 card border m-2 mx-auto" style="width: 18rem;">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 card m-3 mx-auto" style="width: 18rem;">
         <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-        <div class="card-body">
-        <h5 class="card-title">{{booking.author.first_name}} {{booking.author.last_name}}</h5>
         {% if booking.status == 1%}
-            <p class="card-text bg-success">Confirmed</p>
+        <div class="card-body bg-success border rounded-top">
+            <h5 class="card-title">{{booking.author.first_name}} {{booking.author.last_name}}</h5>    
+                <p class="card-text round">Confirmed</p>
                 {% for table in booking.table.all %}
                     <p class="card-text">1 x table for {{table.seats}}</p>
                 {% endfor %}
         {% elif booking.status == 2%}
+        <div class="card-body bg-danger rounded-top">
+            <h5 class="card-title">{{booking.author.first_name}} {{booking.author.last_name}}</h5>    
             <p class="card-text">Declined</p>
-            <p class="card-text">We are unfortunately not able to accept your reservation</p>
+            <p class="card-text">Not able to accept</p>
             <p class="card-text">{{booking.comment}}</p>
         {% else %}
+        <div class="card-body bg-primary rounded-top">
+            <h5 class="card-title">{{booking.author.first_name}} {{booking.author.last_name}}</h5>    
             <p class="card-text">Pending</p>
-            <p class="card-text">Tables to be confirmed</p>
+            <p class="card-text">Reservation to be confirmed</p>
         {% endif %}
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush border">
         <li class="list-group-item">{{booking.booking_start|date}}</li>
         <li class="list-group-item">{{booking.booking_start|time}}</li>
-        <li class="list-group-item">{{booking.number_guests}} guests</li>
+        <li class="list-group-item rounded-bottom">{{booking.number_guests}} guests</li>
         </ul>
         {% if booking.status != 2%}
-            <div class="card-body">
+            <div class="card-body border bg-light rounded-bottom">
                 <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
-                <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Add/edit comment</a>
+                <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Edit comment</a>
             </div>
+        {% else %}
+        <div class="card-body border bg-light rounded-bottom">
+            <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
+            <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Edit comment</a>
+        </div>
         {% endif %}
     </div>
 

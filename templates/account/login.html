@@ -6,25 +6,28 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-
+{% load crispy_forms_tags %}
 <div>
 
+<div class="row">
+  <div class="col-9 mx-auto my-3">
+    <h3>{% trans "Sign In" %}</h3>
+    <p>{% blocktrans %}To make a reservation, please log in.
+      If you have not yet created an account, <a href="{{ signup_url }}">click here</a> to sign up.{% endblocktrans %}</p>
+  </div>
+</div>
 
-  <h3>{% trans "Sign In" %}</h3>
-
-
-  <p>{% blocktrans %}Welcome to the booking site. To make a reservation, please log in.
-    If you have not yet created an account, then <a href="{{ signup_url }}">click here</a> to sign up.{% endblocktrans %}</p>
-
-  <div>
+  <div class="row">
+    <div class="col-9 mx-auto">
     <form class="login" method="POST" action="{% url 'account_login' %}">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form|crispy }}
       {% if redirect_field_value %}
       <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
       {% endif %}
       <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
     </form>
+  </div>
   </div>
 </div>
 

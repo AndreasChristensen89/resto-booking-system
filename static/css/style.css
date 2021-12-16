@@ -63,6 +63,22 @@ body {
     width: 90%;
 }
 
+.bg-success {
+    background-color: #45b481!important;
+}
+
+.bg-primary {
+    background-color: #5b98f2!important;
+}
+
+.bg-danger {
+    background-color: #e25b68!important;
+}
+
+.bg-light {
+    background-color: #cecece!important;
+}
+
 a {
     text-decoration: none;
 }
