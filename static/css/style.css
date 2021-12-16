@@ -22,10 +22,6 @@ body {
     color: white;
 }
 
-h1 {
-    /* color: whitesmoke; */
-}
-
 
 .img-fluid {
     height: auto;
@@ -63,17 +59,8 @@ h1 {
     margin: 3%;
 }
 
-#submitbooking {
-    margin: 0 auto;
-}
-
-label {
-    margin-left: 10%;
-}
-
 .form-control {
-    width: 80%;
-    margin: auto;
+    width: 90%;
 }
 
 a {

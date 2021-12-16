@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load crispy_forms_tags %}
 {% if user == booking.author or user.is_superuser %}
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" name="Submit">
+<form method="post">
+    {% csrf_token %}
+    <div class="col-12 m-4">
+        {{ form.comment|as_crispy_field }}
+    </div>
+    <button type="submit" class="btn btn-primary m-4">Update</button>
 </form>
-<a href="/reservations/">Return</a>
+<br>
+<a class="m-4" href="/reservations/">Return</a>
 {% endif %}
 {% endblock %}

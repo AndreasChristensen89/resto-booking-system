@@ -4,11 +4,26 @@
 {% if user.is_authenticated %}
     {% if user.first_name %}
     {% load crispy_forms_tags %}
-    <h1 class="text-center welcome">Book a Table</h1>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center display-3 m-3">Book a Table</h1>
+        </div>
+    </div>
+    
         <form method="post">
-            {{ form | crispy }}
-            {% csrf_token %} 
-            <input type="submit" value="Submit" name='submit' id=submitbooking>
+            <div class="row">
+                {% csrf_token %}
+                <div class="col-12 mx-4 mb-3 lead">
+                    {{ form.number_guests|as_crispy_field }}
+                </div>
+                <div class="col-12 mx-4 mb-3 lead">
+                    {{ form.booking_start|as_crispy_field }}
+                </div>
+                <div class="col-12 mx-4 mb-3 lead">
+                    {{ form.comment|as_crispy_field }}
+                </div>
+            </div>
+              <button type="submit" class="btn btn-primary btn-lg m-4">Submit</button>
         </form>
     
     {% else %}

@@ -28,11 +28,19 @@ def book_table(request):
             obj.booking_end = booking_end
             obj.save()
             # save the many-to-many data for the form.
-            tables = return_tables(obj.booking_start, obj.number_guests, 4)
             sorting_method = BookingDetails.objects.all()[0].table_assign_method
+            print(sorting_method)
+            tables = return_tables(obj.booking_start, obj.number_guests, sorting_method)
+            print(tables)
             limit = BookingDetails.objects.all()[0].assign_method_limit
+            print(limit)
             conflicting = double_booking(obj.booking_start, user)
+            print(conflicting)
             # conflicting length is 1 due to save further up
+            print(conflicting==1)
+            print(sorting_method > 0)
+            print(len(tables) > 0)
+            print(obj.number_guests < limit)
             if conflicting == 1 and sorting_method > 0 and tables and obj.number_guests < limit:
                 for table in tables:
                     obj.table.add(table)
@@ -111,31 +119,6 @@ class ApproveReservationViewAdmin(UpdateView):
     template_name_suffix = '_approve_form'
     success_url = '/reservations/pending_booking/'
 
-
-def show_tables(request):
-    # User = get_user_model()
-    # users = User.objects.all()
-    # list_of_user_ids = []
-    # for user in users:
-    #     list_of_user_ids.append(user.id)
-    #     list_of_user_ids.append(" ")
-
-    request_start_str = '2021-10-06 18:00:00'
-    request_end_str = '2021-11-06 15:00:00'
-    request_start = datetime.datetime.strptime(request_start_str, '%Y-%m-%d %H:%M:%S')
-    request_end = datetime.datetime.strptime(request_end_str, '%Y-%m-%d %H:%M:%S')
-
-    # double_booked = True
-    # bookings = Booking.objects.all()
-    # list_of_bookings_authors_ids = []
-    # for booking in bookings:
-    #     if str(booking.booking_start) == request_start_str:
-    #         list_of_bookings_authors_ids.append(booking.author.id)
-    #         double_booked = False
-
-    conflicting = double_booking(request_start_str)
-
-    return HttpResponse(conflicting)
 
 # tested
 class ProfileView(SuccessMessageMixin, generic.UpdateView):
