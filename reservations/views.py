@@ -29,18 +29,10 @@ def book_table(request):
             obj.save()
             # save the many-to-many data for the form.
             sorting_method = BookingDetails.objects.all()[0].table_assign_method
-            print(sorting_method)
             tables = return_tables(obj.booking_start, obj.number_guests, sorting_method)
-            print(tables)
             limit = BookingDetails.objects.all()[0].assign_method_limit
-            print(limit)
             conflicting = double_booking(obj.booking_start, user)
-            print(conflicting)
             # conflicting length is 1 due to save further up
-            print(conflicting==1)
-            print(sorting_method > 0)
-            print(len(tables) > 0)
-            print(obj.number_guests < limit)
             if conflicting == 1 and sorting_method > 0 and tables and obj.number_guests < limit:
                 for table in tables:
                     obj.table.add(table)

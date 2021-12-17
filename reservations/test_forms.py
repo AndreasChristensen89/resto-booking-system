@@ -9,8 +9,6 @@ import datetime
 
 def create_booking_form(number_guests):
     form = BookTableForm({
-        'first_name': 'x', 
-        'last_name': 'x', 
         'number_guests': number_guests, 
         'booking_start': '2021-12-12 12:00:00',
         'comment': ''
@@ -32,23 +30,9 @@ class TestBookingForm(TestCase):
         form = BookTableForm()
         self.assertFalse(form.is_valid())
 
-    def test_form_with_no_first_name_field(self):
-        booking_details = create_booking_details(1)
-        form = BookTableForm({'first_name': ''})
-        self.assertIn('first_name', form.errors.keys())
-        self.assertEqual(form.errors['first_name'][0], 'This field is required.')
-        self.assertFalse(form.is_valid())
-
-    def test_form_with_no_last_name_field(self):
-        booking_details = create_booking_details(1)
-        form = BookTableForm({'first_name': 'x', 'last_name': ''})
-        self.assertIn('last_name', form.errors.keys())
-        self.assertEqual(form.errors['last_name'][0], 'This field is required.')
-        self.assertFalse(form.is_valid())
-
     def test_form_with_no_guest_number_field(self):
         booking_details = create_booking_details(1)
-        form = BookTableForm({'first_name': 'x', 'last_name': 'x', 'number_guests': ''})
+        form = BookTableForm({'number_guests': ''})
         self.assertIn('number_guests', form.errors.keys())
         self.assertEqual(form.errors['number_guests'][0], 'This field is required.')
         self.assertFalse(form.is_valid())
@@ -56,8 +40,6 @@ class TestBookingForm(TestCase):
     def test_form_with_no_booking_start_field(self):
         booking_details = create_booking_details(1)
         form = BookTableForm({
-            'first_name': 'x', 
-            'last_name': 'x', 
             'number_guests': 2, 
             'booking_start': ''
             })
@@ -67,7 +49,7 @@ class TestBookingForm(TestCase):
 
     def test_fields_are_explicit_in_form_metaclass(self):
         form = BookTableForm()
-        self.assertEqual(form.Meta.fields, ['first_name', 'last_name', 'number_guests', 'booking_start', 'comment'])
+        self.assertEqual(form.Meta.fields, ['number_guests', 'booking_start', 'comment'])
 
     def test_comment_field_not_required(self):
         opening_hours = OpeningHours.objects.create(
@@ -96,7 +78,7 @@ class TestBookingForm(TestCase):
             moveable=False
             )
         form = create_booking_form(-1)
-        self.assertRaises(ValidationError)
+        self.assertFalse(form.is_valid())
 
     def test_zero_tables_available(self):
         booking_details = create_booking_details(1)
@@ -105,7 +87,7 @@ class TestBookingForm(TestCase):
             from_time='10:00', 
             to_time='22:00')
         form = create_booking_form(4)
-        self.assertRaises(ValidationError)
+        self.assertFalse(form.is_valid())
 
     def test_not_enough_tables_available(self):
         booking_details = create_booking_details(1)
@@ -120,13 +102,13 @@ class TestBookingForm(TestCase):
             moveable=False
             )
         form = create_booking_form(4)
-        self.assertRaises(ValidationError)
+        self.assertFalse(form.is_valid())
 
     def test_outside_opening_hours(self):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=6,
-            from_time='13:00', 
+            from_time='21:00', 
             to_time='22:00')
         tables = Table.objects.create(
             table_number=1,
@@ -135,9 +117,9 @@ class TestBookingForm(TestCase):
             moveable=False
             )
         form = create_booking_form(4)
-        self.assertRaises(ValidationError)
+        self.assertFalse(form.is_valid())
 
-    def test_outside_zero_guests(self):
+    def test_zero_guests(self):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=6,
@@ -150,4 +132,4 @@ class TestBookingForm(TestCase):
             moveable=False
             )
         form = create_booking_form(0)
-        self.assertRaises(ValidationError)
+        self.assertFalse(form.is_valid())

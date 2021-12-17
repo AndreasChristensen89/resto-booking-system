@@ -7,8 +7,6 @@ from restaurant.models import BookingDetails
 def create_booking():
     user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
     booking = Booking.objects.create(
-        first_name='x',
-        last_name='x', 
         author=user, 
         number_guests=4, 
         booking_start='4444-11-06 12:00:00',
@@ -28,5 +26,4 @@ class TestModels(TestCase):
     
     def test_booking_slug(self):
         booking = create_booking()
-        self.assertEqual(str(booking.slug)[0:2], 'xx')
-        self.assertEqual(len(str(booking.slug)[2:]), 4)
+        self.assertEqual(len(str(booking.slug)), 5)

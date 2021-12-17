@@ -12,15 +12,9 @@
     
         <form method="post">
             <div class="row">
+                <div class="col-12 mx-4 mb-3 lead">
                 {% csrf_token %}
-                <div class="col-12 mx-4 mb-3 lead">
-                    {{ form.number_guests|as_crispy_field }}
-                </div>
-                <div class="col-12 mx-4 mb-3 lead">
-                    {{ form.booking_start|as_crispy_field }}
-                </div>
-                <div class="col-12 mx-4 mb-3 lead">
-                    {{ form.comment|as_crispy_field }}
+                {{ form|crispy }}
                 </div>
             </div>
               <button type="submit" class="btn btn-primary btn-lg m-4">Submit</button>

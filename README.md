@@ -11,6 +11,8 @@ Console displays: "POST /accounts/logout/ HTTP/1.1" 302 0
 User is logged back in when hitting the back button in browser
 29/10/2021 - bug was fixed. Had to change the render function in ReservationDetail to include "user": User, instead of "user": User.username.
 
+Installed Pillow for image upload
+
 1/11/2021 - I can make reservations with no problems, but it does show an 302 error, similar with loggin in.
 Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0
 
@@ -74,7 +76,7 @@ get() returned more than one Reservation -- it returned 2!
 <!-- - Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long. -->
 - Need to fix reset password form - seems to work now
 - May not be bug, but no reservations cannot be made if admin has not set opening hours or booking interval
-- Raise validationerror for outside opening hours doesn't show
+<!-- - Raise validationerror for outside opening hours doesn't show - I set crispy fields to only show certain fields thereby hiding messages -->
 
 
 Fixed bugs

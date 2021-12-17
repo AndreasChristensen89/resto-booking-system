@@ -41,11 +41,11 @@ class BookTableForm(forms.ModelForm):
         if number_guests < 1:
             raise forms.ValidationError("Number of guests must be at least 1")
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Save booking'))
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.helper = FormHelper()
+    #     self.helper.form_method = 'post'
+    #     self.helper.add_input(Submit('submit', 'Save booking'))
         
 
 

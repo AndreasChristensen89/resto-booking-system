@@ -21,21 +21,21 @@ body {
 
 #cta-menu {
     background-image: url(../images/site/cta-menu.jpg);
-    height: 100px;
+    height: 200px;
     width: 100%;
     background-size: cover
 }
 
 #cta-contact {
     background-image: url(../images/site/cta-contact.jpg);
-    height: 100px;
+    height: 200px;
     width: 100%;
     background-size: cover
 }
 
 #cta-profile {
     background-image: url(../images/site/cta-profile.jpg);
-    height: 100px;
+    height: 200px;
     width: 100%;
     background-size: cover
 }
