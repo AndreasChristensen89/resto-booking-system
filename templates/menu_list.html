@@ -1,54 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="row menu-row">
+    <div class="col-lg-10 mx-auto col-12 text-center">
+        <h1 class="display-1 mt-5 title">Menu</h1>
+    </div>
+</div>
 <div class="container py-5">
-    <div class="row">
-        <div class="col-lg-10 mx-auto col-12 text-center m-4">
-            <h1 class="display-1">Menu</h1>
-            <p class="lead">Have a look at our menu containing amazing edible items.</p>
+    {% for category in categories %}
+    <div class="col-12 mt-4">
+        <h3 class="text-center display-3">{{category}}</h3>
+        <hr class="accent my-5">
+    </div>
+    <div class="container">
+        <div class="row">
+        {% for meal in menu_list %}
+        {% if meal.category == category %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center rounded">
+                <img class="img-fluid meal-img rounded-top" src="{{meal.image.url}}" alt="image of {{category}} item">
+                <div class="meal-div">
+                    <h5 class="h3">{{meal.name}}</h5>
+                    <p class="lead align-text-bottom"><small class="text-muted">€{{meal.price}}</small></p>
+                    <p class="lead">{{meal.description}}</p>
+                </div>                  
+            </div>
+        {% endif %}
+        {% endfor %}
         </div>
     </div>
-        {% for category in categories %}
-        <div class="col-12 mt-4">
-            <h3 class="text-center display-2">{{category}}</h3>
-            <hr class="accent my-5">
-        </div>
-        <div class="container">
-            <div class="row">
-            {% for meal in menu_list %}
-            {% if meal.category == category %}
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center rounded">
-                    <img class="img-thumbnail meal-img" src="{{meal.image.url}}" alt="image of {{category}} item">
-                    <h5 class="h3">{{meal.name}}</h5>
-                    <p class="lead">{{meal.description}}</p>
-                <div>
-                    <p class="lead align-text-bottom"><small class="text-muted">€{{meal.price}}</small></p>
-                </div>
-                    
-                </div>
-            {% endif %}
-            {% endfor %}
-            </div>
-        </div>
-        {% endfor %}
+    {% endfor %}
 
-      <div class="col-12 mt-4">
-          <hr class="accent my-5">
-      </div>
-      <div class="col-6 mx-auto">
-          <div class="card card-body text-center">
-              <h5 class="text-uppercase">Thursdays Only!</h5>
-              <h6>Portuguese Seafood Soup</h6>
-              <p class="small"> Portuguese Seafood Stew made with clams, shrimp, scallops and chorizo. Served with crusty bread.</p>
-              <span class="float-right font-weight-bold">$12</span>
-          </div>
-      </div>
-      <div class="col-12 mt-5 border border-right-0 border-left-0">
-          <div class="row">
-              <div class="col h5">Dre's Diner</div>
-              <div class="col h5 text-right">+45 48 10 00 02</div>
-          </div>
-      </div>
+    <div class="col-12 mt-4">
+        <hr class="accent my-5">
+    </div>
+    <div class="col-6 mx-auto">
+        <div class="card card-body text-center">
+            <h5 class="text-uppercase">Thursdays Only!</h5>
+            <h6>Portuguese Seafood Soup</h6>
+            <p class="small"> Portuguese Seafood Stew made with clams, shrimp, scallops and chorizo. Served with crusty bread.</p>
+            <span class="float-right font-weight-bold">$12</span>
+        </div>
+    </div>
+    <div class="col-12 mt-5 border border-right-0 border-left-0">
+        <div class="row">
+            <div class="col h5">Dre's Diner</div>
+            <div class="col h5 text-right">+45 48 10 00 02</div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

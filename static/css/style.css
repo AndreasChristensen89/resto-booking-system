@@ -1,6 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
 body {
-    background-color: #262626;
-    color: white;
+    background-color: whitesmoke;
+    color: black;
+    font-family: Lato, sans-serif;
+    font-weight: 300;
 }
 
 .navbar {
@@ -62,6 +72,19 @@ body {
 
 .form-control {
     width: 90%;
+}
+
+.title {
+    font-family: Roboto;
+}
+
+.menu-row {
+    background-color: #90c5f4!important;
+}
+
+.meal-div {
+    border-right: 2px solid #dee2e6!important;
+    border-left: 2px solid #dee2e6!important;
 }
 
 .bg-success {
