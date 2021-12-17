@@ -17,7 +17,7 @@ Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0
 Implemented authetication check when canceling and updating reservations. The check is already done on the reservation list, but the url can be typed in as long as you know the username, which opens up the possibility for non-users to change the reservation.
 -   no longer an issue. user.authentication added.
 
-Add restaurant model to have the restaurant be able to set reservation interval - done
+Add restaurant model to have the restaurant be able to set reservation interval - DONE
 
 If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not given which is because of the chance that a user may want to reserve a table for someone else in the same timeslot.
 
@@ -27,9 +27,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 Check why Django admin in Heroku doesn't load css - DISABLE_COLLECTSTATIC on heroku vars
 
 To add:
-Check if user has first_name, otherwise ask them to fill in. This way we can cut first_name and last_name from booking and only use User info
+Check if user has first_name, otherwise ask them to fill in. This way we can cut first_name and last_name from booking and only use User info - ADDED
 
-TABLE SORT LOGIC:
+On booking_list add comment as pop-out to card.
+
+
+TABLE SORT LOGIC - 
+
+ANY TABLE:
 Admin can change sorting method or turn it off completely in the BookingDetails model
 1. Firstly, the function seeks to bring an exact match with table-size/number of people. 
     - If there are no exact matches it will look for table-size minus one
@@ -49,7 +54,8 @@ Admin can change sorting method or turn it off completely in the BookingDetails 
 6. Once tables are assigned Admin is still free to change tables in admin settings.
 7. This logic assumes that the restaurant is able to move tables around
 
-BOOKING - SAME ZONE
+SAME ZONE TABLE
+
 
 TESTING
 Currently I have no other solution when testing than to comment out the current database, and then uncommenting the sqlite2 database in settings.py
@@ -112,3 +118,12 @@ From here onwards, whenever you (re)start your workspace, you need to do two thi
 run 
 - pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt - first, and then run:
 - pip3 install -r requirements.txt - second
+
+Picture credits from freepik
+
+cta-menu:
+<a href='https://www.freepik.com/photos/food'>Food photo created by valeria_aksakova - www.freepik.com</a>
+cta-contact:
+<a href='https://www.freepik.com/photos/space'>Space photo created by freepik - www.freepik.com</a>
+cta-profile
+<a href='https://www.freepik.com/photos/technology'>Technology photo created by rawpixel.com - www.freepik.com</a>
