@@ -7,16 +7,60 @@
 {% if user.is_authenticated %}
     
     {% if user.first_name %}
+
     <div class="row menu">
         <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
             <h1 class="text-center display-2">Welcome {{user.first_name}}</h1>
         </div>
     </div>
+
     {% else %}
 
-        <h1>Welcome {{user.username}}</h1>
+    <div class="row menu">
+        <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
+            <h1 class="text-center display-2">Welcome {{user.username}}</h1>
+        </div>
+    </div>
 
     {% endif %}
+
+    <!-- -------------------------- call to action logged in -------------------------------- -->
+<div class="container py-5">
+    <div class="row mt-4">
+          
+            <div class="col-6 col-sm-4 col-md-3 mx-auto my-3">
+                <a href="/menu"> 
+                <div class="bg-image rounded-top" id="cta-menu">
+                </div>
+                <div class="border rounded-bottom text-center">
+                    <p class="lead h3 text-dark">Our menu</p>
+                </div>
+                </a>
+            </div>
+        
+            <div class="col-6 col-sm-4 col-md-3 mx-auto my-3">
+                <a href="#">
+                <div class="bg-image rounded" id="cta-contact">
+                </div>
+                <div class="border rounded-bottom text-center">
+                    <p class="lead h3 text-dark">Contact us</p>
+                </div>
+                </a>
+            </div>
+          
+            <div class="col-6 col-sm-4 col-md-3 mx-auto my-3">
+                <a href="{% url 'reservations:profile' %}"> 
+                <div class="bg-image rounded" id="cta-profile">
+                </div>
+                <div class="border rounded-bottom text-center">
+                    <p class="lead h3 text-dark">See your profile</p>
+                </div>
+                </a>
+            </div>
+        
+    </div>
+</div>
+
 {% else %}
 <div class="row menu">
     <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
@@ -41,33 +85,5 @@
 </div>
 </div>
 {% endif %}
-
-<!-- -------------------------- call to action logged in -------------------------------- -->
-<div class="container py-5">
-    <div class="row mt-4">
-        <div class="col-6 col-sm-4 col-md-3 mx-auto my-3">
-            <div class="bg-image rounded-top" id="cta-menu">
-            </div>
-            <div class="border rounded-bottom text-center">
-                <a class="lead" href="/menu">Our menu</a>
-            </div>
-
-        </div>
-        <div class="col-6 col-sm-4 col-md-3 mx-auto my-3">
-            <div class="bg-image rounded" id="cta-contact">
-            </div>
-            <div class="border rounded-bottom text-center">
-                <a class="lead" href="#">Contact us</a>
-            </div>
-        </div>
-        <div class="col-6 col-sm-4 col-md-3 mx-auto my-3">
-            <div class="bg-image rounded" id="cta-profile">
-            </div>
-            <div class="border rounded-bottom text-center">
-                <a class="lead" href="{% url 'reservations:profile' %}">See your profile</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 {% endblock %}

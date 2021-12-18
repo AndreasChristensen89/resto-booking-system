@@ -141,6 +141,7 @@ body {
 
 a {
     text-decoration: none;
+    /* color: inherit; */
 }
 
 .light-bg {
