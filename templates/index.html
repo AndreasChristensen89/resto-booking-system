@@ -7,17 +7,22 @@
     </div>
     <div id="hero-cover">
         <div id="cover-text">
-            <h2>Dre's Diner</h2>
+            {% if user.is_authenticated %}
+                {% if user.first_name %}
+                    <h2>Good to see you, {{user.first_name}}</h2>
+                {% else %}
+                    <h2>Welcome {{user.username}}</h2>
+                {% endif %}
         </div>
     </div>
 </section>
 
 
-{% if user.is_authenticated %}
-    
-    {% if user.first_name %}
 
-    <div class="row">
+    
+    
+
+    <!-- <div class="row">
         <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
             <div class="col-9 col-lg-6">
                 <h1 class="text-center display-3">Good to see you, {{user.first_name}}</h1>
@@ -26,8 +31,6 @@
         </div>
     </div>
 
-    {% else %}
-
     <div class="row menu">
         <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
             <div class="col-9 col-lg-6">
@@ -35,9 +38,7 @@
             </div>
             
         </div>
-    </div>
-
-    {% endif %}
+    </div> -->
 
     <!-- -------------------------- call to action logged in -------------------------------- -->
 <div class="container py-5">
@@ -76,13 +77,18 @@
 </div>
 
 {% else %}
-<div class="row">
+                <h2>Welcome</h2>
+        </div>
+    </div>
+</section>
+
+<!-- <div class="row">
     <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
             <h1 class="text-center display-3">Welcome</h1>
         </div> 
     </div>
-</div>
+</div> -->
 
 <!-- -------------------------- call to action logged out -------------------------------- -->
 <div class="row">

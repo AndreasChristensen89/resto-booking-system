@@ -26,7 +26,6 @@
             <h5 class="card-title">{{booking.author.first_name}} {{booking.author.last_name}}</h5>    
             <p class="card-text">Declined</p>
             <p class="card-text">Not able to accept</p>
-            <p class="card-text">{{booking.comment}}</p>
         {% else %}
         <div class="card-body bg-primary rounded-top">
             <h5 class="card-title">{{booking.author.first_name}} {{booking.author.last_name}}</h5>    
@@ -35,9 +34,8 @@
         {% endif %}
         </div>
         <ul class="list-group list-group-flush border">
-        <li class="list-group-item">{{booking.booking_start|date}}</li>
-        <li class="list-group-item">{{booking.booking_start|time}}</li>
-        <li class="list-group-item rounded-bottom">{{booking.number_guests}} guests</li>
+        <li class="list-group-item">{{booking.booking_start|date}} - {{booking.booking_start|time}}</li>
+        <li class="list-group-item">{{booking.number_guests}} guests</li>
         </ul>
         {% if booking.status != 2%}
             <div class="card-body border bg-light rounded-bottom">
