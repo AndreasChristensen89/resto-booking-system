@@ -1,25 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
-    <div class="col-lg-10 mx-auto col-12 text-center">
-        <h1 class="display-1 m-3 title text-center">Menu</h1>
+<div class="row menu">
+    <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6">
+            <h1 class="text-center display-2">Menu</h1>
+        </div>
+        
     </div>
 </div>
+
 <div class="container py-5">
     {% for category in categories %}
     <div class="col-12 m-3">
-        <h3 class="text-center display-2">{{category}}</h3>
+        <h3 class="text-center display-4">{{category}}</h3>
         <hr class="accent my-5">
     </div>
     <div class="container">
         <div class="row">
         {% for meal in menu_list %}
         {% if meal.category == category %}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center rounded">
+            <div class="col-9 col-sm-6 col-md-4 col-lg-3 text-center rounded mx-auto my-2">
                 <img class="img-fluid meal-img rounded-top" src="{{meal.image.url}}" alt="image of {{category}} item">
                 <div class="meal-div">
-                    <h5 class="h3">{{meal.name}}</h5>
+                    <h5 class="h5">{{meal.name}}</h5>
                     <p class="lead align-text-bottom"><small class="text-muted">€{{meal.price}}</small></p>
                     <p class="lead">{{meal.description}}</p>
                 </div>                  

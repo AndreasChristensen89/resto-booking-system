@@ -2,29 +2,41 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-    {% if user.first_name %}
-    {% load crispy_forms_tags %}
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center display-3 m-3">Book a Table</h1>
+{% if user.first_name %}
+{% load crispy_forms_tags %}
+<div class="row menu">
+    <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6">
+            <h1 class="text-center display-2">Book a Table</h1>
         </div>
     </div>
-    
-        <form method="post">
-            <div class="row">
-                <div class="col-12 mx-4 mb-3 lead">
-                {% csrf_token %}
-                {{ form|crispy }}
-                </div>
-            </div>
-              <button type="submit" class="btn btn-primary btn-lg m-4">Submit</button>
-        </form>
-    
-    {% else %}
-        <h3>Please fill in your name in the <a href="/reservations/profile/">profile section</a> before making a reservation</h3>
-    {% endif %}
+</div>
+
+<form method="post">
+    <div class="row">
+        <div class="col-12 mx-4 mb-3 lead">
+            {% csrf_token %}
+            {{ form|crispy }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg m-4">Submit</button>
+</form>
+
 {% else %}
-    <p>Please log in to make a reservation</p>
+
+<div class="row menu">
+    <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6">
+            <p class="text-center">Please fill in your name in the <a href="/reservations/profile/">profile section</a> before making a reservation
+            </p>
+        </div>
+    </div>
+</div>
+
+
+{% endif %}
+{% else %}
+<p>Please log in to make a reservation</p>
 {% endif %}
 
 {% endblock %}

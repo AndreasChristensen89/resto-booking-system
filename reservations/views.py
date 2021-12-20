@@ -48,9 +48,15 @@ def book_table(request):
 
 class BookingList(generic.ListView):
     model = Booking
-    queryset = Booking.objects.all()
+    # queryset = Booking.objects.filter(author=request.user.id)
+    def get_queryset(self):
+        queryset = super(BookingList, self).get_queryset()
+        queryset = queryset.filter(author=self.request.user)
+        return queryset
     template_name = 'booking_list.html'
     paginate_by = 6
+
+    
 
 # currently not used
 class BookingUpdated(generic.ListView):

@@ -134,3 +134,6 @@ cta-profile
 <a href='https://www.freepik.com/vectors/people'>People vector created by studiogstock - www.freepik.com</a>
 - updated cta-contact
 <a href='https://www.freepik.com/photos/telephone'>Telephone photo created by freepik - www.freepik.com</a>
+
+sign-up-cta:
+<a href='https://www.freepik.com/photos/hand'>Hand photo created by rawpixel.com - www.freepik.com</a>

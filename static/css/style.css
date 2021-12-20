@@ -42,6 +42,22 @@ body {
     background-position-x: 50%;
 }
 
+#cta-signup {
+    background-image: url(../images/site/cta-sign-up.webp);
+    height: 200px;
+    width: 100%;
+    background-size: cover;
+    background-position-x: center;
+}
+
+#cta-signin {
+    background-image: url(../images/site/cta-log-in.webp);
+    height: 200px;
+    width: 100%;
+    background-size: cover;
+    background-position-x: center;
+}
+
 .index-div {
     background-color: #6eb06d!important;
 }
