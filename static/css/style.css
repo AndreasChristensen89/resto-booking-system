@@ -20,30 +20,31 @@ body {
 }
 
 #cta-menu {
-    background-image: url(../images/site/cta-menu.jpg);
+    background-image: url(../images/site/cta-menu.webp);
     height: 200px;
     width: 100%;
-    background-size: cover
+    background-size: cover;
 }
 
 #cta-contact {
-    background-image: url(../images/site/cta-contact.jpg);
+    background-image: url(../images/site/cta-contact.webp);
     height: 200px;
     width: 100%;
-    background-size: cover
+    background-size: cover;
+    background-position-x: center;
 }
 
 #cta-profile {
-    background-image: url(../images/site/cta-profile.jpg);
+    background-image: url(../images/site/cta-profile.webp);
     height: 200px;
     width: 100%;
-    background-size: cover
+    background-size: cover;
+    background-position-x: 50%;
 }
 
-/* #cta-signup {
-    background-image: ;
-    background-size: cover
-} */
+.index-div {
+    background-color: #6eb06d!important;
+}
 
 .menu {
     height: 200px;

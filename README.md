@@ -130,3 +130,7 @@ cta-contact:
 <a href='https://www.freepik.com/photos/space'>Space photo created by freepik - www.freepik.com</a>
 cta-profile
 <a href='https://www.freepik.com/photos/technology'>Technology photo created by rawpixel.com - www.freepik.com</a>
+-updated cta-profile
+<a href='https://www.freepik.com/vectors/people'>People vector created by studiogstock - www.freepik.com</a>
+- updated cta-contact
+<a href='https://www.freepik.com/photos/telephone'>Telephone photo created by freepik - www.freepik.com</a>

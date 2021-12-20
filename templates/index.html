@@ -10,7 +10,10 @@
 
     <div class="row menu">
         <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
-            <h1 class="text-center display-2">Welcome {{user.first_name}}</h1>
+            <div class="col-9 col-lg-6">
+                <h1 class="text-center display-2">Welcome {{user.first_name}}</h1>
+            </div>
+            
         </div>
     </div>
 
@@ -28,31 +31,31 @@
 <div class="container py-5">
     <div class="row mt-4">
           
-            <div class="col-6 col-sm-4 col-md-3 mx-auto my-3">
+            <div class="col-9 col-sm-4 col-md-3 mx-auto my-3">
                 <a href="/menu"> 
                 <div class="bg-image rounded-top" id="cta-menu">
                 </div>
-                <div class="border rounded-bottom text-center">
+                <div class="border rounded-bottom text-center index-div">
                     <p class="lead h3 text-dark">Our menu</p>
                 </div>
                 </a>
             </div>
         
-            <div class="col-6 col-sm-4 col-md-3 mx-auto my-3">
+            <div class="col-9 col-sm-4 col-md-3 mx-auto my-3">
                 <a href="#">
                 <div class="bg-image rounded" id="cta-contact">
                 </div>
-                <div class="border rounded-bottom text-center">
+                <div class="border rounded-bottom text-center index-div">
                     <p class="lead h3 text-dark">Contact us</p>
                 </div>
                 </a>
             </div>
           
-            <div class="col-6 col-sm-4 col-md-3 mx-auto my-3">
+            <div class="col-9 col-sm-4 col-md-3 mx-auto my-3">
                 <a href="{% url 'reservations:profile' %}"> 
                 <div class="bg-image rounded" id="cta-profile">
                 </div>
-                <div class="border rounded-bottom text-center">
+                <div class="border rounded-bottom text-center index-div">
                     <p class="lead h3 text-dark">See your profile</p>
                 </div>
                 </a>
