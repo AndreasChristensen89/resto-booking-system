@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row menu">
-    <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
-        <div class="col-9 col-lg-6">
-            <h1 class="text-center display-2">Menu</h1>
-        </div>
-        
+<section id="hero-outer">
+    <div class="col-12" id="menu-image">
+        <span class="img-fluid" role="img" aria-label="Clean and bright asphalt road in a city park"></span>
     </div>
-</div>
+    <div id="hero-cover">
+        <div id="cover-text">
+            <h2>Menu</h2>
+        </div>
+    </div>
+</section>
 
 <div class="container py-5">
     {% for category in categories %}
@@ -20,12 +22,12 @@
         <div class="row">
         {% for meal in menu_list %}
         {% if meal.category == category %}
-            <div class="col-9 col-sm-6 col-md-4 col-lg-3 text-center rounded mx-auto my-2">
-                <img class="img-fluid meal-img rounded-top" src="{{meal.image.url}}" alt="image of {{category}} item">
-                <div class="meal-div">
+            <div class="col-6 col-sm-4 col-lg-3 text-center rounded mx-auto my-2">
+                <img class="img-fluid meal-img meal-image" src="{{meal.image.url}}" alt="image of {{category}} item">
+                <div class="meal-div bg-white text-dark meal-description">
                     <h5 class="h5">{{meal.name}}</h5>
-                    <p class="lead align-text-bottom"><small class="text-muted">€{{meal.price}}</small></p>
-                    <p class="lead">{{meal.description}}</p>
+                    <p><small class="text-muted">€{{meal.price}}</small></p>
+                    <p class="meal-description">{{meal.description}}</p>
                 </div>                  
             </div>
         {% endif %}
