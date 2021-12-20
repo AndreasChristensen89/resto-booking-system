@@ -10,16 +10,16 @@
             <h1 class="text-center h1">Book a Table</h1>
         </div>
     </div>
-</div>
+  </div>
 
 <form method="post">
     <div class="row">
-        <div class="col-12 mx-4 mb-3 lead">
+        <div class="col-8 col-lg-6 mx-auto mb-3">
             {% csrf_token %}
             {{ form|crispy }}
+            <button type="submit" class="btn btn-primary btn-lg my-3">Submit</button>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-lg m-4">Submit</button>
 </form>
 
 {% else %}

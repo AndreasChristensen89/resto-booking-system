@@ -203,20 +203,13 @@ body {
     border-left: 2px solid #dee2e6!important;
 }
 
-.bg-success {
-    background-color: #45b481!important;
+.profile-div {
+    background-color: #445261;
+    max-width: 200px;
 }
 
-.bg-primary {
-    background-color: #5b98f2!important;
-}
-
-.bg-danger {
-    background-color: #e25b68!important;
-}
-
-.bg-light {
-    background-color: #cecece!important;
+.profile-form {
+    background-color: #445261;
 }
 
 a {
