@@ -33,6 +33,8 @@ Check if user has first_name, otherwise ask them to fill in. This way we can cut
 
 On booking_list add comment as pop-out to card.
 
+Added extra script to base.html
+
 
 TABLE SORT LOGIC - 
 

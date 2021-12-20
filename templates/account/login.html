@@ -9,13 +9,15 @@
 {% load crispy_forms_tags %}
 <div>
 
-<div class="row">
-  <div class="col-9 mx-auto my-3">
-    <h1>{% trans "Log In" %}</h1>
-    <p>{% blocktrans %}To make a reservation, please log in.
-      If you have not yet created an account, <a href="{{ signup_url }}">click here</a> to sign up.{% endblocktrans %}</p>
+  <div class="row menu">
+    <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6 text-center">
+          <h1 class="h1 m-3">{% trans "Log In" %}</h1>
+          <p class="m-3 text-center">{% blocktrans %}If you have not yet created an account, 
+            <a href="{{ signup_url }}">click here</a> to sign up.{% endblocktrans %}</p>
+        </div>
+    </div>
   </div>
-</div>
 
   <div class="row">
     <div class="col-9 mx-auto">
@@ -25,7 +27,7 @@
       {% if redirect_field_value %}
       <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
       {% endif %}
-      <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+      <button class="primaryAction btn btn-primary mt-3" type="submit">{% trans "Sign In" %}</button>
     </form>
   </div>
   </div>
