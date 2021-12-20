@@ -3,24 +3,18 @@ from .models import Booking, Table
 from restaurant.models import OpeningHours, BookingDetails
 import datetime
 
-# 0 Off - admin assigns tables
-# 1 Assign any tables in same zone
-# 2 Assign any tables
-# Set guest-limit to auto-assign system, won't assign if larger/smaller than x.
-
 
 def return_tables(request_start, number_guests, sorting_method):
+    """
+    Function that redirects to correct sorting method and returns best combination of tables
+    """
+
     request_end = generate_request_end(request_start)
     optimal_solution = []
     available_tables = return_all_available_tables(request_start, request_end)
     if sorting_method == 1:
         optimal_solution = table_method_same_zone(available_tables, number_guests, sorting_method)
     elif sorting_method == 2:
-        # moveables = Table.objects.filter(moveable=True)
-        # moveables_list = [table for table in moveables]
-        # sorted = [moveables[i].seats <= moveables[i+1].seats for i in range(len(moveables)-1)]
-        # if False in sorted:
-        #     moveables_list.sort(key=lambda x: x.seats, reverse=False)
         optimal_solution = return_combination(available_tables, number_guests)
 
     return optimal_solution
@@ -29,6 +23,8 @@ def return_tables(request_start, number_guests, sorting_method):
 def table_method_same_zone(available_tables, number_guests, sorting_method):
     """
     Returns any available tables from the same zone
+    Tests list of each zone in return_combinations()
+    Favors fewest losses
     """
 
     list_of_zones = []
@@ -60,7 +56,10 @@ def table_method_same_zone(available_tables, number_guests, sorting_method):
 # tested
 def return_all_available_tables(request_start, request_end):
     """
-    Returns any available tables from the restaurant
+    Returns any available tables
+    Three types of overlap are filtered:
+    1. Same start 2. Starts before & ends during 3. Starts before end
+    Removes overlap tables from list of all tables
     """
     unavailable_tables = []
 
@@ -102,8 +101,8 @@ def return_all_available_tables(request_start, request_end):
 # tested
 def return_combination(available_tables, number_guests):
     """
-    This method takes the available tables and uses 3 step logic to sort the best combination
-    1. Checks if there are exact group-table matches, or match-1 (size 6 for 5 people)
+    Takes the available tables and uses 3 step logic to sort the best combination
+    1. Checks if there are exact group-table matches, or match-1 (6 seats for 5 people)
       1.a if not, best option is stored if it can fit the party
     2. Generates best two-table-combination, then same with three tables
     3. Compare best option for 1/2/3 combinations
@@ -256,7 +255,9 @@ def test_time(request_start):
 
 # tested
 def double_booking(request_start, user):
-
+    """
+    Functions that checks if user has already booked in an overlapping time period
+    """
     request_end = generate_request_end(request_start)
     
     check_one = Booking.objects.filter(
@@ -280,6 +281,9 @@ def double_booking(request_start, user):
 
 # tested
 def get_opening_hours(weekday):
+    """
+    Returns the opening hours of the datetime entered in form
+    """
     if not isinstance(weekday, int):
         raise TypeError("Value needs to be an integer")
     opening_time = OpeningHours.objects.filter(
@@ -290,6 +294,10 @@ def get_opening_hours(weekday):
 
 # tested
 def generate_request_end(request_start):
+    """
+    Generates an ending time of the booking according to what admin has set in booking details
+    """
+    
     duration = BookingDetails.objects.all()[0].booking_duration
     request_end = request_start + timedelta(minutes=duration)
 

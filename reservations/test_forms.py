@@ -133,3 +133,5 @@ class TestBookingForm(TestCase):
             )
         form = create_booking_form(0)
         self.assertFalse(form.is_valid())
+
+    # test limit
