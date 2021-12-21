@@ -116,15 +116,24 @@ class ApproveReservationViewAdmin(UpdateView):
     
     def form_valid(self, form):
         subject = "Dre's Diner booking"
-        body = (
-            f"Hello {self.object.author.first_name}, " +
-            f"your booking is confirmed on {self.object.booking_start}"
-        )
+        status = form.cleaned_data.get('status')
+        if status == 2:
+            body = (
+                f"Hello {self.object.author.first_name}. " +
+                f"Unfortunately, we are not able to accomodate your booking on {self.object.booking_start}. " +
+                f"For more information please check the comment left by the restaurant or contact us via the website."
+            )
+        elif status == 1:
+            body = (
+                f"Hello {self.object.author.first_name}, " +
+                f"your booking is confirmed on {self.object.booking_start}. " +
+                "We look forward to seeing you."
+            )
         send_mail(
             subject,
             body,
-            'swe_zeitz@hotmail.com',
-            [self.object.author.email, 'swe_zeitz@hotmail.com']
+            'dresdiner@email.com',
+            [self.object.author.email, 'dresdiner@email.com']
         )
         return super(ApproveReservationViewAdmin, self).form_valid(form) 
 
