@@ -2,16 +2,27 @@
 
 {% block content %}
 {% if user == booking.author or user.is_superuser %}
+{% load crispy_forms_tags %}
+<div class="row menu">
+    <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6">
+            <h1 class="text-center h1">Delete Booking</h1>
+        </div>
+    </div>
+</div>
+
+<div class="col-9 my-4 mx-auto">
 <form method="post">{% csrf_token %}
     <p>Are you sure you want to delete the reservation?</p>
     <h4>Details:</h4>
-    <p>Name: {{booking.first_name}} {{booking.last_name}}</p>
+    <p>Name: {{booking.author.first_name}} {{booking.author.last_name}}</p>
     <p>{{booking.booking_start|date}}</p>
     <p>{{booking.booking_start|time}}</p>
     <p>{{booking.number_guests}} guests</p>
-    <input type="submit" value="Delete">
+    <button class="btn btn-danger my-3" type="submit">Delete</button>
 </form>
+<button class="btn btn-primary"><a class="text-white" href="/reservations/">Return</a></button>
+</div>
 
-<a href="/reservations/">Return</a>
 {% endif %}
 {% endblock %}

@@ -81,6 +81,10 @@ get() returned more than one Reservation -- it returned 2!
 <!-- - Raise validationerror for outside opening hours doesn't show - I set crispy fields to only show certain fields thereby hiding messages -->
 - Fix favicon
 - Move profile url from reservations
+- Send email with reservation approved
+- Check conflicting user booking - testing
+- Implement deadline to cancel the booking - 5-6 hours?
+
 
 
 Fixed bugs

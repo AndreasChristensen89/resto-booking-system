@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from .models import Booking
 from restaurant.models import BookingDetails
@@ -48,7 +49,6 @@ def book_table(request):
 
 class BookingList(generic.ListView):
     model = Booking
-    # queryset = Booking.objects.filter(author=request.user.id)
     def get_queryset(self):
         queryset = super(BookingList, self).get_queryset()
         queryset = queryset.filter(author=self.request.user)
@@ -71,21 +71,22 @@ class BookingPending(generic.ListView):
         status=0
     )
     template_name = 'pending_bookings.html'
+    paginate_by = 6
 
 # currently not used
-class BookingDetail(View):
+# class BookingDetail(View):
 
-    def get(self, request, slug, *args, **kwargs):
-        queryset = Booking.objects.all()
-        booking = get_object_or_404(queryset, slug=slug)
+#     def get(self, request, slug, *args, **kwargs):
+#         queryset = Booking.objects.all()
+#         booking = get_object_or_404(queryset, slug=slug)
 
-        return render(
-            request,
-            'booking_detail.html',
-            {
-                "booking": booking,
-            }
-            )
+#         return render(
+#             request,
+#             'booking_detail.html',
+#             {
+#                 "booking": booking,
+#             }
+#             )
 
 # tested
 class CancelBookingView(DeleteView):
@@ -112,6 +113,20 @@ class ApproveReservationViewAdmin(UpdateView):
     fields = ['table', 'status', 'comment']
     template_name_suffix = '_approve_form'
     success_url = '/reservations/pending/'
+    
+    def form_valid(self, form):
+        subject = "Dre's Diner booking"
+        body = (
+            f"Hello {self.object.author.first_name}, " +
+            f"your booking is confirmed on {self.object.booking_start}"
+        )
+        send_mail(
+            subject,
+            body,
+            'swe_zeitz@hotmail.com',
+            [self.object.author.email, 'swe_zeitz@hotmail.com']
+        )
+        return super(ApproveReservationViewAdmin, self).form_valid(form) 
 
 
 # tested

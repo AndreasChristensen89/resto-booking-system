@@ -37,6 +37,10 @@ class Booking(models.Model):
             self.slug = random_str
         super().save(*args, **kwargs)
 
+    @property
+    def is_past_due(self):
+        return datetime.now() > self.booking_end
+
     class Meta:
         ordering = ["-created_on"]
 
