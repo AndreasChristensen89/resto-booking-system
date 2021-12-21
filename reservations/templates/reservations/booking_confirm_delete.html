@@ -3,6 +3,28 @@
 {% block content %}
 {% if user == booking.author or user.is_superuser %}
 {% load crispy_forms_tags %}
+{% if booking.latest_cancellation or user.is_superuser %}
+    <div class="row menu">
+        <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
+            <div class="col-9 col-lg-6">
+                <h1 class="text-center h1">Delete Booking</h1>
+            </div>
+        </div>
+    </div>
+    <p>{{latest_}}</p>
+    <div class="col-9 my-4 mx-auto">
+    <form method="post">{% csrf_token %}
+        <p>Are you sure you want to delete the reservation?</p>
+        <h4>Details:</h4>
+        <p>Name: {{booking.author.first_name}} {{booking.author.last_name}}</p>
+        <p>{{booking.booking_start|date}}</p>
+        <p>{{booking.booking_start|time}}</p>
+        <p>{{booking.number_guests}} guests</p>
+        <button class="btn btn-danger my-3" type="submit">Delete</button>
+    </form>
+    <button class="btn btn-primary"><a class="text-white" href="/reservations/">Return</a></button>
+    </div>
+{% else %}
 <div class="row menu">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
@@ -11,18 +33,9 @@
     </div>
 </div>
 
-<div class="col-9 my-4 mx-auto">
-<form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete the reservation?</p>
-    <h4>Details:</h4>
-    <p>Name: {{booking.author.first_name}} {{booking.author.last_name}}</p>
-    <p>{{booking.booking_start|date}}</p>
-    <p>{{booking.booking_start|time}}</p>
-    <p>{{booking.number_guests}} guests</p>
-    <button class="btn btn-danger my-3" type="submit">Delete</button>
-</form>
-<button class="btn btn-primary"><a class="text-white" href="/reservations/">Return</a></button>
-</div>
-
+<p class="my-3 text-center">Time limit exceeded.</p>
+<p class="my-3 text-center"> Cancellation is unfortunately no longer possible.</p>
+<p class="my-3 text-center"> Please get in contact with the restaurant if further information is needed</p>
+{% endif %}
 {% endif %}
 {% endblock %}

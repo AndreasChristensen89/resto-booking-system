@@ -5,28 +5,35 @@ Due to error when creating user I was advised to implement the following in sett
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ![registration error](/static/images/readme-pictures/registration-error.png "error when registering a user")
 
-28/10/2021 - for some reason Django logs user out when following link to reservation_detail.html.
-Browser: Chrome
-Console displays: "POST /accounts/logout/ HTTP/1.1" 302 0
-User is logged back in when hitting the back button in browser
-29/10/2021 - bug was fixed. Had to change the render function in ReservationDetail to include "user": User, instead of "user": User.username.
+ADMIN NOTES
+In order for booking logic to work admin must set up the following:
+- Under Restaurant:
+    - In BookingDetails add one object:
+        - Specify Booking Duration - how many minutes each party will occupy the tables
+        - Specify Table assign method - how or if the system should assign tables
+        - Specify Method Limit - automatically set to 100. This is to set a max-limit of guests to the assign table function. e.g. function will not trigger if number of guests are higher than limit
+    - In Opening Hours an object for each day must be added, Monday to Sunday:
+        - Specify Weekday, opening time, and closing time
+
+In order for menu to be displayed Admin must add items:
+- Under Menu:
+    - In Categories add desired number of categories
+    - In Meals add objects for each desired category:
+        - Specify name, description, price, and for how many people
+        - Image must be included
+        - Meal must be linked to a category
+        - Slug is automatically added
+
+
 
 Installed Pillow for image upload
 
-1/11/2021 - I can make reservations with no problems, but it does show an 302 error, similar with loggin in.
-Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0
-
-Implemented authetication check when canceling and updating reservations. The check is already done on the reservation list, but the url can be typed in as long as you know the username, which opens up the possibility for non-users to change the reservation.
--   no longer an issue. user.authentication added.
+If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not given which is because of the chance that a user may want to reserve a table for someone else in the same timeslot.
 
 Add restaurant model to have the restaurant be able to set reservation interval - DONE
 
-If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not given which is because of the chance that a user may want to reserve a table for someone else in the same timeslot.
-
 The following was added in settings.py to work with emails during development, should not be there when submitting:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-Check why Django admin in Heroku doesn't load css - DISABLE_COLLECTSTATIC on heroku vars
 
 To add:
 Check if user has first_name, otherwise ask them to fill in. This way we can cut first_name and last_name from booking and only use User info - ADDED
@@ -59,31 +66,18 @@ Admin can change sorting method or turn it off completely in the BookingDetails 
 7. This logic assumes that the restaurant is able to move tables around
 
 SAME ZONE TABLE
-
+Add Logic here
 
 TESTING
 Currently I have no other solution when testing than to comment out the current database, and then uncommenting the sqlite2 database in settings.py
 
 Current bugs to fix:
-- It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/
-get() returned more than one Reservation -- it returned 2!
 - When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
     - If a guests wish to increase number of people, the admin does not have access to availability-logic when assigning new tables
-- When creating a reservation the updated_bookings page sets it to "not updated" because it's booked within the same minut. However, if a user updates the reservation, e.g. number of people, within that minute, it is still registered as "not updated".
     - If I change the setting to be within the same second, it's automatically added as "updated" since created_on and updated_on may be added in different seconds.
-<!-- - Admin cannot book tables with specifying booking_end - prepopulated-fields to be tested
-- bootstrap widget implementation from this site: https://pypi.org/project/django-bootstrap-datepicker-plus/
-    - Not currently implemented, however, the following is installed: pip install django-bootstrap-datepicker-plus -->
-- When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate
-<!-- - Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long. -->
-- Need to fix reset password form - seems to work now
-- May not be bug, but no reservations cannot be made if admin has not set opening hours or booking interval
-<!-- - Raise validationerror for outside opening hours doesn't show - I set crispy fields to only show certain fields thereby hiding messages -->
-- Fix favicon
-- Move profile url from reservations
-- Send email with reservation approved - DONE
+- Move profile url from reservations?
 - Check conflicting user booking - testing
-- Implement deadline to cancel the booking - 5-6 hours?
+- Updating a booking removes the tables - see if can implement logic in updateview
 
 
 Fixed bugs
@@ -102,7 +96,22 @@ Fixed bugs
 Creating test database for alias 'default'...
 /workspace/.pip-modules/lib/python3.8/site-packages/django/db/backends/postgresql/base.py:304: RuntimeWarning: Normally Django will use a connection to the 'postgres' database to avoid running initialization queries against the production database when it's not needed (for example, when running tests). Django was unable to create a connection to the 'postgres' database and will use the first PostgreSQL database instead.
   warnings.warn(
-Got an error creating the test database: permission denied to create database - Need to comment out database in settings and remove commentout for sqlite3 database. Flip back when done testing
+- Got an error creating the test database: permission denied to create database - Need to comment out database in settings and remove commentout for sqlite3 database. Flip back when done testing
+- Send email with reservation approved - DONE
+- Implement deadline to cancel the booking - 5-6 hours - add warning in email, DONE
+- When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate - queryset fixed
+- It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/ - slug auto-generated, and there are checks for double booking by same user. First_name and last_name are no longer used, so details from the user is inserted. User must put in details before bookings can be made.
+- Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long. - No longer generates buttons for available times
+- 28/10/2021 - for some reason Django logs user out when following link to reservation_detail.html.
+Browser: Chrome
+Console displays: "POST /accounts/logout/ HTTP/1.1" 302 0
+User is logged back in when hitting the back button in browser
+29/10/2021 - bug was fixed. Had to change the render function in ReservationDetail to include "user": User, instead of "user": User.username.
+- 1/11/2021 - I can make reservations with no problems, but it does show an 302 error, similar with loggin in.
+Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0 - Not a bug
+- Implemented authetication check when canceling and updating reservations. The check is already done on the reservation list, but the url can be typed in as long as you know the username, which opens up the possibility for non-users to change the reservation. - no longer an issue. user authentication added.
+- Check why Django admin in Heroku doesn't load css - DISABLE_COLLECTSTATIC on heroku vars - and debug = True in setting.py
+- Raise validationerror for outside opening hours doesn't show - Fixed - I set crispy fields to only show certain fields thereby hiding messages
 
 TIPS
 To reset database: python manage.py migrate MyApp zero

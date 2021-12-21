@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from .models import Booking
 from restaurant.models import BookingDetails
 from .forms import BookTableForm, ProfileForm
-from allauth.account.views import PasswordChangeView, PasswordResetView
+# from allauth.account.views import PasswordChangeView, PasswordResetView
 from .booking import double_booking, return_tables
 import datetime
 from datetime import timedelta
@@ -60,7 +60,7 @@ class BookingList(generic.ListView):
 class BookingUpdated(generic.ListView):
     model = Booking
     context_object_name = "updated_list"
-    queryset = Booking.objects.all()
+    queryset = Booking.objects.exclude(comment__exact='').exclude(status=2)
     template_name = 'updated_booking.html'
 
 
@@ -74,19 +74,19 @@ class BookingPending(generic.ListView):
     paginate_by = 6
 
 # currently not used
-# class BookingDetail(View):
+class BookingDetail(View):
 
-#     def get(self, request, slug, *args, **kwargs):
-#         queryset = Booking.objects.all()
-#         booking = get_object_or_404(queryset, slug=slug)
+    def get(self, request, slug, *args, **kwargs):
+        queryset = Booking.objects.all()
+        booking = get_object_or_404(queryset, slug=slug)
 
-#         return render(
-#             request,
-#             'booking_detail.html',
-#             {
-#                 "booking": booking,
-#             }
-#             )
+        return render(
+            request,
+            'booking_detail.html',
+            {
+                "booking": booking,
+            }
+            )
 
 # tested
 class CancelBookingView(DeleteView):
@@ -121,13 +121,13 @@ class ApproveReservationViewAdmin(UpdateView):
             body = (
                 f"Hello {self.object.author.first_name}. " +
                 f"Unfortunately, we are not able to accomodate your booking on {self.object.booking_start}. " +
-                f"For more information please check the comment left by the restaurant or contact us via the website."
+                f"For more information please see the comment left by the restaurant or contact us via our website."
             )
         elif status == 1:
             body = (
                 f"Hello {self.object.author.first_name}, " +
                 f"your booking is confirmed on {self.object.booking_start}. " +
-                "We look forward to seeing you."
+                "Please note that cancellations must be made minimum two hours before. We look forward to seeing you."
             )
         send_mail(
             subject,

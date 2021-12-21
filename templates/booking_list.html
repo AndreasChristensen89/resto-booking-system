@@ -81,8 +81,8 @@
         </ul>
         {% if booking.status != 2%}
             <div class="card-body border bg-light rounded-bottom">
-                <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
-                <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Edit comment</a>
+                <a href="#" class="card-link disabled">Cancel</a>
+                <a href="#" class="card-link disabled">Edit comment</a>
             </div>
         {% else %}
         <div class="card-body border bg-light rounded-bottom">

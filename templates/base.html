@@ -22,7 +22,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-16x16.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-32x32.png' %}">
-    <link rel="manifest" href="{% static 'images/favicon/site.webmanifest' %}">
+    <!-- <link rel="manifest" href="{% static 'images/favicon/site.webmanifest' %}"> -->
 
     <!-- XDSoft DateTimePicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
@@ -53,7 +53,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{% url 'reservations:bookings_updated' %}">Updated Bookings</a></li>
               <li><a class="dropdown-item" href="{% url 'reservations:bookings_pending' %}">Pending Bookings</a></li>
-              <li><a class="dropdown-item" href="{% url 'reservations:booking_list' %}">Overview</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:book_table' %}">Book Table</a></li>
             </ul>
           </li>
           <li class="nav-item">
