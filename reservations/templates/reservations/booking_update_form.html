@@ -3,14 +3,32 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% if user == booking.author or user.is_superuser %}
+<div class="row menu">
+    <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6">
+            <h1 class="text-center h1">Update Booking</h1>
+        </div>
+    </div>
+</div>
+
+
 <form method="post">
     {% csrf_token %}
-    <div class="col-12 m-4">
+    <div class="col-9 m-4 mx-auto">
         {{ form.comment|as_crispy_field }}
+        <button type="submit" class="btn btn-primary mt-3">Update</button>
     </div>
-    <button type="submit" class="btn btn-primary m-4">Update</button>
+    
 </form>
 <br>
 <a class="m-4" href="/reservations/">Return</a>
+{% else %}
+<div class="row menu">
+    <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6">
+            <p class="text-center h1">Specific credentials are needed to access this page</p>
+        </div>
+    </div>
+</div>
 {% endif %}
 {% endblock %}

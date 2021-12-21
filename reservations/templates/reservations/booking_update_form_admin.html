@@ -2,10 +2,22 @@
 
 {% block content %}
 {% if user.is_superuser %}
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" name="Submit" value="Update">
-</form>
-<a href="{% url 'reservations:updated_list' %}">Return</a>
+{% load crispy_forms_tags %}
+<div class="row menu">
+    <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6">
+            <h1 class="text-center h1">Update Booking</h1>
+        </div>
+    </div>
+</div>
+<div class="col-9 my-4 mx-auto">
+    <form method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-success my-3" type="submit" name="Submit" value="Update">Update</button>
+    </form>
+    <button class="btn btn-primary"><a class="my-3 text-white" href="{% url 'reservations:bookings_updated' %}">Return</a></button>
+</div>
+
+
 {% endif %}
 {% endblock %}

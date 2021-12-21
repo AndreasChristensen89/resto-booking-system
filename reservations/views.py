@@ -56,25 +56,21 @@ class BookingList(generic.ListView):
     template_name = 'booking_list.html'
     paginate_by = 6
 
-    
 
-# currently not used
 class BookingUpdated(generic.ListView):
     model = Booking
     context_object_name = "updated_list"
-    queryset = Booking.objects.filter(
-        status=1
-    )
+    queryset = Booking.objects.all()
     template_name = 'updated_booking.html'
 
-# currently not used
+
 class BookingPending(generic.ListView):
     model = Booking
     context_object_name = "pending_list"
     queryset = Booking.objects.filter(
         status=0
     )
-    template_name = 'booking_pending.html'
+    template_name = 'pending_bookings.html'
 
 # currently not used
 class BookingDetail(View):
@@ -103,19 +99,19 @@ class UpdateReservationView(UpdateView):
     template_name_suffix = '_update_form'
     success_url = '/reservations/'
 
-# currently not used
+
 class UpdateReservationViewAdmin(UpdateView):
     model = Booking
     fields = ['number_guests', 'table', 'comment', 'status']
     template_name_suffix = '_update_form_admin'
-    success_url = '/reservations/updated_reservations/'
+    success_url = '/reservations/updated/'
 
-# currently not used
+
 class ApproveReservationViewAdmin(UpdateView):
     model = Booking
-    fields = ['table', 'status']
+    fields = ['table', 'status', 'comment']
     template_name_suffix = '_approve_form'
-    success_url = '/reservations/pending_booking/'
+    success_url = '/reservations/pending/'
 
 
 # tested

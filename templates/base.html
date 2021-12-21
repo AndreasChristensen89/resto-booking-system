@@ -40,7 +40,24 @@
           <li class="nav-item">
             <a class="nav-link" href="/menu">Menu</a>
           </li>
-          {% if user.is_authenticated %}
+          {% if user.is_superuser %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Admin Actions
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'reservations:bookings_updated' %}">Updated Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:bookings_pending' %}">Pending Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:booking_list' %}">Overview</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'reservations:profile' %}">Admin Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+          </li>
+          {% elif user.is_authenticated %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Booking

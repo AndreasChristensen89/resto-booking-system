@@ -79,6 +79,8 @@ get() returned more than one Reservation -- it returned 2!
 - Need to fix reset password form - seems to work now
 - May not be bug, but no reservations cannot be made if admin has not set opening hours or booking interval
 <!-- - Raise validationerror for outside opening hours doesn't show - I set crispy fields to only show certain fields thereby hiding messages -->
+- Fix favicon
+- Move profile url from reservations
 
 
 Fixed bugs

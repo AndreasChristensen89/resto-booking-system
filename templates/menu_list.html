@@ -22,7 +22,7 @@
         <div class="row">
         {% for meal in menu_list %}
         {% if meal.category == category %}
-            <div class="col-6 col-sm-4 col-lg-3 text-center rounded mx-auto my-2">
+            <div class="col-6 col-sm-4 col-lg-3 text-center mx-auto my-2">
                 <img class="img-fluid meal-img meal-image" src="{{meal.image.url}}" alt="image of {{category}} item">
                 <div class="meal-div bg-white text-dark meal-description">
                     <h5 class="h5">{{meal.name}}</h5>
@@ -36,21 +36,10 @@
     </div>
     {% endfor %}
 
-    <div class="col-12 mt-4">
-        <hr class="accent my-5">
-    </div>
-    <div class="col-6 mx-auto">
-        <div class="card card-body text-center">
-            <h5 class="text-uppercase">Thursdays Only!</h5>
-            <h6>Portuguese Seafood Soup</h6>
-            <p class="small"> Portuguese Seafood Stew made with clams, shrimp, scallops and chorizo. Served with crusty bread.</p>
-            <span class="float-right font-weight-bold">$12</span>
-        </div>
-    </div>
-    <div class="col-12 mt-5 border border-right-0 border-left-0">
+    <div class="col-12 mt-5 border">
         <div class="row">
-            <div class="col h5">Dre's Diner</div>
-            <div class="col h5 text-right">+45 48 10 00 02</div>
+            <div class="col-6 h5">Dre's Diner</div>
+            <div class="col-6 h5">+45 48 10 00 02</div>
         </div>
     </div>
 </div>

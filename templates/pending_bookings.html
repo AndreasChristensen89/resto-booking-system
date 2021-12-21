@@ -1,50 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if user.is_superuser %}
 <div class="row menu">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
-            <h1 class="text-center h1">Your Bookings</h1>
+            <h1 class="text-center h1">Pending Bookings</h1>
         </div>
     </div>
 </div>
 
 <div class="row">
-{% for booking in booking_list %}
+{% for booking in pending_list %}
     <div class="col-9 col-sm-6 col-md-4 col-lg-3 card mx-auto p-4" style="width: 18rem;">
-        {% if booking.status == 1%}
-        <div class="card-body bg-success border rounded-top">
+        <div class="card-body bg-primary border rounded-top">
             <h5 class="card-title">{{booking.author.first_name}} {{booking.author.last_name}}</h5>    
-                <p class="card-text round">Confirmed</p>
+                <p class="card-text round">Pending</p>
                 {% for table in booking.table.all %}
                     <p class="card-text">1 x table for {{table.seats}}</p>
                 {% endfor %}
-        {% elif booking.status == 2%}
-        <div class="card-body bg-danger rounded-top">
-            <h5 class="card-title">{{booking.author.first_name}} {{booking.author.last_name}}</h5>    
-            <p class="card-text">Declined</p>
-            <p class="card-text">Not able to accept</p>
-        {% else %}
-        <div class="card-body bg-primary rounded-top">
-            <h5 class="card-title">{{booking.author.first_name}} {{booking.author.last_name}}</h5>    
-            <p class="card-text">Pending</p>
-            <p class="card-text">Reservation to be confirmed</p>
-        {% endif %}
         </div>
         <ul class="list-group list-group-flush border">
         <li class="list-group-item">{{booking.booking_start|date}} - {{booking.booking_start|time}}</li>
         <li class="list-group-item">{{booking.number_guests}} guests</li>
         </ul>
-        {% if booking.status != 2%}
-            <div class="card-body border bg-light rounded-bottom">
-                <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
-                <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Edit comment</a>
-            </div>
-        {% else %}
         <div class="card-body border bg-light rounded-bottom">
-            <a href="{% url 'reservations:book_table' %}" class="card-link">Book another time</a>
+            <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
+            <a href="{% url 'reservations:approve_booking' booking.slug %}" class="card-link">Approve/Decline</a>
         </div>
-        {% endif %}
     </div>
 
 {% endfor %}
@@ -67,4 +50,13 @@
             {% endif %}
         </span>
     </div>
+{% else %}
+<div class="row menu">
+    <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6">
+            <p class="text-center lead">You need admin credentials to access this page</p>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
