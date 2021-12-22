@@ -23,7 +23,7 @@ def contact(request):
 
             try:
                 send_mail(subject, message, 'dresdiner@email.com', [
-                    'dresdiner@email.com'])
+                    form.cleaned_data['email_address']])
             except BadHeaderError:
                 return HttpResponse('Invalid header.')
         else:
