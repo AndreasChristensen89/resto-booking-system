@@ -38,33 +38,33 @@ class TestModels(TestCase):
         self.assertEqual(booking1.is_past_due, False)
         self.assertEqual(booking2.is_past_due, True)
 
-    def test_model_property_latest_cancellation(self):
-        """
-        Creates two bookings:
-        One is in 60 minutes, the other is 121 minutes away
-        60 minutes away is too late (False), 121 minutes is just in time (True)
-        """
-        in_an_hour = datetime.now().replace(microsecond=0) + timedelta(minutes=60)
-        date_str = str(in_an_hour)
-        date_end_str = str(in_an_hour + timedelta(minutes=180))
+    # # def test_model_property_latest_cancellation(self):
+    # #     """
+    # #     Creates two bookings:
+    # #     One is in 60 minutes, the other is 121 minutes away
+    # #     60 minutes away is too late (False), 121 minutes is just in time (True)
+    # #     """
+    # #     in_an_hour = datetime.now().replace(microsecond=0) + timedelta(minutes=60)
+    # #     date_str = str(in_an_hour)
+    # #     date_end_str = str(in_an_hour + timedelta(minutes=180))
 
-        user1 = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-        booking1 = Booking.objects.create(
-        author=user1, 
-        number_guests=4, 
-        booking_start=date_str,
-        booking_end=date_end_str)
+    # #     user1 = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+    # #     booking1 = Booking.objects.create(
+    # #     author=user1, 
+    # #     number_guests=4, 
+    # #     booking_start=date_str,
+    # #     booking_end=date_end_str)
 
-        booking_hours_away = in_an_hour + timedelta(minutes=61)
-        booking_hours_away_str = str(booking_hours_away)
-        booking_hours_away_end_str = str(booking_hours_away + timedelta(minutes=180))
+    # #     booking_hours_away = in_an_hour + timedelta(minutes=61)
+    # #     booking_hours_away_str = str(booking_hours_away)
+    # #     booking_hours_away_end_str = str(booking_hours_away + timedelta(minutes=180))
 
-        user2 = User.objects.create_user('paul', 'mccartney@thebeatles.com', 'paulpassword')
-        booking2 = Booking.objects.create(
-        author=user2, 
-        number_guests=4, 
-        booking_start=booking_hours_away_str,
-        booking_end=booking_hours_away_end_str)
+    # #     user2 = User.objects.create_user('paul', 'mccartney@thebeatles.com', 'paulpassword')
+    # #     booking2 = Booking.objects.create(
+    # #     author=user2, 
+    # #     number_guests=4, 
+    # #     booking_start=booking_hours_away_str,
+    # #     booking_end=booking_hours_away_end_str)
 
-        self.assertEqual(booking1.latest_cancellation, False)
-        self.assertEqual(booking2.latest_cancellation, True)
+    # #     self.assertEqual(booking1.latest_cancellation, False)
+    # #     self.assertEqual(booking2.latest_cancellation, True)
