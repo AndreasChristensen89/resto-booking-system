@@ -223,8 +223,13 @@ body {
     max-width: 200px;
 }
 
-#hint_id_password {
-    background-color: white;
+.text-muted {
+    color: #a1a8af!important;
+}
+
+#hint_id_password a {
+    color: white;
+    text-decoration: underline;
 }
 
 a {

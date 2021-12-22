@@ -42,6 +42,8 @@ On booking_list add comment as pop-out to card.
 
 Added extra script to base.html
 
+Added property to booking to see if it's in past or not
+
 
 TABLE SORT LOGIC - 
 

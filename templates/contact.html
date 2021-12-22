@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="row menu">
+<div class="row menu mt-5">
   <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
       <div class="col-8 col-lg-6">
           <h1 class="text-center h1">Contact Us</h1>
@@ -12,22 +12,23 @@
 
 <!--Contact form-->
 <div class="row">
-    <div class="col-8 mx-auto mb-4">
-        <p class="col-10 text-center mx-auto mb-4">Don't hesitate to contact us in case you have any questions, feedback, or comments.</p>
-      <form method="post">
+    <div class="col-8 col-lg-6 mx-auto mb-3">
+      <form id="form" method="post" class="mt-3">
+  
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="btn btn-primary text-center mt-3" data-toggle="modal" data-target="message" type="submit">Submit</button>
-    </form>
+        <button class="btn btn-primary btn-lg m-4" data-toggle="modal" data-target="message" type="submit">Send</button>
+  
+      </form>
     </div>
-</div>
-<div class="row">
-    <h2 class="text-center">You can also reach us by phone</h2>
+  
+  </div>
+
+<div class="row my-5">
+    
     <div class="col-12 my-4 text-center">
-        <div class="row">
-            <div class="col-6 h5">Dre's Diner</div>
-            <div class="col-6 h5">+45 48 10 00 02</div>
-        </div>
+        <h2 class="text-center">You can also reach us by phone</h2>
+        <div class="col h5 text-center">+45 00 00 00 00</div>
     </div>
 </div>
 
