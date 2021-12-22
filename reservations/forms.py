@@ -45,13 +45,8 @@ class BookTableForm(forms.ModelForm):
             raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party at this time")
         if number_guests < 1:
             raise forms.ValidationError("Number of guests must be at least 1")
-    
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.helper = FormHelper()
-    #     self.helper.form_method = 'post'
-    #     self.helper.add_input(Submit('submit', 'Save booking'))
-        
+        if datetime.now() > booking_start:
+            raise forms.ValidationError("Bookings can only be made from current time and forward")
 
 
 class ProfileForm(UserChangeForm):

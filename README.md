@@ -6,6 +6,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ![registration error](/static/images/readme-pictures/registration-error.png "error when registering a user")
 
 ADMIN NOTES
+Admin credentials (superuser)
+username: admin
+password: themagickey
+
 In order for booking logic to work admin must set up the following:
 - Under Restaurant:
     - In BookingDetails add one object:

@@ -13,7 +13,7 @@ def create_booking_form(number_guests):
     """
     form = BookTableForm({
         'number_guests': number_guests, 
-        'booking_start': '2021-12-12 12:00:00',
+        'booking_start': '2050-12-12 12:00:00',
         'comment': ''
             })
     return form
@@ -59,7 +59,7 @@ class TestBookingForm(TestCase):
 
     def test_comment_field_not_required(self):
         opening_hours = OpeningHours.objects.create(
-            weekday=6,
+            weekday=0,
             from_time='10:00', 
             to_time='22:00')
         tables = Table.objects.create(
@@ -74,7 +74,7 @@ class TestBookingForm(TestCase):
     def test_form_with_minus_integer(self):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
-            weekday=6,
+            weekday=0,
             from_time='10:00', 
             to_time='22:00')
         tables = Table.objects.create(
@@ -89,7 +89,7 @@ class TestBookingForm(TestCase):
     def test_zero_tables_available(self):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
-            weekday=6,
+            weekday=0,
             from_time='10:00', 
             to_time='22:00')
         form = create_booking_form(4)
@@ -98,7 +98,7 @@ class TestBookingForm(TestCase):
     def test_not_enough_tables_available(self):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
-            weekday=6,
+            weekday=0,
             from_time='10:00', 
             to_time='22:00')
         tables = Table.objects.create(
@@ -113,7 +113,7 @@ class TestBookingForm(TestCase):
     def test_outside_opening_hours(self):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
-            weekday=6,
+            weekday=0,
             from_time='21:00', 
             to_time='22:00')
         tables = Table.objects.create(
@@ -128,7 +128,7 @@ class TestBookingForm(TestCase):
     def test_zero_guests(self):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
-            weekday=6,
+            weekday=0,
             from_time='10:00', 
             to_time='22:00')
         tables = Table.objects.create(
@@ -138,4 +138,22 @@ class TestBookingForm(TestCase):
             moveable=False
             )
         form = create_booking_form(0)
+        self.assertFalse(form.is_valid())
+
+    def test_cannot_book_in_past(self):
+        opening_hours = OpeningHours.objects.create(
+            weekday=5,
+            from_time='10:00', 
+            to_time='22:00')
+        tables = Table.objects.create(
+            table_number=1,
+            seats=4,
+            zone=1,
+            moveable=True)
+        booking_details = create_booking_details(1)
+        form = BookTableForm({
+        'number_guests': 2, 
+        'booking_start': '2020-12-12 12:00:00',
+        'comment': ''
+            })
         self.assertFalse(form.is_valid())
