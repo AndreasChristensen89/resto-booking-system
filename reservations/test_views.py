@@ -7,16 +7,8 @@ from django.contrib.auth.models import User
 from .test_models import create_booking
 
 
-class TestViews(TestCase):
-
-    def test_get_book_table(self):
-        response = self.client.get('/reservations/book_table/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'book_table.html')
-        self.assertTemplateUsed(response, 'base.html')
-
     # path('profile/', views.ProfileView.as_view(), name='profile'), DONE
-    # path('password/', views.PasswordChangeView.as_view(), name='password'),
+    # path('password/', views.PasswordChangeView.as_view(), name='password'), DONE
     # path('resetpassword/', views.PasswordChangeView.as_view(), name='password'),
     # path('', views.BookingList.as_view(), name='booking_list'), DONE
     # path('book_table/', views.book_table, name='book_table'), DONE
@@ -29,14 +21,22 @@ class TestViews(TestCase):
     # path('<slug:slug>/approve_booking/', views.ApproveReservationViewAdmin.as_view(), name='approve_booking'),
 
 
-class TestsLoggedIn(TestCase):
+class TestsViews(TestCase):
     
     def test_get_booking_list(self):
         create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         login = self.client.login(username='john', password='johnpassword')
-        response = self.client.get('/reservations/')
+        response = self.client.get('/reservations/bookings/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'booking_list.html')
+        self.assertTemplateUsed(response, 'base.html')
+
+    def test_get_booking_list_previous(self):
+        create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        login = self.client.login(username='john', password='johnpassword')
+        response = self.client.get('/reservations/previous_bookings/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'booking_list_previous.html')
         self.assertTemplateUsed(response, 'base.html')
     
     def test_get_profile_page(self):
@@ -54,6 +54,14 @@ class TestsLoggedIn(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/password_change.html')
         self.assertTemplateUsed(response, 'base.html')
+
+    # def test_get_forget_password_page(self):
+    #     create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+    #     login = self.client.login(username='john', password='johnpassword')
+    #     response = self.client.get(f'/reservations/resetpassword/')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'account/password_reset.html')
+    #     self.assertTemplateUsed(response, 'base.html')
 
     def test_get_updated_bookings_page(self):
         my_admin = User.objects.create_superuser('superuser', 'superuser@admin.com', 'adminpass')
@@ -112,12 +120,6 @@ class TestsLoggedIn(TestCase):
             from_time='10:00', 
             to_time='22:00')
         tables = Table.objects.create(
-            table_number=1,
-            seats=2,
-            zone=1,
-            moveable=False
-            )
-        tables = Table.objects.create(
             table_number=2,
             seats=2,
             zone=1,
@@ -128,14 +130,24 @@ class TestsLoggedIn(TestCase):
             table_assign_method=1,
             assign_method_limit=0
         )
+        response = self.client.get(f'/reservations/book_table/')
         self.client.post('/reservations/book_table/', {
-            'number_guests': 4, 
+            'number_guests': 2, 
             'booking_start': '2021-12-12 12:00:00',
             'comment': 'test',
             })
-        all_bookings = Booking.objects.all()
-        self.assertEqual(all_bookings[0].number_guests, 4)
-        self.assertEqual(all_bookings[0].comment, 'test')
-        # Book.objects.count()
-        
-    # test limit
+        self.assertEqual(Booking.objects.count(), 1)
+        self.assertEqual(Booking.objects.all()[0].number_guests, 2)
+        self.assertEqual(Booking.objects.all()[0].comment, 'test')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'book_table.html')
+        self.assertTemplateUsed(response, 'base.html')
+    
+    def test_approve_reservation(self):
+        my_admin = User.objects.create_superuser('superuser', 'superuser@admin.com', 'adminpass')
+        login = self.client.login(username='superuser', password='adminpass')
+        booking = create_booking()
+        response = self.client.get(f'/reservations/{booking.slug}/approve_booking/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'reservations/booking_approve_form.html')
+        self.assertTemplateUsed(response, 'base.html')

@@ -14,7 +14,7 @@ from .booking import double_booking, return_tables
 import datetime
 from datetime import timedelta
 
-
+#tested
 def book_table(request):
     form = BookTableForm()
 
@@ -62,7 +62,7 @@ def book_table(request):
 
     return render(request, 'book_table.html', context)
 
-
+#tested
 class BookingList(generic.ListView):
     model = Booking
     def get_queryset(self):
@@ -72,6 +72,7 @@ class BookingList(generic.ListView):
     template_name = 'booking_list.html'
     paginate_by = 6
 
+#tested
 class BookingListPrevious(generic.ListView):
     model = Booking
     def get_queryset(self):
@@ -81,7 +82,7 @@ class BookingListPrevious(generic.ListView):
     template_name = 'booking_list_previous.html'
     paginate_by = 6
 
-
+#tested
 class BookingUpdated(generic.ListView):
     model = Booking
     context_object_name = "updated_list"
@@ -89,7 +90,7 @@ class BookingUpdated(generic.ListView):
     template_name = 'updated_booking.html'
     paginate_by = 6
 
-
+#tested
 class BookingPending(generic.ListView):
     model = Booking
     context_object_name = "pending_list"
@@ -99,41 +100,26 @@ class BookingPending(generic.ListView):
     template_name = 'pending_bookings.html'
     paginate_by = 6
 
-# currently not used
-class BookingDetail(View):
-
-    def get(self, request, slug, *args, **kwargs):
-        queryset = Booking.objects.all()
-        booking = get_object_or_404(queryset, slug=slug)
-
-        return render(
-            request,
-            'booking_detail.html',
-            {
-                "booking": booking,
-            }
-            )
-
 # tested
 class CancelBookingView(DeleteView):
     model = Booking
     success_url = '/reservations/bookings/'
 
-# tested
+#tested
 class UpdateReservationView(UpdateView):
     model = Booking
     fields = ['comment']
     template_name_suffix = '_update_form'
     success_url = '/reservations/bookings/'
 
-
+#tested
 class UpdateReservationViewAdmin(UpdateView):
     model = Booking
     fields = ['number_guests', 'table', 'comment', 'status']
     template_name_suffix = '_update_form_admin'
     success_url = '/reservations/updated/'
 
-
+#tested
 class ApproveReservationViewAdmin(UpdateView):
     model = Booking
     fields = ['table', 'status', 'comment']
