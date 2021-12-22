@@ -7,7 +7,6 @@ app_name = 'reservations'
 urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('password/', views.PasswordChangeView.as_view(), name='password'),
-    path('resetpassword/', views.PasswordChangeView.as_view(), name='password_reset'),
     path('bookings/', views.BookingList.as_view(), name='booking_list'),
     path('previous_bookings/', views.BookingListPrevious.as_view(), name='booking_list_previous'),
     path('book_table/', views.book_table, name='book_table'),

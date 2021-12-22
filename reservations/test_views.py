@@ -7,20 +7,6 @@ from django.contrib.auth.models import User
 from .test_models import create_booking
 
 
-    # path('profile/', views.ProfileView.as_view(), name='profile'), DONE
-    # path('password/', views.PasswordChangeView.as_view(), name='password'), DONE
-    # path('resetpassword/', views.PasswordChangeView.as_view(), name='password'),
-    # path('', views.BookingList.as_view(), name='booking_list'), DONE
-    # path('book_table/', views.book_table, name='book_table'), DONE
-    # path('updated/', views.BookingUpdated.as_view(), name='bookings_updated'), DONE
-    # path('pending/', views.BookingPending.as_view(), name='bookings_pending'), DONE
-    # path('<slug:slug>/', views.BookingDetail.as_view(), name='booking_detail'),
-    # path('<slug:slug>/cancel/', views.CancelBookingView.as_view(), name='cancel_booking'), DONE
-    # path('<slug:slug>/update/', views.UpdateReservationView.as_view(), name='update_booking'), DONE
-    # path('<slug:slug>/update_admin/', views.UpdateReservationViewAdmin.as_view(), name='admin_update_booking'),
-    # path('<slug:slug>/approve_booking/', views.ApproveReservationViewAdmin.as_view(), name='approve_booking'),
-
-
 class TestsViews(TestCase):
     
     def test_get_booking_list(self):
@@ -54,14 +40,6 @@ class TestsViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/password_change.html')
         self.assertTemplateUsed(response, 'base.html')
-
-    # def test_get_forget_password_page(self):
-    #     create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-    #     login = self.client.login(username='john', password='johnpassword')
-    #     response = self.client.get(f'/reservations/resetpassword/')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'account/password_reset.html')
-    #     self.assertTemplateUsed(response, 'base.html')
 
     def test_get_updated_bookings_page(self):
         my_admin = User.objects.create_superuser('superuser', 'superuser@admin.com', 'adminpass')

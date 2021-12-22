@@ -83,6 +83,7 @@ Current bugs to fix:
 - Fix message for opening hours to reflect latest reservation time - DONE
 - Add alt text to pictures
 - Add attributions to pictures
+- Should I keep the moveable tables?
 
 
 Fixed bugs

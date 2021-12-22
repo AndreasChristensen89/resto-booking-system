@@ -1,5 +1,4 @@
 from django import forms
-from django.forms.widgets import SplitDateTimeWidget
 from allauth.account.forms import SignupForm, LoginForm, ChangePasswordForm, ResetPasswordForm
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User

@@ -8,6 +8,9 @@ import datetime
 
 
 def create_booking_form(number_guests):
+    """
+    creates a booking to shorten test code
+    """
     form = BookTableForm({
         'number_guests': number_guests, 
         'booking_start': '2021-12-12 12:00:00',
@@ -16,6 +19,9 @@ def create_booking_form(number_guests):
     return form
 
 def create_booking_details(method):
+    """
+    create booking details to shorten test code
+    """
     booking_details = BookingDetails.objects.create(
             booking_duration = 180,
             table_assign_method = method,

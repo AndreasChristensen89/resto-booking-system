@@ -39,12 +39,12 @@ class Booking(models.Model):
 
     @property
     def is_past_due(self):
-        return datetime.now() > self.booking_end
+        return datetime.now() > datetime.strptime(self.booking_end, '%Y-%m-%d %H:%M:%S')
 
     @property
     def latest_cancellation(self):
         now = datetime.now()
-        latest_cancel = self.booking_start - timedelta(minutes=120)
+        latest_cancel = datetime.strptime(self.booking_start, '%Y-%m-%d %H:%M:%S') - timedelta(minutes=120)
         return now <= latest_cancel
 
     class Meta:
