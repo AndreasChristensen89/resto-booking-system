@@ -22,7 +22,7 @@
         <p>{{booking.number_guests}} guests</p>
         <button class="btn btn-danger my-3" type="submit">Delete</button>
     </form>
-    <button class="btn btn-primary"><a class="text-white" href="/reservations/">Return</a></button>
+    <button class="btn btn-primary"><a class="text-white" href="{% url 'reservations:booking_list' %}">Return</a></button>
     </div>
 {% else %}
 <div class="row menu">

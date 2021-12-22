@@ -17,64 +17,41 @@
     </div>
 </section>
 
-
-
-    
-    
-
-    <!-- <div class="row">
-        <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
-            <div class="col-9 col-lg-6">
-                <h1 class="text-center display-3">Good to see you, {{user.first_name}}</h1>
-            </div>
-            
-        </div>
-    </div>
-
-    <div class="row menu">
-        <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
-            <div class="col-9 col-lg-6">
-                <h1 class="text-center display-2">Welcome {{user.username}}</h1>
-            </div>
-            
-        </div>
-    </div> -->
-
     <!-- -------------------------- call to action logged in -------------------------------- -->
-<div class="container py-5">
-    <div class="row mt-4">
-          
-            <div class="col-9 col-sm-4 col-md-3 mx-auto my-3">
-                <a href="/menu"> 
-                <div class="bg-image rounded-top" id="cta-menu">
-                </div>
-                <div class="border rounded-bottom text-center bg-white">
-                    <p class="lead h3 text-dark">Our menu</p>
-                </div>
-                </a>
-            </div>
+<!-- <div class="container"> -->
+    <div class="row">
         
-            <div class="col-9 col-sm-4 col-md-3 mx-auto my-3">
+            <div id="cta-div" class="col-12 col-sm-4">
                 <a href="/contact/">
-                <div class="bg-image rounded-top" id="cta-contact">
+                <div class="bg-image" id="cta-contact">
                 </div>
-                <div class="border rounded-bottom text-center bg-white">
-                    <p class="lead h3 text-dark">Contact us</p>
+                <div class="text-center bg-dark border border-dark">
+                    <p class="lead h3 text-dark text-white">Contact</p>
                 </div>
                 </a>
             </div>
           
-            <div class="col-9 col-sm-4 col-md-3 mx-auto my-3">
-                <a href="{% url 'reservations:profile' %}"> 
-                <div class="bg-image rounded-top" id="cta-profile">
+            <div id="cta-div" class="col-12 col-sm-4">
+                <a href="/menu"> 
+                <div class="bg-image" id="cta-menu">
                 </div>
-                <div class="border rounded-bottom text-center bg-white">
-                    <p class="lead h3 text-dark">See your profile</p>
+                <div class="text-center bg-dark border border-dark">
+                    <p class="lead h3 text-dark text-white">Menu</p>
+                </div>
+                </a>
+            </div>
+
+            <div id="cta-div" class="col-12 col-sm-4">
+                <a href="{% url 'reservations:profile' %}">
+                <div class="bg-image" id="cta-profile">
+                </div>
+                <div class="text-center bg-dark border border-dark">
+                    <p class="lead h3 text-dark text-white">Profile</p>
                 </div>
                 </a>
             </div>
     </div>
-</div>
+<!-- </div> -->
 
 {% else %}
                 <h2>Welcome</h2>

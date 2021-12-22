@@ -78,6 +78,7 @@ Current bugs to fix:
 - Move profile url from reservations?
 - Check conflicting user booking - testing
 - Updating a booking removes the tables - see if can implement logic in updateview
+- Fix message for opening hours to reflect latest reservation time
 
 
 Fixed bugs
@@ -139,6 +140,8 @@ run
 - pip3 install -r requirements.txt - second
 
 Picture credits from freepik
+
+Compressing used by tinypng.com
 
 cta-menu:
 <a href='https://www.freepik.com/photos/food'>Food photo created by valeria_aksakova - www.freepik.com</a>

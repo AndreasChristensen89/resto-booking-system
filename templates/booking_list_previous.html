@@ -4,14 +4,15 @@
 <div class="row menu">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
-            <h1 class="text-center h1">Upcoming Bookings</h1>
+            <h1 class="text-center h1">Your Bookings</h1>
         </div>
     </div>
 </div>
 {% if booking_list %}
 <div class="row">
+    <h3 class="text-center h3">Previous bookings</h3>
 {% for booking in booking_list %}
-{% if not booking.is_past_due %}
+{% if booking.is_past_due %}
         <div class="col-9 col-sm-6 col-md-4 col-lg-3 card mx-auto p-4 text-center" style="width: 18rem;">
             {% if booking.status == 1%}
             <div class="card-body bg-success border rounded-top">

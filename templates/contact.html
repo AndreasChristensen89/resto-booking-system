@@ -17,20 +17,20 @@
 
 <div class="row menu">
   <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
-      <div class="col-9 col-lg-6">
+      <div class="col-8 col-lg-6">
           <h1 class="text-center h1">Contact Us</h1>
       </div>
   </div>
 </div>
-<p class="col-9 lead text-center mx-auto mb-4">Don't hesitate to contact us in case you have any questions, feedback, or comments.</p>
 
 <!--Contact form-->
 <div class="row">
-    <div class="col-8 mx-auto">
+    <div class="col-8 mx-auto mb-4">
+        <p class="col-10 text-center mx-auto mb-4">Don't hesitate to contact us in case you have any questions, feedback, or comments.</p>
       <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="btn btn-primary text-center my-2" data-toggle="modal" data-target="message" type="submit">Submit</button>
+        <button class="btn btn-primary text-center mt-3" data-toggle="modal" data-target="message" type="submit">Submit</button>
     </form>
     </div>
 </div>

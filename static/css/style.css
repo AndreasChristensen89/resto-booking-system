@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #6c757d;
+    background-image: url(../images/site/background-image.webp);
     color: whitesmoke;
     font-family: Lato, sans-serif;
     font-weight: 300;
@@ -20,7 +20,7 @@ body {
 }
 
 #hero-outer {
-    height: 600px;
+    height: 570px;
     width: 100%;
     overflow: hidden;
     margin-bottom: 30px;
@@ -66,28 +66,34 @@ body {
 @keyframes text-zoom {
     from {
         opacity: 0;
-        top: 400px;
+        top: 500px;
     }
 
     to {
         opacity: 1;
-        top: 350px;
+        top: 450px;
     }
 }
 
+#cta-div {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 #cta-menu {
-    background-image: url(../images/site/cta-menu.webp);
+    background-image: url(../images/site/cta-menu-chef.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
+    background-position-x: 60%
 }
 
 #cta-contact {
-    background-image: url(../images/site/cta-contact.webp);
+    background-image: url(../images/site/cta-contact-phone.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
-    background-position-x: center;
+    background-position-y: 35%;
 }
 
 #cta-profile {
@@ -126,7 +132,7 @@ body {
 }
 
 .menu {
-    height: 200px;
+    height: 150px;
 }
 
 .navbar {
@@ -208,13 +214,13 @@ body {
     max-width: 200px;
 }
 
-.profile-form {
-    background-color: #445261;
+#hint_id_password {
+    background-color: white;
 }
 
 a {
     text-decoration: none;
-    /* color: inherit; */
+    color: inherit;
 }
 
 .light-bg {

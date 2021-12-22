@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from .models import Booking
 from restaurant.models import BookingDetails
 from .forms import BookTableForm, ProfileForm
-# from allauth.account.views import PasswordChangeView, PasswordResetView
+from allauth.account.views import PasswordChangeView, PasswordResetView
 from .booking import double_booking, return_tables
 import datetime
 from datetime import timedelta
@@ -38,7 +38,23 @@ def book_table(request):
                 for table in tables:
                     obj.table.add(table)
                 form.save_m2m()
-            return HttpResponseRedirect('/reservations/')
+            elif conflicting > 1:
+                subject = "Dre's Diner booking"
+                body = (
+                f"Hello {user.first_name}. " +
+                f"It appears that you have made two overlapping reservations. " 
+                f"Your new reservation on the {obj.booking_start} has therefore not been assigned any tables, it is however still kept on your page. " +
+                "Please contact us if this is intentional, otherwise you can safely delete the new reservation. " +
+                "We look forward to having you."
+                )
+                # Send Confirmation Mail to user and CC to admin
+                send_mail(
+                    subject,
+                    body,
+                    'dresdiner@email.com',
+                    [user.email, 'dresdiner@email.com']
+                )
+            return HttpResponseRedirect('/reservations/bookings/')
     else:
         form = BookTableForm()
 
@@ -56,12 +72,22 @@ class BookingList(generic.ListView):
     template_name = 'booking_list.html'
     paginate_by = 6
 
+class BookingListPrevious(generic.ListView):
+    model = Booking
+    def get_queryset(self):
+        queryset = super(BookingListPrevious, self).get_queryset()
+        queryset = queryset.filter(author=self.request.user)
+        return queryset
+    template_name = 'booking_list_previous.html'
+    paginate_by = 6
+
 
 class BookingUpdated(generic.ListView):
     model = Booking
     context_object_name = "updated_list"
     queryset = Booking.objects.exclude(comment__exact='').exclude(status=2)
     template_name = 'updated_booking.html'
+    paginate_by = 6
 
 
 class BookingPending(generic.ListView):
@@ -91,14 +117,14 @@ class BookingDetail(View):
 # tested
 class CancelBookingView(DeleteView):
     model = Booking
-    success_url = '/reservations/'
+    success_url = '/reservations/bookings/'
 
 # tested
 class UpdateReservationView(UpdateView):
     model = Booking
     fields = ['comment']
     template_name_suffix = '_update_form'
-    success_url = '/reservations/'
+    success_url = '/reservations/bookings/'
 
 
 class UpdateReservationViewAdmin(UpdateView):
@@ -116,6 +142,7 @@ class ApproveReservationViewAdmin(UpdateView):
     
     def form_valid(self, form):
         subject = "Dre's Diner booking"
+        body = ""
         status = form.cleaned_data.get('status')
         if status == 2:
             body = (
@@ -129,12 +156,13 @@ class ApproveReservationViewAdmin(UpdateView):
                 f"your booking is confirmed on {self.object.booking_start}. " +
                 "Please note that cancellations must be made minimum two hours before. We look forward to seeing you."
             )
-        send_mail(
-            subject,
-            body,
-            'dresdiner@email.com',
-            [self.object.author.email, 'dresdiner@email.com']
-        )
+        if status != 0:
+            send_mail(
+                subject,
+                body,
+                'dresdiner@email.com',
+                [self.object.author.email, 'dresdiner@email.com']
+            )
         return super(ApproveReservationViewAdmin, self).form_valid(form) 
 
 

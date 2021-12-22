@@ -69,7 +69,8 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{% url 'reservations:book_table' %}">New Booking</a></li>
-              <li><a class="dropdown-item" href="{% url 'reservations:booking_list' %}">My Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:booking_list' %}">Upcoming Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:booking_list_previous' %}">Previous Bookings</a></li>
             </ul>
           </li>
           <li class="nav-item">
