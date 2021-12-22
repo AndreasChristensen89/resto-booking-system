@@ -9,8 +9,10 @@
         <div id="cover-text">
             {% if user.is_authenticated %}
                 {% if user.first_name %}
+                    <h1>Welcome to Dre's Diner</h1>
                     <h2>Good to see you, {{user.first_name}}</h2>
                 {% else %}
+                    <h1>Welcome to Dre's Diner</h1>
                     <h2>Welcome {{user.username}}</h2>
                 {% endif %}
         </div>
@@ -54,7 +56,7 @@
 <!-- </div> -->
 
 {% else %}
-                <h2>Welcome</h2>
+                <h2>Welcome to Dre's Diner</h2>
         </div>
     </div>
 </section>

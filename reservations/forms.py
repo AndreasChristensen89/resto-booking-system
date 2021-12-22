@@ -7,7 +7,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from .models import Booking
 from restaurant.models import BookingDetails
-import datetime
+from datetime import datetime, timedelta
 from datetime import datetime
 from .booking import return_tables, test_time, get_opening_hours, double_booking
 
@@ -33,9 +33,15 @@ class BookTableForm(forms.ModelForm):
 
             if not time_check:
                 opening_hours = get_opening_hours(booking_start.weekday())
+                closing_hour_str = '01/01/01 ' + str(opening_hours[0].to_time)
+                closing_hour_dt = datetime.strptime(closing_hour_str, '%d/%m/%y %H:%M:%S')
+
+                booking_duration = BookingDetails.objects.all()[0].booking_duration
+                latest_reservation = closing_hour_dt - timedelta(minutes=booking_duration)
+                
                 open = str(opening_hours[0].from_time)[0:5]
-                close = str(opening_hours[0].to_time)[0:5]
-                raise forms.ValidationError(f'Not within opening hours of the requested date - {open} to {close}')
+                close = str(latest_reservation)[11:16]
+                raise forms.ValidationError(f'Reservations on the requested date can be made between {open} and {close}')
         if not available_tables and sorting_method > 0:
             raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party at this time")
         if number_guests < 1:

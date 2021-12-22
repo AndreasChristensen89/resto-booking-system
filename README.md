@@ -78,7 +78,9 @@ Current bugs to fix:
 - Move profile url from reservations?
 - Check conflicting user booking - testing
 - Updating a booking removes the tables - see if can implement logic in updateview
-- Fix message for opening hours to reflect latest reservation time
+- Fix message for opening hours to reflect latest reservation time - DONE
+- Add alt text to pictures
+- Add attributions to pictures
 
 
 Fixed bugs
