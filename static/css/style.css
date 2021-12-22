@@ -120,15 +120,8 @@ body {
     background-position-x: center;
 }
 
-.meal-image {
-    border-top-left-radius: 0.75rem;
-    border-top-right-radius: 0.75rem;
-}
-
 .meal-description {
     height: 150px;
-    border-bottom-left-radius: 0.75rem;
-    border-bottom-right-radius: 0.75rem;
 }
 
 .menu {
@@ -205,8 +198,8 @@ body {
 }
 
 .meal-div {
-    border-right: 2px solid #dee2e6!important;
-    border-left: 2px solid #dee2e6!important;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .profile-div {
