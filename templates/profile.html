@@ -23,17 +23,17 @@
 </div>
 
 <!--User Profile-->
-<div>
-  <form id="form" method="post" class="mt-3">
-    <div class="row">
-    <div class="col-8 mx-auto mb-3 lead">
+<div class="row">
+  <div class="col-8 col-lg-6 mx-auto mb-3">
+    <form id="form" method="post" class="mt-3">
+
       {% csrf_token %}
       {{ form|crispy }}
       <button class="btn btn-primary btn-lg m-4" data-toggle="modal" data-target="message" type="submit">Save</button>
-    </div>
 
+    </form>
   </div>
-      
-  </form>
+
 </div>
+
 {% endblock content%}

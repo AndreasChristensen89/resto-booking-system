@@ -120,6 +120,22 @@ body {
     background-position-x: center;
 }
 
+#id_comment {
+    height: 20vh;
+}
+
+.booking-pending, .booking-button {
+    background-color: #0f52b4;
+}
+
+.booking-confirmed {
+    background-color: #0c7041;
+}
+
+.booking-declined {
+    background-color: #ac0918;
+}
+
 .meal-description {
     height: 150px;
 }
