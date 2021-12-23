@@ -32,7 +32,7 @@ In order for menu to be displayed Admin must add items:
 
 Installed Pillow for image upload
 
-If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not given which is because of the chance that a user may want to reserve a table for someone else in the same timeslot.
+If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not given which is because of the chance that a user may want to use his profile to reserve a table for someone else in the same timeslot.
 
 Add restaurant model to have the restaurant be able to set reservation interval - DONE
 
@@ -42,7 +42,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 To add:
 Check if user has first_name, otherwise ask them to fill in. This way we can cut first_name and last_name from booking and only use User info - ADDED
 
-On booking_list add comment as pop-out to card.
+On booking_list add comment as pop-out to card. - If declined it is there on the card
 
 Added extra script to base.html
 

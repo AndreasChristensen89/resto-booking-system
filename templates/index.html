@@ -25,7 +25,7 @@
         
             <div id="cta-div" class="col-12 col-sm-4">
                 <a href="/contact/">
-                <div class="bg-image" id="cta-contact">
+                <div class="animation bg-image" id="cta-contact">
                 </div>
                 <div class="text-center bg-dark border border-dark">
                     <p class="lead h3 text-dark text-white">Contact</p>
@@ -35,7 +35,7 @@
           
             <div id="cta-div" class="col-12 col-sm-4">
                 <a href="/menu"> 
-                <div class="bg-image" id="cta-menu">
+                <div class="animation bg-image" id="cta-menu">
                 </div>
                 <div class="text-center bg-dark border border-dark">
                     <p class="lead h3 text-dark text-white">Menu</p>
@@ -45,7 +45,7 @@
 
             <div id="cta-div" class="col-12 col-sm-4">
                 <a href="{% url 'reservations:profile' %}">
-                <div class="bg-image" id="cta-profile">
+                <div class="animation bg-image" id="cta-profile">
                 </div>
                 <div class="text-center bg-dark border border-dark">
                     <p class="lead h3 text-dark text-white">Profile</p>
@@ -62,36 +62,38 @@
 </section>
 
 <!-- -------------------------- call to action logged out -------------------------------- -->
-<div class="row">
+<!-- <div class="row">
     <div class="col-3 h1-bg">
     <p class="text-center welcome">If you wish to book a table at this restaurant you need to log in or sign up.</p>
     </div>
-</div>
-
-<div class="container py-5">
-<div class="row m4-t">
-    <div class="col-9 col-sm-4 col-md-3 mx-auto my-3">
+</div> -->
+<!-- ---------------------------------- -->
+<div class="row">
+        
+    <div id="cta-div" class="col-12 col-sm-6 text-center animation">
         <a href="{% url 'account_signup' %}"> 
-        <div class="bg-image rounded-top" id="cta-signup">
+        <div>
+            <i class="animation fas fa-user-plus"></i>
         </div>
-        <div class="border rounded-bottom text-center bg-white">
-            <p class="lead h3 text-dark">Register</p>
+        <div class="text-center border border-dark">
+            <p class="lead text-white">Register</p>
+        </div>
+        </a>
+    </div>
+  
+    <div id="cta-div" class="col-12 col-sm-6 text-center animation">
+        <a href="{% url 'account_login' %}"> 
+        <div>
+            <i class="animation fas fa-users"></i>
+        </div>
+        <div class="text-center border border-dark">
+            <p class="lead text-white">Log In</p>
         </div>
         </a>
     </div>
 
-    <div class="col-9 col-sm-4 col-md-3 mx-auto my-3">
-        <a href="{% url 'account_login' %}"> 
-        <div class="bg-image rounded-top" id="cta-signin">
-        </div>
-        <div class="border rounded-bottom text-center bg-white">
-            <p class="lead h3 text-dark">Log in</p>
-        </div>
-        </a>
-    </div>
-    
 </div>
-</div>
+<!-- ------------------------------ -->
 {% endif %}
 
 {% endblock %}
