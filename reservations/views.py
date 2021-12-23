@@ -165,5 +165,10 @@ class ProfileView(SuccessMessageMixin, generic.UpdateView):
         return self.request.user
 
 
-def error_404_view(request, exception):
-    render(request, '404.html')
+def error_404(request, exception):
+    data = {}
+    return render(request, '404.html', data)
+
+def error_500(request):
+    data = {}
+    return render(request, '500.html', data)

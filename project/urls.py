@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include('homepage.urls')),
 ]
 
-handler404 = 'reservations.views.error_404_view'
+handler404 = 'reservations.views.error_404'
+handler500 = 'reservations.views.error_500'
