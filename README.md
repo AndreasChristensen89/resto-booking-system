@@ -1,3 +1,52 @@
+# Resto-Book
+
+The idea behind this project is to create a site for a restaurant that can manage reservations.
+On deployment all the restaurant details, including contact details, openings hours, booking details, meals, and categories have already been set up, however this can be edited as the admin wants thus making the design useable for other restaurants.
+The content is auto generated on the pages, and the admin can set up their preferred criterias.
+
+The design choice is dark which I find suitable for restaurants that prefer a clean and simple look.
+
+## Features
+
+### Existing Features:
+* __Navigation Bar__
+    * The navigation bar is found on all pages. It is dark grey with white text and changes according to if the user is logged in, and also whether the user is a superuser or not. The design is Bootstrap's own design (https://getbootstrap.com/docs/4.3/components/navbar/), which I have set to collapse when reaching mobile displays.
+        * For non-users there are five links: "Home", "Menu", "Sign-up", "Login", and "Contact Information"
+        ![Nav Bar - logged out](/static/images/readme-pictures/navigation-bar-logged-out.webp)
+        * For users there are more options: "Home", "Menu", a drop-down box "Booking" with three links ("New Booking", "Upcoming Bookings", "Previous Bookings"), "Profile", "logout", and "Contact Information"
+        ![Nav Bar - user](/static/images/readme-pictures/navigation-bar-user.webp)
+        * For superusers there are different options: "Home", "Menu", drop-down box "Admin Actions" with three links ("Pending Bookings", "Updated Bookings", "Book Table"), "Admin Profile", "Logout", and "Contact Information"
+        ![Nav Bar - superuser](/static/images/readme-pictures/navigation-bar-superuser.webp)
+        * All user have the webpage icon that leads to the landing page
+
+* __Landing page__:
+    * The landing page has a dark-themed hero-image of fresh ingredients. There is a welcome message being generated according to who is logged in, and the details of the user. If the user is not logged in it will display the standard welcome message. If logged in, but with no name details added in profile, it will greet the user by username underneath the welcome message. If name details are provided it will use the provided first name in the greeting. The greeting appears into view after a second and a half, changing opacity from 0 to 100.
+
+    ![Landing page - logged out](/static/images/readme-pictures/landing-page-logged-out.webp)
+    ![Landing page - username](/static/images/readme-pictures/landing-page-user.webp)
+    ![Landing page - user's name](/static/images/readme-pictures/landing-page-admin.webp)
+    
+    * Under the hero image are call-to-action divs. These also change when logged in/out.
+        * If not logged in there are two divs with dark-yellow icons that link to the sign-up page and the login page. These are the call-to-actions as users must be logged in in order to make bookings. They move 10px upwards when hovering over them, thus giving an interactive feeling. For mobile view the two divs stack on top of each other.
+        * If logged in there are three divs side by side with background pictures instead of icons: "contact", with a background picture of a phone linking to the contact-us page, "Menu", with a background picture of a menu slate and ingredients, linking to the menu-page, and "Profile", with a picture of faceless people, linking to the profile-page". All these divs also move 10px upwards when hovering over them. For mobile view the divs stack on top of each other.
+    
+    ![Landing page - cta's logged out](/static/images/readme-pictures/landing-page-admin.webp)
+    ![Landing page - cta's logged in](/static/images/readme-pictures/landing-page-admin.webp)
+
+* __Menu page__:
+    * The menu page follows the dark theme and shows different fresh ingredients on a black surface. After a second a message comes into view, going form 0 opacity to 100 that says "Eat healthy and feel good". This page is the same regardless of user.
+    ![Menu page - top](/static/images/readme-pictures/landing-page-admin.webp)
+    * Underneath the main picture is an introductory message that reads "All our food is made from fresh and organic ingredients. Everything served has been put through a rigorous process to ensure optimal quality, health, and flavor."
+    ![Menu page - message](/static/images/readme-pictures/landing-page-admin.webp)
+    * Underneath the site auto generates the categories added by the admin, followed by all the meals connected to this category.
+    The category is on a line of it's own, and underneath the pictures of the meals are displayed along with title, price, and description. Corners of the pictures are slighty rounded. On mobile view two meals are shown next to each other. On 576px three, which are then enlarged on 768px, and finally allowing four items side by side on 992px and above. All text is white, but price is slighty dimmed.
+    ![Menu page - categories and meals](/static/images/readme-pictures/landing-page-admin.webp)
+
+* __Sign-up page__:
+    * Sign up page has a simple design, just showing a heading "Sign Up". Underneath is a paragraph that shows a link to the login page in case the user already has an account. Underneath comes the form, which consists of four fields: "Username", "E-mail", "Password", "Password(again)", and then a blue "Sign Up" button underneath. All fields except for E-mail are mandatory and marked with an "*".
+    ![Sign up page](/static/images/readme-pictures/landing-page-admin.webp)
+
+
 command used for copying authentication templates to directory. Once copied we can make changes to the styling, and the content
 cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates
 
@@ -10,7 +59,9 @@ Admin credentials (superuser)
 username: admin
 password: themagickey
 
-In order for booking logic to work admin must set up the following:
+
+
+In order for booking logic to work admin must set up the following (This is already set on deployment, but can be changed):
 - Under Restaurant:
     - In BookingDetails add one object:
         - Specify Booking Duration - how many minutes each party will occupy the tables
@@ -19,7 +70,7 @@ In order for booking logic to work admin must set up the following:
     - In Opening Hours an object for each day must be added, Monday to Sunday:
         - Specify Weekday, opening time, and closing time
 
-In order for menu to be displayed Admin must add items:
+In order for menu to be displayed Admin must add items (This is already set on deployment, but can be changed):
 - Under Menu:
     - In Categories add desired number of categories
     - In Meals add objects for each desired category:
@@ -89,6 +140,7 @@ Current bugs to fix:
 - Add attributions to pictures
 - Should I keep the moveable tables?
 - Fix test for model, string + datetime shit
+- Grey for pending?
 
 
 Fixed bugs
@@ -155,6 +207,8 @@ Compressing used by tinypng.com
 
 cta-menu:
 <a href='https://www.freepik.com/photos/food'>Food photo created by valeria_aksakova - www.freepik.com</a>
+new menu - no attribution required, so just posting the link:
+https://pixabay.com/photos/menu-pizza-pasta-vegetables-meal-3206749/
 cta-contact:
 <a href='https://www.freepik.com/photos/space'>Space photo created by freepik - www.freepik.com</a>
 cta-profile

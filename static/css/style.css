@@ -7,7 +7,7 @@
 }
 
 body {
-    background-image: url(../images/site/background-image.webp);
+    background-image: url(../images/site/background-black.webp);
     color: whitesmoke;
     font-family: Lato, sans-serif;
     font-weight: 300;
@@ -111,7 +111,7 @@ body {
 }
 
 #cta-menu {
-    background-image: url(../images/site/cta-menu-chef.webp);
+    background-image: url(../images/site/cta-menu-background.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
