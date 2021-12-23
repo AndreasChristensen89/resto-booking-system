@@ -5,6 +5,7 @@ from .booking import return_tables, double_booking
 from restaurant.models import BookingDetails
 from datetime import datetime, timedelta
 
+
 def create_booking(name, datetime):
     user = User.objects.create_user(name, 'lennon@thebeatles.com', 'johnpassword')
     booking = Booking.objects.create(
@@ -15,7 +16,27 @@ def create_booking(name, datetime):
     return booking
 
 
-class TestModels(TestCase):
+class TestTable(TestCase):
+
+    def test_table_object_exists(self):
+        table = Table.objects.create(
+            table_number=1,
+            seats=2,
+            zone=1,
+            moveable=True
+        )
+        self.assertEqual(Table.objects.all().count(), 1)
+
+    def test_zone_auto_zero_moveable_auto_false(self):
+        table = Table.objects.create(
+            table_number=1,
+            seats=2,
+        )
+        self.assertEqual(Table.objects.all()[0].zone, 0)
+        self.assertEqual(Table.objects.all()[0].moveable, False)
+
+
+class TestBooking(TestCase):
     """
     In TestCase the string in datetimefield is not converted to datetime
     Therefore I'm inserting datetime in booking_start/end instead of a string.

@@ -68,7 +68,7 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
     ![Upcoming bookings page](/static/images/readme-pictures/landing-page-admin.webp)
 
 * __Detele booking page__:
-    * The header says "Delete booking". Underneath is a paragraph that says "Are you sure you want to delete the reservation?". Underneath are the details of the booking: Name, Date, Time, and guests. Underneath are two buttons: red button "Delete" and blue button "return". There is no like on the other pages which signifies that it is a serious action that is permanent. The design is narrow and does not change on mobile.
+    * The header says "Delete booking". Underneath is a paragraph that says "Are you sure you want to delete the reservation?". Underneath are the details of the booking: Name, Date, Time, and guests. Underneath are two buttons: red button "Delete" and blue button "return". There is no like on the other pages which signifies that it is a serious action that is permanent. The design is narrow and does not change on mobile. If booking is closer than two hours away (booking property latest_cancellation) the page will display "Time limit exceeded. Cancellation is unfortunately no longer possible. Please get in contact with the restaurant if further information is needed"
     ![Delete booking page](/static/images/readme-pictures/landing-page-admin.webp)
 
 * __Update comment page__:
@@ -136,18 +136,21 @@ All applications have been tested using TestCase. Forms, models, views, and addi
     * When testing the current database was not able to create testing databases, and I had to comment it out and un-comment the other database using sqlite3.
 * Applications
     * Contact
-        * Test_views - two tests, both pass. One for errorcode 200 and one for email sent.
+        * Test_views - two tests, both pass. One for code 200 and one for email sent.
         * Test_forms - five tests, all pass. Test wrong input and required fields.
+    * Homepage
+        * Test_views - one test, passes. Tests for code 200.
     * Menu
-        * Test_models
-        * Test_views
+        * Test_models - two tests, both pass. Test to create objects with both models, Meals and Category.
+        * Test_views - one test, passes. Tests for code 200.
     * Reservations
-        * Test_booking
-        * Test_views
-        * Test_forms
-        * Test_models
+    Every time I tested a booking I had to pass in a datetime object. On the page we pass in a string which is then converted to datetime, but this did not work for certain tests, particularly when testing the model.
+        * Test_booking. 29 tests, all pass. Testing each function in reservations.bookings.py. Checking if functions use input from models properly. For many tests I created specific tables to have multiple options to return, checking if correct ones are returned with correct priority. Had to create opening hours, bookings details, users, and tables for most of the tests. For certain tests I started for loops to test function calls with increasing number of guests, and then running self.assert... for each iteration.
+        * Test_views - 11 tests, all pass. Tested views for code 200 and correct template use. For many of them I had to create a user, at times a superuser, and log in. For the booking view I logged in and posted a correct form and then checked if a booking had been made.
+        * Test_forms - 13 tests, all pass. Tested form for errors for wrong input, all fields should be there, which ones are required, minus values, wrong types, not enough tables, enough tables but one with certain method, opening hours, past booking
+        * Test_models - 7 tests, all pass. Tested if object could be made, if default fields are automatically set, if slugs are generated and unique, if model properties work (booking latest_cancellation and is_due_date).
     * Restaurant
-        * Test_models
+        * Test_models - 3 tests, all pass. Test if objects can be created and if default values work.
 
 ### Browser Testing
 
@@ -300,6 +303,7 @@ In order for menu to be displayed Admin must add items (This is already set on d
 * If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not given which is because of the chance that a user may want to use his profile to reserve a table for someone else in the same timeslot.
 * Added property to booking to see if it's in past or not
 * I set use_tz to False in settings.py in order to avoid the timezone input from bookings.booking_start
+* In order to add the ManyToManyField in the Booking model I had to save the booking first in the view and then afterwards attach the tables, and finally save again. This caused a lot of trouble
 
 
 TABLE SORT LOGIC - 

@@ -14,11 +14,3 @@ def menu_list(request):
     }
 
     return render(request, 'menu_list.html', context)
-
-
-def meal_detail(request, slug):
-    meal_detail = Meals.objects.get(slug=slug)
-
-    context = {'meal_detail': meal_detail}
-
-    return render(request, 'meal_detail.html', context)

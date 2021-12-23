@@ -58,24 +58,16 @@ class TestsViews(TestCase):
         self.assertTemplateUsed(response, 'base.html')
     
     def test_get_update_reservation(self):
+        booking = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         self.client.login(username='john', password='johnpassword')
-        booking = create_booking()
-        response = self.client.get(f'/reservations/{booking.slug}/update/', follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'reservations/booking_update_form.html')
-        self.assertTemplateUsed(response, 'base.html')
-
-    def test_get_update_reservation(self):
-        self.client.login(username='john', password='johnpassword')
-        booking = create_booking()
         response = self.client.get(f'/reservations/{booking.slug}/update/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'reservations/booking_update_form.html')
         self.assertTemplateUsed(response, 'base.html')
 
     def test_cancel_reservation(self):
+        booking = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         self.client.login(username='john', password='johnpassword')
-        booking = create_booking()
         response = self.client.get(f'/reservations/{booking.slug}/cancel/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'reservations/booking_confirm_delete.html')
@@ -84,7 +76,7 @@ class TestsViews(TestCase):
     def test_get_update_booking_admin_page(self):
         my_admin = User.objects.create_superuser('superuser', 'superuser@admin.com', 'adminpass')
         login = self.client.login(username='superuser', password='adminpass')
-        booking = create_booking()
+        booking = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         response = self.client.get(f'/reservations/{booking.slug}/update_admin/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'reservations/booking_update_form_admin.html')
@@ -111,7 +103,7 @@ class TestsViews(TestCase):
         response = self.client.get(f'/reservations/book_table/')
         self.client.post('/reservations/book_table/', {
             'number_guests': 2, 
-            'booking_start': '2021-12-12 12:00:00',
+            'booking_start': datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'),
             'comment': 'test',
             })
         self.assertEqual(Booking.objects.count(), 1)
@@ -124,7 +116,7 @@ class TestsViews(TestCase):
     def test_approve_reservation(self):
         my_admin = User.objects.create_superuser('superuser', 'superuser@admin.com', 'adminpass')
         login = self.client.login(username='superuser', password='adminpass')
-        booking = create_booking()
+        booking = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         response = self.client.get(f'/reservations/{booking.slug}/approve_booking/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'reservations/booking_approve_form.html')
