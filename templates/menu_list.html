@@ -12,11 +12,17 @@
     </div>
 </section>
 
+<div class="row">
+    <div class="col-12 text-center m-5">
+        <h3 class="h3">All our food is made from fresh and organic ingredients.</h3>
+    </div>
+</div>
+
+
 <!-- <div class="container py-5"> -->
     {% for category in categories %}
-    <div class="col-12 m-3">
+    <div class="col-12 my-5">
         <h3 class="text-center display-4">{{category}}</h3>
-        <hr class="accent my-1">
     </div>
     <div class="container">
         <div class="row">
@@ -25,9 +31,9 @@
             <div class="col-6 col-sm-4 col-lg-3 text-center mx-auto my-2 meal-div px-1">
                 <img class="img-fluid meal-img meal-image rounded" src="{{meal.image.url}}" alt="image of {{category}} item">
                 <div class="text-white meal-description">
-                    <h5 class="h5">{{meal.name}}</h5>
+                    <h5 class="h5 mt-2">{{meal.name}}</h5>
                     <p><small class="text-muted">€{{meal.price}}</small></p>
-                    <p class="meal-description">{{meal.description}}</p>
+                    <p class="mx-2 meal-description">{{meal.description}}</p>
                 </div>                  
             </div>
         {% endif %}

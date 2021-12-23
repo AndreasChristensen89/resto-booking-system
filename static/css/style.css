@@ -51,12 +51,11 @@ body {
 
 #cover-text {
     position: relative;
-    top: 300px;
     text-align: center;
     color: white;
     font-size: 200%;
     text-transform: uppercase;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.7);
     
     animation-name: text-zoom;
     animation-duration: 3s;
@@ -66,12 +65,37 @@ body {
 @keyframes text-zoom {
     from {
         opacity: 0;
-        top: 500px;
+        top: 300px;
     }
 
     to {
         opacity: 1;
-        top: 450px;
+        top: 250px;
+    }
+}
+
+.cover-welcome {
+    position: relative;
+    color: white;
+    font-size: 200%;
+    text-transform: uppercase;
+    opacity: 0;
+    
+    animation-name: text-opacity;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-delay: 2s;
+}
+
+@keyframes text-opacity {
+    from {
+        opacity: 0;
+        top: 400px;
+    }
+
+    to {
+        opacity: 1;
+        top: 400px;
     }
 }
 

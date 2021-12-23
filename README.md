@@ -166,3 +166,15 @@ cta-profile
 
 sign-up-cta:
 <a href='https://www.freepik.com/photos/hand'>Hand photo created by rawpixel.com - www.freepik.com</a>
+
+pain au chocolat:
+<a href='https://www.freepik.com/photos/restaurant'>Restaurant photo created by azerbaijan_stockers - www.freepik.com</a>
+
+porridge:
+<a href='https://www.freepik.com/photos/nature'>Nature photo created by jcomp - www.freepik.com</a>
+
+breakfast eggs:
+<a href='https://www.freepik.com/photos/food'>Food photo created by jcomp - www.freepik.com</a>
+
+cereals:
+<a href='https://www.freepik.com/photos/food'>Food photo created by Racool_studio - www.freepik.com</a>

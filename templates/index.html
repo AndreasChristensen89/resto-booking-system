@@ -5,21 +5,20 @@
     <div class="col-12" id="hero-image">
         <span class="img-fluid" role="img" aria-label="Fresh ingredients items on a black surface"></span>
     </div>
-    <div id="hero-cover">
         <div id="cover-text">
-            {% if user.is_authenticated %}
-                {% if user.first_name %}
-                    <h1>Welcome to Dre's Diner</h1>
-                    <h2>Good to see you, {{user.first_name}}</h2>
-                {% else %}
-                    <h1>Welcome to Dre's Diner</h1>
-                    <h2>Welcome {{user.username}}</h2>
-                {% endif %}
+            <h1>Welcome to Dre's Diner</h1>
         </div>
-    </div>
+{% if user.is_authenticated %}
+    {% if user.first_name %}
+        <div class="col text-center cover-welcome">
+            <h2>Good to see you, {{user.first_name}}</h2>
+        </div>
+    {% else %}
+            <h2>Good to see you, {{user.user_name}</h2>
+    {% endif %}
 </section>
 
-    <!-- -------------------------- call to action logged in -------------------------------- -->
+<!-- -------------------------- call to action logged in -------------------------------- -->
 <!-- <div class="container"> -->
     <div class="row">
         
@@ -56,21 +55,12 @@
 <!-- </div> -->
 
 {% else %}
-                <h2>Welcome to Dre's Diner</h2>
-        </div>
-    </div>
 </section>
 
 <!-- -------------------------- call to action logged out -------------------------------- -->
-<!-- <div class="row">
-    <div class="col-3 h1-bg">
-    <p class="text-center welcome">If you wish to book a table at this restaurant you need to log in or sign up.</p>
-    </div>
-</div> -->
-<!-- ---------------------------------- -->
-<div class="row">
+<div id="cta-div" class="row">
         
-    <div id="cta-div" class="col-12 col-sm-6 text-center animation">
+    <div class="col-12 col-sm-6 text-center animation">
         <a href="{% url 'account_signup' %}"> 
         <div>
             <i class="animation fas fa-user-plus"></i>
@@ -81,7 +71,7 @@
         </a>
     </div>
   
-    <div id="cta-div" class="col-12 col-sm-6 text-center animation">
+    <div class="col-12 col-sm-6 text-center animation">
         <a href="{% url 'account_login' %}"> 
         <div>
             <i class="animation fas fa-users"></i>
