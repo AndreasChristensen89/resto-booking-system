@@ -8,7 +8,6 @@
         </div>
     </div>
 </div>
-{% if booking_list %}
 <div class="row">
 {% for booking in booking_list %}
 {% if not booking.is_past_due %}
@@ -65,9 +64,4 @@
             {% endif %}
         </span>
     </div>
-{% else %}
-<div class="row">
-    <h3 class="text-center h3">Currently no bookings</h3>
-</div>
-{% endif %}
 {% endblock %}

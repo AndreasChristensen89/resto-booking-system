@@ -8,7 +8,7 @@
         </div>
     </div>
 </div>
-{% if booking_list %}
+
 <div class="row">
 {% for booking in booking_list %}
 {% if booking.is_past_due %}
@@ -33,16 +33,6 @@
             <li class="list-group-item">{{booking.booking_start|date}} - {{booking.booking_start|time}}</li>
             <li class="list-group-item">{{booking.number_guests}} guests</li>
             </ul>
-            {% if booking.status != 2%}
-                <div class="card-body rounded-bottom">
-                    <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
-                    <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Edit comment</a>
-                </div>
-            {% else %}
-            <div class="card-body rounded-bottom">
-                <a href="{% url 'reservations:book_table' %}" class="card-link">Book another time</a>
-            </div>
-            {% endif %}
         </div>
 {% endif %}
 {% endfor %}
@@ -65,9 +55,4 @@
             {% endif %}
         </span>
     </div>
-{% else %}
-<div class="row">
-    <h3 class="text-center h3">Currently no bookings</h3>
-</div>
-{% endif %}
 {% endblock %}

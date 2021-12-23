@@ -16,12 +16,12 @@
     {% csrf_token %}
     <div class="col-9 m-4 mx-auto">
         {{ form.comment|as_crispy_field }}
-        <button type="submit" class="btn btn-primary mt-3">Update</button>
+        <button type="submit" class="btn btn-primary m-3">Update</button>
+        <a style="text-decoration: underline;" class="m-4" href="{% url 'reservations:booking_list' %}">Return</a>
     </div>
     
 </form>
-<br>
-<a class="m-4" href="/reservations/">Return</a>
+
 {% else %}
 <div class="row menu">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
