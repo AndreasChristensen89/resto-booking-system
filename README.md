@@ -155,42 +155,52 @@ All applications have been tested using TestCase. Forms, models, views, and addi
 ### Browser Testing
 
 ### Media Queries
+Media queries have been done using bootstrap's class system.
+Chrome Developer Tools was used for testing all media queries.
+
+- Test on Firefox, no problems detected.
+- Microsoft Edge, no problems detected.
+- Media query tested on my own phone, Samsung Galaxy S9 using Chrome and Firefox, no issues.
+- Media query tested on my own tablet, Ipad pro 2018 11" using Safari+Chrome, no issues.
+- General testing with my own laptop, Asus 13 inch using Chrome, no issues.
+- All links were tested. All external links and internal links work.
 
 ### Bugs discovered during testing:
-* Update booking doesn't work for some reason. Information is not updated. Gives following error: "POST /bookings/LavaBoy/update/ HTTP/1.1" 302 0 - Was due to view function. The save() command was in the wrong order
+* Update booking doesn't work for some reason. Information is not updated. Gives following error: "POST /bookings/LavaBoy/update/ HTTP/1.1" 302 0 - Was due to view function. 
+    * The save() command was in the wrong order
 * Cancel function on site doesn't work if there are multiple reservations with the same slug
-    Added random string to every slug due to double slugs if first name + last name is the same as another reservation
-* Right now I cannot add the three hours to booking_start "normally" using timedelta since the datetime input is presented in string form. Therefore, I added four steps to recreate a string with three hours added - booking_start now uses datetime format
+    * Added random string to every slug due to double slugs if first name + last name is the same as another reservation
+* I couldn't add the three hours to booking_start "normally" using timedelta since the datetime input is presented in string form. Therefore, I added four steps to recreate a string with three hours added. 
+    * booking_start now uses datetime format and works
 * When 12:00 is booked, django writes 12 as "noon", and the function doesn't work because it expects an integer
-    now uses datetime, and is no longer an issue
-* When calculating available seats the system assumes that closing time is on an full-hour mark. Does not calculate properly if e.g. 20:30 is the closing time
-    No longer uses this feature. User is shown validation error in form and uses datetime to calculate available tables
-* Need to fix DeleteView and UpdateView to fit new app - turns out I needed to rename the folder where my templates were put in. It was still called "bookings", but is now called "reservations"
-* Same user can make many bookings at the same datetime - implemented a check for booking.author in all bookings and test for booking_start. Needed to adjust for length of returns as it always returns one conflicting, which is the booking being made, which is due to double-save. Used print to see the variables along the way
-* When running tests in booking.tests.py (python3 manage.py test bookings) it gives the following error:
-Creating test database for alias 'default'...
-/workspace/.pip-modules/lib/python3.8/site-packages/django/db/backends/postgresql/base.py:304: RuntimeWarning: Normally Django will use a connection to the 'postgres' database to avoid running initialization queries against the production database when it's not needed (for example, when running tests). Django was unable to create a connection to the 'postgres' database and will use the first PostgreSQL database instead.
-  warnings.warn(
-* Got an error creating the test database: permission denied to create database - Need to comment out database in settings and remove commentout for sqlite3 database. Flip back when done testing
-* Send email with reservation approved - DONE
-* Implement deadline to cancel the booking - 5-6 hours - add warning in email, DONE
-* When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate - queryset fixed
-* It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/lollol/ - slug auto-generated, and there are checks for double booking by same user. First_name and last_name are no longer used, so details from the user is inserted. User must put in details before bookings can be made.
-* Booking error: I knew 29/11 was booked at 17:00 - tried to see available times for 40 guests on that day - 14:30 is marked as an available time, which means they have the booking until 17:30, which is too long. - No longer generates buttons for available times
-* 28/10/2021 - for some reason Django logs user out when following link to reservation_detail.html.
-Browser: Chrome
-Console displays: "POST /accounts/logout/ HTTP/1.1" 302 0
-User is logged back in when hitting the back button in browser
-29/10/2021 - bug was fixed. Had to change the render function in ReservationDetail to include "user": User, instead of "user": User.username.
-* 1/11/2021 - I can make reservations with no problems, but it does show an 302 error, similar with loggin in.
-Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0 - Not a bug
-* Implemented authetication check when canceling and updating reservations. The check is already done on the reservation list, but the url can be typed in as long as you know the username, which opens up the possibility for non-users to change the reservation. - no longer an issue. user authentication added.
-* Check why Django admin in Heroku doesn't load css - DISABLE_COLLECTSTATIC on heroku vars - and debug = True in setting.py
-* Raise validationerror for outside opening hours doesn't show - Fixed - I set crispy fields to only show certain fields thereby hiding messages
+    * Now uses datetime, is only an issue with strings
+* When calculating available seats the system assumes that closing time is on an full-hour mark. Does not calculate properly if e.g. 20:30 is the closing time.
+    * No longer uses this feature of showing available times. User is shown validation error in form and uses datetime to calculate available tables
+* Need to fix DeleteView and UpdateView to fit new app
+    * Turns out I needed to rename the folder where my templates were put in. It was still called "bookings", but is now called "reservations"
+* Same user can make many bookings at the same datetime
+    * Implemented a check for booking.author in all bookings and test for booking_start. Needed to adjust for length of returns as it always returns one conflicting, which is the booking being made, which is due to double-save.
+* Got an error creating the test database: permission denied to create database
+    * Need to comment out database in settings and remove commentout for sqlite3 database. Flip back when done testing
+* When logged in as user the pagination still thinks that all bookings are there, even though the user only has e.g. 1 booking, so it might show 3 pages to paginate
+    * Queryset fixed and now only returns the booking for specific user
+* It's possible to create reservations with identical content. However, this makes it impossible to open the details. Console displays: MultipleObjectsReturned at /reservations/xxxxx/ 
+    * Slug auto-generated, and there are checks for double booking by same user. First_name and last_name are no longer used, so details from the user is inserted. User must put in details before bookings can be made.
+* Django logs user out when following link to reservation_detail.html. User is logged back in when hitting the back button in browser
+    * Had to change the render function in ReservationDetail to include "user": User, instead of "user": User.username.
+* Implemented authetication check when canceling and updating reservations. The check is already done on the reservation list, but the url can be typed in as long as you know the username, which opens up the possibility for non-users to change the reservation.
+    * No longer an issue. user authentication added and random slug.
+* Raise validationerror for outside opening hours doesn't show 
+    * Fixed - I set crispy fields to only show certain fields thereby hiding messages
 
 ### Unfixed Bugs:
+* I wanted to have a feature which generated buttons with available times for the date that users put in. I was able to generate the buttons, but not to have them work with a form. This will go in "future implementations"
+* Forms are not completely centered, but stick to the left side of the centered box.
 
 ### Validator Testing
+pep8
+- W3 Markup Validation Service completed for all HTML pages with no errors.
+- Jigsaw test CSS file completed with no errors.
 
 ## Deployment
 ### Deployment to Heroku
@@ -209,13 +219,17 @@ Console displays: "POST /reservations/reserve_table/ HTTP/1.1" 302 0 - Not a bug
 
 # Technologies Used
 
+### Icons
+Icons and script were taken from https://fontawesome.com/, as well as Google's fonts: https://fonts.google.com/icons?selected=Material+Icons.
+
 ### Hosting and Developemtn
+GitHub was used to host the repository, GitPot was used for development and version control, and Heroku was used to deploy site.
 
 ## Credits
 ### Pictures
-Picture credits from freepik
+Images were compressed using the webpage https://tinypng.com/ Afterwards they were converted to webp using https://cloudconvert.com/png-to-webp.
 
-Compressing used by tinypng.com
+Picture credits from freepik
 
 cta-menu:
 <a href='https://www.freepik.com/photos/food'>Food photo created by valeria_aksakova - www.freepik.com</a>
@@ -246,39 +260,81 @@ cereals:
 <a href='https://www.freepik.com/photos/food'>Food photo created by Racool_studio - www.freepik.com</a>
 
 ### Text content
+Content was all formulated by myself, but for the menu I took inspiration from various websites with food, descriptions etc.
 
 
 ### Coding help
-
+- For help with varius issues Django, css etc. I often resorted to https://stackoverflow.com/
+- For help with syntax reminders I often used https://www.w3schools.com/, as well as various pages giving advice on Django
+- For general best practice I used Code Institute's Slack community.
+- For CSS I used Bootstrap Docs a lot.
+- General comments from family and peers for what CSS looked the best.
+- I looked up other booking system to get inspiration for how it could be set up.
 
 ### Design
-
+- For design of the different pages I didn't use other sources of information other than my previous projects.
+- No wireframes were used
 
 ## User stories
+For user stories I used Github's Projects -> User Stories. Kanban board. I created 18 stories and implemented them one by one. Some others were deleted, and some were changed along the way. The ones that are there now are:
+- Accept/decline reservation: As a site admin I can approve or reject reservations so that the customer knows if they have a reservation or not
+- Choose table assignment method: As an admin I can select a table assignment method so that I can adapt the method to the restaurant setup
+- Check opening hours: As a site user I can know if my booking request is within opening hours so that my booking is not falsely accepted
+- Avoid double booking: As a site user I can see if no tables are available on the desired datetime so that no double bookings occurs
+- Automatic table assignment: As a site user I can have tables automatically assigned to my reservation so that no space is wasted
+- Edit reservation: As a site user I can edit the details of my reservation so that the restaurant knows about desired changes
+- Log in as user: As a site user I can log in so that I can make reservations
+- Book multiple tables: As a site user I can combine tables for a reservation so that a larger party than the table can be accommodated
+- Cancel reservation: As a site user I can cancel a reservation so that the restaurant knows of the update
+- See list of specific User reservations: As a site user I can see a list of my reservations so that I have an overview of my bookings
+- Add special requirements: As a site user I can add notes to my reservation so that the restaurants knows of any needs to accommodate the guests
+- See menu: As a site user I can see the menu items so that I can decide whether or not to make a reservation
+- See list of reservations: As a site admin I can see the complete list of reservations so that I have an overview of business activity
+- Change request status: As a site admin I can change the accepted/declined status of a reservation so that I can fix reply-errors
+- See details of reservation: As a site admin I can open a reservation so that see all details of the reservation
+- Make reservation: As a site user I can make a reservation so that the restaurant is notified about my request
+- Site pagination: As a site user I can view a paginated list of reservations so that I can select which reservation to view
+- Send messages to clients: As a site admin I can send messages so that **the customers know reasoning behind e.g. cancellations.
 
 ## Strategy
+The purpose of this site is to create a simple site for a restaurant that handles reservations. The site should be simple to use, and information should be easy to find with simple and clear design
 
 ## Scope
+The scope is limtited in functionality, but does implement logic to assign tables with reasonable complexity. It could for sure be more complex and specific. Options for handling bookings are limited but should be completely functional.
 
 ## Structure
+The flow of the website is simple and should be intuitive for most people. Navbar has everything the user needs to find their way around. In case there is confusion about how the setup works there is a clear path to contact the restaurant both with messages, phones and their address. On the landing page users are shown the call to action divs that encourage them to register.
 
 ## Surface
 
 ### Design Choices
+- Overview: The aim is to provide easy-to-navigate pages that make it easy and clear to navigate around.
+- The site should be easy for the eyes, meaning that there should be no overlapping animations that confuse users.
+- It should be clear to the user what can be clicked on.
+- Information should not be detailed but fast to read and understand, and straight to the point.
 
 ### Color Scheme
+Dark colors are chosen to give a serious professional vibe. On all pages there is a play between black and white. Black background and white text. Blue is generally used to signal progress and/or pending. Green is used to signal confirmation. Red is used to signal cancellation or declined. The black background resembles dark rocks and gives, in my opinion, a nice constrast with the white text.
 
 ### Choice of text
 
 ### Pictures/characters
 
 ### Languages Used
-
+- HTML
+- CSS
+- Python
+- JavaScript
+- Markdown language for readme file
 
 ### Accessibility
+All non-text elements are marked with aria-labels, and the contrast between background and foreground colors were implemented in color scheme.
 
+## Admin setup
+Admin credentials (superuser)
+username: admin
+password: themagickey
 
-### Comments on Admin setup
 In order for booking logic to work admin must set up the following (This is already set on deployment, but can be changed):
 * Under Restaurant:
     - In BookingDetails add one object:
@@ -298,12 +354,12 @@ In order for menu to be displayed Admin must add items (This is already set on d
         * Slug is automatically added
 
 ## Setup explanation
-* Add restaurant model to have the restaurant be able to set reservation interval - DONE
-* Installed Pillow for image upload
-* If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not given which is because of the chance that a user may want to use his profile to reserve a table for someone else in the same timeslot.
-* Added property to booking to see if it's in past or not
+* I added a restaurant model to have the restaurant be able to set specific requirements for bookings. Opening hours, booking duration
+* Installed Pillow for image upload.
+* If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not assigned to new booking which is because of the chance that a user may want to use his profile to reserve a table for someone else in the same timeslot. The system sends out an email to the user to notify of the double booking and no tables assigned. The user is then invited to contact the restaurant or delete the double bookings.
+* Added property to booking to see if it's in past or not, and also if it's too late to cancel reservation. I set it to two hours, which I believe is reasonable. In case the guests need to cancel anyway they have to call the restaurant.
 * I set use_tz to False in settings.py in order to avoid the timezone input from bookings.booking_start
-* In order to add the ManyToManyField in the Booking model I had to save the booking first in the view and then afterwards attach the tables, and finally save again. This caused a lot of trouble
+* In order to add the ManyToManyField in the Booking model I had to save the booking first in the view and then afterwards attach the tables, and finally save again. This caused a lot of trouble but it works now.
 
 
 TABLE SORT LOGIC - 
@@ -333,7 +389,7 @@ Add Logic here
 
 
 ## Additional comments on setup
-* Check if user has first_name, otherwise ask them to fill in. This way we can cut first_name and last_name from booking and only use User info - ADDED
+* In first I included first_name and last_name in the Booking model, but it seemed extensive, especially when a user was already created. Instead, I found it better to require to add contact details before making a booking. This way the same user can easily book again, and the details are taken from the user. The first_name and last_name could be cut from the booking, thus making it more appropriate to book using only a datetime and guests number.
 * On booking_list add comment as pop-out to card. - If declined it is there on the card
 * Height of body is set to 100 to fill the screen
 
@@ -345,17 +401,25 @@ Due to error when creating user I was advised to implement the following in sett
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ![registration error](/static/images/readme-pictures/registration-error.png "error when registering a user")
 
-ADMIN NOTES
-Admin credentials (superuser)
-username: admin
-password: themagickey
-
+## Additional mentions:
+Due to message on the 06-12-2021, Gitpod had new dependencies. Followed the instructions:
+    - find -name "deps.txt" - no results, so meant that I had the older version
+    - ran pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
+    - pip3 install django gunicorn
+    - pip3 install dj_database_url psycopg2
+    - pip3 install dj3-cloudinary-storage
+    - pip3 install django-allauth
+    - pip3 freeze --local > requirements.txt
+    - saved, commited, and pushed
+    - pip3 install Pillow
+    - pip3 freeze --local > requirements.txt
+From here onwards, whenever you (re)start your workspace, you need to do two things:
+run 
+- pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt - first, and then run:
+- pip3 install -r requirements.txt - second
 
 The following was added in settings.py to work with emails during development, should not be there when submitting:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
-Added extra script to base.html
 
 
 Current bugs to fix:
@@ -373,26 +437,5 @@ Current bugs to fix:
 - Grey for pending?
 - Sort out CSS
 
-
-TIPS
-To reset database: python manage.py migrate MyApp zero
-
-Remember in reservations.bookings.generate_request_end() to set duration to:
-duration = BookingDetails.objects.all()[0].booking_duration
-For testing purposes it has been commented out and set to 180
-
-Due to message on the 06-12-2021, Gitpod had new dependencies. Followed the instructions:
-    - find -name "deps.txt" - no results, so meant that I had the older version
-    - ran pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
-    - pip3 install django gunicorn
-    - pip3 install dj_database_url psycopg2
-    - pip3 install dj3-cloudinary-storage
-    - pip3 install django-allauth
-    - pip3 freeze --local > requirements.txt
-    - saved, commited, and pushed
-    - pip3 install Pillow
-    - pip3 freeze --local > requirements.txt
-From here onwards, whenever you (re)start your workspace, you need to do two things:
-run 
-- pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt - first, and then run:
-- pip3 install -r requirements.txt - second
+pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
+pip3 install -r requirements.txt - second
