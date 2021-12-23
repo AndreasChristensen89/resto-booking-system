@@ -4,7 +4,7 @@ from .models import Booking, Table
 from restaurant.models import OpeningHours, BookingDetails
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-import datetime
+from datetime import datetime
 
 
 def create_booking_form(number_guests):
@@ -13,7 +13,7 @@ def create_booking_form(number_guests):
     """
     form = BookTableForm({
         'number_guests': number_guests, 
-        'booking_start': '2050-12-12 12:00:00',
+        'booking_start': datetime.strptime('2050-12-12 12:00:00', '%Y-%m-%d %H:%M:%S'),
         'comment': ''
             })
     return form
@@ -25,7 +25,7 @@ def create_booking_details(method):
     booking_details = BookingDetails.objects.create(
             booking_duration = 180,
             table_assign_method = method,
-            assign_method_limit = 0
+            assign_method_limit = 100
         )
 
     return booking_details
@@ -110,6 +110,48 @@ class TestBookingForm(TestCase):
         form = create_booking_form(4)
         self.assertFalse(form.is_valid())
 
+    def test_not_enough_tables_due_to_different_zones(self):
+        booking_details = create_booking_details(1)
+        opening_hours = OpeningHours.objects.create(
+            weekday=0,
+            from_time='10:00', 
+            to_time='22:00')
+        Table.objects.create(
+            table_number=1,
+            seats=2,
+            zone=1,
+            moveable=False
+            )
+        Table.objects.create(
+            table_number=2,
+            seats=2,
+            zone=2,
+            moveable=False
+            )
+        form = create_booking_form(4)
+        self.assertFalse(form.is_valid())
+
+    def test_enough_tables_different_zones_but_method_two(self):
+        booking_details = create_booking_details(2)
+        opening_hours = OpeningHours.objects.create(
+            weekday=0,
+            from_time='10:00', 
+            to_time='22:00')
+        Table.objects.create(
+            table_number=1,
+            seats=2,
+            zone=1,
+            moveable=False
+            )
+        Table.objects.create(
+            table_number=2,
+            seats=2,
+            zone=2,
+            moveable=False
+            )
+        form = create_booking_form(4)
+        self.assertTrue(form.is_valid())
+
     def test_outside_opening_hours(self):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
@@ -153,7 +195,7 @@ class TestBookingForm(TestCase):
         booking_details = create_booking_details(1)
         form = BookTableForm({
         'number_guests': 2, 
-        'booking_start': '2020-12-12 12:00:00',
+        'booking_start': datetime.strptime('2020-12-12 12:00:00', '%Y-%m-%d %H:%M:%S'),
         'comment': ''
             })
         self.assertFalse(form.is_valid())

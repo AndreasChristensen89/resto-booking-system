@@ -4,6 +4,7 @@ from restaurant.models import OpeningHours, BookingDetails
 from reservations.booking import *
 from .models import Booking, Table
 from .test_forms import create_booking_details, create_booking_form
+from .test_models import create_booking
 import datetime
 
 
@@ -87,16 +88,10 @@ class TestReturnAllAvailableTables(TestCase):
         booking_details = create_booking_details(1)
         Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
         Table.objects.create(table_number=2, seats=2, zone=1, moveable=False)
-        create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-        create_booking = Booking.objects.create(
-            first_name='x',
-            last_name='x', 
-            author=create_user, 
-            number_guests=2, 
-            booking_start='2021-11-06 12:00:00',
-            booking_end='2021-11-06 15:00:00')
+        booking = create_booking('john', datetime.datetime.strptime('2021-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
+
         tables = Table.objects.all()
-        create_booking.table.add(tables[0])
+        booking.table.add(tables[0])
         tables_returned = return_all_available_tables(datetime.datetime(2021, 11, 6, 12, 0), datetime.datetime(2021, 11, 6, 15, 0))
         self.assertEqual(len(tables_returned), 1)
 
@@ -104,16 +99,9 @@ class TestReturnAllAvailableTables(TestCase):
         booking_details = create_booking_details(1)
         Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
         Table.objects.create(table_number=2, seats=2, zone=1, moveable=False)
-        create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-        create_booking = Booking.objects.create(
-            first_name='x',
-            last_name='x', 
-            author=create_user, 
-            number_guests=4, 
-            booking_start='2021-11-06 12:00:00',
-            booking_end='2021-11-06 15:00:00')
+        booking = create_booking('john', datetime.datetime.strptime('2021-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         tables = Table.objects.all()
-        create_booking.table.add(tables[0])
+        booking.table.add(tables[0])
 
         for i in range(10, 15):
             tables_returned = return_all_available_tables(datetime.datetime(2021, 11, 6, i, 0), datetime.datetime(2021, 11, 6, i+3, 0))
@@ -128,7 +116,7 @@ class TestReturnAllAvailableTables(TestCase):
 
 class TestReturnCombination(TestCase):
     
-    def test_sum_of_seat_is_always_greater_or_equal_to_guests_method_one(self):
+    def test_sum_of_seats_is_always_greater_or_equal_to_guests_method_one(self):
         booking_details = create_booking_details(1)
         for i in range(4):
             Table.objects.create(table_number=i, seats=2, zone=1, moveable=False)
@@ -173,6 +161,12 @@ class TestReturnCombination(TestCase):
             self.assertGreaterEqual(sum, i)
 
     def test_function_prefers_fewer_tables_used(self):
+        """
+        Giving the functions two options for nine people:
+        4+3+2 and 6+3
+        Both methods prefer fewest tables, both return 6 and 3
+        """
+        
         booking_details = create_booking_details(2)
         Table.objects.create(table_number=1, seats=4, zone=1, moveable=False)
         Table.objects.create(table_number=2, seats=3, zone=1, moveable=False)
@@ -285,40 +279,56 @@ class TestDoubleBooking(TestCase):
     def test_returns_error_if_wrong_value_passed(self):
         self.assertRaises(TypeError, double_booking, 2)
 
-    def test_returns_correct_number(self):
+    def test_returns_more_than_zero_if_there_is_a_conflicting_booking(self):
         booking_details = create_booking_details(1)
 
-        conflicting_start = datetime.datetime(2021, 11, 6, 12, 0)
-        non_conflicting_start = datetime.datetime(2021, 11, 7, 12, 0)
-
         user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        start = datetime.datetime.strptime('2021-11-06 12:00:00', '%Y-%m-%d %H:%M:%S')
         booking = Booking.objects.create(
-            first_name='x',
-            last_name='x', 
-            author=user, 
-            number_guests=4, 
-            booking_start='2021-11-06 12:00:00',
-            booking_end='2021-11-06 15:00:00')
+        author=user, 
+        number_guests=4, 
+        booking_start=start,
+        booking_end=start+timedelta(minutes=180))
 
-        conflicting_booking = double_booking(conflicting_start, user)
-        non_conflicting_booking = double_booking(non_conflicting_start, user)
-
-        self.assertEqual(conflicting_booking, 1)
-        self.assertEqual(non_conflicting_booking, 0)
+        for i in range(10, 15):
+            conflicting_booking = double_booking(datetime.datetime(2021, 11, 6, i, 0), user)
+            self.assertEqual(conflicting_booking, 1)
+        for i in range(15, 21):
+            non_conflicting_booking = double_booking(datetime.datetime(2021, 11, 6, i, 0), user)
+            self.assertEqual(non_conflicting_booking, 0)
 
 
 class TestTableMethodSameZone(TestCase):
+    """
+    Function has to pick same zone, so with available selection there are always more than one choice
+    Prefers fewer tables so will return fewer tables if losses are equal
+    Will return more tables if match is better
+    """
+    
     def test_list_of_zones(self):
         for i in range(4):
             Table.objects.create(table_number=i+1, seats=6, zone=1, moveable=True)
         for i in range(3):
             Table.objects.create(table_number=5+i, seats=4, zone=2, moveable=False)
-        for i in range(2):
-            Table.objects.create(table_number=8+i, seats=2, zone=3, moveable=True)
-        Table.objects.create(table_number=10, seats=8, zone=4, moveable=False)
+        for i in range(3):
+            Table.objects.create(table_number=8+i, seats=3, zone=3, moveable=True)
+        Table.objects.create(table_number=11, seats=8, zone=4, moveable=False)
         request_start = datetime.datetime(2021, 11, 7, 12, 0)
         request_end = datetime.datetime(2021, 11, 7, 15, 0)
         available_tables  = return_all_available_tables(request_start, request_end)
 
-        test_of_zones = table_method_same_zone(available_tables, 9, 3)
-        self.assertEqual(len(test_of_zones), 2)
+        test_of_zones_nine = table_method_same_zone(available_tables, 9, 1)
+        test_of_zones_eight = table_method_same_zone(available_tables, 8, 1)
+        test_of_zones_ten = table_method_same_zone(available_tables, 10, 1)
+        self.assertEqual(len(test_of_zones_nine), 3)
+        self.assertEqual(test_of_zones_nine[0].seats, 3)
+        self.assertEqual(test_of_zones_nine[1].seats, 3)
+        self.assertEqual(test_of_zones_nine[2].seats, 3)
+
+        self.assertEqual(len(test_of_zones_eight), 2)
+        self.assertEqual(test_of_zones_eight[0].seats, 4)
+        self.assertEqual(test_of_zones_eight[1].seats, 4)
+
+        self.assertEqual(len(test_of_zones_ten), 2)
+        self.assertEqual(test_of_zones_ten[0].seats, 6)
+        self.assertEqual(test_of_zones_ten[1].seats, 6)
