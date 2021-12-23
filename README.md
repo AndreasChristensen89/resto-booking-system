@@ -47,6 +47,73 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
     ![Sign up page](/static/images/readme-pictures/landing-page-admin.webp)
 
 
+### Future features to implement
+
+## Testing
+### Django testing
+* TestCase
+* Applications
+    * Contact
+        * Test_views
+        * Test_forms
+    * Menu
+        * Test_models
+        * Test_views
+    * Reservations
+        * Test_booking
+        * Test_views
+        * Test_forms
+        * Test_models
+    * Restaurant
+        * Test_models
+
+### Browser Testing
+
+### Media Queries
+
+### Bugs discovered during testing:
+
+### Unfixed Bugs:
+
+### Validator Testing
+
+## Deployment
+### Deployment to Heroku
+
+
+### Create a local clone
+1.	Open GitHub and navigate to repository here (https://github.com/AndreasChristensen89/resto-booking-system).
+2.	Click the Code drop-down menu.
+3.	Options:
+•	Download the ZIP file, unpack locally and open with IDE.
+•	Copy git URL from HTTPS dialogue box.
+4.	Open your chosen IDE and open the terminal in a directory.
+5.	Use the "git clone" command with the copied git URL after.
+6.	Clone of the project is created locally on your machine.
+
+
+# Technologies Used
+
+### Hosting and Developemtn
+
+## Credits
+### Pictures
+
+
+### Text content
+
+
+### Coding help
+
+
+### Design
+
+
+## User stories
+
+
+
+
 command used for copying authentication templates to directory. Once copied we can make changes to the styling, and the content
 cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates
 
