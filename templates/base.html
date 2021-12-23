@@ -51,8 +51,8 @@
               Admin Actions
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'reservations:bookings_updated' %}">Updated Bookings</a></li>
               <li><a class="dropdown-item" href="{% url 'reservations:bookings_pending' %}">Pending Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:bookings_updated' %}">Updated Bookings</a></li>
               <li><a class="dropdown-item" href="{% url 'reservations:book_table' %}">Book Table</a></li>
             </ul>
           </li>
@@ -88,7 +88,7 @@
           </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link" href="/contact">Contact Us</a>
+            <a class="nav-link" href="/contact">Contact Information</a>
           </li>
           </ul>
         </div>
@@ -139,7 +139,7 @@
           let messages = document.getElementById('msg');
           let alert = new bootstrap.Alert(messages);
           alert.close();
-      }, 2000);
+      }, 1500);
   </script>
 </body>
 </html>

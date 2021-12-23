@@ -31,7 +31,7 @@ class OpeningHours(models.Model):
     def __str__(self):
         list(calendar.day_abbr)
         ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        return f'{calendar.day_name[self.weekday]}: {self.from_time} to {self.to_time}'
+        return f'{calendar.day_name[self.weekday]}: {str(self.from_time)[0:5]} to {str(self.to_time)[0:5]}'
 
 
 TABLE_SORT_CHOICES = (

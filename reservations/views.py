@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from .models import Booking
-from restaurant.models import BookingDetails
+from restaurant.models import BookingDetails, OpeningHours
 from .forms import BookTableForm, ProfileForm
 from allauth.account.views import PasswordChangeView, PasswordResetView
 from .booking import double_booking, return_tables
@@ -17,6 +17,7 @@ from datetime import timedelta
 #tested
 def book_table(request):
     form = BookTableForm()
+    opening_list = OpeningHours.objects.all()
 
     if request.method == 'POST':
         form = BookTableForm(request.POST)
@@ -58,7 +59,7 @@ def book_table(request):
     else:
         form = BookTableForm()
 
-    context = {'form': form}
+    context = {'form': form, 'opening_list': opening_list}
 
     return render(request, 'book_table.html', context)
 
@@ -163,3 +164,6 @@ class ProfileView(SuccessMessageMixin, generic.UpdateView):
     def get_object(self):
         return self.request.user
 
+
+def error_404_view(request, exception):
+    render(request, '404.html')

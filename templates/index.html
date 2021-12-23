@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section id="hero-outer">
+<section class="hero-outer">
     <div class="col-12" id="hero-image">
         <span class="img-fluid" role="img" aria-label="Fresh ingredients items on a black surface"></span>
     </div>
@@ -14,7 +14,9 @@
             <h2>Good to see you, {{user.first_name}}</h2>
         </div>
     {% else %}
+        <div class="col text-center cover-welcome">
             <h2>Good to see you, {{user.user_name}</h2>
+        </div>
     {% endif %}
 </section>
 

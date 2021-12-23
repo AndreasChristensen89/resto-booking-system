@@ -24,3 +24,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('homepage.urls')),
 ]
+
+handler404 = 'reservations.views.error_404_view'

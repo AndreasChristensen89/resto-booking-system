@@ -3,6 +3,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.contrib import messages
 from .forms import ContactForm
+from restaurant.models import OpeningHours
 
 
 def contact(request):
@@ -31,5 +32,6 @@ def contact(request):
                 request, "Please correct any errors")
             return render(request, 'contact.html', {'form': form})
     form = ContactForm()
-    return render(request, "contact.html", {'form': form})
+    opening_list = OpeningHours.objects.all()
+    return render(request, "contact.html", {'form': form, 'opening_list': opening_list})
 

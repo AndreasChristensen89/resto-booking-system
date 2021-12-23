@@ -4,17 +4,17 @@
 {% if user.is_authenticated %}
 {% if user.first_name %}
 {% load crispy_forms_tags %}
-<div class="row menu mt-5">
+<div class="row menu my-5">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
             <h1 class="text-center h1">Book a Table</h1>
         </div>
     </div>
   </div>
-
+<div class="container">
   <div class="row">
-      <div class="col-8 col-lg-6 mx-auto mb-3">
-          <form method="post">
+      <div class="col-9 col-md-6 mx-auto">
+          <form class="justify-center-center" method="post">
 
               {% csrf_token %}
               {{ form|crispy }}
@@ -22,7 +22,16 @@
 
           </form>
       </div>
+      <div class="col-12 col-md-6 text-center">
+        <h2 class="text-center h2 mb-3">Opening Hours</h2>
+        <div class="col h5 text-center">
+          {% for day in opening_list %}
+          <p>{{day}}</p>
+          {% endfor %}
+        </div>
+      </div>
   </div>
+</div>
 
 {% else %}
 
