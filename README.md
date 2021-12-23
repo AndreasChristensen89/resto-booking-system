@@ -21,7 +21,7 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
     * Navbar sticks to the top, using Bootstrap's "fixed-top" class. This does however cover the top part, so extra magins had to be created for headings.
 
 * __Landing page__:
-    * The landing page has a dark-themed hero-image of fresh ingredients. There is a welcome message being generated according to who is logged in, and the details of the user. If the user is not logged in it will display the standard welcome message. If logged in, but with no name details added in profile, it will greet the user by username underneath the welcome message. If name details are provided it will use the provided first name in the greeting. The greeting appears into view after a second and a half, changing opacity from 0 to 100.
+    * The landing page has a dark-themed hero-image of fresh ingredients. There is a welcome message being generated according to who is logged in, and the details of the user. If the user is not logged in it will display the standard welcome message. If logged in, but with no name details added in profile, it will greet the user by username underneath the welcome message. If name details are provided it will use the provided first name in the greeting. The greeting appears into view after a second and a half, changing opacity from 0 to 100. If user is not logged in the message will read "Log in to make a reservation"
 
     ![Landing page - logged out](/static/images/readme-pictures/landing-page-logged-out.webp)
     ![Landing page - username](/static/images/readme-pictures/landing-page-user.webp)

@@ -55,22 +55,7 @@ body {
     color: white;
     font-size: 200%;
     text-transform: uppercase;
-    
-    animation-name: text-zoom;
-    animation-duration: 3s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes text-zoom {
-    from {
-        opacity: 0;
-        top: 400px;
-    }
-
-    to {
-        opacity: 1;
-        top: 350px;
-    }
+    top: 350px;
 }
 
 #menu-text {
@@ -89,13 +74,12 @@ body {
     position: relative;
     color: white;
     font-size: 200%;
-    text-transform: uppercase;
     opacity: 0;
     
     animation-name: text-opacity;
     animation-duration: 3s;
     animation-fill-mode: forwards;
-    animation-delay: 2s;
+    animation-delay: 1.5s;
 }
 
 @keyframes text-opacity {
@@ -134,13 +118,13 @@ body {
     background-position-x: 50%;
 }
 
-#cta-signup {
+/* #cta-signup {
     background-image: url(../images/site/cta-sign-up.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
     background-position-x: center;
-}
+} */
 
 
 #cta-div i {
@@ -177,11 +161,6 @@ body {
 .animation:not(:hover) {
     transform: translateY(0px);
     transition: all 0.3s ease 0s;
-}
-
-
-#id_comment {
-    height: 20vh;
 }
 
 .booking-pending, .booking-button {
@@ -234,16 +213,12 @@ body {
     background-color: #333;
 }
 
-.brand {
+/* .brand {
     font-family: Lato, sans-serif;
     font-size: 1.4rem;
     font-weight: 700;
     color: #4A4A4F;
-}
-
-.red-o {
-    color: #E84610;
-}
+} */
 
 .thin {
     font-weight: 300;
@@ -269,27 +244,13 @@ body {
     font-family: Roboto;
 }
 
-.menu-row {
-    background-color: #90c5f4!important;
-}
-
 .meal-div {
     padding-left: 0;
     padding-right: 0;
 }
 
-.profile-div {
-    background-color: #445261;
-    max-width: 200px;
-}
-
 .text-muted {
     color: #a1a8af!important;
-}
-
-#hint_id_password a {
-    color: white;
-    text-decoration: underline;
 }
 
 a {
@@ -297,25 +258,9 @@ a {
     color: inherit;
 }
 
-.light-bg {
-    background-color: #fff;
-}
-
-.dark-bg {
-    background-color: #445261;
-}
-
-.main-bg {
-    background-color:#5D5C61;
-}
-
 .card {
     border: none;
     background-color: transparent;
-}
-
-.image-container {
-    position: relative;
 }
 
 .meal-img {
@@ -324,86 +269,8 @@ a {
     height: 200px;
 }
 
-.image-flash {
-    position: absolute;
-    bottom: 5%;
-    min-width: 30%;
-    left: -2px;
-    background-color: #23BBBB;
-}
 
-.author {
-    color: white;
-    margin: 4px;
-    text-transform: uppercase;
-}
-
-.masthead {
-    margin-top: 10px;
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    height: 33vh;
-    width: 100%;
-}
-
-.masthead-text {
-    background-color: #445261;
-    color: white;
-    position: relative;
-}
-
-.masthead-image {
-    position: relative;
-    overflow: hidden;
-}
-
-.masthead-image:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 90%;
-    height: 100%;
-    width: 150%;
-    background: #445261;
-    -webkit-transform: skew(15deg);
-    -moz-transform: skew(15deg);
-    transform: skew(15deg);
-    z-index: 100;
-}
-
-.post-link {
-    text-decoration: none;
-    color: #445261;
-}
-
-.post-link:hover,
-.page-link {
-    color: #E84610;
-}
-
-.post-title {
-    margin-top: 20%;
-    margin-left: 5%;
-}
-
-.post-subtitle {
-    margin-left: 5%;
-    color: lightgray;
-}
-
-.btn-signup {
-    background-color: #23BBBB;
-    color: #fff;
-}
-
-.btn-signup:hover,
-.btn-signup:active {
-    background-color: #fff;
-    color: #23BBBB;
-}
-
-.link {
+/* .link {
     color: #23BBBB;
     text-decoration: none;
 }
@@ -412,17 +279,4 @@ a {
 .link:active {
     color: #445261;
     text-decoration: underline;
-}
-
-.btn-like {
-    color: #E84610;
-    border: none;
-    background: transparent;
-}
-
-.btn-like:hover,
-.btn-like:active {
-    color: #E84610;
-    background: transparent;
-    border: none;
-}
+} */
