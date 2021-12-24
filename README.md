@@ -438,4 +438,4 @@ Current bugs to fix:
 - Sort out CSS
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
-pip3 install -r requirements.txt - second
+pip3 install -r requirements.txt
