@@ -30,21 +30,30 @@
 
 <div class="section section-1">
     <div class="container">
-        <div class="row g-0 align-items-stretch">
+        <div class="row g-0 align-items-stretch meal-bg">
                 {% for meal in menu_list %}
                 {% if meal.category == category %}
                     {% if not forloop.counter|divisibleby:2 %}
-                    <div class="lg-12">
+                    <div class="col-lg-12">
                         <div class="d-block d-lg-flex feature-media align-items-stretch">
                             <div class="img" style="background-image: url({{meal.image.url}});"></div>
-                            <div class="text text-center">
+                            <div class="text">
                                 <h3>{{meal.name}}</h3>
                                 <p>{{meal.description}}</p>
                                 <p><span>{{meal.price}}</span></p>
                             </div>
+                    {% elif forloop.last %}
+                            <div class="img" style="background-image: url({{meal.image.url}});"></div>
+                                    <div class="text">
+                                        <h3>{{meal.name}}</h3>
+                                        <p>{{meal.description}}</p>
+                                        <p><span>{{meal.price}}</span></p>
+                                    </div>
+                                </div>
+                            </div>
                     {% else %}
                             <div class="img" style="background-image: url({{meal.image.url}});"></div>
-                            <div class="text text-center">
+                            <div class="text">
                                 <h3>{{meal.name}}</h3>
                                 <p>{{meal.description}}</p>
                                 <p><span>{{meal.price}}</span></p>
