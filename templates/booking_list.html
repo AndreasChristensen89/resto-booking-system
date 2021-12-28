@@ -33,7 +33,7 @@
             <li class="list-group-item">{{booking.number_guests}} guests</li>
             </ul>
             {% if booking.status != 2%}
-                <div class="card-body rounded-bottom">
+                <div class="card-body rounded-bottom bg-dark">
                     <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
                     <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Edit comment</a>
                 </div>

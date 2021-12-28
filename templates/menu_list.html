@@ -7,41 +7,62 @@
     </div>
     <div id="hero-cover">
         <div id="menu-text">
-            <h1>Eat healthy and feel good</h1>
+            <h1 class="h1">Eat healthy and feel good</h1>
         </div>
     </div>
 </section>
 
-<div class="row">
-    <div class="col-12 text-center m-5">
+<div class="row mt-5">
+    <div class="col-12 text-center px-5">
         <h3 class="h3">All our food is made from fresh and organic ingredients.</h3>
         <h4 class="h4">Everything served has been put through a rigorous process to ensure optimal quality, health, and flavor</h4>
     </div>
 </div>
 
 
-<!-- <div class="container py-5"> -->
-    {% for category in categories %}
+
+{% for category in categories %}
+<div class="row">   
     <div class="col-12 my-5">
         <h3 class="text-center display-4">{{category}}</h3>
     </div>
+</div> 
+
+<div class="section section-1">
     <div class="container">
-        <div class="row">
-        {% for meal in menu_list %}
-        {% if meal.category == category %}
-            <div class="col-6 col-sm-4 col-lg-3 text-center mx-auto my-2 meal-div px-1">
-                <img class="img-fluid meal-img meal-image rounded" src="{{meal.image.url}}" alt="image of {{category}} item">
-                <div class="text-white meal-description">
-                    <h5 class="h5 mt-2">{{meal.name}}</h5>
-                    <p><small class="text-muted">€{{meal.price}}</small></p>
-                    <p class="mx-2 meal-description">{{meal.description}}</p>
-                </div>                  
-            </div>
-        {% endif %}
-        {% endfor %}
+        <div class="row g-0 align-items-stretch">
+                {% for meal in menu_list %}
+                {% if meal.category == category %}
+                    {% if not forloop.counter|divisibleby:2 %}
+                    <div class="lg-12">
+                        <div class="d-block d-lg-flex feature-media align-items-stretch">
+                            <div class="img" style="background-image: url({{meal.image.url}});"></div>
+                            <div class="text text-center">
+                                <h3>{{meal.name}}</h3>
+                                <p>{{meal.description}}</p>
+                                <p><span>{{meal.price}}</span></p>
+                            </div>
+                    {% else %}
+                            <div class="img" style="background-image: url({{meal.image.url}});"></div>
+                            <div class="text text-center">
+                                <h3>{{meal.name}}</h3>
+                                <p>{{meal.description}}</p>
+                                <p><span>{{meal.price}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endif %}
+                {% endfor %}
         </div>
     </div>
-    {% endfor %}
-<!-- </div> -->
+</div>
+{% endfor %}
+
+<div class="row text-center my-5">
+    <div class="col-12">
+        <p>Feel free to <a style="text-decoration: underline;" href="{% url 'contact' %}">reach out</a> for more information about our menu</p>
+    </div>
+</div>
 
 {% endblock %}
