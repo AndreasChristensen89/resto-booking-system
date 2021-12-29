@@ -36,28 +36,46 @@
                     {% if not forloop.counter|divisibleby:2 %}
                     <div class="col-lg-12">
                         <div class="d-block d-lg-flex feature-media align-items-stretch">
+                            {% if forloop.counter not in list_odd %}
                             <div class="img" style="background-image: url({{meal.image.url}});"></div>
                             <div class="text">
                                 <h3>{{meal.name}}</h3>
                                 <p>{{meal.description}}</p>
                                 <p><span>{{meal.price}}</span></p>
                             </div>
+                            {% else %}
+                            <div class="text">
+                                <h3>{{meal.name}}</h3>
+                                <p>{{meal.description}}</p>
+                                <p><span>{{meal.price}}</span></p>
+                            </div>
+                            <div class="img" style="background-image: url({{meal.image.url}});"></div>
+                            {% endif %}
                     {% elif forloop.last %}
                             <div class="img" style="background-image: url({{meal.image.url}});"></div>
-                                    <div class="text">
-                                        <h3>{{meal.name}}</h3>
-                                        <p>{{meal.description}}</p>
-                                        <p><span>{{meal.price}}</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                    {% else %}
-                            <div class="img" style="background-image: url({{meal.image.url}});"></div>
                             <div class="text">
                                 <h3>{{meal.name}}</h3>
                                 <p>{{meal.description}}</p>
                                 <p><span>{{meal.price}}</span></p>
                             </div>
+                        </div>
+                    </div>
+                    {% else %}
+                        {% if forloop.counter not in list_even %}    
+                        <div class="img" style="background-image: url({{meal.image.url}});"></div>
+                        <div class="text">
+                            <h3>{{meal.name}}</h3>
+                            <p>{{meal.description}}</p>
+                            <p><span>{{meal.price}}</span></p>
+                        </div>
+                        {% else %}
+                        <div class="text">
+                            <h3>{{meal.name}}</h3>
+                            <p>{{meal.description}}</p>
+                            <p><span>{{meal.price}}</span></p>
+                        </div>
+                        <div class="img" style="background-image: url({{meal.image.url}});"></div>
+                        {% endif %}
                         </div>
                     </div>
                     {% endif %}
