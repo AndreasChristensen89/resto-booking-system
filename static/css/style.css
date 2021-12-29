@@ -28,7 +28,7 @@ body {
 }
 
 #hero-image {
-    background: url("../images/site/cta-menu.webp") no-repeat center center;
+    /* background: url('/static/images/site/cta-menu.webp') no-repeat center center; */
     height: 600px;
     width: 100%;
     position: absolute;
