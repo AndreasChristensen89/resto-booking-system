@@ -95,7 +95,6 @@ body {
 }
 
 #cta-menu {
-    background-image: url(../images/site/cta-menu-background.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
@@ -110,7 +109,6 @@ body {
 }
 
 #cta-profile {
-    background-image: url(../images/site/cta-profile.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
