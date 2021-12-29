@@ -95,24 +95,17 @@ body {
 
 #cta-menu {
     height: 200px;
-    width: 100%;
-    background-size: cover;
-    background-position-x: 60%
+    width: auto;
 }
 
 #cta-contact {
-    background-image: url("{% static 'images/site/cta-contact-phone.webp' %}");
     height: 200px;
-    width: 100%;
-    background-size: cover;
-    background-position-y: 35%;
+    width: auto;
 }
 
 #cta-profile {
     height: 200px;
-    width: 100%;
-    background-size: cover;
-    background-position-x: 50%;
+    width: auto;
 }
 
 #cta-signup {
@@ -130,11 +123,24 @@ body {
 }
 
 
-#cta-div {
+.cta-div {
     padding-left: 0;
     padding-right: 0;
-    background-image: url(../images/site/background-image.webp);
-     
+    background-color: black;
+}
+
+.background {
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    left: 0px; 
+    top: 0px; 
+    z-index: -1;
+}
+
+.stretch {
+    width:100%;
+    height:100%;
 }
 
 .animation {

@@ -421,6 +421,7 @@ run
 The following was added in settings.py to work with emails during development, should not be there when submitting:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+Due to problems with loading static images I need to import {% load static %} in my index.html and menu_list.html. I was not able to set a background-image in css as the image would not load properly from Cloudinary. Instead, I had to use img in the templates. If I needed a background-image I would have to insert it directly in the style of the div.
 
 Current bugs to fix:
 - When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
