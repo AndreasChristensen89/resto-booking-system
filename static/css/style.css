@@ -28,7 +28,7 @@ body {
 }
 
 #hero-image {
-    background: url("{% static 'images/site/cta-menu-background' %}") no-repeat center center;
+    background: url("../images/site/cta-menu.webp") no-repeat center center;
     height: 600px;
     width: 100%;
     position: absolute;
@@ -36,7 +36,7 @@ body {
 }
 
 #menu-image {
-    background: url("/static/images/site/menu-hero.webp") no-repeat center center;
+    background: url(../images/site/menu-hero.webp) no-repeat center center;
     height: 600px;
     width: 100%;
     position: absolute;
@@ -96,7 +96,7 @@ body {
 }
 
 #cta-menu {
-    background-image: url("/static/images/site/cta-menu-background.webp");
+    background-image: url(../images/site/cta-menu-background.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
@@ -104,7 +104,7 @@ body {
 }
 
 #cta-contact {
-    background-image: url("/static/images/site/cta-contact-phone.webp");
+    background-image: url(../images/site/cta-contact-phone.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
@@ -112,7 +112,7 @@ body {
 }
 
 #cta-profile {
-    background-image: url("/static/images/site/cta-profile.webp");
+    background-image: url(../images/site/cta-profile.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
@@ -120,7 +120,7 @@ body {
 }
 
 #cta-signup {
-    background-image: url("/static/images/site/cta-sign-up.webp");
+    background-image: url(../images/site/cta-sign-up.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
@@ -138,7 +138,7 @@ body {
 #cta-div {
     padding-left: 0;
     padding-right: 0;
-    background-image: url("/static/images/site/background-image.webp");
+    background-image: url(../images/site/background-image.webp);
      
 }
 
@@ -252,7 +252,7 @@ body {
 }
 
 .meal-bg {
-    background-image: url("/static/images/site/background-black.webp");
+    background-image: url(../images/site/background-black.webp);
 }
 
 .image-container {
