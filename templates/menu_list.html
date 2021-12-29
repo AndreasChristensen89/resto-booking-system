@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <section class="hero-outer">
-    <div class="col-12" id="menu-image">
-        <span class="img-fluid" role="img" aria-label="Clean and bright asphalt road in a city park"></span>
+    <div class="col-12">
+        <img class="img-fluid" src="{% static 'images/site/menu-hero.webp' %}" alt="Fresh ingredients on a black table">
     </div>
     <div id="hero-cover">
         <div id="menu-text">

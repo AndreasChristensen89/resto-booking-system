@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static%}
 
 {% block content %}
 <section class="hero-outer">
@@ -28,7 +28,8 @@
         
             <div id="cta-div" class="col-12 col-sm-4">
                 <a href="{% url 'reservations:book_table' %}">
-                <img id="cta-contact" class="img animation" src="{% static 'images/site/cta-contact-phone.webp' %}" alt="Person holding smartphone while typing">
+                <div class="animation bg-image" id="cta-contact">
+                </div>
                 <div class="text-center bg-dark border border-dark">
                     <p class="lead h3 text-dark text-white">Make a booking</p>
                 </div>
@@ -37,7 +38,8 @@
           
             <div id="cta-div" class="col-12 col-sm-4">
                 <a href="/menu"> 
-                <img id="cta-menu" class="img animation" src="{% static 'images/site/cta-menu-background.webp' %}" alt="Black menu slate with ingredients next to it">
+                <div class="animation bg-image" id="cta-menu">
+                </div>
                 <div class="text-center bg-dark border border-dark">
                     <p class="lead h3 text-dark text-white">Menu</p>
                 </div>
@@ -46,7 +48,8 @@
 
             <div id="cta-div" class="col-12 col-sm-4">
                 <a href="{% url 'reservations:profile' %}">
-                    <img id="cta-profile" class="img animation" src="{% static 'images/site/cta-profile.webp' %}" alt="Faceless animated people next to each other">
+                <div class="animation bg-image" id="cta-profile">
+                </div>
                 <div class="text-center bg-dark border border-dark">
                     <p class="lead h3 text-dark text-white">Profile</p>
                 </div>
