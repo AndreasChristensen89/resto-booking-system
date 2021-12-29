@@ -95,17 +95,20 @@ body {
 
 #cta-menu {
     height: 200px;
-    width: auto;
+    width: 80%;
+    max-width: 300px;
 }
 
 #cta-contact {
     height: 200px;
-    width: auto;
+    width: 80%;
+    max-width: 300px;
 }
 
 #cta-profile {
     height: 200px;
-    width: auto;
+    width: 80%;
+    max-width: 300px;
 }
 
 #cta-signup {
