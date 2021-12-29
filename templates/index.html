@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
-{% load cloudinary_static %}
 
 {% block content %}
 <section class="hero-outer">
     <div class="col-12">
-        <img class="img" id="hero-image" src="{% cloudinary_static 'images/site/cta-menu.webp' %}" alt="Fresh ingredients items on a black surface">
+        <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.jpg' %}" alt="Fresh ingredients items on a black surface">
         <!-- <span class="img-fluid" role="img" aria-label="Fresh ingredients items on a black surface"></span> -->
     </div>
         <div id="cover-text">
