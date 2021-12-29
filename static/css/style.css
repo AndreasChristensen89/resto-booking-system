@@ -28,7 +28,6 @@ body {
 }
 
 #hero-image {
-    /* background: url('/static/images/site/cta-menu.webp') no-repeat center center; */
     height: 600px;
     width: 100%;
     position: absolute;
@@ -104,7 +103,6 @@ body {
 }
 
 #cta-contact {
-    background-image: url(../images/site/cta-contact-phone.webp);
     height: 200px;
     width: 100%;
     background-size: cover;
