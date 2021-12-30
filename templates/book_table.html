@@ -12,9 +12,9 @@
     </div>
   </div>
 <div class="container">
-  <div class="row">
-      <div class="col-9 col-md-6 mx-auto mb-4">
-          <form class="justify-center-center" method="post">
+  <div class="row mb-5">
+      <div class="col-9 col-md-6 mx-auto">
+          <form class="p-5" method="post">
 
               {% csrf_token %}
               {{ form|crispy }}
@@ -22,9 +22,9 @@
 
           </form>
       </div>
-      <div class="col-12 col-md-6 text-center">
-        <h2 class="text-center h2 mb-3">Opening Hours</h2>
-        <div class="col h5 text-center">
+      <div class="col-9 col-md-6 mx-auto text-center">
+        <h2 class="text-center h2 my-5">Opening Hours</h2>
+        <div class="col h5 text-center mb-5">
           {% for day in opening_list %}
           <p>{{day}}</p>
           {% endfor %}
@@ -56,5 +56,4 @@
   </div>
 <p></p>
 {% endif %}
-
 {% endblock %}

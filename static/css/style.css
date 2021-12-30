@@ -23,6 +23,36 @@ body {
     height: 150px;
 }
 
+.h1-bg {
+    width: 100%;
+}
+
+.text-muted {
+    color: #a1a8af!important;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card {
+    border: none;
+    background-color: transparent;
+}
+
+
+.link {
+    color: #23BBBB;
+    text-decoration: none;
+}
+
+.link:hover,
+.link:active {
+    color: #445261;
+    text-decoration: underline;
+}
+
 /* -------------------------- nav bar ---------------------------- */
 .navbar {
     background-color: #445261;
@@ -47,34 +77,6 @@ body {
 .light .navbar-nav .nav-link {
     color: white;
 }
-
-/* ------------------------- commented out --------------------------- */
-
-/* #menu-text {
-    position: relative;
-    text-align: center;
-    color: white;
-    font-size: 200%;
-    
-    animation-name: text-opacity;
-    animation-duration: 3s;
-    animation-fill-mode: forwards;
-    animation-delay: 0.75s;
-} */
-
-/* .background {
-    width: 100%; 
-    height: 100%; 
-    position: fixed; 
-    left: 0px; 
-    top: 0px; 
-    z-index: -1;
-} */
-
-/* .stretch {
-    width:100%;
-    height:100%;
-} */
 
 /* ------------------------- Hero image ---------------------------- */
 
@@ -200,21 +202,27 @@ body {
     background-color: #ac0918;
 }
 
+/* ----------------------------- book table ------------------------------ */
 
-/* .img-fluid {
-    height: auto;
-    width: 80%;
-} */
+.book-table {
+    background-color: #40597a;
+    border-radius: 10%;
+}
+
+.hours {
+    background-color: #40597a;
+    border-radius: 10%;
+}
+
+textarea {
+    max-height: 150px;
+}
 
 /* -------------------------- footer --------------------------------- */
 
 .footer {
     background-color: #333;
 }
-
-/* .menu-row {
-    background-color: #90c5f4!important;
-} */
 
 /* ------------------------------ menu list --------------------------------- */
 
@@ -235,31 +243,91 @@ body {
     text-align: center;
 }
 
-/* .profile-div {
-    background-color: #445261;
-    max-width: 200px;
-} */
-
 #hint_id_password a {
     color: white;
     text-decoration: underline;
 }
 
-/* .light-bg {
-    background-color: #fff;
-} */
-
-/* .black-bg {
-    background-color: #445261;
-} */
-
-/* .main-bg {
-    background-color:#5D5C61;
-} */
-
 .meal-bg {
     background-image: url(../images/site/background-black.webp);
 }
+
+.form-control {
+    width: 100%;
+}
+
+.title {
+    font-family: Roboto;
+}
+
+/* --------------------------- media queries ------------------------------ */
+
+@media (min-width: 1400px) {
+.container {
+    max-width: 1320px;
+}
+}
+
+@media (min-width: 1200px) {
+.container {
+    max-width: 1140px;
+}
+}
+
+@media screen and (max-width: 990px) {
+    
+    .img {
+        height: 200px;
+    }
+    .feature-media > div {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    
+    .hero-outer {
+        height: 350px;
+    }
+
+    #hero-image {
+        height: 350px;
+    }
+
+    #cover-text {
+        top: 260px;
+    }
+}
+
+/* ------------------------- commented out --------------------------- */
+
+/* #menu-text {
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 200%;
+    
+    animation-name: text-opacity;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-delay: 0.75s;
+} */
+
+/* .background {
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    left: 0px; 
+    top: 0px; 
+    z-index: -1;
+} */
+
+/* .stretch {
+    width:100%;
+    height:100%;
+} */
 
 /* .image-container {
     position: relative;
@@ -351,96 +419,46 @@ body {
     color: #4A4A4F;
 } */
 
-.thin {
+/* .thin {
     font-weight: 300;
-}
+} */
 
-.h1-bg {
-    width: 100%;
-}
 
-.welcome {
+/* .welcome {
     margin: 3%;
-}
+} */
 
-.booking {
+/* .booking {
     margin: 3%;
-}
+} */
 
-.form-control {
-    width: 100%;
-}
-
-.title {
-    font-family: Roboto;
-}
-
-.meal-div {
+/* .meal-div {
     padding-left: 0;
     padding-right: 0;
-}
+} */
 
-.text-muted {
-    color: #a1a8af!important;
-}
+/* .light-bg {
+    background-color: #fff;
+} */
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
+/* .black-bg {
+    background-color: #445261;
+} */
 
-.card {
-    border: none;
-    background-color: transparent;
-}
+/* .main-bg {
+    background-color:#5D5C61;
+} */
 
+/* .profile-div {
+    background-color: #445261;
+    max-width: 200px;
+} */
 
-.link {
-    color: #23BBBB;
-    text-decoration: none;
-}
+/* .menu-row {
+    background-color: #90c5f4!important;
+} */
 
-.link:hover,
-.link:active {
-    color: #445261;
-    text-decoration: underline;
-}
-
-@media (min-width: 1400px) {
-.container {
-    max-width: 1320px;
-}
-}
-
-@media (min-width: 1200px) {
-.container {
-    max-width: 1140px;
-}
-}
-
-@media screen and (max-width: 990px) {
-    
-    .img {
-        height: 200px;
-    }
-    .feature-media > div {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 100%;
-        flex: 0 0 100%;
-    }
-}
-
-@media screen and (max-width: 576px) {
-    
-    .hero-outer {
-        height: 350px;
-    }
-
-    #hero-image {
-        height: 350px;
-    }
-
-    #cover-text {
-        top: 260px;
-    }
-}
+/* .img-fluid {
+    height: auto;
+    width: 80%;
+} */
