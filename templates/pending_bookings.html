@@ -2,7 +2,7 @@
 
 {% block content %}
 {% if user.is_superuser %}
-<div class="row menu mt-5">
+<div class="row heading-space mt-5">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
             <h1 class="text-center h1">Pending Bookings</h1>
@@ -51,7 +51,7 @@
         </span>
     </div>
 {% else %}
-<div class="row menu">
+<div class="row heading-space">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
             <p class="text-center lead">You need admin credentials to access this page</p>

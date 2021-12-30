@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #1d1c1c;
+    background-color: black;
     color: whitesmoke;
     font-family: Lato, sans-serif;
     font-weight: 300;
@@ -19,6 +19,65 @@ body {
     z-index: 1;
 }
 
+.heading-space {
+    height: 150px;
+}
+
+/* -------------------------- nav bar ---------------------------- */
+.navbar {
+    background-color: #445261;
+}
+
+.navbar-light .navbar-brand {
+    color: #eed71c;
+}
+
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
+    color: white;
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+    color: white;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: white;
+}
+
+.light .navbar-nav .nav-link {
+    color: white;
+}
+
+/* ------------------------- commented out --------------------------- */
+
+/* #menu-text {
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 200%;
+    
+    animation-name: text-opacity;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-delay: 0.75s;
+} */
+
+/* .background {
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    left: 0px; 
+    top: 0px; 
+    z-index: -1;
+} */
+
+/* .stretch {
+    width:100%;
+    height:100%;
+} */
+
+/* ------------------------- Hero image ---------------------------- */
+
 .hero-outer {
     height: 570px;
     width: 100%;
@@ -27,6 +86,7 @@ body {
 }
 
 #hero-image {
+    background: url(../images/site/menu-hero.jpg) center no-repeat fixed;
     height: 600px;
     width: 100%;
     position: absolute;
@@ -54,18 +114,7 @@ body {
     font-size: 200%;
     text-transform: uppercase;
     top: 350px;
-}
-
-#menu-text {
-    position: relative;
-    text-align: center;
-    color: white;
-    font-size: 200%;
-    
-    animation-name: text-opacity;
-    animation-duration: 3s;
-    animation-fill-mode: forwards;
-    animation-delay: 0.75s;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .cover-welcome {
@@ -92,19 +141,9 @@ body {
     }
 }
 
-#cta-menu {
-    height: 200px;
-    width: 80%;
-    max-width: 300px;
-}
-
-#cta-contact {
-    height: 200px;
-    width: 80%;
-    max-width: 300px;
-}
-
-#cta-profile {
+/* --------------------- index --------------------------- */
+ 
+.cta-pic {
     height: 200px;
     width: 80%;
     max-width: 300px;
@@ -131,20 +170,6 @@ body {
     background-color: black;
 }
 
-.background {
-    width: 100%; 
-    height: 100%; 
-    position: fixed; 
-    left: 0px; 
-    top: 0px; 
-    z-index: -1;
-}
-
-.stretch {
-    width:100%;
-    height:100%;
-}
-
 .animation {
     animation-duration: 0.5s;
     animation-iteration-count: infinite;
@@ -161,6 +186,8 @@ body {
     transition: all 0.3s ease 0s;
 }
 
+/* ----------------- bookings ------------------------- */
+
 .booking-pending, .booking-button {
     background-color: #0f52b4;
 }
@@ -173,47 +200,23 @@ body {
     background-color: #ac0918;
 }
 
-.menu {
-    height: 150px;
-}
 
-.navbar {
-    background-color: #445261;
-}
-
-.navbar-light .navbar-brand {
-    color: #eed71c;
-}
-
-.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
-    color: white;
-}
-
-.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-    color: white;
-}
-
-.navbar-light .navbar-nav .nav-link {
-    color: white;
-}
-
-.light .navbar-nav .nav-link {
-    color: white;
-}
-
-
-.img-fluid {
+/* .img-fluid {
     height: auto;
     width: 80%;
-}
+} */
+
+/* -------------------------- footer --------------------------------- */
 
 .footer {
     background-color: #333;
 }
 
-.menu-row {
+/* .menu-row {
     background-color: #90c5f4!important;
-}
+} */
+
+/* ------------------------------ menu list --------------------------------- */
 
 .feature-media .img {
     background-size: cover;
@@ -232,71 +235,71 @@ body {
     text-align: center;
 }
 
-.profile-div {
+/* .profile-div {
     background-color: #445261;
     max-width: 200px;
-}
+} */
 
 #hint_id_password a {
     color: white;
     text-decoration: underline;
 }
 
-.light-bg {
+/* .light-bg {
     background-color: #fff;
-}
+} */
 
-.black-bg {
+/* .black-bg {
     background-color: #445261;
-}
+} */
 
-.main-bg {
+/* .main-bg {
     background-color:#5D5C61;
-}
+} */
 
 .meal-bg {
     background-image: url(../images/site/background-black.webp);
 }
 
-.image-container {
+/* .image-container {
     position: relative;
-}
+} */
 
-.image-flash {
+/* .image-flash {
     position: absolute;
     bottom: 5%;
     min-width: 30%;
     left: -2px;
     background-color: #23BBBB;
-}
+} */
 
-.author {
+/* .author {
     color: white;
     margin: 4px;
     text-transform: uppercase;
-}
+} */
 
-.masthead {
+/* .masthead {
     margin-top: 10px;
     overflow: hidden;
     position: relative;
     display: inline-block;
     height: 33vh;
     width: 100%;
-}
+} */
 
-.masthead-text {
+/* .masthead-text {
     background-color: #445261;
     color: white;
     position: relative;
-}
+} */
 
-.masthead-image {
+/* .masthead-image {
     position: relative;
     overflow: hidden;
-}
+} */
 
-.masthead-image:after {
+/* .masthead-image:after {
     content: "";
     position: absolute;
     top: 0;
@@ -308,45 +311,45 @@ body {
     -moz-transform: skew(15deg);
     transform: skew(15deg);
     z-index: 100;
-}
+} */
 
-.post-link {
+/* .post-link {
     text-decoration: none;
     color: #445261;
-}
+} */
 
-.post-link:hover,
+/* .post-link:hover,
 .page-link {
     color: #E84610;
-}
+} */
 
-.post-title {
+/* .post-title {
     margin-top: 20%;
     margin-left: 5%;
-}
+} */
 
-.post-subtitle {
+/* .post-subtitle {
     margin-left: 5%;
     color: lightgray;
-}
+} */
 
-.btn-signup {
+/* .btn-signup {
     background-color: #23BBBB;
     color: #fff;
-}
+} */
 
-.btn-signup:hover,
+/* .btn-signup:hover,
 .btn-signup:active {
     background-color: #fff;
     color: #23BBBB;
-}
+} */
 
-.brand {
+/* .brand {
     font-family: Lato, sans-serif;
     font-size: 1.4rem;
     font-weight: 700;
     color: #4A4A4F;
-}
+} */
 
 .thin {
     font-weight: 300;

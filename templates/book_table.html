@@ -4,7 +4,7 @@
 {% if user.is_authenticated %}
 {% if user.first_name %}
 {% load crispy_forms_tags %}
-<div class="row menu my-5">
+<div class="row heading-space my-5">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
             <h1 class="text-center h1">Book a Table</h1>
@@ -35,7 +35,7 @@
 
 {% else %}
 
-<div class="row menu">
+<div class="row heading-space">
     <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
             <p class="text-center">Please fill in your name in the <a href="{% url 'reservations:profile' %}">profile section</a> before making a reservation
@@ -47,7 +47,7 @@
 
 {% endif %}
 {% else %}
-<div class="row menu my-5">
+<div class="row heading-space my-5">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
             <h1 class="text-center h1">Please log in to make a reservation</h1>
