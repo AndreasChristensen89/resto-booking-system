@@ -86,7 +86,7 @@ body {
 }
 
 #hero-image {
-    background: url(../images/site/menu-hero.jpg) center no-repeat fixed;
+    background: url("{% static 'images/site/cta-contact-phone.webp' %}") center no-repeat fixed;
     height: 600px;
     width: 100%;
     position: absolute;
