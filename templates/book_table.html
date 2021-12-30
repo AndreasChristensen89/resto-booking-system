@@ -4,7 +4,7 @@
 {% if user.is_authenticated %}
 {% if user.first_name %}
 {% load crispy_forms_tags %}
-<div class="row heading-space my-5">
+<div class="row heading-space mt-5">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
             <h1 class="text-center h1">Book a Table</h1>
@@ -13,8 +13,8 @@
   </div>
 <div class="container">
   <div class="row mb-5">
-      <div class="col-9 col-md-6 mx-auto">
-          <form class="p-5" method="post">
+      <div class="col-12 col-md-6 mx-auto">
+          <form class="px-5 pt-5" method="post">
 
               {% csrf_token %}
               {{ form|crispy }}
