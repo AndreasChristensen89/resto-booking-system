@@ -27,7 +27,6 @@ body {
 }
 
 #hero-image {
-    background-image: url('https://res.cloudinary.com/dp0m1mhqc/image/upload/v1640430115/static/images/site/menu-hero.2163fd1bd943.webp');
     height: 600px;
     width: 100%;
     position: absolute;
