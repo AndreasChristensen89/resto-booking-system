@@ -3,10 +3,9 @@
 
 {% block content %}
 <section class="hero-outer">
-    <div class="col-12">
-        <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.jpg' %}"
-            alt="Fresh ingredients items on a black surface">
-        <!-- <span class="img-fluid" role="img" aria-label="Fresh ingredients items on a black surface"></span> -->
+    <div class="col-12" id="hero-image">
+        <!-- <img class="img" id="hero-image" src="{% static 'images/site/menu-hero.jpg' %}"
+            alt="Fresh ingredients items on a black surface"> -->
     </div>
     <div id="cover-text">
         <h1>Eat healthy and feel good</h1>
@@ -25,13 +24,13 @@
 {% for category in categories %}
 <div class="row">   
     <div class="col-12 my-5">
-        <h3 class="text-center display-4">{{category}}</h3>
+        <h3 class="text-center display-2 bg-dark">{{category}}</h3>
     </div>
 </div> 
 
 <div class="section section-1">
     <div class="container">
-        <div class="row g-0 align-items-stretch meal-bg rounded">
+        <div class="row g-0 align-items-stretch rounded">
                 {% for meal in menu_list %}
                 {% if meal.category == category %}
                     {% if not forloop.counter|divisibleby:2 %}
@@ -41,23 +40,23 @@
                             <div class="text">
                                 <h3>{{meal.name}}</h3>
                                 <p>{{meal.description}}</p>
-                                <p><span>{{meal.price}}</span></p>
+                                <p><span>{{meal.price}}€</span></p>
                             </div>
                     {% elif forloop.last %}
                             <div class="img rounded" style="background-image: url({{meal.image.url}});"></div>
                             <div class="text">
                                 <h3>{{meal.name}}</h3>
                                 <p>{{meal.description}}</p>
-                                <p><span>{{meal.price}}</span></p>
+                                <p><span>{{meal.price}}€</span></p>
                             </div>
-                        </div>
-                    </div>
+                        <!-- </div>
+                    </div> -->
                     {% else %}    
                         <div class="img rounded" style="background-image: url({{meal.image.url}});"></div>
                         <div class="text">
                             <h3>{{meal.name}}</h3>
                             <p>{{meal.description}}</p>
-                            <p><span>{{meal.price}}</span></p>
+                            <p><span>{{meal.price}}€</span></p>
                         </div>
                         </div>
                     </div>

@@ -6,9 +6,8 @@
     border: none;
 }
 
-/* Add comment for testing Cloudinary update */
 body {
-    background-color: black;
+    background-color: #1d1c1c;
     color: whitesmoke;
     font-family: Lato, sans-serif;
     font-weight: 300;
@@ -28,6 +27,7 @@ body {
 }
 
 #hero-image {
+    background-image: url('https://res.cloudinary.com/dp0m1mhqc/image/upload/v1640430115/static/images/site/menu-hero.2163fd1bd943.webp');
     height: 600px;
     width: 100%;
     position: absolute;
@@ -366,7 +366,7 @@ body {
 }
 
 .form-control {
-    width: 90%;
+    width: 100%;
 }
 
 .title {
@@ -425,5 +425,20 @@ a {
         -webkit-box-flex: 0;
         -ms-flex: 0 0 100%;
         flex: 0 0 100%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    
+    .hero-outer {
+        height: 350px;
+    }
+
+    #hero-image {
+        height: 350px;
+    }
+
+    #cover-text {
+        top: 260px;
     }
 }
