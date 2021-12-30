@@ -88,11 +88,9 @@ a {
 }
 
 #hero-image {
-    background: url("{% static 'images/site/cta-contact-phone.webp' %}") center no-repeat fixed;
-    height: 600px;
+    height: 650px;
     width: 100%;
     position: absolute;
-    background-size: cover;
 }
 
 #menu-image {
@@ -109,12 +107,11 @@ a {
   position: relative;
 }
 
-#cover-text {
+.cover-text {
     position: relative;
     text-align: center;
     color: white;
     font-size: 200%;
-    text-transform: uppercase;
     top: 350px;
     background-color: rgba(0, 0, 0, 0.6);
 }
@@ -148,7 +145,7 @@ a {
 .cta-pic {
     height: 200px;
     width: 80%;
-    max-width: 300px;
+    max-width: 250px;
 }
 
 #cta-signup {
@@ -293,11 +290,15 @@ textarea {
     }
 
     #hero-image {
-        height: 350px;
+        height: 400px;
     }
 
-    #cover-text {
+    .cover-text {
         top: 260px;
+    }
+
+    .cover-welcome {
+        position: sticky;
     }
 }
 
