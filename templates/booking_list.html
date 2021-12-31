@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="row heading-space mt-5">
-    <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
-        <div class="col-9 col-lg-6">
-            <h1 class="text-center h1">Upcoming Bookings</h1>
-        </div>
+<section class="hero-outer">
+    <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
+        alt="Fresh ingredients items on a black surface">
+    <div class="booking-cover-text">
+        <h1>Your upcoming bookings</h1>
     </div>
-</div>
-<div class="row">
-{% for booking in booking_list %}
-{% if not booking.is_past_due %}
-        <div class="col-6 col-md-4 col-lg-3 card mx-auto p-4 text-center" style="width: 18rem;">
+    <div class="row">
+    {% for booking in booking_list %}
+        {% if not booking.is_past_due %}
+        <div class="col-6 col-md-4 card p-4 mx-auto text-center card-animation" style="width: 18rem;">
             {% if booking.status == 1%}
             <div class="card-body rounded-top booking-confirmed">   
                     <p class="card-text round">Confirmed</p>
@@ -33,7 +33,7 @@
             <li class="list-group-item">{{booking.number_guests}} guests</li>
             </ul>
             {% if booking.status != 2%}
-                <div class="card-body rounded-bottom bg-dark">
+                <div class="card-body rounded-bottom bottom-card-bg">
                     <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
                     <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Edit comment</a>
                 </div>
@@ -46,6 +46,7 @@
 {% endif %}
 {% endfor %}
 </div>
+</section>
 
     <div class="m-3 pagination">
         <span class="step-links">

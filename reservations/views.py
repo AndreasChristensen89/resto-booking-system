@@ -81,7 +81,7 @@ class BookingList(generic.ListView):
         queryset = queryset.filter(author=self.request.user)
         return queryset
     template_name = 'booking_list.html'
-    paginate_by = 6
+    paginate_by = 3
 
 #tested
 class BookingListPrevious(generic.ListView):
@@ -95,7 +95,7 @@ class BookingListPrevious(generic.ListView):
         queryset = queryset.filter(author=self.request.user)
         return queryset
     template_name = 'booking_list_previous.html'
-    paginate_by = 6
+    paginate_by = 3
 
 #tested
 class BookingUpdated(generic.ListView):
