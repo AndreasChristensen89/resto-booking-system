@@ -16,6 +16,12 @@ from datetime import timedelta
 
 #tested
 def book_table(request):
+    """
+    View for booking table. Attaches the user logged in, adds the end-time of the booking
+    ManytoManyfield (tables) must be added after object exists, so double-save
+    Checks sorting method and fetches tables, checks nbr of tables and limit for sorting
+    If user has conflicting booking it sends an email and assigns no tables
+    """
     form = BookTableForm()
     opening_list = OpeningHours.objects.all()
 
@@ -65,6 +71,10 @@ def book_table(request):
 
 #tested
 class BookingList(generic.ListView):
+    """
+    Gets the user logged in and uses it in filter
+    Template sorts for bookings in future
+    """
     model = Booking
     def get_queryset(self):
         queryset = super(BookingList, self).get_queryset()
@@ -75,6 +85,10 @@ class BookingList(generic.ListView):
 
 #tested
 class BookingListPrevious(generic.ListView):
+    """
+    Gets the user logged in and uses it in filter
+    Template sorts for bookings in past
+    """
     model = Booking
     def get_queryset(self):
         queryset = super(BookingListPrevious, self).get_queryset()
@@ -85,6 +99,10 @@ class BookingListPrevious(generic.ListView):
 
 #tested
 class BookingUpdated(generic.ListView):
+    """
+    Gets all non-declined booking with comments
+    Template sorts for updates
+    """
     model = Booking
     context_object_name = "updated_list"
     queryset = Booking.objects.exclude(comment__exact='').exclude(status=2)
@@ -93,6 +111,9 @@ class BookingUpdated(generic.ListView):
 
 #tested
 class BookingPending(generic.ListView):
+    """
+    Gets all pending bookings
+    """
     model = Booking
     context_object_name = "pending_list"
     queryset = Booking.objects.filter(
@@ -103,11 +124,17 @@ class BookingPending(generic.ListView):
 
 # tested
 class CancelBookingView(DeleteView):
+    """
+    User and admin can cancel a booking
+    """
     model = Booking
     success_url = '/reservations/bookings/'
 
 #tested
 class UpdateReservationView(UpdateView):
+    """
+    User can update comment here
+    """
     model = Booking
     fields = ['comment']
     template_name_suffix = '_update_form'
@@ -115,6 +142,10 @@ class UpdateReservationView(UpdateView):
 
 #tested
 class UpdateReservationViewAdmin(UpdateView):
+    """
+    Admin can update booking details
+    Meant for bookings that have new requests
+    """
     model = Booking
     fields = ['number_guests', 'table', 'comment', 'status']
     template_name_suffix = '_update_form_admin'
@@ -122,6 +153,11 @@ class UpdateReservationViewAdmin(UpdateView):
 
 #tested
 class ApproveReservationViewAdmin(UpdateView):
+    """
+    Admin can update booking details here
+    Meant for accepting/declining directly
+    Sends emails to confirm action
+    """
     model = Booking
     fields = ['table', 'status', 'comment']
     template_name_suffix = '_approve_form'
@@ -155,7 +191,9 @@ class ApproveReservationViewAdmin(UpdateView):
 
 # tested
 class ProfileView(SuccessMessageMixin, generic.UpdateView):
-    """View and update user profile"""
+    """
+    View and update user profile
+    """
     form_class = ProfileForm
     template_name = 'profile.html'
     success_message = 'Profile updated successfully!'

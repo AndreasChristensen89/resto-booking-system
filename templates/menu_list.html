@@ -3,34 +3,26 @@
 
 {% block content %}
 <section class="hero-outer">
-    <div class="col-12" id="hero-image">
-        <!-- <img class="img" id="hero-image" src="{% static 'images/site/menu-hero.jpg' %}"
-            alt="Fresh ingredients items on a black surface"> -->
-    </div>
+        <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
+            alt="Fresh ingredients items on a black surface">
     <div class="cover-text">
-        <h1>Eat healthy and feel good</h1>
+        <h1>Menu coming right up below</h1>
+    </div>
+    <div class="col text-center cover-welcome">
+        <p class="text lead mx-auto">Everything served has been put through a rigorous process to ensure optimal quality, health, and flavor</p>
     </div>
 </section>
-
-<div class="row mt-5">
-    <div class="col-12 text-center px-5">
-        <h3 class="h3">All our food is made from fresh and organic ingredients.</h3>
-        <h4 class="h4 my-3">Everything served has been put through a rigorous process to ensure optimal quality, health, and flavor</h4>
-    </div>
-</div>
-
-
 
 {% for category in categories %}
 <div class="row">   
     <div class="col-12 my-5">
-        <h3 class="text-center display-3 bg-dark">{{category}}</h3>
+        <h3 class="text-center display-3">{{category}}</h3>
     </div>
 </div> 
 
 <div class="section section-1">
     <div class="container">
-        <div class="row g-0 align-items-stretch rounded">
+        <div class="row g-0 align-items-stretch rounded bg-dark">
                 {% for meal in menu_list %}
                 {% if meal.category == category %}
                     {% if not forloop.counter|divisibleby:2 %}

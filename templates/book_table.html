@@ -1,16 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 {% if user.is_authenticated %}
 {% if user.first_name %}
 {% load crispy_forms_tags %}
-<div class="row heading-space mt-5">
-    <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
-        <div class="col-9 col-lg-6">
-            <h1 class="text-center h1">Book a Table</h1>
-        </div>
-    </div>
-  </div>
+<section class="hero-outer">
+    <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
+        alt="Fresh ingredients items on a black surface">
+<div class="cover-text">
+    <h1 class="h1 mx-auto display-4">A reservation?</h1>
+</div>
+<div class="col text-center cover-welcome">
+    <h2 class="h2 display-5 mx-auto">Scroll down and let's see what we can do</h2>
+</div>
+</section>
+
 <div class="container">
   <div class="row mb-5">
       <div class="col-12 col-md-6 mx-auto">

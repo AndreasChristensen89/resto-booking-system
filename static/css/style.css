@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: black;
+    background-color: #332d24;
     color: whitesmoke;
     font-family: Lato, sans-serif;
     font-weight: 300;
@@ -35,6 +35,11 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
+a:hover, a:active {
+    text-decoration: none;
+    color: inherit; 
+  }
 
 .card {
     border: none;
@@ -88,9 +93,10 @@ a {
 }
 
 #hero-image {
-    height: 650px;
+    height: 575px;
     width: 100%;
     position: absolute;
+    opacity: 0.6;
 }
 
 #menu-image {
@@ -108,44 +114,84 @@ a {
 }
 
 .cover-text {
+    animation-name: cover-text;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    
     position: relative;
     text-align: center;
     color: white;
     font-size: 200%;
-    top: 350px;
-    background-color: rgba(0, 0, 0, 0.6);
+    text-shadow: 1px 1px black;
+    top: 275px;
 }
 
-.cover-welcome {
-    position: relative;
-    color: white;
-    font-size: 200%;
-    opacity: 0;
-    
-    animation-name: text-opacity;
-    animation-duration: 3s;
-    animation-fill-mode: forwards;
-    animation-delay: 1.5s;
-}
-
-@keyframes text-opacity {
+@keyframes cover-text {
     from {
         opacity: 0;
-        top: 400px;
+        top: 325px;
     }
 
     to {
         opacity: 1;
-        top: 400px;
+        top: 275px;
+    }
+}
+
+
+.cover-welcome {
+    animation-name: welcome-opacity;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-delay: 2.0s;
+
+    position: relative;
+    color: white;
+    font-size: 200%;
+    opacity: 0;
+    text-shadow: 1px 1px black;
+    
+    
+}
+
+@keyframes welcome-opacity {
+    from {
+        opacity: 0;
+        top: 300px;
+    }
+
+    to {
+        opacity: 1;
+        top: 300px;
     }
 }
 
 /* --------------------- index --------------------------- */
  
+.cta-animation {
+    position: relative;
+    animation-name: cta-opacity;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes cta-opacity {
+    from {
+        opacity: 0;
+        top: 350px;
+    }
+
+    to {
+        opacity: 1;
+        top: 350px;
+    }
+}
+
 .cta-pic {
     height: 200px;
     width: 80%;
     max-width: 250px;
+    border-radius: 10%;
 }
 
 #cta-signup {
@@ -166,13 +212,11 @@ a {
 .cta-div {
     padding-left: 0;
     padding-right: 0;
-    background-color: black;
 }
 
 .animation {
     animation-duration: 0.5s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate-reverse;; 
+    animation-direction: normal;
 }
 
 .animation:hover {
@@ -283,22 +327,68 @@ textarea {
     }
 }
 
-@media screen and (max-width: 576px) {
-    
+/* @media screen and (max-width: 768px) {
+    #hero-image {
+        height: 450px;
+    }
+
     .hero-outer {
-        height: 350px;
+        height: 460px;
+    }
+
+    .cover-text {
+        top: 250px;
+    }
+
+    .cover-welcome {
+        position: sticky;
+    }
+} */
+
+@media screen and (max-width: 576px) {
+
+    .hero-outer {
+        height: 400px;
     }
 
     #hero-image {
         height: 400px;
     }
 
-    .cover-text {
-        top: 260px;
+    @keyframes cover-text {
+        from {
+            opacity: 0;
+            top: 200px;
+        }
+    
+        to {
+            opacity: 1;
+            top: 150px;
+        }
     }
 
-    .cover-welcome {
-        position: sticky;
+    @keyframes welcome-opacity {
+        from {
+            opacity: 0;
+            top: 175px;
+        }
+    
+        to {
+            opacity: 1;
+            top: 175px;
+        }
+    }
+
+    @keyframes cta-opacity {
+        from {
+            opacity: 0;
+            top: 225px;
+        }
+    
+        to {
+            opacity: 1;
+            top: 225px;
+        }
     }
 }
 

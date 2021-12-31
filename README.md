@@ -231,6 +231,9 @@ Images were compressed using the webpage https://tinypng.com/ Afterwards they we
 
 Picture credits from freepik
 
+hero-pic:
+<a href="https://www.freepik.com/photos/background">Background photo created by tirachard - www.freepik.com</a>
+
 cta-menu:
 <a href='https://www.freepik.com/photos/food'>Food photo created by valeria_aksakova - www.freepik.com</a>
 new menu - no attribution required, so just posting the link:

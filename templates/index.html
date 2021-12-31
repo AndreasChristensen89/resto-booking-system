@@ -4,101 +4,90 @@
 {% block content %}
 <section class="hero-outer">
     <div class="col-12">
-        <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
-            alt="Fresh ingredients items on a black surface">
+        <img class="img mt-1" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
+            alt="Clean and bright bar counter with blurry background">
     </div>
     <div class="cover-text">
-        <h1>Welcome to Dre's Diner</h1>
+        <h1 class="h1 mx-auto display-4">Welcome to Dre's Diner</h1>
     </div>
     {% if user.is_authenticated %}
-    {% if user.first_name %}
-    <div class="col text-center cover-welcome">
-        <h2>Good to see you, {{user.first_name}}</h2>
-    </div>
-    {% else %}
-    <div class="col text-center cover-welcome">
-        <h2>Good to see you, {{user.user_name}</h2>
-        </div>
-    {% endif %}
-</section>
-
+        {% if user.first_name %}
+            <div class="col text-center cover-welcome">
+                <h2 class="h2 mx-auto">Good to see you, {{user.first_name}}</h2>
+            </div>
+        {% else %}
+            <div class="col text-center cover-welcome">
+                <h2 class="h2 mx-auto">Good to see you, {{user.user_name}</h2>
+            </div>
+        {% endif %}
 <!-- -------------------------- call to action logged in -------------------------------- -->
-<!-- <div class="container"> -->
-    <div class="row">
-            <div class="col-12 col-sm-4 cta-div text-center mb-4">
-                <a href="{% url 'reservations:book_table' %}">
-                    <img class="img animation rounded cta-pic" src="{% static 'images/site/cta-contact-phone.webp' %}" alt="Person holding smartphone while typing">
-                <div class="text-center">
-                    <p class="lead h3 text-dark text-white">Make a booking</p>
-                </div>
-                </a>
-            </div>
-          
-            <div class="col-12 col-sm-4 cta-div text-center mb-4">
-                <a href="/menu"> 
-                    <img class="img animation rounded cta-pic" src="{% static 'images/site/cta-menu-background.webp' %}" alt="Black menu slate with ingredients next to it">
-                <div class="text-center">
-                    <p class="lead h3 text-dark text-white">Menu</p>
-                </div>
-                </a>
-            </div>
-
-            <div class="col-12 col-sm-4 cta-div text-center mb-4">
-                <a href="{% url 'reservations:profile' %}">
-                    <img class="img animation rounded cta-pic" src="{% static 'images/site/cta-profile.webp' %}" alt="Faceless animated people next to each other">
-                <div class="text-center">
-                    <p class="lead h3 text-dark text-white">Profile</p>
-                </div>
-                </a>
-            </div>
+        
+<div class="row text-center">
+    <div class="col-4 cta-animation animation">
+        <a href="{% url 'reservations:book_table' %}">
+            <h3 class="h3">Book</h3>
+        </a>
     </div>
-<!-- </div> -->
 
-{% else %}
-    <div class="col text-center cover-welcome">
-        <h2>Log in to make a reservation</h2>
+    <div class="col-4 cta-animation animation">
+        <a href="/menu">
+        <h3 class="h3">Menu</h3>
+        </a>
     </div>
+
+    <div class="col-4 cta-animation animation">
+        <a href="{% url 'reservations:profile' %}">
+            <h3 class="h3">Profile</h3>
+        </a>
+    </div>
+</div>
+
 </section>
 
 <!-- -------------------------- call to action logged out -------------------------------- -->
-<div id="cta-div" class="row">
-        
-    <div class="col-12 col-sm-6 text-center animation">
-        <a href="{% url 'account_signup' %}"> 
-        <div>
-            <i class="animation fas fa-user-plus"></i>
+    {% else %}
+        <div class="col text-center cover-welcome">
+            <h3 class="h3">Log in to make a reservation</h3>
         </div>
-        <div class="text-center">
-            <p class="lead text-white">Register</p>
+
+        <div class="row text-center">
+
+        <div class="col-6 cta-animation">
+            <a href="{% url 'account_login' %}">
+                <div>
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="h3">Log In</h3>
+            </a>
         </div>
-        </a>
-    </div>
-  
-    <div class="col-12 col-sm-6 text-center animation">
-        <a href="{% url 'account_login' %}"> 
-        <div>
-            <i class="animation fas fa-users"></i>
+
+        <div class="col-6 cta-animation">
+            <a href="{% url 'account_signup' %}">
+                <div>
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h3 class="h3">Register</h3>
+            </a>
         </div>
-        <div class="text-center">
-            <p class="lead text-white">Log In</p>
-        </div>
-        </a>
+
     </div>
 
-</div>
-<!-- ------------------------------ -->
+</section>
+
 {% endif %}
+
+<!-- ------------------------------ About us --------------------------->
 
 <div class="row text-center">
         <div class="col-12">
             <h2 class="h2 display-3">About us</h2>
         </div>
-        <div class="col-12 col-sm-6 p-4">
+        <div class="col-12 col-sm-6 p-5">
             <p>Founded in 1982, Dre's Diner has been the go-to local spot in Rønneholtparken over four decades. Our
                 focus has always been the quality of food. Quality does not only mean fine ingredients and attention to
                 detail, it also means that we listen to our customers and shape our selection to the local demand.</p>
         </div>
-        <div class="col-12 col-sm-6 p-4">
+        <div class="col-12 col-sm-6 p-5">
             <p>Our setting is humble but cozy, or "hyggeligt" as we say in Danish. We can host a mere 20 people, but we
                 pay our utmost attention to every guest. You will feel welcome and cared for, and we can guarantee that our service is straight from the heart.</p>
         </div>
