@@ -435,11 +435,9 @@ Current bugs to fix:
 - Updating a booking removes the tables - see if can implement logic in updateview - does it? Can't replicate
 - Fix message for opening hours to reflect latest reservation time - DONE
 - Add alt text to pictures
-- Add attributions to pictures
 - Should I keep the moveable tables?
 - Fix test for model, string + datetime shit
-- Grey for pending?
-- Sort out CSS
+- Update greeting for logged in user with no first name given
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
 pip3 install -r requirements.txt
