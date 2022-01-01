@@ -10,39 +10,10 @@
     </div>
     <div class="row">
     {% for booking in booking_list %}
-        <div class="col-6 col-md-4 card p-4 mx-auto text-center card-animation" style="width: 18rem;">
-            {% if booking.status == 1%}
-            <div class="card-body rounded-top booking-confirmed">   
-                    <p class="card-text round">Confirmed</p>
-                    {% for table in booking.table.all %}
-                        <p class="card-text">1 x table for {{table.seats}}</p>
-                    {% endfor %}
-            {% elif booking.status == 2%}
-            <div class="card-body rounded-top booking-declined">    
-                <p class="card-text">Declined</p>
-                <p class="card-text">{{booking.comment}}</p>
-            {% else %}
-            <div class="card-body rounded-top booking-pending">   
-                <p class="card-text">Pending</p>
-                <p class="card-text">Reservation to be confirmed</p>
-            {% endif %}
-            </div>
-            <ul class="list-group list-group-flush">
-            <li class="list-group-item">{{booking.booking_start|date}} - {{booking.booking_start|time}}</li>
-            <li class="list-group-item">{{booking.number_guests}} guests</li>
-            </ul>
-            {% if booking.status != 2%}
-                <div class="card-body rounded-bottom bottom-card-bg">
-                    <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
-                    <a href="{% url 'reservations:update_booking' booking.slug %}" class="card-link">Edit comment</a>
-                </div>
-            {% else %}
-            <div class="card-body rounded-bottom">
-                <a href="{% url 'reservations:book_table' %}" class="card-link">Book another time</a>
-            </div>
-            {% endif %}
-        </div>
-{% endfor %}
+       <div class="col-12 col-md-4 my-4 card-animation text-center mb-2 animation">
+        <h4 class="h4">{{booking.booking_start}}</h4>
+       </div>
+    {% endfor %}
 </div>
 </section>
 

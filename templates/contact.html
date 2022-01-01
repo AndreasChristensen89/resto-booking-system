@@ -1,19 +1,22 @@
 {% extends "base.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="row heading-space mt-5">
-  <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
-      <div class="col-8 col-lg-6">
-          <h1 class="text-center h1">Contact Information</h1>
-      </div>
+<section class="hero-outer">
+  <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
+      alt="Fresh ingredients items on a black surface">
+  <div class="cover-text">
+      <h1>Contact Information</h1>
   </div>
+  <div class="col text-center cover-welcome">
+    <p class="text lead mx-auto">Don't hesitate to send us a message if you have any questions or feedback</p>
 </div>
+</section>
 
 <div class="row">
   <div class="col-12 text text-center">
-    <p class="mx-2">Don't hesitate to send us a message if you have any questions or feedback</p>
-    <p class="mx-2">You can also reach us via the contact details down below</p>
+    <p class="mx-2">Scroll down further for more details</p>
   </div>
 </div>
 

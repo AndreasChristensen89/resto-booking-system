@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200&family=Source+Sans+3:ital,wght@1,300&display=swap');
 
 * {
     margin: 0;
@@ -9,7 +9,7 @@
 body {
     background-color: #332d24;
     color: whitesmoke;
-    font-family: Lato, sans-serif;
+    font-family: Roboto Slab, sans-serif;
     font-weight: 300;
 }
 
@@ -119,7 +119,7 @@ a:hover, a:active {
 
 .cover-text {
     animation-name: cover-text;
-    animation-duration: 3s;
+    animation-duration: 1.5s;
     animation-fill-mode: forwards;
     
     position: relative;
@@ -133,21 +133,21 @@ a:hover, a:active {
 @keyframes cover-text {
     from {
         opacity: 0;
-        top: 325px;
+        top: 290px;
     }
 
     to {
         opacity: 1;
-        top: 275px;
+        top: 240px;
     }
 }
 
 
 .cover-welcome {
     animation-name: welcome-opacity;
-    animation-duration: 3s;
+    animation-duration: 1.5s;
     animation-fill-mode: forwards;
-    animation-delay: 1.5s;
+    animation-delay: 1.0s;
 
     position: relative;
     color: white;
@@ -161,12 +161,12 @@ a:hover, a:active {
 @keyframes welcome-opacity {
     from {
         opacity: 0;
-        top: 300px;
+        top: 280px;
     }
 
     to {
         opacity: 1;
-        top: 300px;
+        top: 280px;
     }
 }
 
@@ -246,8 +246,8 @@ a:hover, a:active {
 }
 
 .booking-cover-text {
-    animation-name: booking-animation;
-    animation-duration: 3s;
+    animation-name: booking-cover-animation;
+    animation-duration: 1.5s;
     animation-fill-mode: forwards;
     position: relative;
     text-align: center;
@@ -261,7 +261,11 @@ a:hover, a:active {
     background-color: #917058;
 }
 
-@keyframes booking-animation {
+.booking-text {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+@keyframes booking-cover-animation {
     from {
         opacity: 0;
         top: 175px;
@@ -274,21 +278,22 @@ a:hover, a:active {
 }
 
 .card-animation {
-    animation-name: card-animation;
-    animation-duration: 3s;
+    animation-name: booking-animation;
+    animation-duration: 1.5s;
     animation-fill-mode: forwards;
     position: relative;
+    text-shadow: 1px 1px black;
 }
 
-@keyframes card-animation {
+@keyframes booking-animation {
     from {
         opacity: 0;
-        top: 235px;
+        top: 275px;
     }
 
     to {
         opacity: 1;
-        top: 235px;
+        top: 275px;
     }
 }
 
@@ -398,50 +403,6 @@ textarea {
 @media screen and (max-width: 576px) {
     .icon {
         font-size: 25px;
-    }
-
-    .hero-outer {
-        height: 400px;
-    }
-
-    #hero-image {
-        height: 400px;
-    }
-
-    @keyframes cover-text {
-        from {
-            opacity: 0;
-            top: 200px;
-        }
-    
-        to {
-            opacity: 1;
-            top: 150px;
-        }
-    }
-
-    @keyframes welcome-opacity {
-        from {
-            opacity: 0;
-            top: 175px;
-        }
-    
-        to {
-            opacity: 1;
-            top: 175px;
-        }
-    }
-
-    @keyframes cta-opacity {
-        from {
-            opacity: 0;
-            top: 225px;
-        }
-    
-        to {
-            opacity: 1;
-            top: 225px;
-        }
     }
 }
 

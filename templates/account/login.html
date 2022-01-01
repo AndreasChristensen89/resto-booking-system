@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% load i18n %}
 {% load account socialaccount %}
 
@@ -7,17 +7,19 @@
 
 {% block content %}
 {% load crispy_forms_tags %}
-<div>
+<section class="hero-outer">
+  <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
+      alt="Fresh ingredients items on a black surface">
+<div class="cover-text">
+  <h1 class="h1 mx-auto display-4">{% trans "Log In" %}</h1>
+</div>
+<div class="col-10 mx-auto text-center cover-welcome">
+  <p class="m-3 text-center">{% blocktrans %}If you have not yet created an account, 
+    <a style="text-decoration: underline;" href="{{ signup_url }}">click here</a> to sign up.{% endblocktrans %}</p>
+</div>
+</section>
 
-  <div class="row heading-space mt-5">
-    <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
-        <div class="col-9 col-lg-6 text-center">
-          <h1 class="h1 m-3">{% trans "Log In" %}</h1>
-          <p class="m-3 text-center">{% blocktrans %}If you have not yet created an account, 
-            <a style="text-decoration: underline;" href="{{ signup_url }}">click here</a> to sign up.{% endblocktrans %}</p>
-        </div>
-    </div>
-  </div>
+  
 
   <div class="row">
     <div class="col-9 col-lg-6 mx-auto">
