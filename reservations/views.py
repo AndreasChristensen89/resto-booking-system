@@ -77,8 +77,11 @@ class BookingList(generic.ListView):
     """
     model = Booking
     def get_queryset(self):
+        current_datetime = datetime.datetime.now()
         queryset = super(BookingList, self).get_queryset()
-        queryset = queryset.filter(author=self.request.user)
+        queryset = queryset.filter(
+            author=self.request.user, 
+            booking_start__gt=current_datetime)
         return queryset
     template_name = 'booking_list.html'
     paginate_by = 3
@@ -91,8 +94,11 @@ class BookingListPrevious(generic.ListView):
     """
     model = Booking
     def get_queryset(self):
+        current_datetime = datetime.datetime.now()
         queryset = super(BookingListPrevious, self).get_queryset()
-        queryset = queryset.filter(author=self.request.user)
+        queryset = queryset.filter(
+            author=self.request.user, 
+            booking_start__lt=current_datetime)
         return queryset
     template_name = 'booking_list_previous.html'
     paginate_by = 3

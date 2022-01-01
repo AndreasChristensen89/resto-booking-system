@@ -58,6 +58,10 @@ a:hover, a:active {
     text-decoration: underline;
 }
 
+.border-dark {
+    border-color: black!important;
+}
+
 /* -------------------------- nav bar ---------------------------- */
 .navbar {
     background-color: #445261;
@@ -316,6 +320,7 @@ textarea {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    height: 175px;
 }
 
 .feature-media > div {

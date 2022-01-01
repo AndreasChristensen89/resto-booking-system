@@ -10,7 +10,6 @@
     </div>
     <div class="row">
     {% for booking in booking_list %}
-        {% if not booking.is_past_due %}
         <div class="col-6 col-md-4 card p-4 mx-auto text-center card-animation" style="width: 18rem;">
             {% if booking.status == 1%}
             <div class="card-body rounded-top booking-confirmed">   
@@ -43,7 +42,6 @@
             </div>
             {% endif %}
         </div>
-{% endif %}
 {% endfor %}
 </div>
 </section>
