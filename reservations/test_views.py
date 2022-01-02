@@ -8,7 +8,7 @@ from .test_models import create_booking
 
 
 class TestsViews(TestCase):
-    
+
     def test_get_booking_list(self):
         create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         login = self.client.login(username='john', password='johnpassword')
@@ -24,7 +24,7 @@ class TestsViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'booking_list_previous.html')
         self.assertTemplateUsed(response, 'base.html')
-    
+
     def test_get_profile_page(self):
         create_user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         login = self.client.login(username='john', password='johnpassword')
@@ -56,7 +56,7 @@ class TestsViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'pending_bookings.html')
         self.assertTemplateUsed(response, 'base.html')
-    
+
     def test_get_update_reservation(self):
         booking = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         self.client.login(username='john', password='johnpassword')
@@ -87,7 +87,7 @@ class TestsViews(TestCase):
         self.client.login(username='john', password='johnpassword')
         OpeningHours.objects.create(
             weekday=6,
-            from_time='10:00', 
+            from_time='10:00',
             to_time='22:00')
         tables = Table.objects.create(
             table_number=2,
@@ -102,7 +102,7 @@ class TestsViews(TestCase):
         )
         response = self.client.get(f'/reservations/book_table/')
         self.client.post('/reservations/book_table/', {
-            'number_guests': 2, 
+            'number_guests': 2,
             'booking_start': datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'),
             'comment': 'test',
             })
@@ -112,7 +112,7 @@ class TestsViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'book_table.html')
         self.assertTemplateUsed(response, 'base.html')
-    
+
     def test_approve_reservation(self):
         my_admin = User.objects.create_superuser('superuser', 'superuser@admin.com', 'adminpass')
         login = self.client.login(username='superuser', password='adminpass')
@@ -120,4 +120,20 @@ class TestsViews(TestCase):
         response = self.client.get(f'/reservations/{booking.slug}/approve_booking/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'reservations/booking_approve_form.html')
+        self.assertTemplateUsed(response, 'base.html')
+
+    def test_booking_details(self):
+        booking = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
+        login = self.client.login(username='john', password='johnpassword')
+        response = self.client.get(f'/reservations/bookings/{booking.slug}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'booking_detail.html')
+        self.assertTemplateUsed(response, 'base.html')
+
+    def test_previous_booking_details(self):
+        booking = create_booking('john', datetime.strptime('2020-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
+        login = self.client.login(username='john', password='johnpassword')
+        response = self.client.get(f'/reservations/previous_bookings/{booking.slug}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'booking_detail_previous.html')
         self.assertTemplateUsed(response, 'base.html')

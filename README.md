@@ -12,7 +12,7 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
 * __Navigation Bar__
     * The navigation bar is found on all pages. It is dark grey with white text and changes according to if the user is logged in, and also whether the user is a superuser or not. The design is Bootstrap's own design (https://getbootstrap.com/docs/4.3/components/navbar/), which I have set to collapse when reaching mobile displays.
         * For non-users there are five links: "Home", "Menu", "Contact Information", "Sign-up", and "Login"
-        ![Nav Bar - logged out large](/static/images/readme-pictures/navbar-logged.out-large.JPG)
+        ![Nav Bar - logged out large](/static/images/readme-pictures/navbar-logged-out-large.JPG)
         ![Nav Bar - collapsed mobile](/static/images/readme-pictures/navbar-mobile-collapsed.JPG)
         ![Nav Bar - logged out mobile](/static/images/readme-pictures/navbar-mobile-open-logged-out.JPG)
         * For users there are more options: "Home", "Menu", a drop-down box "Booking" with three links ("New Booking", "Upcoming Bookings", "Previous Bookings"), "Profile", "Contact Information", and "logout" 
@@ -93,7 +93,8 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
     ![Booking Details declined mobile](/static/images/readme-pictures/booking-details-declined-mobile.JPG)
 
 * __Detele booking page__:
-    * The header says "Delete booking". Underneath is a paragraph that says "Are you sure you want to delete the reservation?". Underneath are the details of the booking: Name, Date, Time, and guests. Underneath are two buttons: red button "Delete" and blue button "return". There is no like on the other pages which signifies that it is a serious action that is permanent. The design is narrow and does not change on mobile. If booking is closer than two hours away (booking property latest_cancellation) the page will display "Time limit exceeded. Cancellation is unfortunately no longer possible. Please get in contact with the restaurant if further information is needed"
+    * The header says "Delete booking". Underneath is a paragraph that says "Are you sure you want to delete the reservation?". Underneath are the details of the booking: Name, Date, Time, and guests. Underneath are two buttons: red button "Delete" and blue button "return". There is no like on the other pages which signifies that it is a serious action that is permanent. The design is narrow and does not change on mobile. If booking is closer than two hours away (booking property latest_cancellation) the page will display "Time limit exceeded. Cancellation is unfortunately no longer possible. Please get in contact with the restaurant if further information is needed".
+
     ![Delete booking page](/static/images/readme-pictures/cancel-booking-mobile.JPG)
 
 * __Update comment page__:
@@ -169,12 +170,13 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
     ![Footer - mobile](/static/images/readme-pictures/footer-mobile.JPG)
 
 ### Future features to implement
+* I wanted to have a feature which generated buttons with available times for the date that users put in. I was able to generate the buttons, but not to have them work with forms.
 
 ## Testing
 ### Django testing
 All applications have been tested using TestCase. Forms, models, views, and additional functions have all been tested.
 * TestCase
-    * When testing the current database was not able to create testing databases, and I had to comment it out and un-comment the other database using sqlite3.
+    * When testing the current database was not able to create testing databases, and I had to comment it out and un-comment the other database using sqlite3 in settings.py
 * Applications
     * Contact
         * Test_views - two tests, both pass. One for code 200 and one for email sent.
@@ -187,7 +189,7 @@ All applications have been tested using TestCase. Forms, models, views, and addi
     * Reservations
     Every time I tested a booking I had to pass in a datetime object. On the page we pass in a string which is then converted to datetime, but this did not work for certain tests, particularly when testing the model.
         * Test_booking. 29 tests, all pass. Testing each function in reservations.bookings.py. Checking if functions use input from models properly. For many tests I created specific tables to have multiple options to return, checking if correct ones are returned with correct priority. Had to create opening hours, bookings details, users, and tables for most of the tests. For certain tests I started for loops to test function calls with increasing number of guests, and then running self.assert... for each iteration.
-        * Test_views - 11 tests, all pass. Tested views for code 200 and correct template use. For many of them I had to create a user, at times a superuser, and log in. For the booking view I logged in and posted a correct form and then checked if a booking had been made.
+        * Test_views - 13 tests, all pass. Tested views for code 200 and correct template use. For many of them I had to create a user, at times a superuser, and log in. For the booking view I logged in and posted a correct form and then checked if a booking had been made.
         * Test_forms - 13 tests, all pass. Tested form for errors for wrong input, all fields should be there, which ones are required, minus values, wrong types, not enough tables, enough tables but one with certain method, opening hours, past booking
         * Test_models - 7 tests, all pass. Tested if object could be made, if default fields are automatically set, if slugs are generated and unique, if model properties work (booking latest_cancellation and is_due_date).
     * Restaurant
@@ -233,15 +235,24 @@ Chrome Developer Tools was used for testing all media queries.
     * No longer an issue. user authentication added and random slug.
 * Raise validationerror for outside opening hours doesn't show 
     * Fixed - I set crispy fields to only show certain fields thereby hiding messages
+* Had many problems loading the static files from Cloudinary to Heroku. Heroku would generate a wrong URL and could not retrieve CSS and pictures. My mentor and I were unable to resolve the issue after two meetings, which caused me to miss the first deadline.
+    * I created a new Cloudinary account which fixed the CSS problem. However, it did not want to load pictures. I eventually solved it by loading the static to every template that had to use images from Cloudinary. Static was already loaded in base.html but did not extend. Also, I was unable to have it load css backgrounds from style.css - the url to cloudinary would be wrong - so I instead used inline styling. This was later removed as I redesigned the page to only used hero-image.
 
 ### Unfixed Bugs:
-* I wanted to have a feature which generated buttons with available times for the date that users put in. I was able to generate the buttons, but not to have them work with a form. This will go in "future implementations"
 * Forms are not completely centered, but stick to the left side of the centered box.
 
 ### Validator Testing
-pep8
-- W3 Markup Validation Service completed for all HTML pages with no errors.
-- Jigsaw test CSS file completed with no errors.
+* PEP8 validator for python:
+    * I have "Line too long" e501 errors and I am aware of them. They do not impact my code.
+        * 2 in reservations.booking.py
+        * 10 in reservations.forms.py
+        * 10 in reservations.models.py
+        * 12 in reservations.views.py
+        * 19 in reservations.test_booking.py
+        * 5 in reservations.test_forms.py
+        * 25 in reservations.test_views.py
+* W3 Markup Validation Service completed for all HTML pages with no errors.
+* Jigsaw test CSS file completed with no errors.
 
 ## Deployment
 ### Deployment to Heroku
@@ -268,7 +279,7 @@ GitHub was used to host the repository, GitPot was used for development and vers
 
 ## Credits
 ### Pictures
-Images were compressed using the webpage https://tinypng.com/ Afterwards they were converted to webp using https://cloudconvert.com/png-to-webp.
+Image was compressed using the webpage https://tinypng.com/ Afterwards it was converted to webp using https://cloudconvert.com/png-to-webp.
 
 Picture credits from freepik
 
@@ -308,10 +319,10 @@ Content was all formulated by myself, but for the menu I took inspiration from v
 
 
 ### Coding help
-- For help with varius issues Django, css etc. I often resorted to https://stackoverflow.com/
+- For help with varius issues Django, css etc. I often resorted to https://stackoverflow.com/ as well as the official documentation for Django.
 - For help with syntax reminders I often used https://www.w3schools.com/, as well as various pages giving advice on Django
 - For general best practice I used Code Institute's Slack community.
-- For CSS I used Bootstrap Docs a lot.
+- For CSS and Bootstrap I used https://stackoverflow.com/ as well as Bootstrap Documentation.
 - General comments from family and peers for what CSS looked the best.
 - I looked up other booking system to get inspiration for how it could be set up.
 
@@ -478,6 +489,12 @@ Current bugs to fix:
 - Add alt text to pictures
 - Should I keep the moveable tables?
 - Fix test for model, string + datetime shit
+- Remove old CSS
+- Add booking logic for same zone
+- Add django models explanation/outline
+- Remove moveable from tables
+- Remove for people from meals
+- Style error 404 and 500
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
 pip3 install -r requirements.txt

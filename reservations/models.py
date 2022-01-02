@@ -18,7 +18,7 @@ class Table(models.Model):
 
 class Booking(models.Model):
     STATUS = ((0, "Pending"), (1, "Approved"), (2, "Declined"))
-    
+
     slug = models.SlugField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='table_booking')
     number_guests = models.PositiveIntegerField()
@@ -29,7 +29,7 @@ class Booking(models.Model):
     status = models.IntegerField(choices=STATUS, default=0)
     comment = models.TextField(max_length=200, blank=True)
     table = models.ManyToManyField(Table, related_name='booking_tables', blank=True)
-    
+
     def save(self, *args, **kwargs):
         if not self.slug:
             letters = string.ascii_lowercase

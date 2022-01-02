@@ -19,7 +19,7 @@ class TestReturnTables(TestCase):
         tables_for_four = return_tables(datetime.datetime(2021, 12, 12, 10, 0), 4, 1)
         self.assertEqual(len(tables_for_two), 1)
         self.assertEqual(len(tables_for_four), 1)
-    
+
     def test_returns_tables_from_different_zones(self):
         booking_details = create_booking_details(2)
         Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
@@ -27,7 +27,7 @@ class TestReturnTables(TestCase):
         Table.objects.create(table_number=3, seats=4, zone=3, moveable=False)
         all_tables = return_tables(datetime.datetime(2021, 12, 12, 10, 0), 8, 2)
         self.assertEqual(len(all_tables), 3)
-        
+
 
 class TestGetOpeningHours(TestCase):
 
@@ -59,7 +59,7 @@ class TestGetOpeningHours(TestCase):
 
 
 class TestGenerateRequestEnd(TestCase):
-    
+
     def test_correct_datetime_is_returned(self):
         booking_details = create_booking_details(1)
         returned_datetime = generate_request_end(datetime.datetime(2021, 12, 12, 10, 0))
@@ -74,7 +74,7 @@ class TestGenerateRequestEnd(TestCase):
 
 
 class TestReturnAllAvailableTables(TestCase):
-    
+
     def test_all_tables_returned(self):
         booking_details = create_booking_details(1)
         Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
@@ -115,7 +115,7 @@ class TestReturnAllAvailableTables(TestCase):
 
 
 class TestReturnCombination(TestCase):
-    
+
     def test_sum_of_seats_is_always_greater_or_equal_to_guests_method_one(self):
         booking_details = create_booking_details(1)
         for i in range(4):
@@ -137,7 +137,7 @@ class TestReturnCombination(TestCase):
             for table in tables_returned:
                 sum += table.seats
             self.assertGreaterEqual(sum, i)
-    
+
     def test_sum_of_seat_is_always_greater_or_equal_to_guests_method_two(self):
         booking_details = create_booking_details(2)
         for i in range(4):
@@ -166,7 +166,7 @@ class TestReturnCombination(TestCase):
         4+3+2 and 6+3
         Both methods prefer fewest tables, both return 6 and 3
         """
-        
+
         booking_details = create_booking_details(2)
         Table.objects.create(table_number=1, seats=4, zone=1, moveable=False)
         Table.objects.create(table_number=2, seats=3, zone=1, moveable=False)
@@ -206,10 +206,10 @@ class TestReturnCombination(TestCase):
 
 
 class TestSortLargerParty(TestCase):
-    
+
     def test_function_return_error_if_no_argument(self):
         self.assertRaises(TypeError, sort_large_party)
-    
+
     def test_sum_of_seats_always_greater_or_equal_to_guests(self):
         booking_details = create_booking_details(1)
         for i in range(4):
@@ -219,7 +219,7 @@ class TestSortLargerParty(TestCase):
         for i in range(2):
             Table.objects.create(table_number=7+i, seats=6, zone=1, moveable=False)
         Table.objects.create(table_number=9, seats=8, zone=1, moveable=False)
-        
+
         request_start = datetime.datetime(2021, 11, 6, 12, 0)
         request_end = datetime.datetime(2021, 11, 6, 15, 0)
         av_tables = return_all_available_tables(request_start, request_end)
@@ -227,7 +227,7 @@ class TestSortLargerParty(TestCase):
             sum = 0
             returned_tables = sort_large_party(i, av_tables)
             for table in returned_tables:
-                sum += table.seats 
+                sum += table.seats
             self.assertGreaterEqual(sum, i)
 
     def test_return_no_tables_if_not_enough(self):
@@ -250,7 +250,7 @@ class TestTestTime(TestCase):
 
     def test_returns_error_if_wrong_value_passed(self):
         self.assertRaises(TypeError, test_time, 2)
-    
+
     def test_returns_correct_boolean(self):
         booking_details = create_booking_details(1)
         OpeningHours.objects.create(
@@ -285,10 +285,10 @@ class TestDoubleBooking(TestCase):
         user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         start = datetime.datetime.strptime('2021-11-06 12:00:00', '%Y-%m-%d %H:%M:%S')
         booking = Booking.objects.create(
-        author=user, 
-        number_guests=4, 
-        booking_start=start,
-        booking_end=start+timedelta(minutes=180))
+            author=user,
+            number_guests=4,
+            booking_start=start,
+            booking_end=start+timedelta(minutes=180))
 
         for i in range(10, 15):
             conflicting_booking = double_booking(datetime.datetime(2021, 11, 6, i, 0), user)
@@ -304,7 +304,7 @@ class TestTableMethodSameZone(TestCase):
     Prefers fewer tables so will return fewer tables if losses are equal
     Will return more tables if match is better
     """
-    
+
     def test_list_of_zones(self):
         for i in range(4):
             Table.objects.create(table_number=i+1, seats=6, zone=1, moveable=True)

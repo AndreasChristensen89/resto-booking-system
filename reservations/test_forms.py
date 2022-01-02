@@ -12,20 +12,21 @@ def create_booking_form(number_guests):
     creates a booking to shorten test code
     """
     form = BookTableForm({
-        'number_guests': number_guests, 
+        'number_guests': number_guests,
         'booking_start': datetime.strptime('2050-12-12 12:00:00', '%Y-%m-%d %H:%M:%S'),
         'comment': ''
             })
     return form
+
 
 def create_booking_details(method):
     """
     create booking details to shorten test code
     """
     booking_details = BookingDetails.objects.create(
-            booking_duration = 180,
-            table_assign_method = method,
-            assign_method_limit = 100
+            booking_duration=180,
+            table_assign_method=method,
+            assign_method_limit=100
         )
 
     return booking_details
@@ -46,7 +47,7 @@ class TestBookingForm(TestCase):
     def test_form_with_no_booking_start_field(self):
         booking_details = create_booking_details(1)
         form = BookTableForm({
-            'number_guests': 2, 
+            'number_guests': 2,
             'booking_start': ''
             })
         self.assertIn('booking_start', form.errors.keys())
@@ -60,7 +61,7 @@ class TestBookingForm(TestCase):
     def test_comment_field_not_required(self):
         opening_hours = OpeningHours.objects.create(
             weekday=0,
-            from_time='10:00', 
+            from_time='10:00',
             to_time='22:00')
         tables = Table.objects.create(
             table_number=1,
@@ -75,7 +76,7 @@ class TestBookingForm(TestCase):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=0,
-            from_time='10:00', 
+            from_time='10:00',
             to_time='22:00')
         tables = Table.objects.create(
             table_number=1,
@@ -90,7 +91,7 @@ class TestBookingForm(TestCase):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=0,
-            from_time='10:00', 
+            from_time='10:00',
             to_time='22:00')
         form = create_booking_form(4)
         self.assertFalse(form.is_valid())
@@ -99,7 +100,7 @@ class TestBookingForm(TestCase):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=0,
-            from_time='10:00', 
+            from_time='10:00',
             to_time='22:00')
         tables = Table.objects.create(
             table_number=1,
@@ -114,7 +115,7 @@ class TestBookingForm(TestCase):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=0,
-            from_time='10:00', 
+            from_time='10:00',
             to_time='22:00')
         Table.objects.create(
             table_number=1,
@@ -135,7 +136,7 @@ class TestBookingForm(TestCase):
         booking_details = create_booking_details(2)
         opening_hours = OpeningHours.objects.create(
             weekday=0,
-            from_time='10:00', 
+            from_time='10:00',
             to_time='22:00')
         Table.objects.create(
             table_number=1,
@@ -156,7 +157,7 @@ class TestBookingForm(TestCase):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=0,
-            from_time='21:00', 
+            from_time='21:00',
             to_time='22:00')
         tables = Table.objects.create(
             table_number=1,
@@ -171,7 +172,7 @@ class TestBookingForm(TestCase):
         booking_details = create_booking_details(1)
         opening_hours = OpeningHours.objects.create(
             weekday=0,
-            from_time='10:00', 
+            from_time='10:00',
             to_time='22:00')
         tables = Table.objects.create(
             table_number=1,
@@ -185,7 +186,7 @@ class TestBookingForm(TestCase):
     def test_cannot_book_in_past(self):
         opening_hours = OpeningHours.objects.create(
             weekday=5,
-            from_time='10:00', 
+            from_time='10:00',
             to_time='22:00')
         tables = Table.objects.create(
             table_number=1,
@@ -194,8 +195,8 @@ class TestBookingForm(TestCase):
             moveable=True)
         booking_details = create_booking_details(1)
         form = BookTableForm({
-        'number_guests': 2, 
-        'booking_start': datetime.strptime('2020-12-12 12:00:00', '%Y-%m-%d %H:%M:%S'),
-        'comment': ''
+            'number_guests': 2,
+            'booking_start': datetime.strptime('2020-12-12 12:00:00', '%Y-%m-%d %H:%M:%S'),
+            'comment': ''
             })
         self.assertFalse(form.is_valid())

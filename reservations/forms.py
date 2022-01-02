@@ -24,10 +24,10 @@ class BookTableForm(forms.ModelForm):
     def clean(self):
         number_guests = self.cleaned_data.get('number_guests')
         booking_start = self.cleaned_data.get('booking_start')
-        available_tables = []
+        av_tables = []
         sorting_method = BookingDetails.objects.all()[0].table_assign_method
         if booking_start is not None:
-            available_tables = return_tables(booking_start, number_guests, sorting_method)
+            av_tables = return_tables(booking_start, number_guests, sorting_method)
             time_check = test_time(booking_start)
 
             if not time_check:
@@ -37,12 +37,15 @@ class BookTableForm(forms.ModelForm):
 
                 booking_duration = BookingDetails.objects.all()[0].booking_duration
                 latest_reservation = closing_hour_dt - timedelta(minutes=booking_duration)
-                
+
                 open = str(opening_hours[0].from_time)[0:5]
                 close = str(latest_reservation)[11:16]
-                raise forms.ValidationError(f'Reservations on the requested date can be made between {open} and {close}')
-        if not available_tables and sorting_method > 0:
-            raise forms.ValidationError("There are unfortunately not enough tables to accomodate your party at this time")
+                raise forms.ValidationError(
+                    f'Reservations on the requested date can be made between {open} and {close}'
+                    )
+        if not av_tables and sorting_method > 0:
+            raise forms.ValidationError(
+                "There are unfortunately not enough tables to accomodate your party at this time")
         if number_guests < 1:
             raise forms.ValidationError("Number of guests must be at least 1")
         if datetime.now() > booking_start:

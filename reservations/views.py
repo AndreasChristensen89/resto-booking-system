@@ -14,7 +14,7 @@ from .booking import double_booking, return_tables
 import datetime
 from datetime import timedelta
 
-#tested
+
 def book_table(request):
     """
     View for booking table. Attaches the user logged in, adds the end-time of the booking
@@ -48,11 +48,11 @@ def book_table(request):
             elif conflicting > 1:
                 subject = "Dre's Diner booking"
                 body = (
-                f"Hello {user.first_name}. " +
-                f"It appears that you have made two overlapping reservations. " 
-                f"Your new reservation on the {obj.booking_start} has therefore not been assigned any tables, it is however still kept on your page. " +
-                "Please contact us if this is intentional, otherwise you can safely delete the new reservation. " +
-                "We look forward to having you."
+                    f"Hello {user.first_name}. " +
+                    f"It appears that you have made two overlapping reservations. "
+                    f"Your new reservation on the {obj.booking_start} has therefore not been assigned any tables, it is however still kept on your page. " +
+                    "Please contact us if this is intentional, otherwise you can safely delete the new reservation. " +
+                    "We look forward to having you."
                 )
                 # Send Confirmation Mail to user and CC to admin
                 send_mail(
@@ -69,35 +69,37 @@ def book_table(request):
 
     return render(request, 'book_table.html', context)
 
-#tested
+
 class BookingList(generic.ListView):
     """
     Gets the user logged in and uses it in filter
     Template sorts for bookings in future
     """
     model = Booking
+
     def get_queryset(self):
         current_datetime = datetime.datetime.now()
         queryset = super(BookingList, self).get_queryset()
         queryset = queryset.filter(
-            author=self.request.user, 
+            author=self.request.user,
             booking_start__gt=current_datetime)
         return queryset
     template_name = 'booking_list.html'
     paginate_by = 3
 
-#tested
+
 class BookingListPrevious(generic.ListView):
     """
     Gets the user logged in and uses it in filter
     Template sorts for bookings in past
     """
     model = Booking
+
     def get_queryset(self):
         current_datetime = datetime.datetime.now()
         queryset = super(BookingListPrevious, self).get_queryset()
         queryset = queryset.filter(
-            author=self.request.user, 
+            author=self.request.user,
             booking_start__lt=current_datetime)
         return queryset
     template_name = 'booking_list_previous.html'
@@ -117,7 +119,9 @@ class BookingDetail(View):
             }
             )
 
+
 class BookingDetailPrevious(View):
+
     def get(self, request, slug, *args, **kwargs):
         queryset = Booking.objects.all()
         booking = get_object_or_404(queryset, slug=slug)
@@ -130,7 +134,7 @@ class BookingDetailPrevious(View):
             }
             )
 
-#tested
+
 class BookingUpdated(generic.ListView):
     """
     Gets all non-declined booking with comments
@@ -142,7 +146,7 @@ class BookingUpdated(generic.ListView):
     template_name = 'updated_booking.html'
     paginate_by = 6
 
-#tested
+
 class BookingPending(generic.ListView):
     """
     Gets all pending bookings
@@ -155,7 +159,7 @@ class BookingPending(generic.ListView):
     template_name = 'pending_bookings.html'
     paginate_by = 3
 
-# tested
+
 class CancelBookingView(DeleteView):
     """
     User and admin can cancel a booking
@@ -163,7 +167,7 @@ class CancelBookingView(DeleteView):
     model = Booking
     success_url = '/reservations/bookings/'
 
-#tested
+
 class UpdateReservationView(UpdateView):
     """
     User can update comment here
@@ -173,7 +177,7 @@ class UpdateReservationView(UpdateView):
     template_name_suffix = '_update_form'
     success_url = '/reservations/bookings/'
 
-#tested
+
 class UpdateReservationViewAdmin(UpdateView):
     """
     Admin can update booking details
@@ -184,7 +188,7 @@ class UpdateReservationViewAdmin(UpdateView):
     template_name_suffix = '_update_form_admin'
     success_url = '/reservations/updated/'
 
-#tested
+
 class ApproveReservationViewAdmin(UpdateView):
     """
     Admin can update booking details here
@@ -195,7 +199,7 @@ class ApproveReservationViewAdmin(UpdateView):
     fields = ['table', 'status', 'comment']
     template_name_suffix = '_approve_form'
     success_url = '/reservations/pending/'
-    
+
     def form_valid(self, form):
         subject = "Dre's Diner booking"
         body = ""
@@ -219,10 +223,9 @@ class ApproveReservationViewAdmin(UpdateView):
                 'dresdiner@email.com',
                 [self.object.author.email, 'dresdiner@email.com']
             )
-        return super(ApproveReservationViewAdmin, self).form_valid(form) 
+        return super(ApproveReservationViewAdmin, self).form_valid(form)
 
 
-# tested
 class ProfileView(SuccessMessageMixin, generic.UpdateView):
     """
     View and update user profile
@@ -239,6 +242,7 @@ class ProfileView(SuccessMessageMixin, generic.UpdateView):
 def error_404(request, exception):
     data = {}
     return render(request, '404.html', data)
+
 
 def error_500(request):
     data = {}
