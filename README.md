@@ -11,87 +11,124 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
 ### Existing Features:
 * __Navigation Bar__
     * The navigation bar is found on all pages. It is dark grey with white text and changes according to if the user is logged in, and also whether the user is a superuser or not. The design is Bootstrap's own design (https://getbootstrap.com/docs/4.3/components/navbar/), which I have set to collapse when reaching mobile displays.
-        * For non-users there are five links: "Home", "Menu", "Sign-up", "Login", and "Contact Information"
-        ![Nav Bar - logged out](/static/images/readme-pictures/navigation-bar-logged-out.webp)
-        * For users there are more options: "Home", "Menu", a drop-down box "Booking" with three links ("New Booking", "Upcoming Bookings", "Previous Bookings"), "Profile", "logout", and "Contact Information"
-        ![Nav Bar - user](/static/images/readme-pictures/navigation-bar-user.webp)
-        * For superusers there are different options: "Home", "Menu", drop-down box "Admin Actions" with three links ("Pending Bookings", "Updated Bookings", "Book Table"), "Admin Profile", "Logout", and "Contact Information"
-        ![Nav Bar - superuser](/static/images/readme-pictures/navigation-bar-superuser.webp)
+        * For non-users there are five links: "Home", "Menu", "Contact Information", "Sign-up", and "Login"
+        ![Nav Bar - logged out large](/static/images/readme-pictures/navbar-logged.out-large.JPG)
+        ![Nav Bar - collapsed mobile](/static/images/readme-pictures/navbar-mobile-collapsed.JPG)
+        ![Nav Bar - logged out mobile](/static/images/readme-pictures/navbar-mobile-open-logged-out.JPG)
+        * For users there are more options: "Home", "Menu", a drop-down box "Booking" with three links ("New Booking", "Upcoming Bookings", "Previous Bookings"), "Profile", "Contact Information", and "logout" 
+        ![Nav Bar - user](/static/images/readme-pictures/navbar-logged-in-medium.JPG)
+        ![Nav Bar - user dropdown box](/static/images/readme-pictures/navbar-logged-in-dropbox-medium.JPG)
+        ![Nav Bar - user dropdown box mobile](/static/images/readme-pictures/navbar-mobile-open-user-login-dropbox.JPG)
+        ![Nav Bar - user mobile](/static/images/readme-pictures/navbar-mobile-open-user-login.JPG)
+        * For superusers there are different options: "Home", "Menu", drop-down box "Admin Actions" with three links ("Pending Bookings", "Updated Bookings", "Book Table"), "Admin Profile", and "Logout"
+        ![Nav Bar - superuser mobile](/static/images/readme-pictures/navbar-mobile-open-superuser-login.JPG)
+        ![Nav Bar - superuser mobile dropdown box](/static/images/readme-pictures/navbar-mobile-open-superuser-login-dropbox.JPG)
+        ![Nav Bar - superuser](/static/images/readme-pictures/navbar-logged-in-superuser-medium.JPG)
+        ![Nav Bar - superuser dropdown box](/static/images/readme-pictures/navbar-logged-in-superuser-dropbox-medium.JPG)
         * All user have the webpage icon that leads to the landing page
     * Navbar sticks to the top, using Bootstrap's "fixed-top" class. This does however cover the top part, so extra magins had to be created for headings.
 
 * __Landing page__:
-    * The landing page has a dark-themed hero-image of fresh ingredients. There is a welcome message being generated according to who is logged in, and the details of the user. If the user is not logged in it will display the standard welcome message. If logged in, but with no name details added in profile, it will greet the user by username underneath the welcome message. If name details are provided it will use the provided first name in the greeting. The greeting appears into view after a second and a half, changing opacity from 0 to 100. If user is not logged in the message will read "Log in to make a reservation"
+    * The landing page has bright themed hero picture of a wooden bar desk. This picture is used in all main pages of the site. There is a welcome message being generated according to who is logged in, and the details of the user. The main title "Welcome to Dre's Diner" is animated going from 0 to 100 opacity, and moving 50px up when coming into view. If the user is not logged in it will display the standard welcome message. If logged in, but with no name details added in profile, it will greet the user by username underneath the welcome message "Good to see you, (inserts name)". If name details are provided it will use the provided first name in the greeting. The greeting appears into view after a second and a half, changing opacity from 0 to 100. If user is not logged in the message will read "Log in to make a reservation"
 
-    ![Landing page - logged out](/static/images/readme-pictures/landing-page-logged-out.webp)
-    ![Landing page - username](/static/images/readme-pictures/landing-page-user.webp)
-    ![Landing page - user's name](/static/images/readme-pictures/landing-page-admin.webp)
+    ![Landing page - logged out large](/static/images/readme-pictures/index-logged-out-large.JPG)
+    ![Landing page - logged out mobile](/static/images/readme-pictures/index-logged-out-mobile.JPG)
+    ![Landing page - logged in large](/static/images/readme-pictures/index-logged-in-large.JPG)
+    ![Landing page - logged in mobile](/static/images/readme-pictures/index-logged-in-mobile.JPG)
+    ![Landing page - logged in only username](/static/images/readme-pictures/index-logged-in-no-details.JPG)
     
-    * Under the hero image are call-to-action divs. These also change when logged in/out.
-        * If not logged in there are two divs with dark-yellow icons that link to the sign-up page and the login page. These are the call-to-actions as users must be logged in in order to make bookings. They move 10px upwards when hovering over them, thus giving an interactive feeling. For mobile view the two divs stack on top of each other.
-        * If logged in there are three divs side by side with background pictures instead of icons: "contact", with a background picture of a phone linking to the contact-us page, "Menu", with a background picture of a menu slate and ingredients, linking to the menu-page, and "Profile", with a picture of faceless people, linking to the profile-page". All these divs also move 10px upwards when hovering over them. For mobile view the divs stack on top of each other.
-    
-    ![Landing page - cta's logged out](/static/images/readme-pictures/landing-page-admin.webp)
-    ![Landing page - cta's logged in](/static/images/readme-pictures/landing-page-admin.webp)
+    * On the bar desk area of the hero image are three links. These also change when logged in/out.
+        * If not logged in there are two white call-to-action icons that link to the sign-up page and the login page. They move 10px upwards when hovering over them, thus giving an interactive feeling.
+        * If logged in there are three links side by side with white borders around them: "New Booking" linking to the booking page, "Menu", linking to the menu page, and "My Bookings", linking to the upcoming bookings for the user. All these divs also move 10px upwards when hovering over them.
 
 * __Menu page__:
-    * The menu page follows the dark theme and shows different fresh ingredients on a black surface. After a second a message comes into view, going form 0 opacity to 100 that says "Eat healthy and feel good". This page is the same regardless of user.
-    ![Menu page - top](/static/images/readme-pictures/landing-page-admin.webp)
-    * Underneath the main picture is an introductory message that reads "All our food is made from fresh and organic ingredients. Everything served has been put through a rigorous process to ensure optimal quality, health, and flavor."
-    ![Menu page - message](/static/images/readme-pictures/landing-page-admin.webp)
+    * The menu page shares the index hero-image and has the title "Menu coming right up below" and is animated in the same style as the index titles. This page is the same regardless of user.
+    ![Menu page - large](/static/images/readme-pictures/menu-large.JPG)
+    ![Menu page - mobile top](/static/images/readme-pictures/menu-top-mobile.JPG)
+    ![Menu page - mobile category and items](/static/images/readme-pictures/menu-category-and-item-mobile.JPG)
+    * Underneath the main title is an introductory message that reads "Everything served has been put through a rigorous process to ensure optimal quality and flavor"
     * Underneath the site auto generates the categories added by the admin, followed by all the meals connected to this category.
-    The category is on a line of it's own, and underneath the pictures of the meals are displayed along with title, price, and description. Corners of the pictures are slighty rounded. On mobile view two meals are shown next to each other. On 576px three, which are then enlarged on 768px, and finally allowing four items side by side on 992px and above. All text is white, but price is slighty dimmed.
-    ![Menu page - categories and meals](/static/images/readme-pictures/landing-page-admin.webp)
+    The category is on a row of it's own, and underneath the pictures of the meals are displayed along with title, price, and description. Corners of the pictures are slighty rounded. On mobile view one meal occupies a full column. On large there are two meals side by side, which consists of the image to the left and the descriptions on the right. All text is white.
 
 * __Sign-up page__:
     * Sign up page has a simple design, just showing a heading "Sign Up". Underneath is a paragraph that shows a link to the login page in case the user already has an account. Underneath comes the form, which consists of four fields: "Username", "E-mail", "Password", "Password(again)", and then a blue "Sign Up" button underneath. All fields except for E-mail are mandatory and marked with an "*".
-    ![Sign up page](/static/images/readme-pictures/landing-page-admin.webp)
+    ![Sign up page - large](/static/images/readme-pictures/signup-page-large.JPG)
+    ![Sign up page - mobile ](/static/images/readme-pictures/signup-page-mobile.JPG)
 
 * __Log-in page__:
-    * Log in page has the same simple design as the sign-up page, just showing a heading "Log in". Underneath is a paragraph that shows a link to the login page in case the user has not already created an account. Underneath comes the form, which consists of two fields: "Username" and "Password", and then a blue "Sign in" button underneath, and right under is a check-box which the phrase"Remember Me" so the system will remember the user. Underneath the button is a link to reset the password in case the user has forgotten. All fields are mandatory and marked with an "*".
-    ![Sign in page](/static/images/readme-pictures/landing-page-admin.webp)
+    * Log in page has the same simple design as the sign-up page, just showing a heading "Log in". Underneath is a paragraph that shows a link to the login page in case the user has not already created an account. Underneath comes the form, which consists of two fields: "Username" and "Password", and then a blue "Sign in" button underneath, and right under is a check-box which the phrase "Remember Me" so the system will remember the user. Underneath the button is a link to reset the password in case the user has forgotten. All fields are mandatory and marked with an "*".
+    ![Log in page - large](/static/images/readme-pictures/login-page-large.JPG)
+    ![Log in page - mobile ](/static/images/readme-pictures/login-page-mobile.JPG)
 
 * __Contact Information__:
-    * The contact information page has the same design as the log-in and sign-up page. Underneath the heading is a paragraph that reads "Don't hesitate to send us a message if you have any questions, comments, or feedback. You can also reach us via the contact details down below". Below is the form for the user to send a message. There are three fields: "Name", "Email Address", and "Message". All fields are mandatory. Below is a blue send button.
+    * The contact information page has the same design as the index and menu pages. The content is the same regardless of user. Underneath the heading "Contact Information" is a paragraph that reads "Don't hesitate to send us a message if you have any questions or feedback". Below is the form for the user to send a message. On top of the form it reads "Scroll down further for more details", nofitying the user of the opening hours and address below the form. There are three fields in the form: "Name", "Email Address", and "Message". All fields are mandatory. Below is a blue send button.
     * Underneath is a section which holds two divs, one with the opening hours - these are generated from the OpeningHours model - and the other with the contact details of the establishment (made up). For mobile views these two divs are not side by side but stacked on top of each other.
-    ![Contact Information page](/static/images/readme-pictures/landing-page-admin.webp)
+    ![Contact page - top large](/static/images/readme-pictures/contact-top-large.JPG)
+    ![Contact page - bottom large](/static/images/readme-pictures/contact-bottom-large.JPG)
+    ![Contact page - top mobile](/static/images/readme-pictures/contact-top-mobile.JPG)
+    ![Contact page - middle mobile](/static/images/readme-pictures/contact-middle-mobile.JPG)
+    ![Contact page - bottom mobile](/static/images/readme-pictures/contact-bottom-mobile.JPG)
 
 * __Book Table page__:
-    * The heading reads "Book Table" which is followed by two divs underneath, one with a form the other with the opening hours. They are side by side, but on mobile view the form is on top. The opening hours are there for convenience when making a booking. If the user has not updated their name details then the page will only display "Please fill in your name in the (link to profile section) before making a reservation".
+    * Has the same hero-image as the before-mentioned pages. The heading reads "A Reservation"? which is followed by a phrase underneath "Scroll down and let's see what we can do". Underneath the hero-image is a form with the opening hours next to it. On mobile the opening hours will appear underneath. The opening hours are there for convenience when making a booking. If the user has not updated their name details then the page will only display "Please fill in your name in the (link to profile section) before making a reservation".
     * The form has three fields: "Number of guests", "Date and Time" and "Comment". Only "comment" is not mandatory. Underneath the form is a blue button that says "Book". Should the a validation error be provoked in the form a pink message will appear on top of the form with the error message. When selecting the "Date and Time" field a DateTimePicker will be activated, which makes sure that the correct datetime format is inserted. In the "Number of guests" field the arrow keys, up and down, can also be used to increase the number.
     * This page will show a header "Please log in to make a reservation" if a user arrives, using the URL, without being logged in
-    ![Book Table page](/static/images/readme-pictures/landing-page-admin.webp)
+    * When user has made a reservation they will be redirected to the "upcoming bookings" page.
+
+    ![Book Table - large](/static/images/readme-pictures/book-table-large.JPG)
+    ![Book Table - top mobile](/static/images/readme-pictures/book-table-top-mobile.JPG)
+    ![Book Table - middle mobile](/static/images/readme-pictures/book-table-middle-mobile.JPG)
+    ![Book Table - bottom mobile](/static/images/readme-pictures/book-table-bottom-mobile.JPG)
 
 * __Upcoming bookings page__:
-    * Header says "Upcoming Bookings". If the user is not logged in an error page will show. This view filters all the bookings that are tied to the user logged in, and uses the property is the Booking model "is_past_due" to check if the booking is in the future. Bookings are displayed on Bootstrap cards, and are colored according to their status. Status 0 is pending and will show as a blue card. Blue cards display "pending", "Reservation to be confirmed", date, and guests. Status 1 is accepted and will show as green, "confirmed", then all the tables connected to the booking, then date and guests. Status 2 is declined and will show as red, "Declined", then (if any) the comment tied to the booking, then the date and guests. Underneath each card are actions. If blue or green the user can "cancel" or "Edit comment". "Cancel" links to the DeleteView page, and Edit comment to the UpdateView page, which lets the user update only the comment. The red cards only have one action available which is a link to the book table page "Book another time".
-    * On mobile view there is one booking per row, on small two, medium three, and largest as many as fits the width of the screen. It paginates on 6 items, so that is the maximum.
-    ![Upcoming bookings page](/static/images/readme-pictures/landing-page-admin.webp)
+    * Same hero-image as before-mentioned pages. Header says "Your Upcoming Bookings". If the user is not logged in an error page will show. This view filters all the bookings that are tied to the user logged in and are in the future. Bookings are displayed on top of each other, the datetime being shown in white text, 0.2 opacity background, and white borders. Status 0 is pending and will show as a grey background. Status 1 is accepted and will give a green background. Status 2 is declined and will show as red background. Each booking links to a booking details page.
+    * The booking paginates by three
+    ![Upcoming bookings page](/static/images/readme-pictures/upcoming-bookings-large.JPG)
+    ![Upcoming bookings page](/static/images/readme-pictures/upcoming-bookings-mobile.JPG)
+
+* __Booking details page__:
+    * Same hero-image. Heading reads "Booking Details". Underneath the details of the booking are shown. According to status it displays "To be confirmed", "Accepted", or "Declined". Underneath is the full name of the user, the datetime, the number of guests, the comment (if any), and two buttons; red for Cancel booking and blue for Edit comment. If the booking has been declined there will be a blue button linking to the booking page, urging the user to book another time.
+    ![Booking Details large](/static/images/readme-pictures/booking-details-large.JPG)
+    ![Booking Details declined large](/static/images/readme-pictures/booking-details-declined-large.JPG)
+    ![Booking Details declined mobile](/static/images/readme-pictures/booking-details-declined-mobile.JPG)
 
 * __Detele booking page__:
     * The header says "Delete booking". Underneath is a paragraph that says "Are you sure you want to delete the reservation?". Underneath are the details of the booking: Name, Date, Time, and guests. Underneath are two buttons: red button "Delete" and blue button "return". There is no like on the other pages which signifies that it is a serious action that is permanent. The design is narrow and does not change on mobile. If booking is closer than two hours away (booking property latest_cancellation) the page will display "Time limit exceeded. Cancellation is unfortunately no longer possible. Please get in contact with the restaurant if further information is needed"
-    ![Delete booking page](/static/images/readme-pictures/landing-page-admin.webp)
+    ![Delete booking page](/static/images/readme-pictures/cancel-booking-mobile.JPG)
 
 * __Update comment page__:
     * Simple design. Header says "Update booking", underneath is a big comment field. Underneath is a blue button "Update". Next to the button is a link to return to the "Upcoming bookings" page "return".
+    ![Update comment page large](/static/images/readme-pictures/edit-comment-large.JPG)
+    ![Update comment page mobile](/static/images/readme-pictures/edit-comment-mobile.JPG)
 
 * __Previous bookings page__:
-    * Similar set up as "upcoming bookings" page. If the user is not logged in an error page will show. Setup of cards is the same as on the other site only filtering the false of is_due_date with the user. Also, there are no action buttons for the cards.
-    ![Previous bookings page](/static/images/readme-pictures/landing-page-admin.webp)
+    * Similar set up as "upcoming bookings" page. If the user is not logged in an error page will show. Queryset is set to previous from datetime.now(). 
+    ![Previous bookings large](/static/images/readme-pictures/previous-bookings-large.JPG)
+    ![Previous bookings mobile](/static/images/readme-pictures/previous-bookings-mobile.JPG)
+
+* __Previous bookings details page__:
+    * Similar design as the booking details, but since the booking is past time the user does not have the option to edit or cancel the booking.
+    ![Previous bookings details large](/static/images/readme-pictures/previous-bookings-details-large.JPG)
+    ![Previous bookings details mobile](/static/images/readme-pictures/previous-bookings-details-mobile.JPG)
 
 * __Profile page__:
-    * Simple design in line with the other sites using forms. Header says "Profile" and underneath is a form. The form has five fields: "Username", "First name", "Last name", "Email", and "Password". All except for password are mandatory. Underneath the form is a paragraph with a link to change the password. Underneath the form is a blue button "Save" which will update the details of the profile. Updating name details here will allow the user to make reservations.
-    ![Profile page](/static/images/readme-pictures/landing-page-admin.webp)
+    * Design in line with the other sites. Header says "Profile" and underneath the image is a form. The form has five fields: "Username", "First name", "Last name", "Email", and "Password". All except for password are mandatory. Underneath the form is a paragraph with a link to change the password. Underneath the form is a blue button "Save" which will update the details of the profile. Updating name details here will allow the user to make reservations.
+    ![Profile page - large](/static/images/readme-pictures/profile-large.JPG)
+    ![Profile page - top mobile](/static/images/readme-pictures/profile-top-mobile.JPG)
+    ![Profile page - bottom mobile](/static/images/readme-pictures/profile-bottom-mobile.JPG)
 
 * __Log out page__:
     * Very simple design in line with the other allauth pages. Header "Sign out". Underneath a paragraph "Are you sure you want to sign out?". Underneath a blue button "Sign Out".
-    ![Log out page](/static/images/readme-pictures/landing-page-admin.webp)
+    ![Log out page - large](/static/images/readme-pictures/signup-page-large.JPG)
+    ![Log out page - mobile](/static/images/readme-pictures/signup-page-mobile.JPG)
 
 * __Pending bookings page__:
-    * Similar design as the "Upcoming bookings" page. If a non-superuser arrives then page will show "You need admin credentials to access this page". Pending reservations (status 0) are filtered to the admin. Admin can see on the booking if tables have been assigned. Underneath the bookings there are two choices: "Cancel" which will take admin to the "Cancel Booking" page, and "Approve/Decline" which takes admin to an extended version of UpdateView. Cards are similarly to the other pages also paginated by six.
-    ![Pending bookings page](/static/images/readme-pictures/landing-page-admin.webp)
+    * Page does not share the design of the other pages as this is an "extra" page for the admin. Admin has the capabilities in the admin panel, and technically does not need this page. If a non-superuser arrives then page will show "You need admin credentials to access this page". Pending reservations (status 0) are filtered to the admin. Bookings are displayed using Bootstrap cards. Admin can see on the booking if tables have been assigned. Underneath the bookings there are two choices: "Cancel" which will take admin to the "Cancel Booking" page, and "Approve/Decline" which takes admin to an extended version of UpdateView. Cards/bookings are paginated by three.
+    ![Pending bookings page -large](/static/images/readme-pictures/pending-bookings-large.JPG)
+    ![Pending bookings page - mobile](/static/images/readme-pictures/pending-bookings-mobile.JPG)
 
 * __Approve/decline booking page__:
-    * Heading reads "Approve or Decline Booking". Underneath are important asterix comments: "* If declining: Add a comment to the customer and remove tables." - this is a chance to explain to the client why the booking was declined. Also, if tables are not removed then they will stay as occupied for other reservations. This can still be changed on the admin site, but it's still good to remember to do it here. Secondly, "* To select/deselect tables, press and hold control/command key when adding/removing" - This is simply to explain how to manage the table-field, if needed.Underneath are two buttons: blue "Update" and under is a white "Return".
+    * Heading reads "Approve or Decline Booking". Underneath are important asterix comments: "* If declining: Add a comment to the customer and remove tables." - this is a chance to explain to the client why the booking was declined. Also, if tables are not removed then they will stay as occupied for other reservations. This can still be changed on the admin site, but it's still good to remember to do it here. Secondly, "* To select/deselect tables, press and hold control/command key when adding/removing" - This is simply to explain how to manage the table-field, if needed. Underneath are two buttons: blue "Update" and under is a white "Return".
     * If status is set to approved and updated an email will be sent:
     Subject: Dre's Diner booking
     From: dresdiner@email.com
@@ -101,6 +138,7 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
     <164029106357.53006.4891105094604906206@ws-a179a4a9-ce31-4837-8329-6d89e01dd653>
 
     Hello {{user.first_name}}, your booking is confirmed on {{booking.booking_start}}. Please note that cancellations must be made minimum two hours before. We look forward to seeing you.
+
     * If status is set to declined a different email will be sent:
     Subject: Dre's Diner booking
     From: dresdiner@email.com
@@ -111,21 +149,24 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
 
     Hello {{user.first_name}}. Unfortunately, we are not able to accomodate your booking on {{booking.booking_start}}. For more information please see the comment left by the restaurant or contact us via our website.
 
-    ![Pending bookings page](/static/images/readme-pictures/landing-page-admin.webp)
-    ![Email sent approved](/static/images/readme-pictures/landing-page-admin.webp)
-    ![Email sent declined](/static/images/readme-pictures/landing-page-admin.webp)
-    ![Pending bookings page updated comment](/static/images/readme-pictures/landing-page-admin.webp)
+    ![Approve/Decline bookings - large](/static/images/readme-pictures/approve-decline-large.JPG)
+    ![Approve/Decline bookings - mobile](/static/images/readme-pictures/approve-decline-bottom-mobile.JPG)
 
 * __Updated Bookings page__:
-    * This page shows the admin the future bookings that have been updated in the comments. It filters updated on > created on, and also if there are any comments. The setup is the same as on the other bookings pages with the bookings on cards. Underneath each card the admin has two actions: "Cancel" and "See details". "Cancel" will take the admin to the "Cancel booking" page, and See details will take the admin to another Update booking page. Cards are paginated by 6 as in the other pages.
-    ![Updated bookings page](/static/images/readme-pictures/landing-page-admin.webp)
+    * This page shows the admin the future bookings that have been updated in the comments. It filters updated on > created on, and also if there are any comments. The setup is the same as on the other admin page with the bookings on cards. Underneath each card the admin has two actions: "Cancel" and "See details". "Cancel" will take the admin to the "Cancel booking" page, and See details will take the admin to another Update booking page. Cards are paginated by 6 as in the other pages.
+    ![Updated bookings page - large](/static/images/readme-pictures/updated-bookings-large.JPG)
+    ![Updated bookings page - mobile](/static/images/readme-pictures/updated-bookings-mobile.JPG)
 
-* __Update booking admin page__:
+* __Update booking details admin page__:
     * This is essentially the same page as the approve/decline bookings, but has a different heading "Update booking". This extra page is created as bookings are likely accepted before they are updated, and another forms feels correct.
-    ![Update bookings admin page](/static/images/readme-pictures/landing-page-admin.webp)
+    ![Update bookings details admin page - large](/static/images/readme-pictures/update-booking-details-large.JPG)
+    ![Update bookings details admin page top - mobile](/static/images/readme-pictures/update-booking-details-top-mobile.JPG)
+    ![Update bookings details admin page bottom - mobile](/static/images/readme-pictures/update-booking-details-bottom-mobile.JPG)
 
 * __footer__:
     * Footer is dark grey with centered text. It reads "Made by Dre" Underneath are links to social media: Facebook, Youtube, Github, and Instagram. All links open in a new page. Links simply go to the main pages, except for Github which leads to my personal repository.
+    ![Footer - large](/static/images/readme-pictures/footer-large.JPG)
+    ![Footer - mobile](/static/images/readme-pictures/footer-mobile.JPG)
 
 ### Future features to implement
 
