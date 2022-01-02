@@ -23,7 +23,7 @@
 
               {% csrf_token %}
               {{ form|crispy }}
-              <button type="submit" class="btn btn-lg my-3 booking-button text-white">Book</button>
+              <button type="submit" class="btn btn-lg my-3 btn-primary text-white">Book</button>
 
           </form>
       </div>
@@ -43,7 +43,7 @@
 <div class="row heading-space">
     <div class="col-3 h1-bg mx-auto d-flex align-items-end justify-content-center">
         <div class="col-9 col-lg-6">
-            <p class="text-center">Please fill in your name in the <a style="text-decoration: underline;" href="{% url 'reservations:profile' %}">profile section</a> before making a reservation
+            <p class="text-center">Please fill in your details in the <a style="text-decoration: underline;" href="{% url 'reservations:profile' %}">profile section</a> before making a reservation
             </p>
         </div>
     </div>

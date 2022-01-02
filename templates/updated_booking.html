@@ -32,8 +32,8 @@
             <li class="list-group-item">{{booking.number_guests}} guests</li>
         </ul>
         <div class="card-body rounded-bottom">
-            <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="card-link">Cancel</a>
-            <a href="{% url 'reservations:admin_update_booking' booking.slug %}" class="card-link">See details</a>
+            <a href="{% url 'reservations:cancel_booking' booking.slug %}" style="text-decoration: underline 1px;" class="card-link">Cancel</a>
+            <a href="{% url 'reservations:admin_update_booking' booking.slug %}" style="text-decoration: underline 1px;" class="card-link">See details</a>
         </div>
     </div>
     {% endif %}

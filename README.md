@@ -437,7 +437,6 @@ Current bugs to fix:
 - Add alt text to pictures
 - Should I keep the moveable tables?
 - Fix test for model, string + datetime shit
-- Update greeting for logged in user with no first name given
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
 pip3 install -r requirements.txt

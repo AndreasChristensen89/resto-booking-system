@@ -12,11 +12,17 @@
     {% for booking in booking_list %}
        <a href="{% url 'reservations:booking_detail' booking.slug %}">
         <div class="col-12 my-5 card-animation text-center mb-2 animation">
-        <h4 class="h4">{{booking.booking_start}}</h4>
+        {% if booking.status == 0 %}
+        <h4 class="h4 mx-auto border booking-pending">{{booking.booking_start}}</h4>
+        {% elif booking.status == 1 %}
+        <h4 class="h4 mx-auto border booking-accepted">{{booking.booking_start}}</h4>
+        {% else %}
+        <h4 class="h4 mx-auto border booking-declined">{{booking.booking_start}}</h4>
+        {% endif %}
        </div>
         </a>
     {% empty %}
-        <div class="col-12 my-5 card-animation text-center mb-2 animation">
+        <div class="col-12 card-animation text-center">
         <h4 class="h4">Currently no bookings</h4>
         </div>
     {% endfor %}

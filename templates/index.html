@@ -17,30 +17,51 @@
             </div>
         {% else %}
             <div class="col text-center cover-welcome">
-                <h2 class="h2 mx-auto">Good to see you, {{user.user_name}}</h2>
+                <h2 class="h2 mx-auto">Good to see you, {{user.username}}</h2>
             </div>
         {% endif %}
 <!-- -------------------------- call to action logged in -------------------------------- -->
-        
+{% if user.is_superuser %}
 <div class="row text-center">
-    <div class="col-4 cta-animation animation">
-        <a href="{% url 'reservations:book_table' %}">
-            <h3 class="h3">Booking</h3>
+    <div class="col-4 cta-animation animation border">
+        <a href="{% url 'reservations:bookings_pending' %}">
+            <h3 class="h3">Pending Bookings</h3>
         </a>
     </div>
 
-    <div class="col-4 cta-animation animation">
+    <div class="col-4 cta-animation animation border d-flex justify-content-center align-items-center">
         <a href="/menu">
         <h3 class="h3">Menu</h3>
         </a>
     </div>
 
-    <div class="col-4 cta-animation animation">
-        <a href="{% url 'reservations:profile' %}">
-            <h3 class="h3">Profile</h3>
+    <div class="col-4 cta-animation animation border">
+        <a href="{% url 'reservations:bookings_updated' %}">
+            <h3 class="h3">Updated Bookings</h3>
         </a>
     </div>
 </div>
+{% elif user.is_authenticated %}
+<div class="row text-center">
+    <div class="col-4 cta-animation animation border">
+        <a href="{% url 'reservations:book_table' %}">
+            <h3 class="h3">New Booking</h3>
+        </a>
+    </div>
+
+    <div class="col-4 cta-animation animation border d-flex justify-content-center align-items-center">
+        <a href="/menu">
+        <h3 class="h3">Menu</h3>
+        </a>
+    </div>
+
+    <div class="col-4 cta-animation animation border">
+        <a href="{% url 'reservations:booking_list' %}">
+            <h3 class="h3">My Bookings</h3>
+        </a>
+    </div>
+</div>
+{% endif %}
 
 </section>
 
@@ -80,7 +101,7 @@
 
 <div class="row text-center">
         <div class="col-12">
-            <h2 class="h2 display-3">About us</h2>
+            <h2 class="h2 display-3 mt-3">About us</h2>
         </div>
         <div class="col-12 col-sm-6 p-5">
             <p>Founded in 1982, Dre's Diner has been the go-to local spot in Rønneholtparken over four decades. Our

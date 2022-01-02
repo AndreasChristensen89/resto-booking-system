@@ -10,6 +10,13 @@
     </div>
     <div class="row">
        <div class="col-12 card-animation text-center mb-2">
+        {% if booking.status == 0 %}
+            <h3 class="h3">To be confirmed</h3>
+        {% elif booking.status == 1 %}
+            <h3 class="h3">Accepted</h3>
+        {% else %}
+            <h3 class="h3">Declined</h3>
+        {% endif %}
         <h3 class="h3">{{booking.author.first_name}} {{booking.author.last_name}}</h3>
         <p class="text lead">{{booking.booking_start}}</p>
         <p class="text lead">{{booking.number_guests}} guests</p>
