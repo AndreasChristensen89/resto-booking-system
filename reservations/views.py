@@ -117,6 +117,19 @@ class BookingDetail(View):
             }
             )
 
+class BookingDetailPrevious(View):
+    def get(self, request, slug, *args, **kwargs):
+        queryset = Booking.objects.all()
+        booking = get_object_or_404(queryset, slug=slug)
+
+        return render(
+            request,
+            'booking_detail_previous.html',
+            {
+                "booking": booking,
+            }
+            )
+
 #tested
 class BookingUpdated(generic.ListView):
     """
@@ -140,7 +153,7 @@ class BookingPending(generic.ListView):
         status=0
     )
     template_name = 'pending_bookings.html'
-    paginate_by = 6
+    paginate_by = 3
 
 # tested
 class CancelBookingView(DeleteView):

@@ -9,9 +9,15 @@
     </div>
     <div class="row">
     {% for booking in booking_list %}
-       <div class="col-12 my-2 card-animation text-center mb-2 animation">
+    <a href="{% url 'reservations:booking_detail_previous' booking.slug %}">
+        <div class="col-12 my-5 card-animation text-center mb-2 animation">
         <h4 class="h4">{{booking.booking_start}}</h4>
        </div>
+    </a>
+    {% empty %}
+        <div class="col-12 my-5 card-animation text-center mb-2 animation">
+        <h4 class="h4">Currently no bookings</h4>
+        </div>
     {% endfor %}
 </div>
 </section>

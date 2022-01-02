@@ -8,13 +8,17 @@
     <div class="booking-cover-text">
         <h1>Your upcoming bookings</h1>
     </div>
-    <div class="row">
+<div class="row">
     {% for booking in booking_list %}
        <a href="{% url 'reservations:booking_detail' booking.slug %}">
         <div class="col-12 my-5 card-animation text-center mb-2 animation">
         <h4 class="h4">{{booking.booking_start}}</h4>
        </div>
         </a>
+    {% empty %}
+        <div class="col-12 my-5 card-animation text-center mb-2 animation">
+        <h4 class="h4">Currently no bookings</h4>
+        </div>
     {% endfor %}
 </div>
 </section>
