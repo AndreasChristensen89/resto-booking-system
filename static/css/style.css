@@ -288,12 +288,12 @@ a:hover, a:active {
 @keyframes booking-animation {
     from {
         opacity: 0;
-        top: 275px;
+        top: 240px;
     }
 
     to {
         opacity: 1;
-        top: 275px;
+        top: 240px;
     }
 }
 

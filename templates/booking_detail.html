@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero-outer">
+    <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
+        alt="Fresh ingredients items on a black surface">
+    <div class="booking-cover-text">
+        <h1>Booking Details</h1>
+    </div>
+    <div class="row">
+       <div class="col-12 card-animation text-center mb-2">
+        <h3 class="h3">{{booking.author.first_name}} {{booking.author.last_name}}</h3>
+        <p class="text lead">{{booking.booking_start}}</p>
+        <p class="text lead">{{booking.number_guests}} guests</p>
+        {% for table in booking.table.all %}
+            <p class="text lead">1 x table for {{table.seats}}</p>
+        {% endfor %}
+        {% if booking.comment %}
+            <p class="text">{{booking.comment}}</p>
+        {% endif %}
+        {% if booking.status != 2%}
+            <a href="{% url 'reservations:cancel_booking' booking.slug %}" class="btn btn-danger mx-2">Cancel</a>
+            <a href="{% url 'reservations:update_booking' booking.slug %}" class="btn btn-primary">Edit comment</a>
+        {% else %}
+            <a href="{% url 'reservations:book_table' %}" class="btn btn-primary">Book another time</a>
+        {% endif %}
+       </div>
+    </div>
+</section>
+{% endblock %}

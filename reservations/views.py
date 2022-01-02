@@ -103,6 +103,20 @@ class BookingListPrevious(generic.ListView):
     template_name = 'booking_list_previous.html'
     paginate_by = 3
 
+
+class BookingDetail(View):
+    def get(self, request, slug, *args, **kwargs):
+        queryset = Booking.objects.all()
+        booking = get_object_or_404(queryset, slug=slug)
+
+        return render(
+            request,
+            'booking_detail.html',
+            {
+                "booking": booking,
+            }
+            )
+
 #tested
 class BookingUpdated(generic.ListView):
     """
