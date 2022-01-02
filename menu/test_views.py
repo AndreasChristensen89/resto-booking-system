@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+
 class TestViews(TestCase):
 
     def test_get_menu_list(self):

@@ -19,9 +19,9 @@ class TestBookingDetails(TestCase):
 
     def test_objects_are_created(self):
         BookingDetails.objects.create(
-        booking_duration=120,
-        table_assign_method=1,
-        assign_method_limit=50,
+            booking_duration=120,
+            table_assign_method=1,
+            assign_method_limit=50,
         )
         self.assertEqual(BookingDetails.objects.all().count(), 1)
         self.assertEqual(BookingDetails.objects.all()[0].booking_duration, 120)
@@ -30,7 +30,7 @@ class TestBookingDetails(TestCase):
 
     def test_assign_limit_automatically_100(self):
         BookingDetails.objects.create(
-        booking_duration=120,
-        table_assign_method=1,
+            booking_duration=120,
+            table_assign_method=1,
         )
         self.assertEqual(BookingDetails.objects.all()[0].assign_method_limit, 100)

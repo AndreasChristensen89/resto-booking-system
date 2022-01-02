@@ -251,6 +251,12 @@ Chrome Developer Tools was used for testing all media queries.
         * 19 in reservations.test_booking.py
         * 5 in reservations.test_forms.py
         * 25 in reservations.test_views.py
+        * 1 in menu.models.py
+        * 1 in contact.views.py
+        * 1 in contact.test_forms.py
+        * 3 in restaurant.test_models.py
+        * 2 in restaurant.models.py
+
 * W3 Markup Validation Service completed for all HTML pages with no errors.
 * Jigsaw test CSS file completed with no errors.
 

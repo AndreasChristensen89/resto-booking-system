@@ -17,7 +17,7 @@ class TestBookingForm(TestCase):
 
     def test_form_with_no_email_field(self):
         form = ContactForm({
-            'name': 'test', 
+            'name': 'test',
             'email_address': ''
             })
         self.assertIn('email_address', form.errors.keys())
@@ -26,7 +26,7 @@ class TestBookingForm(TestCase):
 
     def test_form_with_no_message_field(self):
         form = ContactForm({
-            'name': 'test', 
+            'name': 'test',
             'email_address': 'mosh@email.com',
             'message': ''
             })
@@ -36,7 +36,7 @@ class TestBookingForm(TestCase):
 
     def test_form_with_non_email(self):
         form = ContactForm({
-            'name': 'name', 
+            'name': 'name',
             'email_address': 'mosh.com',
             'message': 'Hi'
             })

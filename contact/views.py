@@ -34,4 +34,3 @@ def contact(request):
     form = ContactForm()
     opening_list = OpeningHours.objects.all()
     return render(request, "contact.html", {'form': form, 'opening_list': opening_list})
-
