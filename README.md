@@ -501,6 +501,7 @@ Current bugs to fix:
 - Remove moveable from tables
 - Remove for people from meals
 - Style error 404 and 500
+- Include design thoughts for css
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
 pip3 install -r requirements.txt
