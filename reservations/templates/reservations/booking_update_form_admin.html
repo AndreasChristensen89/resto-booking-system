@@ -10,6 +10,9 @@
         </div>
     </div>
 </div>
+{% for table in queryset %}
+{{table}}
+{% endfor %}
 <div class="col-9 my-4 mx-auto">
     <form method="post">{% csrf_token %}
         {{ form|crispy }}

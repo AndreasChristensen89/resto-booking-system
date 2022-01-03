@@ -498,10 +498,11 @@ Current bugs to fix:
 - Remove old CSS
 - Add booking logic for same zone
 - Add django models explanation/outline
-- Remove moveable from tables
-- Remove for people from meals
+- Remove/add for people from meals
 - Style error 404 and 500
 - Include design thoughts for css
+- Add available tables to update site
+
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
 pip3 install -r requirements.txt

@@ -23,6 +23,6 @@ class AdminBookings(admin.ModelAdmin):
 @admin.register(Table)
 class AdminTable(admin.ModelAdmin):
 
-    list_display = ('seats', 'zone', 'table_number', 'moveable')
-    search_fields = ['zone', 'seats', 'table_number', 'moveable']
-    list_filter = ('seats', 'zone', 'table_number', 'moveable')
+    list_display = ('seats', 'zone', 'table_number')
+    search_fields = ['zone', 'seats', 'table_number']
+    list_filter = ('seats', 'zone', 'table_number')

@@ -10,7 +10,6 @@ class Table(models.Model):
     table_number = models.IntegerField(unique=True, default=1)
     seats = models.IntegerField()
     zone = models.IntegerField(blank=True, default=0)
-    moveable = models.BooleanField(blank=True, default=False)
 
     def __str__(self):
         return f'Table {self.table_number} - Seats: {self.seats} - Zone: {self.zone}'

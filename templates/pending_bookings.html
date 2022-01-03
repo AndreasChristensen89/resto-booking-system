@@ -18,6 +18,8 @@
                     <p class="card-text round">Pending</p>
                     {% for table in booking.table.all %}
                         <p class="card-text">1 x table for {{table.seats}}</p>
+                    {% empty %}
+                        <p class="card-text">No tables assigned</p>
                     {% endfor %}
             </div>
             <ul class="list-group list-group-flush border">
