@@ -129,7 +129,7 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
     ![Pending bookings page - mobile](/static/images/readme-pictures/pending-bookings-mobile.JPG)
 
 * __Approve/decline booking page__:
-    * Heading reads "Approve or Decline Booking". Underneath are important asterix comments: "* If declining: Add a comment to the customer and remove tables." - this is a chance to explain to the client why the booking was declined. Also, if tables are not removed then they will stay as occupied for other reservations. This can still be changed on the admin site, but it's still good to remember to do it here. Secondly, "* To select/deselect tables, press and hold control/command key when adding/removing" - This is simply to explain how to manage the table-field, if needed. Underneath are two buttons: blue "Update" and under is a white "Return".
+    * Heading reads "Approve or Decline Booking". Underneath are important asterix comments: "* If declining: Add a comment to the customer and remove tables." - this is a chance to explain to the client why the booking was declined. Also, if tables are not removed then they will stay as occupied for other reservations. This can still be changed on the admin site, but it's still good to remember to do it here. Secondly, "* To select/deselect tables, press and hold control/command key when adding/removing" - This is simply to explain how to manage the table-field, if needed. Also, there is a link for the admin to see all current available tables for this booking, should they wish to assign/add any. Underneath the form are two buttons: blue "Update" and under is a white "Return".
     * If status is set to approved and updated an email will be sent:
     Subject: Dre's Diner booking
     From: dresdiner@email.com
@@ -163,6 +163,11 @@ The design choice is dark which I find suitable for restaurants that prefer a cl
     ![Update bookings details admin page - large](/static/images/readme-pictures/update-booking-details-large.JPG)
     ![Update bookings details admin page top - mobile](/static/images/readme-pictures/update-booking-details-top-mobile.JPG)
     ![Update bookings details admin page bottom - mobile](/static/images/readme-pictures/update-booking-details-bottom-mobile.JPG)
+
+* __Available Tables admin page__:
+    * Page follows the admin styling. Header reads "Available tables". Underneath is another header "Booking for (first name + last name)", and underneath the number of guests are mentioned.
+    * All available tables for this booking are displayed one by one, mentioning all fields for model: Table number, number of seats, and which zone.
+    ![Available tables - large](/static/images/readme-pictures/available-tables-admin.JPG)
 
 * __footer__:
     * Footer is dark grey with centered text. It reads "Made by Dre" Underneath are links to social media: Facebook, Youtube, Github, and Instagram. All links open in a new page. Links simply go to the main pages, except for Github which leads to my personal repository.
