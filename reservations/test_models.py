@@ -23,7 +23,6 @@ class TestTable(TestCase):
             table_number=1,
             seats=2,
             zone=1,
-            moveable=True
         )
         self.assertEqual(Table.objects.all().count(), 1)
 
@@ -32,8 +31,7 @@ class TestTable(TestCase):
             table_number=1,
             seats=2,
         )
-        self.assertEqual(Table.objects.all()[0].zone, 0)
-        self.assertEqual(Table.objects.all()[0].moveable, False)
+        self.assertEqual(Table.objects.all()[0].table_number, 1)
 
 
 class TestBooking(TestCase):

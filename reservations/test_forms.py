@@ -66,8 +66,7 @@ class TestBookingForm(TestCase):
         tables = Table.objects.create(
             table_number=1,
             seats=4,
-            zone=1,
-            moveable=True)
+            zone=1,)
         booking_details = create_booking_details(1)
         form = create_booking_form(4)
         self.assertTrue(form.is_valid())
@@ -82,7 +81,6 @@ class TestBookingForm(TestCase):
             table_number=1,
             seats=4,
             zone=1,
-            moveable=False
             )
         form = create_booking_form(-1)
         self.assertFalse(form.is_valid())
@@ -106,7 +104,6 @@ class TestBookingForm(TestCase):
             table_number=1,
             seats=2,
             zone=1,
-            moveable=False
             )
         form = create_booking_form(4)
         self.assertFalse(form.is_valid())
@@ -121,13 +118,11 @@ class TestBookingForm(TestCase):
             table_number=1,
             seats=2,
             zone=1,
-            moveable=False
             )
         Table.objects.create(
             table_number=2,
             seats=2,
             zone=2,
-            moveable=False
             )
         form = create_booking_form(4)
         self.assertFalse(form.is_valid())
@@ -142,13 +137,11 @@ class TestBookingForm(TestCase):
             table_number=1,
             seats=2,
             zone=1,
-            moveable=False
             )
         Table.objects.create(
             table_number=2,
             seats=2,
             zone=2,
-            moveable=False
             )
         form = create_booking_form(4)
         self.assertTrue(form.is_valid())
@@ -163,7 +156,6 @@ class TestBookingForm(TestCase):
             table_number=1,
             seats=4,
             zone=1,
-            moveable=False
             )
         form = create_booking_form(4)
         self.assertFalse(form.is_valid())
@@ -178,7 +170,6 @@ class TestBookingForm(TestCase):
             table_number=1,
             seats=4,
             zone=1,
-            moveable=False
             )
         form = create_booking_form(0)
         self.assertFalse(form.is_valid())
@@ -192,7 +183,7 @@ class TestBookingForm(TestCase):
             table_number=1,
             seats=4,
             zone=1,
-            moveable=True)
+            )
         booking_details = create_booking_details(1)
         form = BookTableForm({
             'number_guests': 2,

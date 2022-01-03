@@ -479,6 +479,8 @@ In order for menu to be displayed Admin must add items (This is already set on d
         * Meal must be linked to a category
         * Slug is automatically added
 
+* Warning: Admin can rely on booking logic to not conflict tables and bookings, but Admin is able to manually assign the same tables to concurrent bookings. Admin is advised to rely on the logic, or to make sure to use the Available Tables site when updating and accepting bookings (if sorting is turned off). If the admin wants to create a booking then it is best done from the site, as the logic does not work in the Admin administration system.
+
 ## Setup explanation
 * I added a restaurant model to have the restaurant be able to set specific requirements for bookings. Opening hours, booking duration
 * Installed Pillow for image upload.
@@ -505,9 +507,6 @@ In the BookingDetails model Admin can change sorting method or turn it off compl
 * Tables from same zone
 * Any Tables
 
-### Same zone tables
-1. 
-
 ### Any tables
 
 1. Firstly, the function seeks to bring an exact match with table-size/number of people. 
@@ -525,13 +524,24 @@ In the BookingDetails model Admin can change sorting method or turn it off compl
 5. If three tables are not sufficient then tables will be added one by one, largest to smallest.
     - If sum of seats exceeds number of guests then last table will not be added, and it, along with the following smaller tables, is checked for which one gives fewest losses.
     - Seeks to only add one table to preserve tables
-6. Once tables are assigned Admin is still free to change tables in admin settings.
-7. This logic assumes that the restaurant is able to move tables around
+6. Once tables are assigned Admin is still free to change tables.
+
+### Same zone tables
+1. Method uses a list of all available tables
+2. Creates lists of each zone's tables.
+3. Loops through each zone-list and checks if sum of seats >= guests
+4. If sum passes then each zone-list is run through same logic as any-tables logic
+5. The result with the fewest losses is returned.
+
+### Limitations of table sort logic
+* The logic is limited in that it does not factor in moveable tables, but is only able to go by zone. Zones may not be easy to handle in real life, depending on the restaurant setup, and the logic may end up not finding what would be an obvious solution.
+    * In this I am mostly referring to larger parties that require multiple tables. Tables may be in the same zone, but not optimal to put next to each other. Also, tables from two zones may be easily put together in real life, but should not in general be in the same zone and thus not able to be sorted with the current logic.
+    * 
+* Admin
 
 
-## Additional comments on setup
+## Django apps
 * In first I included first_name and last_name in the Booking model, but it seemed extensive, especially when a user was already created. Instead, I found it better to require to add contact details before making a booking. This way the same user can easily book again, and the details are taken from the user. The first_name and last_name could be cut from the booking, thus making it more appropriate to book using only a datetime and guests number.
-* Height of body is set to 100 to fill the screen
 
 
 command used for copying authentication templates to directory. Once copied we can make changes to the styling, and the content
@@ -572,7 +582,6 @@ Current bugs to fix:
 - Updating a booking removes the tables - see if can implement logic in updateview - does it? Can't replicate
 - Fix message for opening hours to reflect latest reservation time - DONE
 - Add alt text to pictures
-- Should I keep the moveable tables?
 - Fix test for model, string + datetime shit
 - Remove old CSS
 - Add booking logic for same zone

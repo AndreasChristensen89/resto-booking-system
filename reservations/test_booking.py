@@ -12,9 +12,9 @@ class TestReturnTables(TestCase):
 
     def test_only_same_zone_returned(self):
         booking_details = create_booking_details(1)
-        Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
-        Table.objects.create(table_number=2, seats=2, zone=2, moveable=False)
-        Table.objects.create(table_number=3, seats=4, zone=3, moveable=False)
+        Table.objects.create(table_number=1, seats=2, zone=1)
+        Table.objects.create(table_number=2, seats=2, zone=2)
+        Table.objects.create(table_number=3, seats=4, zone=3)
         tables_for_two = return_tables(datetime.datetime(2021, 12, 12, 10, 0), 2, 1)
         tables_for_four = return_tables(datetime.datetime(2021, 12, 12, 10, 0), 4, 1)
         self.assertEqual(len(tables_for_two), 1)
@@ -22,9 +22,9 @@ class TestReturnTables(TestCase):
 
     def test_returns_tables_from_different_zones(self):
         booking_details = create_booking_details(2)
-        Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
-        Table.objects.create(table_number=2, seats=2, zone=2, moveable=False)
-        Table.objects.create(table_number=3, seats=4, zone=3, moveable=False)
+        Table.objects.create(table_number=1, seats=2, zone=1)
+        Table.objects.create(table_number=2, seats=2, zone=2)
+        Table.objects.create(table_number=3, seats=4, zone=3)
         all_tables = return_tables(datetime.datetime(2021, 12, 12, 10, 0), 8, 2)
         self.assertEqual(len(all_tables), 3)
 
@@ -77,17 +77,17 @@ class TestReturnAllAvailableTables(TestCase):
 
     def test_all_tables_returned(self):
         booking_details = create_booking_details(1)
-        Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
-        Table.objects.create(table_number=2, seats=2, zone=2, moveable=False)
-        Table.objects.create(table_number=3, seats=4, zone=3, moveable=False)
-        Table.objects.create(table_number=4, seats=4, zone=4, moveable=False)
+        Table.objects.create(table_number=1, seats=2, zone=1)
+        Table.objects.create(table_number=2, seats=2, zone=2)
+        Table.objects.create(table_number=3, seats=4, zone=3)
+        Table.objects.create(table_number=4, seats=4, zone=4)
         tables = return_all_available_tables(datetime.datetime(2021, 12, 12, 10, 0), datetime.datetime(2021, 12, 12, 13, 0))
         self.assertEqual(len(tables), 4)
 
     def test_does_not_returned_occupied_table(self):
         booking_details = create_booking_details(1)
-        Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
-        Table.objects.create(table_number=2, seats=2, zone=1, moveable=False)
+        Table.objects.create(table_number=1, seats=2, zone=1)
+        Table.objects.create(table_number=2, seats=2, zone=1)
         booking = create_booking('john', datetime.datetime.strptime('2021-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
 
         tables = Table.objects.all()
@@ -97,8 +97,8 @@ class TestReturnAllAvailableTables(TestCase):
 
     def test_only_returns_if_outside_duration(self):
         booking_details = create_booking_details(1)
-        Table.objects.create(table_number=1, seats=2, zone=1, moveable=False)
-        Table.objects.create(table_number=2, seats=2, zone=1, moveable=False)
+        Table.objects.create(table_number=1, seats=2, zone=1)
+        Table.objects.create(table_number=2, seats=2, zone=1)
         booking = create_booking('john', datetime.datetime.strptime('2021-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         tables = Table.objects.all()
         booking.table.add(tables[0])
@@ -119,12 +119,12 @@ class TestReturnCombination(TestCase):
     def test_sum_of_seats_is_always_greater_or_equal_to_guests_method_one(self):
         booking_details = create_booking_details(1)
         for i in range(4):
-            Table.objects.create(table_number=i, seats=2, zone=1, moveable=False)
+            Table.objects.create(table_number=i, seats=2, zone=1)
         for i in range(3):
-            Table.objects.create(table_number=4+i, seats=4, zone=1, moveable=False)
+            Table.objects.create(table_number=4+i, seats=4, zone=1)
         for i in range(2):
-            Table.objects.create(table_number=7+i, seats=6, zone=1, moveable=False)
-        Table.objects.create(table_number=9, seats=8, zone=1, moveable=False)
+            Table.objects.create(table_number=7+i, seats=6, zone=1)
+        Table.objects.create(table_number=9, seats=8, zone=1)
 
         all_tables = Table.objects.all()
         table_list = [table for table in all_tables]
@@ -141,12 +141,12 @@ class TestReturnCombination(TestCase):
     def test_sum_of_seat_is_always_greater_or_equal_to_guests_method_two(self):
         booking_details = create_booking_details(2)
         for i in range(4):
-            Table.objects.create(table_number=i, seats=2, zone=1, moveable=False)
+            Table.objects.create(table_number=i, seats=2, zone=1)
         for i in range(3):
-            Table.objects.create(table_number=4+i, seats=4, zone=1, moveable=False)
+            Table.objects.create(table_number=4+i, seats=4, zone=1)
         for i in range(2):
-            Table.objects.create(table_number=7+i, seats=6, zone=1, moveable=False)
-        Table.objects.create(table_number=9, seats=8, zone=1, moveable=False)
+            Table.objects.create(table_number=7+i, seats=6, zone=1)
+        Table.objects.create(table_number=9, seats=8, zone=1)
 
         all_tables = Table.objects.all()
         table_list = [table for table in all_tables]
@@ -168,11 +168,11 @@ class TestReturnCombination(TestCase):
         """
 
         booking_details = create_booking_details(2)
-        Table.objects.create(table_number=1, seats=4, zone=1, moveable=False)
-        Table.objects.create(table_number=2, seats=3, zone=1, moveable=False)
-        Table.objects.create(table_number=3, seats=2, zone=1, moveable=False)
-        Table.objects.create(table_number=4, seats=3, zone=1, moveable=False)
-        Table.objects.create(table_number=5, seats=6, zone=1, moveable=False)
+        Table.objects.create(table_number=1, seats=4, zone=1)
+        Table.objects.create(table_number=2, seats=3, zone=1)
+        Table.objects.create(table_number=3, seats=2, zone=1)
+        Table.objects.create(table_number=4, seats=3, zone=1)
+        Table.objects.create(table_number=5, seats=6, zone=1)
         request_start = datetime.datetime(2021, 11, 6, 9, 0)
 
         returned_tables_one = return_tables(request_start, 9, 1)
@@ -194,11 +194,11 @@ class TestReturnCombination(TestCase):
 
     def test_function_return_error_if_integer_is_missing(self):
         booking_details = create_booking_details(1)
-        Table.objects.create(table_number=1, seats=4, zone=1, moveable=False)
-        Table.objects.create(table_number=2, seats=3, zone=2, moveable=False)
-        Table.objects.create(table_number=3, seats=2, zone=3, moveable=False)
-        Table.objects.create(table_number=4, seats=3, zone=4, moveable=False)
-        Table.objects.create(table_number=5, seats=6, zone=5, moveable=False)
+        Table.objects.create(table_number=1, seats=4, zone=1)
+        Table.objects.create(table_number=2, seats=3, zone=2)
+        Table.objects.create(table_number=3, seats=2, zone=3)
+        Table.objects.create(table_number=4, seats=3, zone=4)
+        Table.objects.create(table_number=5, seats=6, zone=5)
         request_start = datetime.datetime(2021, 11, 6, 9, 0)
 
         returned_tables = return_tables(request_start, 9, 1)
@@ -213,12 +213,12 @@ class TestSortLargerParty(TestCase):
     def test_sum_of_seats_always_greater_or_equal_to_guests(self):
         booking_details = create_booking_details(1)
         for i in range(4):
-            Table.objects.create(table_number=i, seats=2, zone=1, moveable=False)
+            Table.objects.create(table_number=i, seats=2, zone=1)
         for i in range(3):
-            Table.objects.create(table_number=4+i, seats=4, zone=1, moveable=False)
+            Table.objects.create(table_number=4+i, seats=4, zone=1)
         for i in range(2):
-            Table.objects.create(table_number=7+i, seats=6, zone=1, moveable=False)
-        Table.objects.create(table_number=9, seats=8, zone=1, moveable=False)
+            Table.objects.create(table_number=7+i, seats=6, zone=1)
+        Table.objects.create(table_number=9, seats=8, zone=1)
 
         request_start = datetime.datetime(2021, 11, 6, 12, 0)
         request_end = datetime.datetime(2021, 11, 6, 15, 0)
@@ -234,7 +234,7 @@ class TestSortLargerParty(TestCase):
         booking_details = create_booking_details(1)
 
         for i in range(4):
-            Table.objects.create(table_number=i+1, seats=2, zone=1, moveable=False)
+            Table.objects.create(table_number=i+1, seats=2, zone=1)
 
         request_start = datetime.datetime(2021, 11, 6, 12, 0)
         request_end = datetime.datetime(2021, 11, 6, 15, 0)
@@ -307,12 +307,12 @@ class TestTableMethodSameZone(TestCase):
 
     def test_list_of_zones(self):
         for i in range(4):
-            Table.objects.create(table_number=i+1, seats=6, zone=1, moveable=True)
+            Table.objects.create(table_number=i+1, seats=6, zone=1)
         for i in range(3):
-            Table.objects.create(table_number=5+i, seats=4, zone=2, moveable=False)
+            Table.objects.create(table_number=5+i, seats=4, zone=2)
         for i in range(3):
-            Table.objects.create(table_number=8+i, seats=3, zone=3, moveable=True)
-        Table.objects.create(table_number=11, seats=8, zone=4, moveable=False)
+            Table.objects.create(table_number=8+i, seats=3, zone=3)
+        Table.objects.create(table_number=11, seats=8, zone=4)
         request_start = datetime.datetime(2021, 11, 7, 12, 0)
         request_end = datetime.datetime(2021, 11, 7, 15, 0)
         available_tables  = return_all_available_tables(request_start, request_end)
