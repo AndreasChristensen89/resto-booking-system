@@ -199,7 +199,7 @@ All applications have been tested using TestCase. Forms, models, views, and addi
     * Reservations
         * When I tested a booking I had to pass in a datetime object. On the website we pass in a string which is then converted to datetime, but this did not work for certain tests or when testing the model.
         * Test_booking. 29 tests, all pass. Testing each function in reservations.bookings.py. Checking if functions use input from models properly. For many tests I created specific tables to have multiple options to return, checking if correct ones are returned with correct priority. Had to create opening hours, bookings details, users, and tables for most of the tests. For certain tests I started for loops to test function calls with increasing number of guests, and then running self.assert... for each iteration.
-        * Test_views - 14 tests, all pass. Tested views for code 200 and correct template use. For many of them I had to create a user, at times a superuser, and log in. For the booking view I logged in and posted a correct form and then checked if a booking had been made.
+        * Test_views - 15 tests, all pass. Tested views for code 200 and correct template use. For many of them I had to create a user, at times a superuser, and log in. For the booking view I logged in and posted a correct form and then checked if a booking had been made.
         * Test_forms - 13 tests, all pass. Tested form for errors for wrong input, all fields should be there, which ones are required, minus values, wrong types, not enough tables, enough tables but one with certain method, opening hours, past booking
         * Test_models - 7 tests, all pass. Tested if object could be made, if default fields are automatically set, if slugs are generated and unique, if model properties work (booking latest_cancellation and is_due_date).
     * Restaurant
@@ -249,7 +249,7 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
     * I created a new Cloudinary account which fixed the CSS problem. However, it did not want to load pictures. I eventually solved it by loading the static to every template that had to use images from Cloudinary. Static was already loaded in base.html but did not extend. Also, I was unable to have it load css backgrounds from style.css - the url to cloudinary would be wrong - so I instead used inline styling. This was later removed as I redesigned the page to only used hero-image.
 
 ### Unfixed Bugs:
-* Forms are not completely centered, but stick to the left side of the centered box.
+* 
 
 ### Validator Testing
 * PEP8 validator for python:
@@ -270,7 +270,7 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
 * W3 Markup Validation Service completed for all HTML pages with no errors.
 * Jigsaw test CSS file completed with no errors.
 
-## Starting Django project
+# Starting Django project
 * I used the Code Insitute full-stack template for this project: https://github.com/Code-Institute-Org/gitpod-full-template
 * Create new workspace install the following:
     * Django and gunicorn: pip3 install django gunicorn
@@ -283,8 +283,8 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
     * Migrate to database: python3 manage.py migrate
     * Now the project can open by typing python3 manage.py runserver
 
-### Deployment
-#### Heroku
+## Deployment
+### Heroku
 * On dashboard on Heroku create new app, name it and set to EU
 * To to resources tab -> search for "postgres" -> add Heroku Postgres
 * Go to settings tab -> reveal config vars -> copy-paste the value of DATABASE_URL
@@ -305,7 +305,7 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
         * DATABASES = {'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))}
 * Migrate changes to new database: python3 manage.py migrate
 
-#### Cloudinary
+### Cloudinary
 * Create new Cloudinary account
 * On the dashboard copy paste the API Environment Variable
 * Back to gitpod env.py -> add: os.environ['CLOUDINARY_URL'] = 'here goes the copy-pasted variable'
@@ -324,7 +324,7 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
         * MEDIA_URL = '/media/'
         * DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-#### Last settings
+### Last settings
 * In Gitpod under settings.py:
     * Underneath BASE_DIR = Path(__file__).resolve().parent.parent add:
             * TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
@@ -348,7 +348,7 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
 * Back to Heroku Dashboard -> deploym -> choose GitHub -> search for the repository name and connect -> deploy branch
 
 
-### Create a local clone
+## Create a local clone
 1.	Open GitHub and navigate to repository here (https://github.com/AndreasChristensen89/resto-booking-system).
 2.	Click the Code drop-down menu.
 3.	Options:
@@ -364,8 +364,11 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
 ### Icons
 Icons and script were taken from https://fontawesome.com/, as well as Google's fonts: https://fonts.google.com/icons?selected=Material+Icons.
 
-### Hosting and Developemtn
-GitHub was used to host the repository, GitPot was used for development and version control, and Heroku was used to deploy site.
+### Hosting and Developement
+* GitHub was used to host the repository
+* GitPot was used for development and version control
+* Heroku was used to deploy site
+* Cloudinary was used as cloud service
 
 ## Credits
 ### Pictures
@@ -376,33 +379,6 @@ Picture credits from freepik
 hero-pic:
 <a href="https://www.freepik.com/photos/background">Background photo created by tirachard - www.freepik.com</a>
 
-cta-menu:
-<a href='https://www.freepik.com/photos/food'>Food photo created by valeria_aksakova - www.freepik.com</a>
-new menu - no attribution required, so just posting the link:
-https://pixabay.com/photos/menu-pizza-pasta-vegetables-meal-3206749/
-cta-contact:
-<a href='https://www.freepik.com/photos/space'>Space photo created by freepik - www.freepik.com</a>
-cta-profile
-<a href='https://www.freepik.com/photos/technology'>Technology photo created by rawpixel.com - www.freepik.com</a>
--updated cta-profile
-<a href='https://www.freepik.com/vectors/people'>People vector created by studiogstock - www.freepik.com</a>
-- updated cta-contact
-<a href='https://www.freepik.com/photos/telephone'>Telephone photo created by freepik - www.freepik.com</a>
-
-sign-up-cta:
-<a href='https://www.freepik.com/photos/hand'>Hand photo created by rawpixel.com - www.freepik.com</a>
-
-pain au chocolat:
-<a href='https://www.freepik.com/photos/restaurant'>Restaurant photo created by azerbaijan_stockers - www.freepik.com</a>
-
-porridge:
-<a href='https://www.freepik.com/photos/nature'>Nature photo created by jcomp - www.freepik.com</a>
-
-breakfast eggs:
-<a href='https://www.freepik.com/photos/food'>Food photo created by jcomp - www.freepik.com</a>
-
-cereals:
-<a href='https://www.freepik.com/photos/food'>Food photo created by Racool_studio - www.freepik.com</a>
 
 ### Text content
 Content was all formulated by myself, but for the menu I took inspiration from various websites with food, descriptions etc.
@@ -418,6 +394,7 @@ Content was all formulated by myself, but for the menu I took inspiration from v
 
 ### Design
 - For design of the different pages I didn't use other sources of information other than my previous projects.
+- I recided to redesign the entire site thus making it a lot more minimal. Inspiration came from my family.
 - No wireframes were used
 
 ## User stories
@@ -448,7 +425,7 @@ The purpose of this site is to create a simple site for a restaurant that handle
 The scope is limtited in functionality, but does implement logic to assign tables with reasonable complexity. It could for sure be more complex and specific. Options for handling bookings are limited but should be completely functional.
 
 ## Structure
-The flow of the website is simple and should be intuitive for most people. Navbar has everything the user needs to find their way around. In case there is confusion about how the setup works there is a clear path to contact the restaurant both with messages, phones and their address. On the landing page users are shown the call to action divs that encourage them to register.
+The flow of the website is simple and should be intuitive for most people. Navbar has everything the user needs to find their way around. In case there is confusion about how the setup works there is a clear path to contact the restaurant both with messages, phones and their address. On the landing page users are shown the call to action divs that encourage them to register, and if logged in they are directed to the the most common pages.
 
 ## Surface
 
@@ -457,13 +434,16 @@ The flow of the website is simple and should be intuitive for most people. Navba
 - The site should be easy for the eyes, meaning that there should be no overlapping animations that confuse users.
 - It should be clear to the user what can be clicked on.
 - Information should not be detailed but fast to read and understand, and straight to the point.
+- All pages should share design
 
 ### Color Scheme
-Dark colors are chosen to give a serious professional vibe. On all pages there is a play between black and white. Black background and white text. Blue is generally used to signal progress and/or pending. Green is used to signal confirmation. Red is used to signal cancellation or declined. The black background resembles dark rocks and gives, in my opinion, a nice constrast with the white text.
+There is a play between bright and dark, and the colors are centered around brown. Bright restaurant background with a wooden feel. White is used to for choices and grey, red, and white signal status. Green is used to signal confirmation. Red is used to signal cancellation or declined. Grey is used for pending. The dark brown background resembles and gives, in my opinion, a nice constrast with the hero-image.
 
 ### Choice of text
+Lato was the choice. I experimented with a lot of fonts from Google, but in the end Lato was the best in my opinion.
 
-### Pictures/characters
+### Pictures
+There is only one picture used, which is a wooden bar desk with a blurry background. It is bright and has a brown/wood based theme. I find it relaxing and simple, and hope that others will feel the same way.
 
 ### Languages Used
 - HTML
@@ -475,11 +455,12 @@ Dark colors are chosen to give a serious professional vibe. On all pages there i
 ### Accessibility
 All non-text elements are marked with aria-labels, and the contrast between background and foreground colors were implemented in color scheme.
 
-## Admin setup
+# Admin setup
 Admin credentials (superuser)
 username: admin
 password: themagickey
 
+## Must have settings
 In order for booking logic to work admin must set up the following (This is already set on deployment, but can be changed):
 * Under Restaurant:
     - In BookingDetails add one object:
@@ -507,7 +488,7 @@ In order for menu to be displayed Admin must add items (This is already set on d
 * In order to add the ManyToManyField in the Booking model I had to save the booking first in the view and then afterwards attach the tables, and finally save again. This caused a lot of trouble but it works now.
 
 
-### Complete Booking Logic
+## Booking Logic
 1. User must create a profile in order to make reservations. Profile must include first name and last name.
 2. User precifies number of guests and datetime, comment can be made but is not needed
 3. Form validates opening hours, datetime (past), number of available tables, number of people and gives validation errors if any conflicts exist
@@ -518,10 +499,17 @@ In order for menu to be displayed Admin must add items (This is already set on d
 8. If Admin accepts the booking will turn green and give a confirmed message as well as an email. if Admin declines the booking will turn red and send a different email It's possible for Admin to change a declined to an accepted and vice versa. After action the booking will disappear from the pending page.
 
 
-TABLE SORT LOGIC - 
+## Table sorting methods
+In the BookingDetails model Admin can change sorting method or turn it off completely. There are three choices:
+* Off
+* Tables from same zone
+* Any Tables
 
-ANY TABLE:
-Admin can change sorting method or turn it off completely in the BookingDetails model
+### Same zone tables
+1. 
+
+### Any tables
+
 1. Firstly, the function seeks to bring an exact match with table-size/number of people. 
     - If there are no exact matches it will look for table-size minus one
     - This is done to keep groups at the same table, and also to preserve other tables (smaller tables are valuable for dates/small families)
@@ -540,13 +528,9 @@ Admin can change sorting method or turn it off completely in the BookingDetails 
 6. Once tables are assigned Admin is still free to change tables in admin settings.
 7. This logic assumes that the restaurant is able to move tables around
 
-SAME ZONE TABLE
-Add Logic here
-
 
 ## Additional comments on setup
 * In first I included first_name and last_name in the Booking model, but it seemed extensive, especially when a user was already created. Instead, I found it better to require to add contact details before making a booking. This way the same user can easily book again, and the details are taken from the user. The first_name and last_name could be cut from the booking, thus making it more appropriate to book using only a datetime and guests number.
-* On booking_list add comment as pop-out to card. - If declined it is there on the card
 * Height of body is set to 100 to fill the screen
 
 
@@ -597,6 +581,7 @@ Current bugs to fix:
 - Style error 404 and 500
 - Include design thoughts for css
 - Add available tables to update site
+- Add arial labels to icons
 
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt

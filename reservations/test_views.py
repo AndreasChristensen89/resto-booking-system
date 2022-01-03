@@ -145,3 +145,11 @@ class TestsViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'available_tables.html')
         self.assertTemplateUsed(response, 'base.html')
+
+    def test_booking_accepted(self):
+        my_admin = User.objects.create_superuser('superuser', 'superuser@admin.com', 'adminpass')
+        login = self.client.login(username='superuser', password='adminpass')
+        response = self.client.get(f'/reservations/accepted/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accepted_bookings.html')
+        self.assertTemplateUsed(response, 'base.html')
