@@ -140,9 +140,13 @@ class BookingUpdated(generic.ListView):
     Gets all non-declined booking with comments
     Template sorts for updates
     """
+    def get_queryset(self):
+        current_datetime = datetime.datetime.now()
+        queryset = super(BookingUpdated, self).get_queryset()
+        queryset = queryset.exclude(comment__exact='').exclude(status=2).exclude(booking_start__lt=current_datetime)
+        return queryset
     model = Booking
     context_object_name = "updated_list"
-    queryset = Booking.objects.exclude(comment__exact='').exclude(status=2)
     template_name = 'updated_booking.html'
     paginate_by = 6
 
@@ -151,11 +155,15 @@ class BookingPending(generic.ListView):
     """
     Gets all pending bookings
     """
+    def get_queryset(self):
+        current_datetime = datetime.datetime.now()
+        queryset = super(BookingPending, self).get_queryset()
+        queryset = queryset.filter(
+            status=0,
+            booking_start__gt=current_datetime)
+        return queryset
     model = Booking
     context_object_name = "pending_list"
-    queryset = Booking.objects.filter(
-        status=0
-    )
     template_name = 'pending_bookings.html'
     paginate_by = 3
 
