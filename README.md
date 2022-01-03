@@ -406,7 +406,7 @@ In order for booking logic to work admin must set up the following (This is alre
     - In BookingDetails add one object:
         * Specify Booking Duration - how many minutes each party will occupy the tables
         * Specify Table assign method - how or if the system should assign tables
-        * Specify Method Limit - automatically set to 100. This is to set a max-limit of guests to the assign table function. e.g. function will not trigger if number of guests are higher than limit
+        * Specify Method Limit - automatically set to 100, on deplyment set to 12. This is to set a max-limit of guests to the assign table function. e.g. function will not trigger if number of guests are higher than limit
     * In Opening Hours an object for each day must be added, Monday to Sunday:
         * Specify Weekday, opening time, and closing time
 
@@ -426,6 +426,17 @@ In order for menu to be displayed Admin must add items (This is already set on d
 * Added property to booking to see if it's in past or not, and also if it's too late to cancel reservation. I set it to two hours, which I believe is reasonable. In case the guests need to cancel anyway they have to call the restaurant.
 * I set use_tz to False in settings.py in order to avoid the timezone input from bookings.booking_start
 * In order to add the ManyToManyField in the Booking model I had to save the booking first in the view and then afterwards attach the tables, and finally save again. This caused a lot of trouble but it works now.
+
+
+### Complete Booking Logic
+1. User must create a profile in order to make reservations. Profile must include first name and last name.
+2. User precifies number of guests and datetime, comment can be made but is not needed
+3. Form validates opening hours, datetime (past), number of available tables, number of people and gives validation errors if any conflicts exist
+4. View code checks which sorting method/if sorting method is on, uses the method to extract tables, returns best combination, and assigns table(s) to booking.
+5. Booking is displayed on users "upcoming bookings" - color indicates status - is also displayed on admin's "pending bookings" as booking is automatically set to status 0 (pending)
+6. User can access booking details, cancel booking, or update the comment - User cannot cancel the booking if booking is less that two hours away. If user updates booking it will appear on admin's "updated bookings" site, but only if a comment is present (it's possible to update without leaving a comment)
+7. Admin can see booking details, as well as the current tables assigned to the booking. Admin is able to cancel booking directly, or accept/decline. In accept/decline admin is able to change tables, status, and comments.
+8. If Admin accepts... if Admin declines. It's possible for Admin to change a declined to an accepted and vice versa
 
 
 TABLE SORT LOGIC - 
