@@ -225,6 +225,7 @@ class ApproveReservationViewAdmin(UpdateView):
             )
         return super(ApproveReservationViewAdmin, self).form_valid(form)
 
+
 class AvailableTables(View):
     def get(self, request, slug, *args, **kwargs):
         queryset = Booking.objects.all()

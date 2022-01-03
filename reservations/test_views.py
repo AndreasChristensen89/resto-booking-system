@@ -93,7 +93,6 @@ class TestsViews(TestCase):
             table_number=2,
             seats=2,
             zone=1,
-            moveable=False
             )
         BookingDetails.objects.create(
             booking_duration=180,
@@ -136,4 +135,13 @@ class TestsViews(TestCase):
         response = self.client.get(f'/reservations/previous_bookings/{booking.slug}/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'booking_detail_previous.html')
+        self.assertTemplateUsed(response, 'base.html')
+
+    def test_available_tables(self):
+        my_admin = User.objects.create_superuser('superuser', 'superuser@admin.com', 'adminpass')
+        login = self.client.login(username='superuser', password='adminpass')
+        booking = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
+        response = self.client.get(f'/reservations/{booking.slug}/available_tables/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'available_tables.html')
         self.assertTemplateUsed(response, 'base.html')
