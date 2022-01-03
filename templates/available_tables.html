@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row mt-5 mb-4">
+    <div class="col-3 h1-bg mx-auto mt-5 d-flex align-items-end justify-content-center">
+        <div class="col-9 col-lg-6 text-center">
+            <h1 class="h1 mt-3 mb-5">Available Tables</h1>
+            <h3 class="h3">Booking for {{booking.author.first_name}} {{booking.author.last_name}}</h3>
+            <h3 class="h3">{{booking.number_guests}} guests</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row m-1 text-center">
+{% for table in list%}
+    <p class="col-12 my-1 mx-auto">{{table}}</p>
+{% empty %}
+    <h3 class="col-12 my-1 mx-auto h3">No available tables at this time</h3>
+{% endfor %}
+</div>
+
+{% endblock %}

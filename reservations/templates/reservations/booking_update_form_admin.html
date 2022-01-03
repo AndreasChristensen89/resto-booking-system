@@ -10,9 +10,7 @@
         </div>
     </div>
 </div>
-{% for table in queryset %}
-{{table}}
-{% endfor %}
+<p class="col-9 my-3 mx-auto">Click <a style="text-decoration: underline;" href="{% url 'reservations:available_tables' booking.slug %}">here</a> to see available tables</p>
 <div class="col-9 my-4 mx-auto">
     <form method="post">{% csrf_token %}
         {{ form|crispy }}

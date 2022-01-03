@@ -18,4 +18,5 @@ urlpatterns = [
     path('<slug:slug>/update/', views.UpdateReservationView.as_view(), name='update_booking'),
     path('<slug:slug>/update_admin/', views.UpdateReservationViewAdmin.as_view(), name='admin_update_booking'),
     path('<slug:slug>/approve_booking/', views.ApproveReservationViewAdmin.as_view(), name='approve_booking'),
+    path('<slug:slug>/available_tables/', views.AvailableTables.as_view(), name='available_tables'),
 ]

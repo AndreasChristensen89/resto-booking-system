@@ -10,7 +10,7 @@ from .models import Booking
 from restaurant.models import BookingDetails, OpeningHours
 from .forms import BookTableForm, ProfileForm
 from allauth.account.views import PasswordChangeView, PasswordResetView
-from .booking import double_booking, return_tables
+from .booking import double_booking, return_tables, return_all_available_tables
 import datetime
 from datetime import timedelta
 
@@ -224,6 +224,21 @@ class ApproveReservationViewAdmin(UpdateView):
                 [self.object.author.email, 'dresdiner@email.com']
             )
         return super(ApproveReservationViewAdmin, self).form_valid(form)
+
+class AvailableTables(View):
+    def get(self, request, slug, *args, **kwargs):
+        queryset = Booking.objects.all()
+        booking = get_object_or_404(queryset, slug=slug)
+        list = return_all_available_tables(booking.booking_start, booking.booking_end)
+
+        return render(
+            request,
+            'available_tables.html',
+            {
+                "list": list,
+                "booking": booking,
+            }
+            )
 
 
 class ProfileView(SuccessMessageMixin, generic.UpdateView):
