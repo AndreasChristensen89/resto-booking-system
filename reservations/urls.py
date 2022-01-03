@@ -12,6 +12,7 @@ urlpatterns = [
     path('book_table/', views.book_table, name='book_table'),
     path('updated/', views.BookingUpdated.as_view(), name='bookings_updated'),
     path('pending/', views.BookingPending.as_view(), name='bookings_pending'),
+    path('accepted/', views.BookingAccepted.as_view(), name='bookings_accepted'),
     path('bookings/<slug:slug>/', views.BookingDetail.as_view(), name='booking_detail'),
     path('previous_bookings/<slug:slug>/', views.BookingDetailPrevious.as_view(), name='booking_detail_previous'),
     path('<slug:slug>/cancel/', views.CancelBookingView.as_view(), name='cancel_booking'),

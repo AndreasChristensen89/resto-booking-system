@@ -436,7 +436,7 @@ In order for menu to be displayed Admin must add items (This is already set on d
 5. Booking is displayed on users "upcoming bookings" - color indicates status - is also displayed on admin's "pending bookings" as booking is automatically set to status 0 (pending)
 6. User can access booking details, cancel booking, or update the comment - User cannot cancel the booking if booking is less that two hours away. If user updates booking it will appear on admin's "updated bookings" site, but only if a comment is present (it's possible to update without leaving a comment)
 7. Admin can see booking details, as well as the current tables assigned to the booking. Admin is able to cancel booking directly, or accept/decline. In accept/decline admin is able to change tables, status, and comments.
-8. If Admin accepts... if Admin declines. It's possible for Admin to change a declined to an accepted and vice versa
+8. If Admin accepts the booking will turn green and give a confirmed message as well as an email. if Admin declines the booking will turn red and send a different email It's possible for Admin to change a declined to an accepted and vice versa. After action the booking will disappear from the pending page.
 
 
 TABLE SORT LOGIC - 

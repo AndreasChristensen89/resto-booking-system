@@ -160,6 +160,23 @@ class BookingPending(generic.ListView):
     paginate_by = 3
 
 
+class BookingAccepted(generic.ListView):
+    """
+    Gets all pending bookings
+    """
+    def get_queryset(self):
+        current_datetime = datetime.datetime.now()
+        queryset = super(BookingAccepted, self).get_queryset()
+        queryset = queryset.filter(
+            status=1,
+            booking_start__gt=current_datetime)
+        return queryset
+    model = Booking
+    context_object_name = "accepted_list"
+    template_name = 'accepted_bookings.html'
+    paginate_by = 3
+
+
 class CancelBookingView(DeleteView):
     """
     User and admin can cancel a booking
