@@ -6,6 +6,8 @@ Much of the content is auto generated on the pages, and the admin can set up the
 
 The development rationale for this project is to create an application that meets a real life need, which is the need for restaurant owners to digitalise the process of taking orders, sorting tables, and avoiding double bookings. Much of it should be automatic, including emails.
 
+
+# Table of contents
 - [Resto-Book](#resto-book)
   * [Features](#features)
     + [Existing Features:](#existing-features-)
@@ -418,6 +420,12 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
 
 ### Icons
 Icons and script were taken from https://fontawesome.com/, as well as Google's fonts: https://fonts.google.com/icons?selected=Material+Icons.
+
+### Datetime Picker
+A Javascript datetime picker, XDSoft DateTimePicker, was used on the booking page. It was found on this page:
+* https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
+    * Followed instructions for install, which included implementation of a script in the head and at the bottom of the html page.
+    * Was inserted into base.html
 
 ### Hosting and Development
 * GitHub was used to host the repository
