@@ -640,11 +640,13 @@ Current bugs to fix:
 <!-- - Include design thoughts for css DONE -->
 <!-- - Add available tables to update site DONE -->
 - Check conflicting user booking - testing
-- Add arial labels to icons
-- Style error 404 and 500 - To be tested on Heroku
+<!-- - Add arial labels to icons DONE -->
+- Style error 404 and 500 - DONE To be tested on Heroku
 - Add django models explanation/outline
 - Remove old CSS
 - Test HTML in validator
+- New pictures of index and menu
+- Make different contact page for logged in
 
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt

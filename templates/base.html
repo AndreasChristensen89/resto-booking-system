@@ -45,7 +45,7 @@
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/menu">Menu</a>
+            <a class="nav-link" href="/menu" aria-label="Jump to Home page">Menu</a>
           </li>
           {% if user.is_superuser %}
           <li class="nav-item dropdown">
@@ -53,17 +53,17 @@
               Admin Actions
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'reservations:bookings_pending' %}">Pending Bookings</a></li>
-              <li><a class="dropdown-item" href="{% url 'reservations:bookings_accepted' %}">Accepted Bookings</a></li>
-              <li><a class="dropdown-item" href="{% url 'reservations:bookings_updated' %}">Updated Bookings</a></li>
-              <li><a class="dropdown-item" href="{% url 'reservations:book_table' %}">Book Table</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:bookings_pending' %}" aria-label="Go to admin pending bookings">Pending Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:bookings_accepted' %}" aria-label="Go to admin accepted bookings">Accepted Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:bookings_updated' %}" aria-label="Go to admin updated bookings">Updated Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:book_table' %}" aria-label="Go to book table">Book Table</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'reservations:profile' %}">Admin Profile</a>
+            <a class="nav-link" href="{% url 'reservations:profile' %}" aria-label="Go to admin profile">Admin Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+            <a class="nav-link" href="{% url 'account_logout' %}" aria-label="Go to logout page">Logout</a>
           </li>
           {% elif user.is_authenticated %}
           <li class="nav-item dropdown">
@@ -71,29 +71,29 @@
               Booking
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'reservations:book_table' %}">New Booking</a></li>
-              <li><a class="dropdown-item" href="{% url 'reservations:booking_list' %}">Upcoming Bookings</a></li>
-              <li><a class="dropdown-item" href="{% url 'reservations:booking_list_previous' %}">Previous Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:book_table' %}" aria-label="Go to booking page">New Booking</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:booking_list' %}" aria-label="Go to user's upcoming bookings">Upcoming Bookings</a></li>
+              <li><a class="dropdown-item" href="{% url 'reservations:booking_list_previous' %}" aria-label="Go to user's previous bookings">Previous Bookings</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'reservations:profile' %}">Profile</a>
+            <a class="nav-link" href="{% url 'reservations:profile' %}" aria-label="Go to user's profile page">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'contact' %}">Contact Information</a>
+            <a class="nav-link" href="{% url 'contact' %}" aria-label="Go to contact page">Contact Information</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+            <a class="nav-link" href="{% url 'account_logout' %}" aria-label="Go to logout page">Logout</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'contact' %}">Contact Information</a>
+            <a class="nav-link" href="{% url 'contact' %}" aria-label="Go to contact page">Contact Information</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_signup' %}">Sign up</a>
+            <a class="nav-link" href="{% url 'account_signup' %}" aria-label="Go to signup page">Sign up</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+            <a class="nav-link" href="{% url 'account_login' %}" aria-label="Go to login page">Login</a>
           </li>
           {% endif %}
           </ul>
@@ -128,7 +128,7 @@
           target="_blank" rel="noopener"><i class="fab fa-facebook-square ms-3 text-white" aria-hidden="true"></i></a>
           <a href="https://youtube.com" aria-label="Visit our Youtube channel (opens in a new tab)"
           target="_blank" rel="noopener"><i class="fab fa-youtube-square ms-3 text-white" aria-hidden="true"></i></a>
-          <a href="https://github.com/AndreasChristensen89?tab=repositories" aria-label="Visit our twitter page (opens in a new tab)"
+          <a href="https://github.com/AndreasChristensen89?tab=repositories" aria-label="Visit my Github page (opens in a new tab)"
           target="_blank" rel="noopener"><i class="fab fa-github ms-3 text-white" aria-hidden="true"></i></a>
           <a href="https://instagram.com" aria-label="Visit our instagram page (opens in a new tab)"
           target="_blank" rel="noopener"><i class="fab fa-instagram-square ms-3 text-white" aria-hidden="true"></i></a></p>

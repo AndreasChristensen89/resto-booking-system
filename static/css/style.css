@@ -27,9 +27,9 @@ body {
     width: 100%;
 }
 
-.text-muted {
+/* .text-muted {
     color: #a1a8af!important;
-}
+} */
 
 a {
     text-decoration: none;
@@ -58,9 +58,9 @@ a:hover, a:active {
     text-decoration: underline;
 }
 
-.border-dark {
+/* .border-dark {
     border-color: black!important;
-}
+} */
 
 /* -------------------------- nav bar ---------------------------- */
 .navbar {
@@ -103,19 +103,19 @@ a:hover, a:active {
     opacity: 0.6;
 }
 
-#menu-image {
+/* #menu-image {
     height: 600px;
     width: 100%;
     position: absolute;
     background-size: cover;
-}
+} */
 
 
-.hero-cover {
+/* .hero-cover {
   width: 100%;
   height: 300px;
   position: relative;
-}
+} */
 
 .cover-text {
     animation-name: cover-text;
@@ -181,6 +181,13 @@ a:hover, a:active {
     height: 35px;
 }
 
+.cta-logout {
+    position: relative;
+    animation-name: cta-opacity;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
 @keyframes cta-opacity {
     from {
         opacity: 0;
@@ -193,19 +200,19 @@ a:hover, a:active {
     }
 }
 
-.cta-pic {
+/* .cta-pic {
     height: 200px;
     width: 80%;
     max-width: 250px;
     border-radius: 10%;
-}
+} */
 
-#cta-signup {
+/* #cta-signup {
     height: 200px;
     width: 100%;
     background-size: cover;
     background-position-x: center;
-}
+} */
 
 
 .icon {
@@ -213,10 +220,10 @@ a:hover, a:active {
 }
 
 
-.cta-div {
+/* .cta-div {
     padding-left: 0;
     padding-right: 0;
-}
+} */
 
 .animation {
     animation-duration: 0.5s;
@@ -235,7 +242,11 @@ a:hover, a:active {
 
 /* ----------------- bookings ------------------------- */
 
-.booking-pending, .booking-button {
+/* .booking-pending, .booking-button {
+    background-color: #55402d;
+} */
+
+.booking-pending {
     background-color: #55402d;
 }
 
@@ -259,13 +270,13 @@ a:hover, a:active {
     top: 275px;
 }
 
-.bottom-card-bg {
+/* .bottom-card-bg {
     background-color: #917058;
-}
+} */
 
-.booking-text {
+/* .booking-text {
     background-color: rgba(0, 0, 0, 0.2);
-}
+} */
 
 @keyframes booking-cover-animation {
     from {
@@ -316,19 +327,19 @@ a:hover, a:active {
 
 /* ----------------------------- book table ------------------------------ */
 
-.book-table {
+/* .book-table {
     background-color: #40597a;
     border-radius: 10%;
-}
+} */
 
-.hours {
+/* .hours {
     background-color: #40597a;
     border-radius: 10%;
-}
+} */
 
-textarea {
+/* textarea {
     max-height: 150px;
-}
+} */
 
 /* -------------------------- footer --------------------------------- */
 
@@ -361,13 +372,13 @@ textarea {
     text-decoration: underline;
 }
 
-.form-control {
+/* .form-control {
     width: 100%;
-}
+} */
 
-.title {
+/* .title {
     font-family: Roboto;
-}
+} */
 
 /* --------------------------- media queries ------------------------------ */
 

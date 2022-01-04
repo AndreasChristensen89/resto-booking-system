@@ -23,21 +23,21 @@
 <!-- -------------------------- call to action logged in -------------------------------- -->
 {% if user.is_superuser %}
 <div class="row text-center">
-    <div class="col-4 cta animation">
+    <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
         <a href="{% url 'reservations:bookings_pending' %}">
-            <p class="lead">Pending Bookings</p>
+            <p class="lead">Pending</p>
         </a>
     </div>
 
-    <div class="col-4 cta animation d-flex justify-content-center align-items-center">
+    <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
         <a href="{% url 'reservations:bookings_accepted' %}">
-        <p class="lead">Accepted bookings</p>
+        <p class="lead">Accepted</p>
         </a>
     </div>
 
-    <div class="col-4 cta animation">
+    <div class="col-12 col-sm-4 cta animation d-flex justify-content-center cta-width mx-auto">
         <a href="{% url 'reservations:bookings_updated' %}">
-            <p class="lead">Updated Bookings</p>
+            <p class="lead">Updated</p>
         </a>
     </div>
 </div>
@@ -73,19 +73,19 @@
 
         <div class="row text-center">
 
-        <div class="col-6 cta animation">
-            <a href="{% url 'account_login' %}">
+        <div class="col-6 cta-logout animation">
+            <a href="{% url 'account_login' %}" aria-label="Go to login page">
                 <div>
-                    <i class="fas fa-users icon"></i>
+                    <i class="fas fa-users icon" aria-hidden="true"></i>
                 </div>
                 <h3 class="h3">Log In</h3>
             </a>
         </div>
 
-        <div class="col-6 cta animation">
-            <a href="{% url 'account_signup' %}">
+        <div class="col-6 cta-logout animation">
+            <a href="{% url 'account_signup' %}" aria-label="Go to signup page">
                 <div>
-                    <i class="fas fa-user-plus icon"></i>
+                    <i class="fas fa-user-plus icon" aria-hidden="true"></i>
                 </div>
                 <h3 class="h3">Register</h3>
             </a>
