@@ -246,7 +246,7 @@ class ApproveReservationViewAdmin(UpdateView):
                 subject,
                 body,
                 None,
-                [self.object.author.email, 'dre1891@hotmail.com'],
+                [self.object.author.email],
                 fail_silently=False
             )
         return super(ApproveReservationViewAdmin, self).form_valid(form)
