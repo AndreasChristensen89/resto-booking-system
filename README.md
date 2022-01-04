@@ -469,12 +469,14 @@ All non-text elements are marked with aria-labels, and the contrast between back
     EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
+    * Single Sender Verification setup
     * This will now send live emails, but is limited at 200 emails due to free account.
     * Password in stored in env.py
 * Email is sent when registering, to confirm the email.
 * Email is sent when a booking is accepted or declined
 * Email is sent when a message is sent on the contact page
-    * Host email is CC
+    * Host email is set as CC
+
 
 # Admin setup
 Admin credentials (superuser)
