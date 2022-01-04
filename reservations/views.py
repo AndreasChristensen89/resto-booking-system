@@ -224,31 +224,31 @@ class ApproveReservationViewAdmin(UpdateView):
     template_name_suffix = '_approve_form'
     success_url = '/reservations/pending/'
 
-    def form_valid(self, form):
-        subject = "Dre's Diner booking"
-        body = ""
-        status = form.cleaned_data.get('status')
-        if status == 2:
-            body = (
-                f"Hello {self.object.author.first_name}. " +
-                f"Unfortunately, we are not able to accomodate your booking on {self.object.booking_start}. " +
-                f"For more information please see the comment left by the restaurant or contact us via our website."
-            )
-        elif status == 1:
-            body = (
-                f"Hello {self.object.author.first_name}, " +
-                f"your booking is confirmed on {self.object.booking_start}. " +
-                "Please note that cancellations must be made minimum two hours before. We look forward to seeing you."
-            )
-        if status != 0:
-            send_mail(
-                subject,
-                body,
-                None,
-                [self.object.author.email],
-                fail_silently=False
-            )
-        return super(ApproveReservationViewAdmin, self).form_valid(form)
+    # def form_valid(self, form):
+    #     subject = "Dre's Diner booking"
+    #     body = ""
+    #     status = form.cleaned_data.get('status')
+    #     if status == 2:
+    #         body = (
+    #             f"Hello {self.object.author.first_name}. " +
+    #             f"Unfortunately, we are not able to accomodate your booking on {self.object.booking_start}. " +
+    #             f"For more information please see the comment left by the restaurant or contact us via our website."
+    #         )
+    #     elif status == 1:
+    #         body = (
+    #             f"Hello {self.object.author.first_name}, " +
+    #             f"your booking is confirmed on {self.object.booking_start}. " +
+    #             "Please note that cancellations must be made minimum two hours before. We look forward to seeing you."
+    #         )
+    #     if status != 0:
+    #         send_mail(
+    #             subject,
+    #             body,
+    #             None,
+    #             [self.object.author.email],
+    #             fail_silently=False
+    #         )
+    #     return super(ApproveReservationViewAdmin, self).form_valid(form)
 
 
 class AvailableTables(View):
