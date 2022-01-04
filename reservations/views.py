@@ -58,8 +58,8 @@ def book_table(request):
                 send_mail(
                     subject,
                     body,
-                    'dresdiner@email.com',
-                    [user.email, 'dresdiner@email.com']
+                    'dresdiner.notice@gmail.com',
+                    [user.email, 'dresdiner.notice@gmail.com']
                 )
             return HttpResponseRedirect('/reservations/bookings/')
     else:
@@ -245,8 +245,9 @@ class ApproveReservationViewAdmin(UpdateView):
             send_mail(
                 subject,
                 body,
-                'dresdiner@email.com',
-                [self.object.author.email, 'dresdiner@email.com']
+                None,
+                [self.object.author.email, 'dresdiner.notice@gmail.com'],
+                fail_silently=False
             )
         return super(ApproveReservationViewAdmin, self).form_valid(form)
 

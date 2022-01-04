@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.contrib import messages
+from django.conf import settings
 from .forms import ContactForm
 from restaurant.models import OpeningHours
 
@@ -13,20 +14,22 @@ def contact(request):
     else:
         form = ContactForm(request.POST)
         if form.is_valid():
-            subject = "Website Enquiry"
             body = {
                 'message': form.cleaned_data['message'],
                 'name': form.cleaned_data['name'],
                 'email': form.cleaned_data['email_address']
             }
             message = "\n".join(body.values())
-            messages.success(request, 'Message sent successfully!')
+            messages.success(request, 'Your message has been sent!')
 
-            try:
-                send_mail(subject, message, 'dresdiner@email.com', [
-                    form.cleaned_data['email_address']])
-            except BadHeaderError:
-                return HttpResponse('Invalid header.')
+            send_mail(
+                "Dre's Diner",
+                'Hello ' + form.cleaned_data['name'] + ', thank you for getting in touch.' '\n'
+                'We received this message from you' ',\n' + form.cleaned_data['message'],
+                None,
+                [form.cleaned_data['email_address'], 'dresdiner.notice@gmail.com'],
+                fail_silently=False
+            )
         else:
             messages.error(
                 request, "Please correct any errors")

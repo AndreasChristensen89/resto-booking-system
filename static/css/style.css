@@ -302,17 +302,17 @@ a:hover, a:active {
 }
 
 .booking-pending {
-    width: 250px;
+    width: 260px;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
 .booking-accepted {
-    width: 250px;
+    width: 260px;
     background-color: rgba(7, 212, 41, 0.2);
 }
 
 .booking-declined {
-    width: 250px;
+    width: 260px;
     background-color: rgba(196, 14, 14, 0.2);
 }
 
