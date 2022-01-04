@@ -471,7 +471,7 @@ All non-text elements are marked with aria-labels, and the contrast between back
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
     * Single Sender Verification setup
-    * This will now send live emails, but is limited at 200 emails due to free account.
+    * This sends live emails, but is limited at 100 emails per day due to free account.
     * Password in stored in env.py
 * Email is sent when registering, to confirm the email.
 * Email is sent when a booking is accepted or declined
@@ -592,6 +592,12 @@ Six models
 * Meals - stores an object for each meal
     Name must be unique. Takes in description. Uses foreignkey to connect to a Category object. Takes in number specifying how many people it is meant for. Price is a decimal field with max 4 digits and two decimal places. Image must be included, which will be uploaded to cloud via Pillow (installed). Slug is auto generated from the name field.
 
+## Django forms
+Three forms
+* BookTableForm - form for creating booking on the booking page
+* ProfileForm - form for the profile page
+* ContactForm - form for the contact page
+
 
 In first I included first_name and last_name in the Booking model, but it seemed extensive, especially when a user was already created. Instead, I found it better to require adding contact details before making a booking. This way the same user can easily book again, and the details are taken from the user. The first_name and last_name could be cut from the booking, thus making it more appropriate to book using only a datetime and guests number.
 
@@ -620,30 +626,25 @@ run
 * pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt - first, and then run:
 * pip3 install -r requirements.txt - second
 
-* The following was added in settings.py to work with emails during development.
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-    According to official Django documentation:
-    "This backend is not intended for use in production – it is provided as a convenience that can be used during development."
-
 Current bugs to fix:
-- When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
+<!-- - When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
     - If a guests wish to increase number of people, the admin does not have access to availability-logic when assigning new tables
-    - If I change the setting to be within the same second, it's automatically added as "updated" since created_on and updated_on may be added in different seconds.
-- Move profile url from reservations?
+    - If I change the setting to be within the same second, it's automatically added as "updated" since created_on and updated_on may be added in different seconds. -->
+<!-- - Move profile url from reservations DONE -->
+<!-- - Updating a booking removes the tables - see if can implement logic in updateview - does it? Can't replicate -->
+<!-- - Fix message for opening hours to reflect latest reservation time - DONE -->
+<!-- - Add alt text to pictures DONE -->
+<!-- - Fix test for model, string + datetime shit DONE -->
+<!-- - Add booking logic for same zone DONE -->
+<!-- - Remove/add for people from meals DONE -->
+<!-- - Include design thoughts for css DONE -->
+<!-- - Add available tables to update site DONE -->
 - Check conflicting user booking - testing
-- Updating a booking removes the tables - see if can implement logic in updateview - does it? Can't replicate
-- Fix message for opening hours to reflect latest reservation time - DONE
-- Add alt text to pictures
-- Fix test for model, string + datetime shit
-- Remove old CSS
-- Add booking logic for same zone
-- Add django models explanation/outline
-- Remove/add for people from meals
-- Style error 404 and 500 - To be tested on Heroku
-- Include design thoughts for css
-- Add available tables to update site DONE
 - Add arial labels to icons
+- Style error 404 and 500 - To be tested on Heroku
+- Add django models explanation/outline
+- Remove old CSS
+- Test HTML in validator
 
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
