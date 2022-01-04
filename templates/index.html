@@ -20,7 +20,7 @@
                 <h2 class="h2 mx-auto">Good to see you, {{user.username}}</h2>
             </div>
         {% endif %}
-<!-- -------------------------- call to action logged in -------------------------------- -->
+<!-------------------------- call to action logged in superuser -------------------------------->
 {% if user.is_superuser %}
 <div class="row text-center">
     <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
@@ -41,6 +41,7 @@
         </a>
     </div>
 </div>
+<!-------------------------- call to action logged in regular user -------------------------------->
 {% elif user.is_authenticated %}
 <div class="row text-center">
     <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
@@ -65,7 +66,7 @@
 
 </section>
 
-<!-- -------------------------- call to action logged out -------------------------------- -->
+<!-------------------------- call to action logged out -------------------------------->
     {% else %}
         <div class="col text-center cover-welcome">
             <h3 class="h3">Log in to make a reservation</h3>
