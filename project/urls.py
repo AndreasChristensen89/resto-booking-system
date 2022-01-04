@@ -25,4 +25,4 @@ urlpatterns = [
     path('', include('homepage.urls')),
 ]
 
-# handler404 = 'reservations.views.error_404'
+handler404 = 'homepage.views.custom_page_not_found_view'

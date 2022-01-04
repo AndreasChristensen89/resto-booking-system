@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views import generic, View
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import DeleteView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
@@ -54,7 +54,6 @@ def book_table(request):
                     "Please contact us if this is intentional, otherwise you can safely delete the new reservation. " +
                     "We look forward to having you."
                 )
-                # Send Confirmation Mail to user and CC to admin
                 send_mail(
                     subject,
                     body,
@@ -279,8 +278,3 @@ class ProfileView(SuccessMessageMixin, generic.UpdateView):
 
     def get_object(self):
         return self.request.user
-
-
-def error_404(request, exception):
-    data = {}
-    return render(request, '404.html', data)
