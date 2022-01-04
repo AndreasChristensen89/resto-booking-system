@@ -26,3 +26,4 @@ urlpatterns = [
 ]
 
 handler404 = 'homepage.views.custom_page_not_found_view'
+handler500 = 'homepage_name.views.custom_error_view'
