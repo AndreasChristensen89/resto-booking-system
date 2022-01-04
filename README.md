@@ -706,6 +706,7 @@ Current bugs to fix:
 - Test HTML in validator
 - New pictures of index and menu
 - Make different contact page for logged in
+- Fix 404 code
 
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
