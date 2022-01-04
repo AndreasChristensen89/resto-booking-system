@@ -20,12 +20,12 @@
     </div>
 </div> 
 
-<div class="section section-1 bg-dark border border-dark">
+<div class="section section-1 border-bottom border-white">
     <div class="container">
         <div class="row g-0 align-items-stretch">
                 {% for meal in menu_list %}
                 {% if meal.category == category %}
-                    <div class="col-lg-6 my-2">
+                    <div class="col-lg-6 mt-4 mb-2">
                         <div class="d-block feature-media align-items-stretch">
                             <div class="img mx-2 rounded" style="background-image: url({{meal.image.url}});"></div>
                             <div class="text">
