@@ -26,4 +26,3 @@ urlpatterns = [
 ]
 
 handler404 = 'reservations.views.error_404'
-handler500 = 'reservations.views.error_500'
