@@ -23,41 +23,41 @@
 <!-- -------------------------- call to action logged in -------------------------------- -->
 {% if user.is_superuser %}
 <div class="row text-center">
-    <div class="col-4 cta-animation animation border">
+    <div class="col-4 cta animation">
         <a href="{% url 'reservations:bookings_pending' %}">
-            <h3 class="h3">Pending Bookings</h3>
+            <p class="lead">Pending Bookings</p>
         </a>
     </div>
 
-    <div class="col-4 cta-animation animation border d-flex justify-content-center align-items-center">
+    <div class="col-4 cta animation d-flex justify-content-center align-items-center">
         <a href="{% url 'reservations:bookings_accepted' %}">
-        <h3 class="h3">Accepted bookings</h3>
+        <p class="lead">Accepted bookings</p>
         </a>
     </div>
 
-    <div class="col-4 cta-animation animation border">
+    <div class="col-4 cta animation">
         <a href="{% url 'reservations:bookings_updated' %}">
-            <h3 class="h3">Updated Bookings</h3>
+            <p class="lead">Updated Bookings</p>
         </a>
     </div>
 </div>
 {% elif user.is_authenticated %}
 <div class="row text-center">
-    <div class="col-4 cta-animation animation border">
+    <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
         <a href="{% url 'reservations:book_table' %}">
-            <h3 class="h3">New Booking</h3>
+            <h4 class="h4">New Booking</h4>
         </a>
     </div>
 
-    <div class="col-4 cta-animation animation border d-flex justify-content-center align-items-center">
+    <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
         <a href="/menu">
-        <h3 class="h3">Menu</h3>
+        <h4 class="h4">Menu</h4>
         </a>
     </div>
 
-    <div class="col-4 cta-animation animation border">
+    <div class="col-12 col-sm-4 cta animation d-flex justify-content-center cta-width mx-auto">
         <a href="{% url 'reservations:booking_list' %}">
-            <h3 class="h3">My Bookings</h3>
+            <h4 class="h4">My Bookings</h4>
         </a>
     </div>
 </div>
@@ -73,7 +73,7 @@
 
         <div class="row text-center">
 
-        <div class="col-6 cta-animation animation">
+        <div class="col-6 cta animation">
             <a href="{% url 'account_login' %}">
                 <div>
                     <i class="fas fa-users icon"></i>
@@ -82,7 +82,7 @@
             </a>
         </div>
 
-        <div class="col-6 cta-animation animation">
+        <div class="col-6 cta animation">
             <a href="{% url 'account_signup' %}">
                 <div>
                     <i class="fas fa-user-plus icon"></i>

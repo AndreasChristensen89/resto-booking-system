@@ -649,3 +649,4 @@ Current bugs to fix:
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
 pip3 install -r requirements.txt
+python3 manage.py runserver
