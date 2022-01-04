@@ -1,10 +1,10 @@
 # Resto-Book
 
 The idea behind this project is to create a site for a restaurant that can manage reservations.
-On deployment all the restaurant details, including contact details, openings hours, booking details, meals, and categories have already been set up, however this can be edited as the admin wants thus making the design useable for other restaurants.
+On deployment all the restaurant details, including contact details, openings hours, booking details, meals, and categories have already been set up, however this can be edited as the admin wants thus making the content changeable.
 Much of the content is auto generated on the pages, and the admin can set up their preferred criteria.
 
-The development rationale for this project is to create an application that meets a real life need, which is the need for restaurant owners to digitalise the process of taking orders, sorting tables, and avoiding double bookings. Much of it should be automatic, including email confirmations.
+The development rationale for this project is to create an application that meets a real life need, which is the need for restaurant owners to digitalise the process of taking orders, sorting tables, and avoiding double bookings. Much of it should be automatic, including emails.
 
 ## Features
 
