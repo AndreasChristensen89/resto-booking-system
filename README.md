@@ -176,7 +176,7 @@ The development rationale for this project is to create an application that meet
 * __Profile page__:
     * Design in line with the other sites. Header says "Profile" and underneath the image is a form. The form has five fields: "Username", "First name", "Last name", "Email", and "Password". All except for password are mandatory. Underneath the form is a paragraph with a link to change the password. Underneath the form is a blue button "Save" which will update the details of the profile. Updating name details here will allow the user to make reservations.
         * ![Profile page - large](/static/images/readme-pictures/profile-large.JPG)
-        * ![Profile page - top mobile](/static/images/readme-pictures/profile-top-mobile.JPG)
+        * ![Profile page - top mobile](/static/images/readme-pictures/profile-mobile.JPG)
 
 * __Log out page__:
     * Very simple design in line with the other allauth pages. Header "Sign out". Underneath a paragraph "Are you sure you want to sign out?". Underneath a blue button "Sign Out".
@@ -558,13 +558,13 @@ All non-text elements are marked with aria-labels, and the contrast between back
 * During development the following was used in settings.py:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 * Post-production a Gmail was implemented with the following settings:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = 'dresdiner.notice@gmail.com'
-    EMAIL_HOST_PASSWORD = os.environ.get('APP_KEY')
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    DEFAULT_FROM_EMAIL = 'dresdiner.notice@gmail.com'
+    - EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    - EMAIL_HOST = 'smtp.gmail.com'
+    - EMAIL_HOST_USER = 'dresdiner.notice@gmail.com'
+    - EMAIL_HOST_PASSWORD = os.environ.get('APP_KEY')
+    - EMAIL_PORT = 587
+    - EMAIL_USE_TLS = True
+    - DEFAULT_FROM_EMAIL = 'dresdiner.notice@gmail.com'
     * This sends live emails, but and sends from a gmail I created for this project
     * Password in stored in env.py
         * variable is also added to Heroku config variables
