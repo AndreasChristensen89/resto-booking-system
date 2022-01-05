@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.contrib import messages
+from django.conf import settings
 from .forms import ContactForm
 from restaurant.models import OpeningHours
 
@@ -25,8 +26,8 @@ def contact(request):
                 "Dre's Diner",
                 'Hello ' + form.cleaned_data['name'] + ', thank you for getting in touch.' '\n'
                 'We received this message from you' ',\n' + form.cleaned_data['message'],
-                None,
-                [form.cleaned_data['email_address'], 'dresdiner.notice@gmail.com'],
+                settings.EMAIL_HOST_USER,
+                [form.cleaned_data['email_address'], 'dresdiner.notice@gmail.com',],
                 fail_silently=False
             )
             
