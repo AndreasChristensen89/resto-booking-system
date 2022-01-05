@@ -25,8 +25,8 @@
         <div class="row g-0 align-items-stretch">
                 {% for meal in menu_list %}
                 {% if meal.category == category %}
-                    <div class="col-lg-6 mt-4 mb-2">
-                        <div class="d-block feature-media align-items-stretch">
+                    <div class="col-sm-6 mt-4 mb-2">
+                        <div class="d-block menu-item align-items-stretch">
                             <div class="img mx-2 rounded" style="background-image: url({{meal.image.url}});"></div>
                             <div class="text">
                                 <h3>{{meal.name}}</h3>
