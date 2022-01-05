@@ -536,6 +536,7 @@ All non-text elements are marked with aria-labels, and the contrast between back
 * Email is sent when a booking is accepted or declined
 * Email is sent when a message is sent on the contact page
     * Host email is set as CC
+* Email is sent when a User double books, meaning that two or more bookings are overlapping
 
 
 # Admin setup
@@ -700,13 +701,13 @@ Current bugs to fix:
 <!-- - Add available tables to update site DONE -->
 - Check conflicting user booking - testing
 <!-- - Add arial labels to icons DONE -->
-- Style error 404 and 500 - DONE To be tested on Heroku
+<!-- - Style error 404 and 500 - DONE To be tested on Heroku -->
 - Add django models explanation/outline
-- Remove old CSS
-- Test HTML in validator
+<!-- - Remove old CSS DONE -->
+<!-- - Test HTML in validator DONE -->
 - New pictures of index and menu
-- Make different contact page for logged in
-- Fix 404 code
+<!-- - Make different contact page for logged in DONE -->
+<!-- - Fix 404 code DONE -->
 - Add new email settings to readme
 
 

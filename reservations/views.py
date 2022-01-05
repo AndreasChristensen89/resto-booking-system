@@ -59,7 +59,7 @@ def book_table(request):
                     subject,
                     body,
                     'dresdiner.notice@gmail.com',
-                    [user.email, 'dresdiner.notice@gmail.com']
+                    [user.email,]
                 )
             return HttpResponseRedirect('/reservations/bookings/')
     else:
