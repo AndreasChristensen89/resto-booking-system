@@ -45,7 +45,11 @@
 
 <div class="row text-center my-5">
     <div class="col-10 mx-auto">
-        <p>Feel free to <a style="text-decoration: underline;" href="{% url 'contact' %}">reach out</a> for more information about our menu</p>
+        {% if user.is_authenticated %}
+        <p>Feel free to <a style="text-decoration: underline;" href="{% url 'contact:contact_login' %}">reach out</a> for more information about our menu</p>
+        {% else %}
+        <p>Feel free to <a style="text-decoration: underline;" href="{% url 'contact:contact' %}">reach out</a> for more information about our menu</p>
+        {% endif %}
     </div>
 </div>
 

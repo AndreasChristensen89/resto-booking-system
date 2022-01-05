@@ -18,12 +18,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('contact/', include('contact.urls'), name='contact_urls'),
     path('reservations/', include('reservations.urls'), name='reservations_urls'),
     path('menu/', include('menu.urls'), name='menu_urls'),
-    path('contact/', include('contact.urls'), name='contact_urls'),
     path('accounts/', include('allauth.urls')),
     path('', include('homepage.urls')),
 ]
 
 handler404 = 'homepage.views.custom_page_not_found_view'
-handler500 = 'homepage.views.custom_error_view'
