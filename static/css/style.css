@@ -270,14 +270,6 @@ a:hover, a:active {
     top: 275px;
 }
 
-/* .bottom-card-bg {
-    background-color: #917058;
-} */
-
-/* .booking-text {
-    background-color: rgba(0, 0, 0, 0.2);
-} */
-
 @keyframes booking-cover-animation {
     from {
         opacity: 0;
@@ -504,6 +496,30 @@ a:hover, a:active {
         to {
             opacity: 1;
             top: 190px;
+        }
+    }
+
+    @keyframes booking-cover-animation {
+        from {
+            opacity: 0;
+            top: 120px;
+        }
+    
+        to {
+            opacity: 1;
+            top: 100px;
+        }
+    }
+
+    @keyframes booking-animation {
+        from {
+            opacity: 0;
+            top: 125px;
+        }
+    
+        to {
+            opacity: 1;
+            top: 125px;
         }
     }
 }

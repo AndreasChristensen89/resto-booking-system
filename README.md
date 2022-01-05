@@ -123,6 +123,13 @@ The development rationale for this project is to create an application that meet
         * ![Contact page - middle mobile](/static/images/readme-pictures/contact-middle-mobile.JPG)
         * ![Contact page - bottom mobile](/static/images/readme-pictures/contact-bottom-mobile.JPG)
 
+* __Contact Information Logged In__:
+    * Same design as contact information, but have a more personal message for the user "Don't hesitate to send us a message, {user}". A different shorter form is used, so that the user does not need to put in name and email.
+    * ![Contact page logged in - top large](/static/images/readme-pictures/contact-logged-in-top-large.JPG)
+    * ![Contact page logged in - bottom large](/static/images/readme-pictures/contact-logged-in-bottom-large.JPG)
+    * ![Contact page logged in - top mobile](/static/images/readme-pictures/contact-logged-in-top-mobile.JPG)
+    * ![Contact page logged in - bottom mobile](/static/images/readme-pictures/contact-logged-in-bottom-mobile.JPG)
+
 * __Book Table page__:
     * Has the same hero-image as the before-mentioned pages. The heading reads "A Reservation"? which is followed by a phrase underneath "Scroll down and let's see what we can do". Underneath the hero-image is a form with the opening hours next to it. On mobile the opening hours will appear underneath. The opening hours are there for convenience when making a booking. The opening hours are auto generated from the OpeningHours model. If the user has not updated their name details, then the page will only display "Please fill in your name in the (link to profile section) before making a reservation".
     * The form has three fields: "Number of guests", "Date and Time" and "Comment". Only "comment" is not mandatory. Underneath the form is a blue button that says "Book". Should a validation error be provoked in the form a pink message will appear on top of the form with the error message. When selecting the "Date and Time" field a DateTimePicker will be activated, which makes sure that the correct datetime format is inserted. In the "Number of guests" field the arrow keys, up and down, can also be used to increase the number.
