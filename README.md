@@ -9,16 +9,17 @@ The development rationale for this project is to create an application that meet
 
 # Table of contents
 - [Resto-Book](#resto-book)
-  * [Features](#features)
-    + [Existing Features:](#existing-features-)
-    + [Future features to implement](#future-features-to-implement)
-  * [Testing](#testing)
-    + [Django testing](#django-testing)
-    + [Browser Testing](#browser-testing)
-    + [Media Queries](#media-queries)
-    + [Bugs discovered during testing:](#bugs-discovered-during-testing-)
-    + [Unfixed Bugs:](#unfixed-bugs-)
-    + [Validator Testing](#validator-testing)
+- [Table of contents](#table-of-contents)
+- [Features](#features)
+  * [Existing Features:](#existing-features-)
+  * [Future features to implement](#future-features-to-implement)
+- [Testing](#testing)
+  * [Django testing](#django-testing)
+  * [Browser Testing](#browser-testing)
+  * [Media Queries](#media-queries)
+  * [Bugs discovered during testing:](#bugs-discovered-during-testing-)
+  * [Unfixed Bugs:](#unfixed-bugs-)
+  * [Validator Testing](#validator-testing)
 - [Starting Django project](#starting-django-project)
   * [Deployment](#deployment)
     + [Heroku](#heroku)
@@ -26,14 +27,17 @@ The development rationale for this project is to create an application that meet
     + [Last settings](#last-settings)
   * [Create a local clone](#create-a-local-clone)
 - [Technologies Used](#technologies-used)
-    + [Icons](#icons)
-    + [Hosting and Development](#hosting-and-development)
-  * [Credits](#credits)
-    + [Pictures](#pictures)
-    + [Text content](#text-content)
-    + [Coding help](#coding-help)
-    + [Design](#design)
-  * [User stories](#user-stories)
+  * [Icons](#icons)
+  * [Datetime Picker](#datetime-picker)
+- [Hosting and Development](#hosting-and-development)
+- [Credits](#credits)
+  * [Pictures](#pictures)
+  * [Text content](#text-content)
+  * [Coding help](#coding-help)
+  * [Design](#design)
+- [User stories](#user-stories)
+- [UX](#ux)
+  * [User acceptance criteria](#user-acceptance-criteria)
   * [Strategy](#strategy)
   * [Scope](#scope)
   * [Structure](#structure)
@@ -42,13 +46,18 @@ The development rationale for this project is to create an application that meet
     + [Color Scheme](#color-scheme)
     + [Choice of text](#choice-of-text)
     + [Pictures](#pictures-1)
-    + [Languages Used](#languages-used)
     + [Accessibility](#accessibility)
+- [Languages Used](#languages-used)
+- [CRUD](#crud)
+  * [Create](#create)
+  * [Reading](#reading)
+  * [Updating](#updating)
+  * [Deteion](#deteion)
 - [Email](#email)
-- [Admin setup](#admin-setup)
+- [Admin Access](#admin-access)
   * [Must have settings](#must-have-settings)
   * [Setup explanation](#setup-explanation)
-  * [Booking Logic](#booking-logic)
+- [Booking Logic](#booking-logic)
   * [Table sorting methods](#table-sorting-methods)
     + [Any tables](#any-tables)
     + [Same zone tables](#same-zone-tables)
@@ -59,9 +68,13 @@ The development rationale for this project is to create an application that meet
   * [Django forms](#django-forms)
   * [Additional mentions:](#additional-mentions-)
 
+
 # Features
 
 ## Existing Features:
+* Note:
+All pages have been tested to work down until width 280px, which is the smallest device on Google Chrome Devtools.
+
 * __Navigation Bar__
     * The navigation bar is found on all pages. It is dark grey with white text and changes according to if the user is logged in, and also whether the user is a superuser or not. The design is Bootstrap's own design (https://getbootstrap.com/docs/4.3/components/navbar/), which I have set to collapse when reaching mobile displays.
         * For non-users there are five links: "Home", "Menu", "Contact Information", "Sign-up", and "Login"
@@ -73,7 +86,7 @@ The development rationale for this project is to create an application that meet
             * ![Nav Bar - user dropdown box](/static/images/readme-pictures/navbar-logged-in-dropbox-medium.JPG)
             * ![Nav Bar - user mobile](/static/images/readme-pictures/navbar-mobile-open-user-login.JPG)
             * ![Nav Bar - user dropdown box mobile](/static/images/readme-pictures/navbar-mobile-open-user-login-dropbox.JPG)
-        * For superusers there are different options: "Home", "Menu", drop-down box "Admin Actions" with three links ("Pending Bookings", "Updated Bookings", "Book Table"), "Admin Profile", and "Logout"
+        * For superusers there are different options: "Home", "Menu", drop-down box "Admin Actions" with three links ("Pending Bookings", "Accepted Booking", "Updated Bookings", "Book Table"), "Admin Profile", and "Logout"
             * ![Nav Bar - superuser mobile](/static/images/readme-pictures/navbar-mobile-open-superuser-login.JPG)
             * ![Nav Bar - superuser mobile dropdown box](/static/images/readme-pictures/navbar-mobile-open-superuser-login-dropbox.JPG)
             * ![Nav Bar - superuser](/static/images/readme-pictures/navbar-logged-in-superuser-medium.JPG)
