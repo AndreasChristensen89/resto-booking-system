@@ -243,8 +243,8 @@ All applications have been tested using TestCase. Forms, models, views, and addi
     * When testing the current database was not able to create testing databases, and I had to comment it out and un-comment the other database using sqlite3 in settings.py
 * Applications
     * Contact
-        * Test_views - two tests, both pass. One for code 200 and one for email sent.
-        * Test_forms - five tests, all pass. Test wrong input and required fields.
+        * Test_views - two tests, both pass. One for code 200.
+        * Test_forms - seven tests, all pass. Test wrong input and required fields.
     * Homepage
         * Test_views - one test, passes. Tests for code 200.
     * Menu
@@ -707,6 +707,7 @@ Current bugs to fix:
 - New pictures of index and menu
 - Make different contact page for logged in
 - Fix 404 code
+- Add new email settings to readme
 
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt

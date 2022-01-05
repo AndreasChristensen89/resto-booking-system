@@ -77,14 +77,14 @@
             <a class="nav-link" href="{% url 'reservations:profile' %}" aria-label="Go to user's profile page">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'contact' %}" aria-label="Go to contact page">Contact Information</a>
+            <a class="nav-link" href="{% url 'contact:contact_login' %}" aria-label="Go to contact page">Contact Information</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account_logout' %}" aria-label="Go to logout page">Logout</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'contact' %}" aria-label="Go to contact page">Contact Information</a>
+            <a class="nav-link" href="{% url 'contact:contact_logout' %}" aria-label="Go to contact page">Contact Information</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account_signup' %}" aria-label="Go to signup page">Sign up</a>
