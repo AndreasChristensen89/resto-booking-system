@@ -254,6 +254,7 @@ All pages have been tested to work down until width 280px, which is the smallest
 ## Future features to implement
 * I wanted to have a feature which generated buttons with available times for the date that users put in. I was able to generate the buttons, but not to have them work with forms.
 * Opening hours could include national holidays
+* Restaurant could be able to specify lastest cancel time
 
 # Testing
 ## Django testing
@@ -262,18 +263,18 @@ All applications have been tested using TestCase. Forms, models, views, and addi
     * When testing the current database was not able to create testing databases, and I had to comment it out and un-comment the other database using sqlite3 in settings.py
 * Applications
     * Contact
-        * Test_views - two tests, both pass. One for code 200.
-        * Test_forms - seven tests, all pass. Test wrong input and required fields.
+        * Test_views - 2 tests, both pass. One for code 200.
+        * Test_forms - 7 tests, all pass. Test wrong input and required fields.
     * Homepage
-        * Test_views - one test, passes. Tests for code 200.
+        * Test_views - 2 tests, passes. Tests for code 200.
     * Menu
-        * Test_models - two tests, both pass. Test to create objects with both models, Meals and Category.
-        * Test_views - one test, passes. Tests for code 200.
+        * Test_models - 2 tests, both pass. Test to create objects with both models, Meals and Category.
+        * Test_views - 2 test, passes. Tests for code 200.
     * Reservations
         * When I tested a booking, I had to pass in a datetime object. On the website we pass in a string which is then converted to datetime, but this did not work for certain tests or when testing the model.
         * Test_booking. 29 tests, all pass. Testing each function in reservations.bookings.py. Checking if functions use input from models properly. For many tests I created specific tables to have multiple options to return, checking if correct ones are returned with correct priority. Had to create opening hours, bookings details, users, and tables for most of the tests. For certain tests I started for loops to test function calls with increasing number of guests, and then running self.assert... for each iteration.
         * Test_views - 15 tests, all pass. Tested views for code 200 and correct template use. For many of them I had to create a user, at times a superuser, and log in. For the booking view I logged in and posted a correct form and then checked if a booking had been made.
-        * Test_forms - 13 tests, all pass. Tested form for errors for wrong input, all fields should be there, which ones are required, minus values, wrong types, not enough tables, enough tables but one with certain method, opening hours, past booking
+        * Test_forms - 18 tests, all pass. Tested forms for errors for wrong input, all fields should be there, which ones are required, minus values, wrong types, not enough tables, enough tables but one with certain method, opening hours, past booking
         * Test_models - 7 tests, all pass. Tested if object could be made, if default fields are automatically set, if slugs are generated and unique, if model properties work (booking latest_cancellation and is_due_date).
     * Restaurant
         * Test_models - 3 tests, all pass. Test if objects can be created and if default values work.
@@ -611,7 +612,7 @@ Users can find their past (previous bookings page) and future booking (upcoming 
 ## Updating
 Users can update their future bookings on the upcoming bookings page using the UpdateView class. It is limited in that they can only alter the comment. However, admin is able to alter every aspect of the booking objects, done in the admin panel, pending bookings, updated bookings, and accepted bookings, and can alter bookings from any time.
 
-## Deteion
+## Deletion
 Users can delete their future bookings on the upcoming bookings page. Admin can delete bookings via the pending bookings, updated bookings, accepted bookings, and can delete all bookings from any time.
 
 
@@ -626,7 +627,7 @@ Users can delete their future bookings on the upcoming bookings page. Admin can 
     - EMAIL_PORT = 587
     - EMAIL_USE_TLS = True
     - DEFAULT_FROM_EMAIL = 'dresdiner.notice@gmail.com'
-    * This sends live emails, but and sends from a gmail I created for this project
+    * This sends live emails from a gmail I created for this project
     * Password in stored in env.py
         * variable is also added to Heroku config variables
 * Email is sent when registering to confirm the email.
@@ -767,8 +768,9 @@ Four forms
     * One field: message. View code handles the rest.
 
 ## Additional mentions:
-Due to message on the 06-12-2021, Gitpod had new dependencies. Followed the instructions:
-    * find -name "deps.txt" - no results, so meant that I had the older version
+Due to message on the 06-12-2021, Gitpod had new dependencies. 
+I Followed the instructions:
+    * find -name "deps.txt" - no results, which meant that I had the older version
     * ran pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
     * pip3 install django gunicorn
     * pip3 install dj_database_url psycopg2
@@ -778,19 +780,11 @@ Due to message on the 06-12-2021, Gitpod had new dependencies. Followed the inst
     * saved, commited, and pushed
     * pip3 install Pillow
     * pip3 freeze --local > requirements.txt
-From here onwards, whenever you (re)start your workspace, you need to do two things:
-run 
+From here onwards, whenever I (re)started my workspace, I needed to do two things:
 * First:
-    - pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt - first,
+    - pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
 * Second:
     - pip3 install -r requirements.txt
 
 command used for copying authentication templates to directory. Once copied we can make changes to the styling, and the content
 cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates
-
-
-
-
-pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
-pip3 install -r requirements.txt
-python3 manage.py runserver

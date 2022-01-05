@@ -7,7 +7,7 @@ from .views import contact
 class ContactTest(TestCase):
 
     def test_contact_page(self):
-        response = self.client.get('/contact/')
+        response = self.client.get('/contact/no_user/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'contact.html')
         self.assertTemplateUsed(response, 'base.html')
