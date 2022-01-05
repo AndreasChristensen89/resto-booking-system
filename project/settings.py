@@ -29,7 +29,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ["resto-booking-system.herokuapp.com", "localhost"]
@@ -184,4 +184,4 @@ EMAIL_HOST_USER = 'dresdiner.notice@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('APP_KEY')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'default from email'
+DEFAULT_FROM_EMAIL = 'dresdiner.notice@gmail.com'
