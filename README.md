@@ -576,11 +576,9 @@ All non-text elements are marked with aria-labels, and the contrast between back
 * Email is sent when a User double books, meaning that two or more bookings are overlapping
 
 
-# Admin setup
+# Admin Access
 Admin credentials (superuser)
-in url add "/admin" (https://resto-booking-system.herokuapp.com/admin)
-username: admin
-password: themagickey
+* in url add "/admin" (https://resto-booking-system.herokuapp.com/admin)
 
 ## Must have settings
 In order for booking logic to work admin must set up the following (This is already set on deployment, but can be changed):
@@ -608,7 +606,7 @@ In order for menu to be displayed Admin must add items (This is already set on d
 * Warning: Admin can rely on booking logic to not conflict tables and bookings, but Admin is able to manually assign the same tables to concurrent bookings. Admin is advised to rely on the logic, or to make sure to use the Available Tables site when updating and accepting bookings (if sorting is turned off). If the admin wants to create a booking, then it is best done from the site, as the logic does not work in the Admin administration system.
 
 ## Setup explanation
-* I added a restaurant model to have the restaurant be able to set specific requirements for bookings. Opening hours, booking duration
+* I added a restaurant application with models to have the restaurant be able to set specific requirements for bookings. Opening hours, booking duration
 * If a user double books (same user, and duration of booking overlaps) a validation error is not given. Table check is done but tables are not assigned to new booking which is because of the chance that a user may want to use his profile to reserve a table for someone else in the same timeslot. The system sends out an email to the user to notify of the double booking and no tables assigned. The user is then invited to contact the restaurant or delete the double booking(s).
 * Added property to booking to see if it's in past or not, and also if it's too late to cancel reservation. I set it to two hours, which I believe is reasonable. In case the guests need to cancel anyway they have to call the restaurant.
 * I set use_tz to False in settings.py in order to avoid the time zone input from bookings.booking_start
@@ -635,15 +633,15 @@ In the BookingDetails model Admin can change sorting method or turn it off compl
 ### Any tables
 
 1. Firstly, the function seeks to bring an exact match with table-size/number of people. 
-    - If there are no exact matches it will look for table-size minus one
-    - This is done to keep groups at the same table, and also to preserve other tables (smaller tables are valuable for dates/small families)
+    - If there are no exact matches it will look for table-size minus one (e.g. table size 6 for 5 people)
+    - This is done to keep groups at the same table, and also to preserve other tables (smaller tables are valuable for smaller groups)
     - If there are no matches it will store the best option for 1 table
 2. Follows to find best option (fewest seat losses) when combining any two tables
 3. Follows to find best option (fewest seat losses) when combining any three tables
 4. All options are then compared to each other to find best match
     - fewest tables are prioritised, meaning if losses are equal, it will pick the option with the fewest tables
         - 1-table-option is only compared to 2-table-option. If a single table can fit a group, and with fewer or equal losses than a two-table option, then a 3-table option is not worth considering due to loss of smaller tables. As mentioned above, smaller tables are valuable and should be kept for smaller groups.
-        - e.g. if available tables' sizes are [2, 2, 4, 10], a group of 8 will be given a table of 10, even though the total-seat loss of 2+2+4 == 0. If only the table for 10 is used, then three tables remain for a potential of more groups, compared to only a table of 10.
+            - e.g. if available tables' sizes are [2, 2, 4, 10], a group of 8 will be given a table of 10, even though the total-seat loss of 2+2+4 == 0. If only the table for 10 is used, then three tables remain for a potential of more groups, compared to only a table of 10.
     - fewer losses are then prioritised
         - 2-table option and 3-table option are compared
 5. If three tables are not sufficient then tables will be added one by one, largest to smallest.
@@ -668,35 +666,35 @@ In the BookingDetails model Admin can change sorting method or turn it off compl
 ## Django Apps
 * project - main
 * reservations - contains the booking and table models as well as the booking and profile form. Contains all the views related to booking, both for admin and users. Also contains all the booking logic in a separate file booking.py.
-* homepage - simply contains the view for the index page.
-* contact - contains the view code for the contact page as well as the form
+* homepage - simply contains the view for the index page and the 404 view code.
+* contact - contains the view codes for the contact pages as well as the forms
 * menu - contains the view for the menu page as well as the two models; Category and Meals.
 * restaurant - contains two models: OpeningHours and BookingDetails
 
 ## Django models
 Six models
-* Booking - stores object for each reservation
-    Has an autogenerated slug field with random chars, User logged in is added, takes number of guests and a booking start. Booking end is automatically generated in view code according to the BookingDetails model. Updated on, and created on are created and uses current datetime. Status has three options,1: "Pending", 2: "Approved", and 3: "Declined", is automatically set to 0. Comment is optional.
+* Booking - stores object for each reservation.
+    - Has an autogenerated slug field with random chars, User logged in is added, takes number of guests and a booking start. Booking end is automatically generated in view code according to the BookingDetails model. Updated on, and created on are created and uses current datetime. Status has three options,1: "Pending", 2: "Approved", and 3: "Declined", is automatically set to 0. Comment is optional.
     Table is a ManyToManyField and can have multiple tables attached from the Table model.
+        - In first I included first_name and last_name in the Booking model, but it seemed extensive, especially when a user was already created. Instead, I found it better to require adding contact details before making a booking. This way the same user can easily book again, and the details are taken from the user. The first_name and last_name could be cut from the booking, thus making it more appropriate to book using only a datetime and guests number.
 * Table - store object for each table
-    Needs a unique table number, number of seats, and a zone. Seats and zone are used in booking logic.
-* OpeningHours - stores objects for each weekday
+    - Needs a unique table number, number of seats, and a zone. Seats and zone are used in booking logic.
+* OpeningHours - stores objects for each weekday.
     Takes in weekday, opening time and closing time, which uses timefields.
-* Bookings details - should only store one object for booking details
-    Takes in booking duration, meaning how long time each booking should occupy in the system. Next is table assign method, which has three options: 0 - "Off - admin assigns tables", 1 - "Assign any tables in same zone", 2 - "Assign any tables". Finally assign method limit, which is automatically set to 100. Admin can specify if they want the system to not sort automatically if the number of guests for a single reservation is more than this number.
-* Category - stores an object for each food category
-    One field; name. Connects to meal.
-* Meals - stores an object for each meal
-    Name must be unique. Takes in description. Uses foreignkey to connect to a Category object. Takes in number specifying how many people it is meant for. Price is a decimal field with max 4 digits and two decimal places. Image must be included, which will be uploaded to cloud via Pillow (installed). Slug is auto generated from the name field.
+* Bookings details - should only store one object for booking details.
+    - Takes in booking duration, meaning how long time each booking should occupy in the system. Next is table assign method, which has three options: 0 - "Off - admin assigns tables", 1 - "Assign any tables in same zone", 2 - "Assign any tables". Finally assign method limit, which is automatically set to 100. Admin can specify if they want the system to not sort automatically if the number of guests for a single reservation is more than this number.
+* Category - stores an object for each food category.
+    - One field; name. Connects to meal.
+* Meals - stores an object for each meal.
+    - Name must be unique. Takes in description. Uses foreignkey to connect to a Category object. Takes in number specifying how many people it is meant for. Price is a decimal field with max 4 digits and two decimal places. Image must be included, which will be uploaded to cloud via Pillow (installed). Slug is auto generated from the name field.
 
 ## Django forms
-Three forms
+Four forms
 * BookTableForm - form for creating booking on the booking page
+    * Has three fields: Number of guests, Booking 
 * ProfileForm - form for the profile page
 * ContactForm - form for the contact page
-
-
-In first I included first_name and last_name in the Booking model, but it seemed extensive, especially when a user was already created. Instead, I found it better to require adding contact details before making a booking. This way the same user can easily book again, and the details are taken from the user. The first_name and last_name could be cut from the booking, thus making it more appropriate to book using only a datetime and guests number.
+* ContactFormLoggedIn - form for the contact page for registered users
 
 
 command used for copying authentication templates to directory. Once copied we can make changes to the styling, and the content
