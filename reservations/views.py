@@ -6,6 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
+from django.conf import settings
 from .models import Booking
 from restaurant.models import BookingDetails, OpeningHours
 from .forms import BookTableForm, ProfileForm
@@ -244,7 +245,7 @@ class ApproveReservationViewAdmin(UpdateView):
             send_mail(
                 subject,
                 body,
-                None,
+                settings.EMAIL_HOST_USER,
                 [self.object.author.email],
                 fail_silently=False
             )
