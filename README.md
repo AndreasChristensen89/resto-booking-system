@@ -575,6 +575,8 @@ All non-text elements are marked with aria-labels, and the contrast between back
     * Host email is set as CC
 * Email is sent when a User double books, meaning that two or more bookings are overlapping
 
+* Email may arrive in spam folder, so be sure to check that.
+
 
 # Admin Access
 Admin credentials (superuser)
@@ -601,7 +603,7 @@ In order for menu to be displayed Admin must add items (This is already set on d
 
 * Under Reservation:
     * In Tables add desired number of tables
-        * Technically the system works without tables, but no tables are added to bookings, and it will therefore not know if restaurant is full.
+        * Technically you can make it work without tables, but no tables are available, and it will therefore think that the restaurant is fully booked and will not accept bookings. Admin can make reservations manually though.
 
 * Warning: Admin can rely on booking logic to not conflict tables and bookings, but Admin is able to manually assign the same tables to concurrent bookings. Admin is advised to rely on the logic, or to make sure to use the Available Tables site when updating and accepting bookings (if sorting is turned off). If the admin wants to create a booking, then it is best done from the site, as the logic does not work in the Admin administration system.
 
@@ -691,10 +693,17 @@ Six models
 ## Django forms
 Four forms
 * BookTableForm - form for creating booking on the booking page
-    * Has three fields: Number of guests, Booking 
+    * Has three fields: Number of guests, Date and Time, and Comment.
+    * Checks if sum of seats (from available tables) are greater or equal to number of guests.
+    * Checks if Date and Time is in future
+    * Check if number of guests are at least 1
+    * Checks if Date and time is within closing time minus booking duration. E.g. if closing time is 22:00 and booking duration is 120 mins, then latest time is 20:00
 * ProfileForm - form for the profile page
+    * Fields: username, first name, last name, email, and password. Only password is not mandatory.
 * ContactForm - form for the contact page
+    * Fields: name, email, and message.
 * ContactFormLoggedIn - form for the contact page for registered users
+    * One field: message. View code handles the rest.
 
 
 command used for copying authentication templates to directory. Once copied we can make changes to the styling, and the content

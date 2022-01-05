@@ -36,12 +36,11 @@ def book_table(request):
             booking_end = obj.booking_start + timedelta(minutes=BookingDetails.objects.all()[0].booking_duration)
             obj.booking_end = booking_end
             obj.save()
-            # save the many-to-many data for the form.
+            
             sorting_method = BookingDetails.objects.all()[0].table_assign_method
             tables = return_tables(obj.booking_start, obj.number_guests, sorting_method)
             limit = BookingDetails.objects.all()[0].assign_method_limit
             conflicting = double_booking(obj.booking_start, user)
-            # conflicting length is 1 due to save further up
             if conflicting == 1 and sorting_method > 0 and tables and obj.number_guests < limit:
                 for table in tables:
                     obj.table.add(table)
@@ -107,6 +106,11 @@ class BookingListPrevious(generic.ListView):
 
 
 class BookingDetail(View):
+    """
+    Uses the booking's slug to access the booking,
+    allowing template to display all info.
+    """
+    
     def get(self, request, slug, *args, **kwargs):
         queryset = Booking.objects.all()
         booking = get_object_or_404(queryset, slug=slug)
@@ -121,7 +125,10 @@ class BookingDetail(View):
 
 
 class BookingDetailPrevious(View):
-
+    """
+    Same content as BookingDetail,
+    but used differently in template
+    """
     def get(self, request, slug, *args, **kwargs):
         queryset = Booking.objects.all()
         booking = get_object_or_404(queryset, slug=slug)
@@ -153,7 +160,7 @@ class BookingUpdated(generic.ListView):
 
 class BookingPending(generic.ListView):
     """
-    Gets all pending bookings
+    Gets all future pending bookings for admin
     """
     def get_queryset(self):
         current_datetime = datetime.datetime.now()
@@ -170,7 +177,7 @@ class BookingPending(generic.ListView):
 
 class BookingAccepted(generic.ListView):
     """
-    Gets all pending bookings
+    Gets all future accepted bookings
     """
     def get_queryset(self):
         current_datetime = datetime.datetime.now()
@@ -206,7 +213,7 @@ class UpdateReservationView(UpdateView):
 class UpdateReservationViewAdmin(UpdateView):
     """
     Admin can update booking details
-    Meant for bookings that have new requests
+    Meant for bookings that have updated requests
     """
     model = Booking
     fields = ['number_guests', 'table', 'comment', 'status']
@@ -253,6 +260,11 @@ class ApproveReservationViewAdmin(UpdateView):
 
 
 class AvailableTables(View):
+    """
+    Displays all the available tables for the booking.
+    Uses booking function to retrieve list
+    """
+    
     def get(self, request, slug, *args, **kwargs):
         queryset = Booking.objects.all()
         booking = get_object_or_404(queryset, slug=slug)
