@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 def create_booking(name, datetime):
     user = User.objects.create_user(name, 'lennon@thebeatles.com', 'johnpassword')
     booking = Booking.objects.create(
-        author=user, 
-        number_guests=4, 
+        author=user,
+        number_guests=4,
         booking_start=datetime,
         booking_end=datetime+timedelta(minutes=180))
     return booking
@@ -43,11 +43,11 @@ class TestBooking(TestCase):
     def test_object_exists(self):
         booking = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         self.assertEqual(len(Booking.objects.filter(booking_start='4444-11-06 12:00:00')), 1)
-    
+
     def test_pending_status_is_zero(self):
         booking = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         self.assertEqual(booking.status, 0)
-    
+
     def test_booking_slug_are_generated_and_unique(self):
         booking1 = create_booking('john', datetime.strptime('4444-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))
         booking2 = create_booking('paul', datetime.strptime('3333-11-06 12:00:00', '%Y-%m-%d %H:%M:%S'))

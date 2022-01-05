@@ -30,10 +30,10 @@ def contact(request):
                 'Hello ' + form.cleaned_data['name'] + ', thank you for getting in touch.' '\n'
                 'We received this message from you' ',\n' + form.cleaned_data['message'],
                 settings.EMAIL_HOST_USER,
-                [form.cleaned_data['email_address'], 'dresdiner.notice@gmail.com',],
+                [form.cleaned_data['email_address'], 'dresdiner.notice@gmail.com'],
                 fail_silently=False
             )
-            
+
         else:
             messages.error(
                 request, "Please correct any errors")
@@ -63,10 +63,10 @@ def contact_logged_in(request):
                 'Hello ' + request.user.first_name + ', thank you for getting in touch.' '\n'
                 'We received this message from you' ',\n' + form.cleaned_data['message'],
                 settings.EMAIL_HOST_USER,
-                [request.user.email, 'dresdiner.notice@gmail.com',],
+                [request.user.email, 'dresdiner.notice@gmail.com'],
                 fail_silently=False
             )
-            
+
         else:
             messages.error(
                 request, "Please correct any errors")

@@ -36,7 +36,7 @@ def book_table(request):
             booking_end = obj.booking_start + timedelta(minutes=BookingDetails.objects.all()[0].booking_duration)
             obj.booking_end = booking_end
             obj.save()
-            
+
             sorting_method = BookingDetails.objects.all()[0].table_assign_method
             tables = return_tables(obj.booking_start, obj.number_guests, sorting_method)
             limit = BookingDetails.objects.all()[0].assign_method_limit
@@ -110,7 +110,7 @@ class BookingDetail(View):
     Uses the booking's slug to access the booking,
     allowing template to display all info.
     """
-    
+
     def get(self, request, slug, *args, **kwargs):
         queryset = Booking.objects.all()
         booking = get_object_or_404(queryset, slug=slug)
@@ -264,7 +264,7 @@ class AvailableTables(View):
     Displays all the available tables for the booking.
     Uses booking function to retrieve list
     """
-    
+
     def get(self, request, slug, *args, **kwargs):
         queryset = Booking.objects.all()
         booking = get_object_or_404(queryset, slug=slug)

@@ -42,6 +42,7 @@ class TestBookingForm(TestCase):
             })
         self.assertFalse(form.is_valid())
 
+
 class TestBookingFormLogin(TestCase):
     def test_empty_form(self):
         form = ContactFormLoggedin()

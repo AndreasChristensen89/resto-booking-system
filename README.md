@@ -330,7 +330,7 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
 
 ## Validator Testing
 * PEP8 validator for python:
-    * I have "Line too long" e501 errors and I am aware of them. They do not impact my code.
+    * I have "Line too long" e501 errors and I am aware of them. I was advised to let them be as they do not impact my code.
         * 2 in reservations.booking.py
         * 10 in reservations.forms.py
         * 10 in reservations.models.py
@@ -541,7 +541,7 @@ What are the goals for a first-time visitor?
 * Be able to navigate effortless through the pages
     * Navigation bar is always available and the index page has call-to-action links depending on user
     * Interactive element move when users hover over them.
-* Easily understand how to make a booking and to set up
+* Easily understand how to get started and to set up
     * Message on index tell them to log in to make a reservation. The call to action links are easy to see and takes them directly to sign-up or login
 * Easily understand how to make a booking
     * If user has not entered details they are guided to the profile page to fill them in
