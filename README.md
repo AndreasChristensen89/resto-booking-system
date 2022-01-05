@@ -59,9 +59,9 @@ The development rationale for this project is to create an application that meet
   * [Django forms](#django-forms)
   * [Additional mentions:](#additional-mentions-)
 
-## Features
+# Features
 
-### Existing Features:
+## Existing Features:
 * __Navigation Bar__
     * The navigation bar is found on all pages. It is dark grey with white text and changes according to if the user is logged in, and also whether the user is a superuser or not. The design is Bootstrap's own design (https://getbootstrap.com/docs/4.3/components/navbar/), which I have set to collapse when reaching mobile displays.
         * For non-users there are five links: "Home", "Menu", "Contact Information", "Sign-up", and "Login"
@@ -238,12 +238,12 @@ The development rationale for this project is to create an application that meet
         * ![Footer - large](/static/images/readme-pictures/footer-large.JPG)
         * ![Footer - mobile](/static/images/readme-pictures/footer-mobile.JPG)
 
-### Future features to implement
+## Future features to implement
 * I wanted to have a feature which generated buttons with available times for the date that users put in. I was able to generate the buttons, but not to have them work with forms.
 * Opening hours could include national holidays
 
-## Testing
-### Django testing
+# Testing
+## Django testing
 All applications have been tested using TestCase. Forms, models, views, and additional functions have all been tested.
 * TestCase
     * When testing the current database was not able to create testing databases, and I had to comment it out and un-comment the other database using sqlite3 in settings.py
@@ -265,9 +265,9 @@ All applications have been tested using TestCase. Forms, models, views, and addi
     * Restaurant
         * Test_models - 3 tests, all pass. Test if objects can be created and if default values work.
 
-### Browser Testing
+## Browser Testing
 
-### Media Queries
+## Media Queries
 Media queries have been done using bootstrap's class system.
 Chrome Developer Tools was used for testing all media queries for additional CSS.
 
@@ -280,7 +280,7 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
 - General testing with my own laptop, Asus 13 inch using Chrome, no issues.
 - All links were tested. All external links and internal links work.
 
-### Bugs discovered during testing:
+## Bugs discovered during testing:
 * Update booking doesn't work for some reason. Information is not updated. Gives following error: "POST /bookings/LavaBoy/update/ HTTP/1.1" 302 0 - Was due to view function. 
     * The save() command was in the wrong order
 * Cancel function on site doesn't work if there are multiple reservations with the same slug
@@ -310,11 +310,11 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
 * Had many problems loading the static files from Cloudinary to Heroku. Heroku would generate a wrong URL and could not retrieve CSS and pictures. My mentor and I were unable to resolve the issue after two meetings, which caused me to miss the first deadline.
     * I created a new Cloudinary account which fixed the CSS problem. However, it did not want to load pictures. I eventually solved it by loading the static to every template that had to use images from Cloudinary. Static was already loaded in base.html but did not extend. Also, I was unable to have it load css backgrounds from style.css - the url to cloudinary would be wrong - so I instead used inline styling. This was later removed as I redesigned the page to only used hero-image.
 
-### Unfixed Bugs:
+## Unfixed Bugs:
 * Due to problems with loading static images I need to import {% load static %} in all of the files using the hero image. I was not able to set a background-image in css as the image would not load properly from Cloudinary. I could not resolve this issue and resorted to my mentor, who was equally unable to understand the cause.
 * If a user does not enter email on registration then no confirmation email is sent. If user then updates profile with email, as is required to make a booking, then no email-confirmation is sent. It is only sent on registration.
 
-### Validator Testing
+## Validator Testing
 * PEP8 validator for python:
     * I have "Line too long" e501 errors and I am aware of them. They do not impact my code.
         * 2 in reservations.booking.py
@@ -454,23 +454,23 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
 
 # Technologies Used
 
-### Icons
+## Icons
 Icons and script were taken from https://fontawesome.com/, as well as Google's fonts: https://fonts.google.com/icons?selected=Material+Icons.
 
-### Datetime Picker
+## Datetime Picker
 A Javascript datetime picker, XDSoft DateTimePicker, was used on the booking page. It was found on this page:
 * https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
     * Followed instructions for install, which included implementation of a script in the head and at the bottom of the html page.
     * Was inserted into base.html
 
-### Hosting and Development
+# Hosting and Development
 * GitHub was used to host the repository
 * GitPod was used for development and version control
 * Heroku was used to deploy site
 * Cloudinary was used as cloud service
 
-## Credits
-### Pictures
+# Credits
+## Pictures
 Image was compressed using the webpage https://tinypng.com/ Afterwards it was converted to webp using https://cloudconvert.com/png-to-webp.
 
 Picture credits from freepik
@@ -479,11 +479,11 @@ hero-pic:
 <a href="https://www.freepik.com/photos/background">Background photo created by tirachard - www.freepik.com</a>
 
 
-### Text content
+## Text content
 Content was all formulated by myself, but for the menu I took inspiration from various websites with food, descriptions etc.
 
 
-### Coding help
+## Coding help
 - For help with various issues Django, css etc. I often resorted to https://stackoverflow.com/ as well as the official documentation for Django.
 - For help with syntax reminders I often used https://www.w3schools.com/, as well as various pages giving advice on Django
 - For general best practice I used Code Institute's Slack community.
@@ -491,12 +491,12 @@ Content was all formulated by myself, but for the menu I took inspiration from v
 - General comments from family and peers for what CSS looked the best.
 - I looked up other booking system to get inspiration for how it could be set up.
 
-### Design
+## Design
 - For design of the different pages I didn't use other sources of information other than my previous projects.
 - I decided to redesign the entire site thus making it a lot more minimal. Inspiration came from my family.
 - No wireframes were used
 
-## User stories
+# User stories
 For user stories I used Github's Projects -> User Stories. Kanban board. I created 18 stories and implemented them one by one. Some others were deleted, and some were changed along the way. The ones that are there now are:
 - Accept/decline reservation: As a site admin I can approve or reject reservations so that the customer knows if they have a reservation or not
 - Choose table assignment method: As an admin I can select a table assignment method so that I can adapt the method to the restaurant setup
@@ -516,6 +516,40 @@ For user stories I used Github's Projects -> User Stories. Kanban board. I creat
 - Make reservation: As a site user I can make a reservation so that the restaurant is notified about my request
 - Site pagination: As a site user I can view a paginated list of reservations so that I can select which reservation to view
 - Send messages to clients: As a site admin I can send messages so that the customers know reasoning behind e.g. cancellations.
+
+# UX
+## User acceptance criteria
+What are the goals for a first-time visitor? 
+* Quickly understand that the page is about and make sense of the setup
+    * This is indicated by the welcome message and the clear white call-to-action icon
+* Be captivated by the content and the imagery
+    * Bright and inviting colors are used. It's simple and easy for the eyes.
+* Be able to navigate effortless through the pages
+    * Navigation bar is always available and the index page has call-to-action links depending on user
+    * Interactive element move when users hover over them.
+* Easily understand how to make a booking and to set up
+    * Message on index tell them to log in to make a reservation. The call to action links are easy to see and takes them directly to sign-up or login
+* Easily understand how to make a booking
+    * If user has not entered details they are guided to the profile page to fill them in
+    * Afterwards if their screen on the booking site is too small to show the form the message tells them to scroll down
+    * If info is wrong, validation error will be raised with clear messages of what went wrong.
+* Understand how to access bookings
+    * When a booking is made the user is redirected to the upcoming bookings page.
+    * Addtionally, the nav bar has a dropdown called "booking" which has clear links to upcoming/previous bookings
+* Give good feedback
+    * Messages are incorporated and gives feedback for account activity and email.
+* Have the application work on all devices.
+    * Using bootstrap as a mobile first tool made sure that it works properly. Additional styling was made by custom CSS and is tested to work on all devices.
+
+What are the goals for a returning visitor?
+* Instantly/easily remember how to navigate the content
+    * I estimate this to be intuitive
+* Easily remember how to access relevant pages
+    * Index has call to action for most common pages, and navbar is always present
+    * In case user has questions there is also the contact page, which makes it easy to send messages
+* Easily be able to contact the developer with questions, feedback, any other inquiries
+    * Contact page is clearly displayed in the navbar, and there is also a link at the bottom of the menu
+    * User has the option of sending a message, but also to phone the restaurant (made up number), or to visit them at their address
 
 ## Strategy
 The purpose of this site is to create a simple site for a restaurant that handles reservations. The site should be simple to use, and information should be easy to find with simple and clear design
@@ -544,15 +578,29 @@ Lato was the choice. I experimented with a lot of fonts from Google, but in the 
 ### Pictures
 There is only one picture used, which is a wooden bar desk with a blurry background. It is bright and has a brown/wood based theme. I find it relaxing and simple, and hope that others will feel the same way.
 
-### Languages Used
+### Accessibility
+All non-text elements are marked with aria-labels, and the contrast between background and foreground colors were implemented in color scheme.
+
+# Languages Used
 - HTML
 - CSS
 - Python
 - JavaScript
 - Markdown language for readme file
 
-### Accessibility
-All non-text elements are marked with aria-labels, and the contrast between background and foreground colors were implemented in color scheme.
+# CRUD
+## Create
+Users and admin can create objects in the Booking model via the booking form + booking view code on the booking page. Admin can additionally create objects via the admin panel.
+
+## Reading
+Users can find their past (previous bookings page) and future booking (upcoming bookings page) object on their site and see the booking details (booking details page). Admin can see all bookings in admin panel, or filtered bookings on the pending bookings page, accepted bookigns page, and the updated bookings page.
+
+## Updating
+Users can update their future bookings on the upcoming bookings page using the UpdateView class. It is limited in that they can only alter the comment. However, admin is able to alter every aspect of the booking objects, done in the admin panel, pending bookings, updated bookings, and accepted bookings, and can alter bookings from any time.
+
+## Deteion
+Users can delete their future bookings on the upcoming bookings page. Admin can delete bookings via the pending bookings, updated bookings, accepted bookings, and can delete all bookings from any time.
+
 
 # Email
 * During development the following was used in settings.py:
@@ -579,8 +627,8 @@ All non-text elements are marked with aria-labels, and the contrast between back
 
 
 # Admin Access
-Admin credentials (superuser)
-* in url add "/admin" (https://resto-booking-system.herokuapp.com/admin)
+Admin credentials given on submission
+* In url add "/admin" (https://resto-booking-system.herokuapp.com/admin)
 
 ## Must have settings
 In order for booking logic to work admin must set up the following (This is already set on deployment, but can be changed):
@@ -615,7 +663,7 @@ In order for menu to be displayed Admin must add items (This is already set on d
 * In order to add the ManyToManyField in the Booking model I had to save the booking first in the view and then afterwards attach the tables, and finally save again. This caused a lot of trouble but it works now.
 
 
-## Booking Logic
+# Booking Logic
 1. User must create a profile in order to make reservations. Profile must include first name and last name.
 2. User specifies number of guests and datetime, comment can be made but is not needed
 3. Form validates opening hours, datetime (past), number of available tables, number of people and gives validation errors if any conflicts exist
@@ -705,16 +753,8 @@ Four forms
 * ContactFormLoggedIn - form for the contact page for registered users
     * One field: message. View code handles the rest.
 
-
-command used for copying authentication templates to directory. Once copied we can make changes to the styling, and the content
-cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates
-
-Due to error when creating user, I was advised to implement the following in settings.py:
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-![registration error](/static/images/readme-pictures/registration-error.JPG)
-
 ## Additional mentions:
-* Due to message on the 06-12-2021, Gitpod had new dependencies. Followed the instructions:
+Due to message on the 06-12-2021, Gitpod had new dependencies. Followed the instructions:
     * find -name "deps.txt" - no results, so meant that I had the older version
     * ran pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
     * pip3 install django gunicorn
@@ -727,32 +767,15 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
     * pip3 freeze --local > requirements.txt
 From here onwards, whenever you (re)start your workspace, you need to do two things:
 run 
-* pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt - first, and then run:
-* pip3 install -r requirements.txt - second
+* First:
+    - pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt - first,
+* Second:
+    - pip3 install -r requirements.txt
 
-Current bugs to fix:
-<!-- - When updating the reservation the table function does't run again, so tables assigned stay the same even if number of people exceed capacity.
-    - If a guests wish to increase number of people, the admin does not have access to availability-logic when assigning new tables
-    - If I change the setting to be within the same second, it's automatically added as "updated" since created_on and updated_on may be added in different seconds. -->
-<!-- - Move profile url from reservations DONE -->
-<!-- - Updating a booking removes the tables - see if can implement logic in updateview - does it? Can't replicate -->
-<!-- - Fix message for opening hours to reflect latest reservation time - DONE -->
-<!-- - Add alt text to pictures DONE -->
-<!-- - Fix test for model, string + datetime shit DONE -->
-<!-- - Add booking logic for same zone DONE -->
-<!-- - Remove/add for people from meals DONE -->
-<!-- - Include design thoughts for css DONE -->
-<!-- - Add available tables to update site DONE -->
-- Check conflicting user booking - testing
-<!-- - Add arial labels to icons DONE -->
-<!-- - Style error 404 and 500 - DONE To be tested on Heroku -->
-- Add django models explanation/outline
-<!-- - Remove old CSS DONE -->
-<!-- - Test HTML in validator DONE -->
-- New pictures of index and menu
-<!-- - Make different contact page for logged in DONE -->
-<!-- - Fix 404 code DONE -->
-- Add new email settings to readme
+command used for copying authentication templates to directory. Once copied we can make changes to the styling, and the content
+cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates
+
+
 
 
 pip3 freeze > unins.txt && pip3 uninstall -y -r unins.txt && rm unins.txt
