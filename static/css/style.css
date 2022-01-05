@@ -401,6 +401,16 @@ a:hover, a:active {
 
 @media screen and (max-width: 576px) {
     
+    .animation:hover {
+        transform: scale(0.9);
+        transition: all 0.3s ease 0s;
+    }
+    
+    .animation:not(:hover) {
+        transform: scale(1);
+        transition: all 0.3s ease 0s;
+    }
+
     .booking-outer {
         height: 430px;
     }
