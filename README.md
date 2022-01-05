@@ -177,7 +177,6 @@ The development rationale for this project is to create an application that meet
     * Design in line with the other sites. Header says "Profile" and underneath the image is a form. The form has five fields: "Username", "First name", "Last name", "Email", and "Password". All except for password are mandatory. Underneath the form is a paragraph with a link to change the password. Underneath the form is a blue button "Save" which will update the details of the profile. Updating name details here will allow the user to make reservations.
         * ![Profile page - large](/static/images/readme-pictures/profile-large.JPG)
         * ![Profile page - top mobile](/static/images/readme-pictures/profile-top-mobile.JPG)
-        * ![Profile page - bottom mobile](/static/images/readme-pictures/profile-bottom-mobile.JPG)
 
 * __Log out page__:
     * Very simple design in line with the other allauth pages. Header "Sign out". Underneath a paragraph "Are you sure you want to sign out?". Underneath a blue button "Sign Out".

@@ -246,6 +246,13 @@ a:hover, a:active {
     background-color: #55402d;
 } */
 
+.booking-outer {
+    height: 570px;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
 .booking-pending {
     background-color: #55402d;
 }
@@ -404,6 +411,10 @@ a:hover, a:active {
         height: 500px;
     }
 
+    .booking-outer {
+        height: 500px;
+    }
+
     #hero-image {
         height: 500px;
     }
@@ -443,10 +454,25 @@ a:hover, a:active {
             top: 300px;
         }
     }
+
+    @keyframes booking-animation {
+        from {
+            opacity: 0;
+            top: 195px;
+        }
+    
+        to {
+            opacity: 1;
+            top: 195px;
+        }
+    }
 }
 
 @media screen and (max-width: 576px) {
     
+    .booking-outer {
+        height: 430px;
+    }
     .icon {
         font-size: 25px;
     }
@@ -514,12 +540,12 @@ a:hover, a:active {
     @keyframes booking-animation {
         from {
             opacity: 0;
-            top: 125px;
+            top: 120px;
         }
     
         to {
             opacity: 1;
-            top: 125px;
+            top: 120px;
         }
     }
 }
