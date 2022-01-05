@@ -242,10 +242,6 @@ a:hover, a:active {
 
 /* ----------------- bookings ------------------------- */
 
-/* .booking-pending, .booking-button {
-    background-color: #55402d;
-} */
-
 .booking-outer {
     height: 570px;
     width: 100%;
@@ -253,15 +249,15 @@ a:hover, a:active {
     margin-bottom: 30px;
 }
 
-.booking-pending {
+.admin-pending {
     background-color: #55402d;
 }
 
-.booking-confirmed {
+.admin-confirmed {
     background-color: #066000;
 }
 
-.booking-declined {
+.admin-declined {
     background-color: #ac0918;
 }
 

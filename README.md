@@ -331,6 +331,36 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
         * 2 in restaurant.models.py
 
 * W3 Markup Validation Service completed for all HTML pages with no errors.
+    - Admin accepted page
+        - ![Admin accepted page test](/static/images/readme-pictures/test-admin-accepted.JPG)
+    - Admin pending page
+        - ![Admin pending page test](/static/images/readme-pictures/test-admin-pending.JPG)
+    - Admin updated page
+        - ![Admin updated page test](/static/images/readme-pictures/test-admin-updated.JPG)
+    - Book table page
+        - ![Book table page test](/static/images/readme-pictures/test-book-table.JPG)
+    - Contact page nouser
+        - ![Contact page nouser test](/static/images/readme-pictures/test-contact-nouser.JPG)
+    - Contact page logged in
+        - ![Contact page logged in test](/static/images/readme-pictures/test-contact-login.JPG)
+    - Homepage
+        - ![Homepage test](/static/images/readme-pictures/test-homepage.JPG)
+    - Login page
+        - ![Login page test](/static/images/readme-pictures/test-login.JPG)
+    - Logout page
+        - ![Logout page test](/static/images/readme-pictures/test-logout.JPG)
+    - Menu page
+        - ![Menu page test](/static/images/readme-pictures/test-menu.JPG)
+    - Password page
+        - ![Password page test](/static/images/readme-pictures/test-password.JPG)
+    - Profile page
+        - ![Profile page test](/static/images/readme-pictures/test-profile.JPG)
+    - Signup page
+        - ![Signup page test](/static/images/readme-pictures/test-sigup.JPG)
+    - User previous bookings page
+        - ![User previous bookings page test](/static/images/readme-pictures/test-user-previous-bookings.JPG)
+    - User upcoming bookings page
+        - ![User upcoming bookings page test](/static/images/readme-pictures/test-user-upcoming-bookings.JPG)
 * Jigsaw test CSS file completed with no errors.
 
 # Starting Django project
@@ -527,18 +557,19 @@ All non-text elements are marked with aria-labels, and the contrast between back
 # Email
 * During development the following was used in settings.py:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-* Post-production a live service, SendGrid, was implemented with the following settings:
-    SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
-    DEFAULT_FROM_EMAIL = 'dresdiner.notice@gmail.com'
-    EMAIL_HOST = 'smtp.sendgrid.net'
-    EMAIL_HOST_USER = 'apikey'
-    EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+* Post-production a Gmail was implemented with the following settings:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = 'dresdiner.notice@gmail.com'
+    EMAIL_HOST_PASSWORD = os.environ.get('APP_KEY')
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
-    * Single Sender Verification setup
-    * This sends live emails, but is limited at 100 emails per day due to free account.
+    DEFAULT_FROM_EMAIL = 'dresdiner.notice@gmail.com'
+    * This sends live emails, but and sends from a gmail I created for this project
     * Password in stored in env.py
-* Email is sent when registering, to confirm the email.
+        * variable is also added to Heroku config variables
+* Email is sent when registering to confirm the email.
+* Email is sent when resetting password
 * Email is sent when a booking is accepted or declined
 * Email is sent when a message is sent on the contact page
     * Host email is set as CC
