@@ -239,8 +239,8 @@ class ApproveReservationViewAdmin(UpdateView):
         if status == 2:
             body = (
                 f"Hello {self.object.author.first_name}. " +
-                f"Unfortunately, we are not able to accomodate your booking on {self.object.booking_start}. " +
-                f"For more information please see the comment left by the restaurant or contact us via our website."
+                f"Unfortunately, we are not able to accommodate your booking on {self.object.booking_start}. " +
+                f"For more information, please see the comment left by the restaurant or contact us via our website."
             )
         elif status == 1:
             body = (
