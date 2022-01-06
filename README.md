@@ -1,10 +1,10 @@
-# Resto-Book
+# Resto-Booking
 
 The idea behind this project is to create a site for a restaurant that can manage reservations.
 On deployment all the restaurant details, including contact details, openings hours, booking details, meals, and categories have already been set up, however this can be edited as the admin wants thus making the content changeable.
 Much of the content is auto generated on the pages, and the admin can set up their preferred criteria.
 
-The development rationale for this project is to create an application that meets a real life need, which is the need for restaurant owners to digitalise the process of taking orders, sorting tables, and avoiding double bookings. Much of it should be automatic, including emails.
+The development rationale for this project is to create an application that meets a real-life need, which is the need for restaurant owners to digitalise the process of taking orders, sorting tables, and avoiding double bookings. Much of it should be automatic, including emails.
 
 
 # Table of contents
@@ -115,7 +115,7 @@ All pages have been tested to work down until width 280px, which is the smallest
         * ![Menu page - mobile category and items](/static/images/readme-pictures/menu-category-and-item-mobile.JPG)
     * Underneath the main title is an introductory message that reads "Everything served has been put through a rigorous process to ensure optimal quality and flavour"
     * Underneath the site auto generates the categories added by the admin, followed by all the meals connected to this category.
-    The category is on a row of it's own, and underneath the pictures of the meals are displayed along with title, price, and description. Corners of the pictures are slightly rounded. On mobile view one meal occupies a full column. On large there are two meals side by side, which consists of the image to the left and the descriptions on the right. All text is white.
+    The category is on a row of its own, and underneath the pictures of the meals are displayed along with title, price, and description. Corners of the pictures are slightly rounded. On mobile view one meal occupies a full column. On large there are two meals side by side, which consists of the image to the left and the descriptions on the right. All text is white.
 
 * __Sign-up page__:
     * Sign up page has a simple design, just showing a heading "Sign Up". Underneath is a paragraph that shows a link to the login page in case the user already has an account. Underneath comes the form, which consists of four fields: "Username", "E-mail", "Password", "Password(again)", and then a blue "Sign Up" button underneath. All fields except for E-mail are mandatory and marked with an "*".
@@ -128,7 +128,7 @@ All pages have been tested to work down until width 280px, which is the smallest
         * ![Log in page - mobile ](/static/images/readme-pictures/login-page-mobile.JPG)
 
 * __Contact Information__:
-    * The contact information page has the same design as the index and menu pages. The content is the same regardless of user. Underneath the heading "Contact Information" is a paragraph that reads "Don't hesitate to send us a message if you have any questions or feedback". Below is the form for the user to send a message. On top of the form it reads "Scroll down further for more details", nofitying the user of the opening hours and address below the form. There are three fields in the form: "Name", "Email Address", and "Message". All fields are mandatory. Below is a blue send button.
+    * The contact information page has the same design as the index and menu pages. The content is the same regardless of user. Underneath the heading "Contact Information" is a paragraph that reads "Don't hesitate to send us a message if you have any questions or feedback". Below is the form for the user to send a message. On top of the form it reads "Scroll down further for more details", notifying the user of the opening hours and address below the form. There are three fields in the form: "Name", "Email Address", and "Message". All fields are mandatory. Below is a blue send button.
     * Underneath is a section which holds two divs, one with the opening hours - these are generated from the OpeningHours model - and the other with the contact details of the establishment (made up). For mobile views these two divs are not side by side but stacked on top of each other.
         * ![Contact page - top large](/static/images/readme-pictures/contact-top-large.JPG)
         * ![Contact page - bottom large](/static/images/readme-pictures/contact-bottom-large.JPG)
@@ -137,7 +137,7 @@ All pages have been tested to work down until width 280px, which is the smallest
         * ![Contact page - bottom mobile](/static/images/readme-pictures/contact-bottom-mobile.JPG)
 
 * __Contact Information Logged In__:
-    * Same design as contact information, but have a more personal message for the user "Don't hesitate to send us a message, {user}". A different shorter form is used, so that the user does not need to put in name and email.
+    * Same design as contact information but has a more personal message for the user "Don't hesitate to send us a message, {user}". A different shorter form is used, so that the user does not need to put in name and email.
     * ![Contact page logged in - top large](/static/images/readme-pictures/contact-logged-in-top-large.JPG)
     * ![Contact page logged in - bottom large](/static/images/readme-pictures/contact-logged-in-bottom-large.JPG)
     * ![Contact page logged in - top mobile](/static/images/readme-pictures/contact-logged-in-top-mobile.JPG)
@@ -210,22 +210,18 @@ All pages have been tested to work down until width 280px, which is the smallest
     * If status is set to approved and updated an email will be sent:
     Subject: Dre's Diner booking
     From: dresdiner@email.com
-    To: {{user.email}}, dresdiner@email.com
+    To: {{user.email}}
     Date: Thu, 23 Dec 2021 20:24:23 -0000
-    Message-ID: 
-    <164029106357.53006.4891105094604906206@ws-a179a4a9-ce31-4837-8329-6d89e01dd653>
 
     Hello {{user.first_name}}, your booking is confirmed on {{booking.booking_start}}. Please note that cancellations must be made minimum two hours before. We look forward to seeing you.
 
     * If status is set to declined a different email will be sent:
         Subject: Dre's Diner booking
         From: dresdiner@email.com
-        To: {{user.email}}, dresdiner@email.com
-        Date: Thu, 23 Dec 2021 20:27:37 -0000
-        Message-ID: 
-        <164029125792.53006.11650285119791939862@ws-a179a4a9-ce31-4837-8329-6d89e01dd653>
+        To: {{user.email}}
+        Date: Jan 2, 2022, 9:11 AM
 
-        Hello {{user.first_name}}. Unfortunately, we are not able to accomodate your booking on {{booking.booking_start}}. For more information please see the comment left by the restaurant or contact us via our website.
+        Hello {{user.first_name}}. Unfortunately, we are not able to accommodate your booking on {{booking.booking_start}}. For more information, please see the comment left by the restaurant or contact us via our website.
 
         * ![Approve/Decline bookings - large](/static/images/readme-pictures/approve-decline-large.JPG)
         * ![Approve/Decline bookings - mobile](/static/images/readme-pictures/approve-decline-mobile.JPG)
@@ -254,7 +250,7 @@ All pages have been tested to work down until width 280px, which is the smallest
 ## Future features to implement
 * I wanted to have a feature which generated buttons with available times for the date that users put in. I was able to generate the buttons, but not to have them work with forms.
 * Opening hours could include national holidays
-* Restaurant could be able to specify lastest cancel time
+* Restaurant could be able to specify latest cancel time
 
 # Testing
 ## Django testing
@@ -378,7 +374,7 @@ Chrome Developer Tools was used for testing all media queries for additional CSS
 * Jigsaw test CSS file completed with no errors.
 
 # Starting Django project
-* I used the Code Insitute full-stack template for this project: https://github.com/Code-Institute-Org/gitpod-full-template
+* I used the Code Institute full-stack template for this project: https://github.com/Code-Institute-Org/gitpod-full-template
 * Create new workspace install the following:
     * Django and gunicorn: pip3 install django gunicorn
     * Supporting libraries: pip3 install dj_database_url psycopg2
@@ -549,7 +545,7 @@ What are the goals for a first-time visitor?
     * If info is wrong, validation error will be raised with clear messages of what went wrong.
 * Understand how to access bookings
     * When a booking is made the user is redirected to the upcoming bookings page.
-    * Addtionally, the nav bar has a dropdown called "booking" which has clear links to upcoming/previous bookings
+    * Additionally, the nav bar has a dropdown called "booking" which has clear links to upcoming/previous bookings
 * Give good feedback
     * Messages are incorporated and gives feedback for account activity and email.
 * Have the application work on all devices.
@@ -607,7 +603,7 @@ All non-text elements are marked with aria-labels, and the contrast between back
 Users and admin can create objects in the Booking model via the booking form + booking view code on the booking page. Admin can additionally create objects via the admin panel.
 
 ## Reading
-Users can find their past (previous bookings page) and future booking (upcoming bookings page) object on their site and see the booking details (booking details page). Admin can see all bookings in admin panel, or filtered bookings on the pending bookings page, accepted bookigns page, and the updated bookings page.
+Users can find their past (previous bookings page) and future booking (upcoming bookings page) object on their site and see the booking details (booking details page). Admin can see all bookings in admin panel, or filtered bookings on the pending bookings page, accepted bookings page, and the updated bookings page.
 
 ## Updating
 Users can update their future bookings on the upcoming bookings page using the UpdateView class. It is limited in that they can only alter the comment. However, admin is able to alter every aspect of the booking objects, done in the admin panel, pending bookings, updated bookings, and accepted bookings, and can alter bookings from any time.
