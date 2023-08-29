@@ -764,6 +764,10 @@ Four forms
     * One field: message. View code handles the rest.
 
 ## Additional mentions:
+New postgres:
+https://www.elephantsql.com/
+Not Heroku anymore:
+render.com
 Due to message on the 06-12-2021, Gitpod had new dependencies. 
 I Followed the instructions:
     * find -name "deps.txt" - no results, which meant that I had the older version

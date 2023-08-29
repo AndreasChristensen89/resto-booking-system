@@ -29,10 +29,10 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
-ALLOWED_HOSTS = ["resto-booking-system.herokuapp.com", "localhost"]
+ALLOWED_HOSTS = ["localhost", "https://resto-booking-system.onrender.com/", "8000-turquoise-goose-2gjua3vm.ws-eu104.gitpod.io"]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
