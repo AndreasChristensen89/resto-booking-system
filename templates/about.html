@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% include 'includes/top-space.html' %}
+<div class="row">
+    <div class="col-12 about-title">
+        <h1 class="h1 text-center display-4">About us</h1>
+    </div>
+</div>
+
+
+<div class="row mt-5 about-content text-center">
+
+<div class="col-6" style="--i:1;">
+    <div class="mx-auto p-5">
+    <p>Founded in 1982, Dre's Diner has been the go-to local spot in Rønneholtparken over four decades. Our
+        focus has always been the quality of food. Quality does not only mean fine ingredients and attention to
+        detail, it also means that we listen to our customers and shape our selection to the local demand.</p>
+    </div>
+</div>
+
+<div class="col-6" style="--i:2">
+    <div class="mx-auto p-5">
+        <p>Our setting is humble but cozy, or "hyggeligt" as we say in Danish. We can host a mere 20 people, but we
+            pay our utmost attention to every guest. You will feel welcome and cared for, and we can guarantee that our service is straight from the heart.</p>
+    </div>
+</div>
+
+</div>
+  
+{% endblock content%}

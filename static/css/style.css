@@ -6,11 +6,23 @@
     border: none;
 }
 
+/* To prevent scrolling */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 body {
     background-color: #332d24;
     color: whitesmoke;
     font-family: Lato, sans-serif;
     font-weight: 300;
+}
+
+main {
+    z-index: 2;
 }
 
 .header{
@@ -54,6 +66,10 @@ a:hover, a:active {
     text-decoration: underline;
 }
 
+.top-space {
+    margin-top: 150px;
+}
+
 /* -------------------------- nav bar ---------------------------- */
 
 .navbar {
@@ -82,18 +98,12 @@ a:hover, a:active {
 
 /* ------------------------- Hero image ---------------------------- */
 
-.hero-outer {
-    height: 570px;
-    width: 100%;
-    overflow: hidden;
-    margin-bottom: 30px;
-}
-
 #hero-image {
     height: 575px;
     width: 100%;
     position: absolute;
     opacity: 0.6;
+    z-index: -1;
 }
 
 .cover-text {
@@ -108,6 +118,62 @@ a:hover, a:active {
     text-shadow: 1px 1px black;
     top: 275px;
 }
+
+.about-title {
+    animation-name: about-text;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    color: white;
+    font-size: 200%;
+    text-shadow: 1px 1px black;
+}
+
+.about-content {
+    font-size: 125%;
+    opacity: 0;
+    animation: about-background 3s ease forwards;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.about-content div {
+    opacity: 0;
+    animation: about-opacity 1s ease forwards;
+    animation-delay: calc(.5s * var(--i));
+}
+
+@keyframes about-background {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes about-opacity {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes about-text {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 @keyframes cover-text {
     from {
@@ -160,7 +226,7 @@ a:hover, a:active {
     height: 35px;
 }
 
-.cta-logout {
+.cta-authentication {
     position: relative;
     animation-name: cta-opacity;
     animation-duration: 3s;
@@ -188,12 +254,16 @@ a:hover, a:active {
     animation-direction: normal;
 }
 
-.animation:hover {
+.cta-link {
+    width: 80px;
+}
+
+.cta-link:hover {
     transform: translateY(-10px);
     transition: all 0.3s ease 0s;
 }
 
-.animation:not(:hover) {
+.cta-link:not(:hover) {
     transform: translateY(0px);
     transition: all 0.3s ease 0s;
 }

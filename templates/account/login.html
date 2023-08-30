@@ -2,12 +2,11 @@
 
 {% load i18n %}
 {% load account socialaccount %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-{% load crispy_forms_tags %}
-<div>
 
   <div class="row heading-space mt-5">
     <div class="col-3 h1-bg mx-auto mt-3 mb-4 d-flex align-items-end justify-content-center">
@@ -34,6 +33,5 @@
     </p>
   </div>
   </div>
-</div>
 
 {% endblock %}

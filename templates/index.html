@@ -2,11 +2,6 @@
 {% load static%}
 
 {% block content %}
-<section class="hero-outer">
-    <div class="col-12">
-        <img class="img mt-1" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
-            alt="Clean and bright bar counter with blurry background">
-    </div>
     <div class="cover-text">
         <h1 class="h1 mx-auto display-4">Welcome to Dre's Diner</h1>
     </div>
@@ -21,50 +16,48 @@
             </div>
         {% endif %}
 <!--------------------------Call to action logged in superuser-------------------------------->
-{% if user.is_superuser %}
-<div class="row text-center">
-    <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
-        <a href="{% url 'reservations:bookings_pending' %}">
-            <p class="lead">Pending</p>
-        </a>
-    </div>
+        {% if user.is_superuser %}
+        <div class="row text-center">
+            <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
+                <a href="{% url 'reservations:bookings_pending' %}">
+                    <p class="lead">Pending</p>
+                </a>
+            </div>
 
-    <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
-        <a href="{% url 'reservations:bookings_accepted' %}">
-        <p class="lead">Accepted</p>
-        </a>
-    </div>
+            <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
+                <a href="{% url 'reservations:bookings_accepted' %}">
+                <p class="lead">Accepted</p>
+                </a>
+            </div>
 
-    <div class="col-12 col-sm-4 cta animation d-flex justify-content-center cta-width mx-auto">
-        <a href="{% url 'reservations:bookings_updated' %}">
-            <p class="lead">Updated</p>
-        </a>
-    </div>
-</div>
-<!--Call to action logged in regular user-->
-{% elif user.is_authenticated %}
-<div class="row text-center">
-    <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
-        <a href="{% url 'reservations:book_table' %}">
-            <h4 class="h4">New Booking</h4>
-        </a>
-    </div>
+            <div class="col-12 col-sm-4 cta animation d-flex justify-content-center cta-width mx-auto">
+                <a href="{% url 'reservations:bookings_updated' %}">
+                    <p class="lead">Updated</p>
+                </a>
+            </div>
+        </div>
+        <!--Call to action logged in regular user-->
+        {% else %}
+        <div class="row text-center">
+            <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
+                <a href="{% url 'reservations:book_table' %}">
+                    <h4 class="h4">New Booking</h4>
+                </a>
+            </div>
 
-    <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
-        <a href="/menu">
-        <h4 class="h4">Menu</h4>
-        </a>
-    </div>
+            <div class="col-6 col-sm-4 cta animation d-flex justify-content-center">
+                <a href="/menu">
+                <h4 class="h4">Menu</h4>
+                </a>
+            </div>
 
-    <div class="col-12 col-sm-4 cta animation d-flex justify-content-center cta-width mx-auto">
-        <a href="{% url 'reservations:booking_list' %}">
-            <h4 class="h4">My Bookings</h4>
-        </a>
-    </div>
-</div>
-{% endif %}
-
-</section>
+            <div class="col-12 col-sm-4 cta animation d-flex justify-content-center cta-width mx-auto">
+                <a href="{% url 'reservations:booking_list' %}">
+                    <h4 class="h4">My Bookings</h4>
+                </a>
+            </div>
+        </div>
+        {% endif %}
 
 <!--Call to action logged out-->
     {% else %}
@@ -74,45 +67,25 @@
 
         <div class="row text-center">
 
-        <div class="col-6 cta-logout animation">
-            <a href="{% url 'account_login' %}" aria-label="Go to login page">
-                <div>
-                    <i class="fas fa-users icon" aria-hidden="true"></i>
-                </div>
+        <div class="col-6 cta-authentication animation">
+            <div class="cta-link mx-auto">
+                <a href="{% url 'account_login' %}" aria-label="Go to login page">
+                <i class="fas fa-users icon" aria-hidden="true"></i>
                 <h3 class="h3">Log In</h3>
-            </a>
+                </a>
+            </div>
         </div>
 
-        <div class="col-6 cta-logout animation">
-            <a href="{% url 'account_signup' %}" aria-label="Go to signup page">
-                <div>
-                    <i class="fas fa-user-plus icon" aria-hidden="true"></i>
-                </div>
+        <div class="col-6 cta-authentication animation">
+            <div class="cta-link mx-auto">
+                <a href="{% url 'account_signup' %}" aria-label="Go to signup page">
+                <i class="fas fa-user-plus icon" aria-hidden="true"></i>
                 <h3 class="h3">Register</h3>
-            </a>
+                </a>
+            </div>
         </div>
 
     </div>
 
-</section>
-
 {% endif %}
-
-<!--About us-->
-
-<div class="row text-center">
-        <div class="col-12">
-            <h2 class="h2 display-3 mt-3">About us</h2>
-        </div>
-        <div class="col-12 col-sm-6 p-5">
-            <p>Founded in 1982, Dre's Diner has been the go-to local spot in Rønneholtparken over four decades. Our
-                focus has always been the quality of food. Quality does not only mean fine ingredients and attention to
-                detail, it also means that we listen to our customers and shape our selection to the local demand.</p>
-        </div>
-        <div class="col-12 col-sm-6 p-5">
-            <p>Our setting is humble but cozy, or "hyggeligt" as we say in Danish. We can host a mere 20 people, but we
-                pay our utmost attention to every guest. You will feel welcome and cared for, and we can guarantee that our service is straight from the heart.</p>
-        </div>
-</div>
-
 {% endblock %}

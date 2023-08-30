@@ -94,6 +94,9 @@
             <a class="nav-link" href="{% url 'account_login' %}" aria-label="Go to login page">Login</a>
           </li>
           {% endif %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'about' %}">About</a>
+          </li>
           </ul>
         </div>
       </div>
@@ -113,12 +116,17 @@
     </div>
   </div>
 
+  <div class="col-12 position-fixed">
+    <img class="img mt-1" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
+        alt="Clean and bright bar counter with blurry background">
+  </div>
+
     <main class="flex-shrink-0">
         {% block content %}
-        <!--Content Goes here-->
         {% endblock content %}
     </main>
-    <footer class="footer mt-auto py-3">
+  
+    <!-- <footer class="footer mt-auto py-3">
         <p class="m-0 text-center text-white">Made by Dre</p>
         <p class="m-0 text-center text-white">Follow me: 
           <a href="https://facebook.com" aria-label="Visit our Facebook page (opens in a new tab)"
@@ -129,7 +137,7 @@
           target="_blank" rel="noopener"><i class="fab fa-github ms-3 text-white" aria-hidden="true"></i></a>
           <a href="https://instagram.com" aria-label="Visit our instagram page (opens in a new tab)"
           target="_blank" rel="noopener"><i class="fab fa-instagram-square ms-3 text-white" aria-hidden="true"></i></a></p>
-    </footer>
+    </footer> -->
     <!-- datetimepicker function is from link below -->
     <!-- https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html -->
     <script>
