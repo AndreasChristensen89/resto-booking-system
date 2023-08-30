@@ -365,6 +365,29 @@ a:hover, a:active {
 
 /* ------------------------------ menu list --------------------------------- */
 
+.meal-img {
+    width: 230px;
+    height: 150px;
+}
+
+.menu-link {
+    cursor: pointer;
+}
+
+.menu-link:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease 0s;
+}
+
+.menu-link:not(:hover) {
+    transform: translateY(0px);
+    transition: all 0.3s ease 0s;
+}
+
+.menu-link.active {
+    text-decoration: underline;
+}
+
 .opacity-out {
     animation: opacity-out 0.3s ease forwards;
 }
@@ -377,12 +400,13 @@ a:hover, a:active {
     font-size: 150%;
 }
 
-.menu-item .img {
+.menu-category .img {
     background-size: cover;
-    background-position: center center;
+    /* background-position: center center;
     background-repeat: no-repeat;
-    background-position-y: 66%;
-    height: 200px;
+    background-position-y: 66%; */
+    height: 150px;
+    width: 200px;
 }
 
 .menu-item > div {

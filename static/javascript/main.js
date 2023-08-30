@@ -5,6 +5,14 @@ function switchMenu(id) {
 
     let elementId = id.toLowerCase();
     const targetID = document.getElementById(elementId);
+    
+    const element = document.querySelector('.active.menu-link');
+    if (element) {
+    element.classList.remove('active');
+    }
+    const category = document.getElementById(id);
+    category.classList.add("active");
+
 
     const menuItems = document.getElementsByClassName("menu-category");
     let currentlyDisplayedItem;
@@ -17,13 +25,9 @@ function switchMenu(id) {
     }
 
     const handleFadeIn = () => {
-        // Remove d-none from the target ID
         targetID.classList.remove('d-none');
-        
-        // Add opacity-in to the target ID
         targetID.classList.add("opacity-in");
 
-        // Wait for animation to complete then remove opacity-in
         targetID.addEventListener("animationend", function handler() {
             targetID.classList.remove("opacity-in");
             targetID.removeEventListener("animationend", handler);
@@ -40,7 +44,6 @@ function switchMenu(id) {
             currentlyDisplayedItem.classList.remove("opacity-out");
             currentlyDisplayedItem.removeEventListener("animationend", handler);
             
-            // Start the 'opacity-in' animation
             handleFadeIn();
         });
     } else {

@@ -6,27 +6,39 @@
 <div class="row">  
 {% for category in categories %}
     <div class="col-4">
-        <h3 onclick="switchMenu('{{category.name}}')" class="text-center display-5">{{ category }}</h3>
+        <h3 onclick="switchMenu('{{category.name}}')" id="{{category.name}}" class="text-center {% if forloop.counter0 == 0 %}active{% endif %} display-5 menu-link">{{ category }}</h3>
     </div>
 {% endfor %}
 </div>
 
-<div class="row mt-5 menu-category" id="breakfast">
+<div class="row mt-5 text-center menu-category" id="breakfast">
 {% for item in breakfast %}
-    <div class="col-10 text-center mx-auto menu-item">{{ item.name }} - €{{ item.price }}</div>
+    <div class="col-10 text-center col-md-3 mx-auto">
+        <img class="meal-img border rounded" src="{{item.image.url}}">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <p class="card-text">€{{ item.price }}</p>
+    </div>
 {% endfor %}
 </div>
 
 <div class="row mt-5 menu-category d-none" id="lunch">
-    {% for item in lunch %}
-        <div class="col-10 text-center mx-auto menu-item">{{ item.name }} - €{{ item.price }}</div>
-    {% endfor %}
+{% for item in lunch %}
+    <div class="col-10 text-center col-md-3 mx-auto">
+        <img class="meal-img border rounded" src="{{item.image.url}}">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <p class="card-text">€{{ item.price }}</p>
+    </div>
+{% endfor %}
 </div>
 
 <div class="row mt-5 menu-category d-none" id="dinner">
-    {% for item in dinner %}
-        <div class="col-10 text-center mx-auto menu-item">{{ item.name }} - €{{ item.price }}</div>
-    {% endfor %}
+{% for item in dinner %}
+    <div class="col-10 text-center col-md-3 mx-auto">
+        <img class="meal-img border rounded" src="{{item.image.url}}">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <p class="card-text">€{{ item.price }}</p>
+    </div>
+{% endfor %}
 </div>
 
 {% endblock %}
