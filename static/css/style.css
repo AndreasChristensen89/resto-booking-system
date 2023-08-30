@@ -131,7 +131,7 @@ a:hover, a:active {
 .about-content {
     font-size: 125%;
     opacity: 0;
-    animation: about-background 3s ease forwards;
+    animation: opacity-in 3s ease forwards;
     background-color: rgba(0, 0, 0, 0.15);
 }
 
@@ -141,12 +141,21 @@ a:hover, a:active {
     animation-delay: calc(.5s * var(--i));
 }
 
-@keyframes about-background {
+@keyframes opacity-in {
     from {
         opacity: 0;
     }
     to {
         opacity: 1;
+    }
+}
+
+@keyframes opacity-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }
 
@@ -355,6 +364,18 @@ a:hover, a:active {
 }
 
 /* ------------------------------ menu list --------------------------------- */
+
+.opacity-out {
+    animation: opacity-out 0.3s ease forwards;
+}
+
+.opacity-in {
+    animation: opacity-in 0.3s ease forwards;
+}
+
+.menu-item {
+    font-size: 150%;
+}
 
 .menu-item .img {
     background-size: cover;

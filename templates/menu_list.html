@@ -2,55 +2,31 @@
 {% load static %}
 
 {% block content %}
-<section class="hero-outer">
-        <img class="img" id="hero-image" src="{% static 'images/site/hero-pic.webp' %}"
-            alt="Fresh ingredients items on a black surface">
-    <div class="cover-text">
-        <h1 class="h1 mx-auto display-4">Menu coming right up below</h1>
-    </div>
-    <div class="col-10 mx-auto text-center cover-welcome">
-        <p class="text lead mx-auto">Everything served has been put through a rigorous process to ensure optimal quality and flavor</p>
-    </div>
-</section>
-
+{% include 'includes/top-space.html' %} 
+<div class="row">  
 {% for category in categories %}
-<div class="row">   
-    <div class="col-12 my-5">
-        <h3 class="text-center display-3">{{category}}</h3>
+    <div class="col-4">
+        <h3 onclick="switchMenu('{{category.name}}')" class="text-center display-5">{{ category }}</h3>
     </div>
-</div> 
-
-<div class="section section-1 border-bottom border-white">
-    <div class="container">
-        <div class="row g-0 align-items-stretch">
-                {% for meal in menu_list %}
-                {% if meal.category == category %}
-                    <div class="col-sm-6 mt-4 mb-2">
-                        <div class="d-block menu-item align-items-stretch">
-                            <div class="img mx-2 rounded" style="background-image: url({{meal.image.url}});"></div>
-                            <div class="text">
-                                <h3>{{meal.name}}</h3>
-                                <p>{{meal.description}}</p>
-                                <p><span>{{meal.price}}€</span></p>
-                                <p><span>Meant for {{meal.for_nbr_people}} person(s)</span></p>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% endfor %}
-        </div>
-    </div>
-</div>
 {% endfor %}
+</div>
 
-<div class="row text-center my-5">
-    <div class="col-10 mx-auto">
-        {% if user.is_authenticated %}
-        <p>Feel free to <a style="text-decoration: underline;" href="{% url 'contact:contact_login' %}">reach out</a> for more information about our menu</p>
-        {% else %}
-        <p>Feel free to <a style="text-decoration: underline;" href="{% url 'contact:contact' %}">reach out</a> for more information about our menu</p>
-        {% endif %}
-    </div>
+<div class="row mt-5 menu-category" id="breakfast">
+{% for item in breakfast %}
+    <div class="col-10 text-center mx-auto menu-item">{{ item.name }} - €{{ item.price }}</div>
+{% endfor %}
+</div>
+
+<div class="row mt-5 menu-category d-none" id="lunch">
+    {% for item in lunch %}
+        <div class="col-10 text-center mx-auto menu-item">{{ item.name }} - €{{ item.price }}</div>
+    {% endfor %}
+</div>
+
+<div class="row mt-5 menu-category d-none" id="dinner">
+    {% for item in dinner %}
+        <div class="col-10 text-center mx-auto menu-item">{{ item.name }} - €{{ item.price }}</div>
+    {% endfor %}
 </div>
 
 {% endblock %}

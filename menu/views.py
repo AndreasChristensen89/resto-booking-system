@@ -3,11 +3,15 @@ from .models import Category, Meals
 
 
 def menu_list(request):
-    menu_list = Meals.objects.all()
+    breakfast = Meals.objects.filter(category__name="Breakfast")
+    lunch = Meals.objects.filter(category__name="Lunch")
+    dinner = Meals.objects.filter(category__name="Dinner")
     categories = Category.objects.all()
 
     context = {
-        'menu_list': menu_list,
+        'breakfast': breakfast,
+        'lunch': lunch,
+        'dinner': dinner,
         'categories': categories,
     }
 
