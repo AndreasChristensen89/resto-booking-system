@@ -6,12 +6,16 @@
 <div class="row">  
 {% for category in categories %}
     <div class="col-4">
-        <h3 onclick="switchMenu('{{category.name}}')" id="{{category.name}}" class="text-center {% if forloop.counter0 == 0 %}active{% endif %} display-5 menu-link">{{ category }}</h3>
+        <h3 onclick="switchMenu('{{category.name}}')" style="--i:{{forloop.counter}};" id="{{category.name}}" class="text-center display-5 menu-link">{{ category }}</h3>
     </div>
 {% endfor %}
 </div>
 
-<div class="row mt-5 text-center menu-category" id="breakfast">
+<div class="text-center mt-5 menu-category">
+    <h3>Pick a category</h3>
+</div>
+
+<div class="row mt-5 text-center menu-category d-none" id="breakfast">
 {% for item in breakfast %}
     <div class="col-10 text-center col-md-3 mx-auto">
         <img class="meal-img border rounded" src="{{item.image.url}}">
